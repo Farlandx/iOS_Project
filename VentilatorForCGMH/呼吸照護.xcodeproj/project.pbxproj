@@ -28,6 +28,7 @@
 		1E5E56B518861184005EF6AC /* ____Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E5E56B418861184005EF6AC /* ____Tests.m */; };
 		1E781AEC18BC467600647ED3 /* VentilatorDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E781AEB18BC467600647ED3 /* VentilatorDataViewController.m */; };
 		1E781AEF18BC469200647ED3 /* OtherDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E781AEE18BC469200647ED3 /* OtherDataViewController.m */; };
+		1E8DD5D918D824DF005B41D2 /* DisplayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E8DD5D818D824DF005B41D2 /* DisplayView.m */; };
 		1E9DDB3318D2DDD800643295 /* BreathSoundTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E9DDB3218D2DDD800643295 /* BreathSoundTableViewController.m */; };
 		1EDA9CCD18B206B200AF987A /* MeasureData.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EDA9CCC18B206B200AF987A /* MeasureData.m */; };
 		1EDA9CCF18B206CA00AF987A /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EDA9CCE18B206CA00AF987A /* libsqlite3.0.dylib */; };
@@ -82,6 +83,8 @@
 		1E781AEB18BC467600647ED3 /* VentilatorDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VentilatorDataViewController.m; sourceTree = "<group>"; };
 		1E781AED18BC469200647ED3 /* OtherDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OtherDataViewController.h; sourceTree = "<group>"; };
 		1E781AEE18BC469200647ED3 /* OtherDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherDataViewController.m; sourceTree = "<group>"; };
+		1E8DD5D718D824DF005B41D2 /* DisplayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayView.h; sourceTree = "<group>"; };
+		1E8DD5D818D824DF005B41D2 /* DisplayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisplayView.m; sourceTree = "<group>"; };
 		1E9DDB3118D2DDD800643295 /* BreathSoundTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BreathSoundTableViewController.h; sourceTree = "<group>"; };
 		1E9DDB3218D2DDD800643295 /* BreathSoundTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BreathSoundTableViewController.m; sourceTree = "<group>"; };
 		1EDA9CCB18B206B200AF987A /* MeasureData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeasureData.h; sourceTree = "<group>"; };
@@ -220,6 +223,8 @@
 				1E781AEE18BC469200647ED3 /* OtherDataViewController.m */,
 				1E9DDB3118D2DDD800643295 /* BreathSoundTableViewController.h */,
 				1E9DDB3218D2DDD800643295 /* BreathSoundTableViewController.m */,
+				1E8DD5D718D824DF005B41D2 /* DisplayView.h */,
+				1E8DD5D818D824DF005B41D2 /* DisplayView.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -349,6 +354,7 @@
 				1E781AEF18BC469200647ED3 /* OtherDataViewController.m in Sources */,
 				1E32C6C218B742DB00DE4595 /* VentilatorMeasureViewController.m in Sources */,
 				1EF0012B18B2EAEF003B5D58 /* DatabaseUtility.m in Sources */,
+				1E8DD5D918D824DF005B41D2 /* DisplayView.m in Sources */,
 				1EFAD8C418C6B335002118C7 /* FirstViewController.m in Sources */,
 				1E32C6BB18B7064000DE4595 /* MeasureTabBarViewController.m in Sources */,
 				1EDA9CCD18B206B200AF987A /* MeasureData.m in Sources */,

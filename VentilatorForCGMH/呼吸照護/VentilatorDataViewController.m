@@ -28,6 +28,18 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    _displayView.delegate = self;
+    
+    for (UIView *v in [_displayView subviews]) {
+        if ([v isKindOfClass:[UITextField class]]) {
+            UITextField *txtField = v;
+            txtField.delegate = self;
+        }
+    }
+    
+    heightChanged = NO;
+    rect.origin = _scrollView.frame.origin;
+    rect.size = CGSizeMake(_scrollView.frame.size.width, _scrollView.frame.size.height);
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -44,6 +56,48 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)didKeyboardDismiss {
+    _scrollView.frame = rect;
+    [UIView animateWithDuration:0.3 animations:^{
+        _scrollView.frame = CGRectMake(0, 0, _scrollView.frame.size.width, _scrollView.frame.size.height);
+    }];
+    heightChanged = NO;
+}
+
+- (void)displayViewTouchesBeganDone {
+    [self didKeyboardDismiss];
+}
+
+#pragma mark - TextFieldDelegate
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    CGPoint pt;
+    CGRect rc = [textField bounds];
+    rc = [textField convertRect:rc toView:_scrollView];
+    pt = rc.origin;
+    pt.x = 0;
+    if (!heightChanged) {
+        if (pt.y > 162) {
+            pt.y -= 162;
+            [_scrollView setContentOffset:pt animated:YES];
+        }
+        CGRect newRect;
+        newRect.origin = _scrollView.frame.origin;
+        newRect.size = CGSizeMake(_scrollView.frame.size.width, _scrollView.frame.size.height - 172);
+        [UIView animateWithDuration:0.3 animations:^{
+            _scrollView.frame = newRect;
+        }];
+        heightChanged = YES;
+    }
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [self didKeyboardDismiss];
+    
+    [textField resignFirstResponder];
+    return YES;
+}
+
+#pragma mark - Methods
 - (void)setMeasureData:(MeasureData *)measureData {
     //Ventilation
     _VentilationMode.text = measureData.VentilationMode;

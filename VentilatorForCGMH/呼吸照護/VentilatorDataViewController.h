@@ -8,8 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "MeasureData.h"
+#import "DisplayView.h"
 
-@interface VentilatorDataViewController : UIViewController<UITextFieldDelegate>
+@interface VentilatorDataViewController : UIViewController<UITextFieldDelegate, DisplayViewDelegate> {
+    CGRect rect;
+    BOOL heightChanged;
+}
+
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (strong, nonatomic) IBOutlet DisplayView *displayView;
 
 #pragma mark - Methods
 - (void)setMeasureData:(MeasureData *)measureData;

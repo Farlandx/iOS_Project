@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>4448DE35-80B5-4A69-9ECA-CED7E79704D9</string>
+	<key>IDESourceControlProjectName</key>
+	<string>呼吸照護</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>1E4B5063-7E6D-4F20-8988-F2E1BB151D93</key>
+		<string>https://github.com/Farlandx/VentilatorForCGMH.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>呼吸照護.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>1E4B5063-7E6D-4F20-8988-F2E1BB151D93</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/Farlandx/VentilatorForCGMH.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>1E4B5063-7E6D-4F20-8988-F2E1BB151D93</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>1E4B5063-7E6D-4F20-8988-F2E1BB151D93</string>
+			<key>IDESourceControlWCCName</key>
+			<string>VentilatorForCGMH</string>
+		</dict>
+	</array>
+</dict>
+</plist>
