@@ -32,7 +32,8 @@
     
     for (UIView *v in [_displayView subviews]) {
         if ([v isKindOfClass:[UITextField class]]) {
-            UITextField *txtField = v;
+            UITextField *txtField = (UITextField *)v;
+            txtField.keyboardType = UIKeyboardTypeDecimalPad;
             txtField.delegate = self;
         }
     }
@@ -183,6 +184,93 @@
     
     //Relief. Pr.
     _ReliefPressure.text = measureData.ReliefPressure;
+}
+
+- (void)getMeasureData:(MeasureData *)measureData {
+    //Ventilation
+    measureData.VentilationMode = _VentilationMode.text;
+    
+    //Tidal Volume
+    measureData.TidalVolumeSet = _TidalVolumeSet.text;
+    measureData.TidalVolumeMeasured = _TidalVolumeMeasured.text;
+    
+    //Ventilation Rate
+    measureData.VentilationRateSet = _VentilationRateSet.text;
+    measureData.VentilationRateTotal = _VentilationRateTotal.text;
+    
+    //MV
+    measureData.MVSet = _MVSet.text;
+    measureData.MVTotal = _MVTotal.text;
+    
+    //SIMV Rate
+    measureData.SIMVRateSet = _SIMVRateSet.text;
+    
+    //%min Vol
+    //Minute Volume Set
+    measureData.PercentMinVolSet = _PercentMinVolSet.text;
+    
+    //Pattern
+    measureData.Pattern = _Pattern.text;
+    
+    //Vol Target
+    measureData.VolumeTarget = _VolumeTarget.text;
+    
+    //Insp. T
+    measureData.InspT = _InspT.text;
+    
+    //I:E
+    //I:E Ratio
+    measureData.InspirationExpirationRatio = _InspirationExpirationRatio.text;
+    
+    
+    //THigh
+    measureData.THigh = _THigh.text;
+    
+    //TLow
+    measureData.Tlow = _Tlow.text;
+    
+    //Flow
+    measureData.FlowSetting = _FlowSetting.text;
+    measureData.FlowMeasured = _FlowMeasured.text;
+    measureData.BaseFlow = _BaseFlow.text;
+    measureData.FlowSensitivity = _FlowSensitivity.text;
+    measureData.AutoFlow = _AutoFlow.text;
+    
+    //Pressure
+    measureData.PeakPressure = _PeakPressure.text;
+    measureData.PlateauPressure = _PlateauPressure.text;
+    measureData.MeanPressure = _MeanPressure.text;
+    measureData.PEEP = _PEEP.text;
+    measureData.PressureSupport = _PressureSupport.text;
+    measureData.PressureControl = _PressureControl.text;
+    
+    //PHigh
+    measureData.PHigh = _PHigh.text;
+    
+    //Plow
+    measureData.Plow = _Plow.text;
+    
+    //Temp.
+    measureData.Temperature = _Temperature.text;
+    
+    //FiO2
+    measureData.FiO2Set = _FiO2Set.text;
+    measureData.FiO2Measured = _FiO2Measured.text;
+    
+    //Resistance
+    measureData.Resistance = _Resistance.text;
+    
+    //Compliance
+    measureData.Compliance = _Compliance.text;
+    
+    //L. MV
+    measureData.LowerMV = _LowerMV.text;
+    
+    //H. Pr. Alarm
+    measureData.HighPressureAlarm = _HighPressureAlarm.text;
+    
+    //Relief. Pr.
+    measureData.ReliefPressure = _ReliefPressure.text;
 }
 
 @end

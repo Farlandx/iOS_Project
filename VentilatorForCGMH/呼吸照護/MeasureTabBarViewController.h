@@ -16,7 +16,6 @@
 
 
 #pragma mark - Methods
-- (MeasureData *)getMeasureData;
 - (void)setMeasureData:(MeasureData *)measureData;
 
 #pragma mark - Bar Button Item

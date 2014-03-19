@@ -72,8 +72,6 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"%@ selected.", [rowData objectAtIndex:indexPath.row]);
-    
     if (_delegate && [_delegate respondsToSelector:@selector(breathSoundTableViewDismissWithStringData:)]) {
         [_delegate breathSoundTableViewDismissWithStringData:[rowData objectAtIndex:indexPath.row]];
     }

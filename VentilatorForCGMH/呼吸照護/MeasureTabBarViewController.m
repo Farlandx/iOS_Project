@@ -29,6 +29,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    _measureData = [[MeasureData alloc] init];
 }
 
 - (void)didReceiveMemoryWarning
@@ -41,17 +42,19 @@
 
 - (IBAction)btnSaveClick:(id)sender {
     //[self dismissViewControllerAnimated:YES completion:nil];
-    [self setMeasureData:[[MeasureData alloc] init]];
+//    [self setMeasureData:[[MeasureData alloc] init]];
     
     for (UIViewController *v in self.viewControllers) {
         if ([v isKindOfClass:[VentilatorDataViewController class]]) {
-            if ([v isViewLoaded] == NO) {
-                // 還沒進過該view
-                NSLog(@"not ready yet.");
+            if ([v isViewLoaded]) {
+                VentilatorDataViewController *vc = (VentilatorDataViewController *)v;
+                [vc getMeasureData:_measureData];
             }
-            else {
-                VentilatorDataViewController *vc = v;
-                [vc setMeasureData:_measureData];
+        }
+        else if ([v isKindOfClass:[OtherDataViewController class]]) {
+            if ([v isViewLoaded]) {
+                OtherDataViewController *vc = (OtherDataViewController *)v;
+                [vc getMeasureData:_measureData];
             }
         }
     }

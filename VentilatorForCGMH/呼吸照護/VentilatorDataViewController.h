@@ -19,7 +19,7 @@
 @property (strong, nonatomic) IBOutlet DisplayView *displayView;
 
 #pragma mark - Methods
-- (void)setMeasureData:(MeasureData *)measureData;
+- (void)getMeasureData:(MeasureData *)measureData;
 
 #pragma mark - 量測資料
 //Ventilation

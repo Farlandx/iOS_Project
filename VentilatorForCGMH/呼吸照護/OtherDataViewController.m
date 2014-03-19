@@ -7,7 +7,6 @@
 //
 
 #import "OtherDataViewController.h"
-#import "MeasureData.h"
 #import "MeasureTabBarViewController.h"
 
 @interface OtherDataViewController ()
@@ -17,8 +16,6 @@
 @implementation OtherDataViewController {
     MeasureData *data;
 }
-
-@synthesize BreathSounds;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -37,7 +34,14 @@
     
     for (UIView *v in [_displayView subviews]) {
         if ([v isKindOfClass:[UITextField class]]) {
-            ((UITextField *)v).delegate = self;
+            UITextField *txtField = (UITextField *)v;
+            if (txtField.tag == 1) {
+                txtField.keyboardType = UIKeyboardTypeDefault;
+            }
+            else {
+                txtField.keyboardType = UIKeyboardTypeDecimalPad;
+            }
+            txtField.delegate = self;
         }
     }
     
@@ -45,15 +49,18 @@
     rect.origin = _scrollView.frame.origin;
     rect.size = CGSizeMake(_scrollView.frame.size.width, _scrollView.frame.size.height);
     
-    [_textView.layer setBorderColor:[[[UIColor grayColor] colorWithAlphaComponent:0.5f] CGColor]];
-    [_textView.layer setBorderWidth:0.5f];
-    _textView.delegate = self;
+    [_Xrem.layer setBorderColor:[[[UIColor grayColor] colorWithAlphaComponent:0.5f] CGColor]];
+    [_Xrem.layer setBorderWidth:0.5f];
+    _Xrem.delegate = self;
     
     _btnBreathSound.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     
     if (data.BreathSounds != nil && ![data.BreathSounds isEqualToString:@""]) {
         data.BreathSounds = data.BreathSounds;
         [_btnBreathSound setTitle:data.BreathSounds forState:UIControlStateNormal];
+    }
+    else {
+        _BreathSounds = @"Clear";
     }
 }
 
@@ -89,13 +96,15 @@
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     CGPoint pt;
     CGRect rc = [textField bounds];
-    rc = [textField convertRect:rc toView:_scrollView];
+    rc = [textField convertRect:rc toView:nil];
     pt = rc.origin;
     pt.x = 0;
     if (!heightChanged) {
-        pt.y -= 200;
-        [_scrollView setContentOffset:pt animated:YES];
-            
+        if (pt.y > 162) {
+            pt.y -= 162;
+            [_scrollView setContentOffset:pt animated:YES];
+        }
+        
         CGRect newRect;
         newRect.origin = _scrollView.frame.origin;
         newRect.size = CGSizeMake(_scrollView.frame.size.width, _scrollView.frame.size.height - 172);
@@ -117,14 +126,12 @@
 - (void)textViewDidBeginEditing:(UITextView *)textView {
     CGPoint pt;
     CGRect rc = [textView bounds];
-    rc = [textView convertRect:rc toView:_scrollView];
+    rc = [textView convertRect:rc toView:nil];
     pt = rc.origin;
     pt.x = 0;
     if (!heightChanged) {
-        if (pt.y > 162) {
-            pt.y -= 162;
-            [_scrollView setContentOffset:pt animated:YES];
-        }
+        pt.y -= 230;
+        [_scrollView setContentOffset:pt animated:YES];
         CGRect newRect;
         newRect.origin = _scrollView.frame.origin;
         newRect.size = CGSizeMake(_scrollView.frame.size.width, _scrollView.frame.size.height - 172);
@@ -148,14 +155,53 @@
 
 - (void)breathSoundTableViewDismissWithStringData:(NSString *)sound {
     [_btnBreathSound setTitle:sound forState:UIControlStateNormal];
-}
-
-- (void)setMeasureData:(MeasureData *)measureData {
+    _BreathSounds = sound;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     BreathSoundTableViewController *vc = [segue destinationViewController];
     vc.delegate  = self;
+}
+
+#pragma mark - Methods
+- (void)setMeasureData:(MeasureData *)measureData {
+    _BreathSounds = measureData.BreathSounds;
+    _PetCo2.text = measureData.PetCo2;
+    _SpO2.text = measureData.SpO2;
+    _RR.text = measureData.RR;
+    _TV.text = measureData.TV;
+    _MV.text = measureData.MV;
+    _MaxPi.text = measureData.MaxPi;
+    _Mvv.text = measureData.Mvv;
+    _Rsbi.text = measureData.Rsbi;
+    _EtSize.text = measureData.EtSize;
+    _Mark.text = measureData.Mark;
+    _CuffPressure.text = measureData.CuffPressure;
+    _Pr.text = measureData.Pr;
+    _Cvp.text = measureData.Cvp;
+    _BpS.text = measureData.BpS;
+    _BpD.text = measureData.BpD;
+    _Xrem.text = measureData.Xrem;
+}
+
+- (void)getMeasureData:(MeasureData *)measureData {
+    measureData.BreathSounds = _btnBreathSound.currentTitle;
+    measureData.PetCo2 = _PetCo2.text;
+    measureData.SpO2 = _SpO2.text;
+    measureData.RR = _RR.text;
+    measureData.TV = _TV.text;
+    measureData.MV = _MV.text;
+    measureData.MaxPi = _MaxPi.text;
+    measureData.Mvv = _Mvv.text;
+    measureData.Rsbi = _Rsbi.text;
+    measureData.EtSize = _EtSize.text;
+    measureData.Mark = _Mark.text;
+    measureData.CuffPressure = _CuffPressure.text;
+    measureData.Pr = _Pr.text;
+    measureData.Cvp = _Cvp.text;
+    measureData.BpS = _BpS.text;
+    measureData.BpD = _BpD.text;
+    measureData.Xrem = _Xrem.text;
 }
 
 @end
