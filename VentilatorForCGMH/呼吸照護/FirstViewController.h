@@ -8,10 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreBluetooth/CoreBluetooth.h>
+#import "NfcA1Device.h"
 
-@interface FirstViewController : UIViewController<CBCentralManagerDelegate, CBPeripheralDelegate> {
+@interface FirstViewController : UIViewController<CBCentralManagerDelegate, CBPeripheralDelegate, UITextFieldDelegate, NfcA1ProtocolDelegate> {
     NSString *deviceUUID;
     NSInteger bleStep;
+    
+    NfcA1Device* mNfcA1Device;
+    UInt8 gBlockData[16];
+    UInt8 gNo;
+    UInt8 gTagUID[7];
+    IBOutlet UIButton *btnRead;
 }
 
 @property (strong, nonatomic) CBCentralManager *centralManager;

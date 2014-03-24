@@ -17,6 +17,8 @@
 
 @implementation FirstViewController {
     MeasureData *myMeasureData;
+    
+    BOOL isStartListeningThread, isFocusOnRecordOper, isFocusOnVentNo;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -35,12 +37,18 @@
     [_RecordOper addTarget:self action:@selector(recordOperTextFieldDone:) forControlEvents:UIControlEventEditingDidEndOnExit];
     [_ChtNo addTarget:self action:@selector(chtNoTextFieldDone:) forControlEvents:UIControlEventEditingDidEndOnExit];
     [_VentNo addTarget:self action:@selector(ventNoTextFieldDone:) forControlEvents:UIControlEventEditingDidEndOnExit];
+    _RecordOper.delegate = self;
+    _VentNo.delegate = self;
     
     bleStep = 0;
     _data = [[NSData alloc] init];
     _mData = [[NSMutableData alloc] init];
     myMeasureData = [[MeasureData alloc] init];
     _centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
+    
+    isStartListeningThread = NO;
+    isFocusOnRecordOper = NO;
+    isFocusOnVentNo = NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -77,6 +85,155 @@
     [textField resignFirstResponder];
     
     [self btnStart:_btnReadData];
+}
+
+#pragma mark - NFC Dongle
+- (BOOL)isHeadsetPluggedIn
+{
+    NSArray *availableOutputs = [[AVAudioSession sharedInstance] currentRoute].outputs;
+    for (AVAudioSessionPortDescription *portDescription in availableOutputs) {
+        if ([portDescription.portType isEqualToString:AVAudioSessionPortHeadphones]) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
+- (void) hexStringToData:(NSString *)str
+                    Data: (void *) data
+{
+    int len = [str length] / 2;    // Target length
+    
+    unsigned char *whole_byte = data;
+    char byte_chars[3] = {'\0','\0','\0'};
+    
+    int i;
+    for (i=0; i < len; i++)
+    {
+        byte_chars[0] = [str characterAtIndex:i*2];
+        byte_chars[1] = [str characterAtIndex:i*2+1];
+        *whole_byte = strtol(byte_chars, NULL, 16);
+        whole_byte++;
+    }
+}
+
+- (NSString *) hexDataToString:(UInt8 *)data
+                        Length:(int)len
+{
+    NSString *tmp = @"";
+    NSString *str = @"";
+    for(int i = 0; i < len; ++i)
+    {
+        tmp = [NSString stringWithFormat:@"%02X",data[i]];
+        str = [str stringByAppendingString:tmp];
+    }
+    return str;
+}
+
+- (void)listeningRecordOper {
+    [self initAudioPlayer];
+    if([mNfcA1Device readerGetTagUID] == NO) {
+        NSLog(@"readerGetTagUID false");
+    }
+}
+
+- (void)listeningVentNo {
+    [self initAudioPlayer];
+    if([mNfcA1Device readerGetTagUID] == NO) {
+        NSLog(@"readerReadTagSectorData false");
+    }
+}
+
+- (void) initAudioPlayer {
+    if(!mNfcA1Device)
+        mNfcA1Device = [[NfcA1Device alloc] init];
+    mNfcA1Device.delegate = self;
+}
+
+- (void)receivedMessage:(SInt32)type Result:(Boolean)result Data:(void *)data {
+    switch (type) {
+        case MESSAGE_READER_GET_TAG_UID:
+            if (result == TRUE)
+            {
+                MSG_INFORM_DATA *infrom_data = data;
+                
+                NSString *tagUID =
+                [self hexDataToString: infrom_data->data Length: 7];
+                memcpy(gTagUID,infrom_data->data,sizeof(gTagUID));
+                
+                _RecordOper.text = tagUID;
+                
+                NSString *strStatus =[NSString stringWithFormat:@"%02X",infrom_data->status];
+                
+                NSLog(@"tagUID:%@", [[NSString alloc] initWithFormat:@"Tag UID:%@,%@",tagUID,strStatus]);
+            }
+            break;
+            
+        default:
+            break;
+    }
+    
+    //持續listening直到讀到資料為止
+    if (isStartListeningThread) {
+        if (isFocusOnRecordOper) {
+            if([mNfcA1Device readerGetTagUID] == YES) {
+                
+            }
+            else {
+                NSLog(@"readerGetTagUID false");
+            }
+        }
+        else if (isFocusOnVentNo) {
+            //if([mNfcA1Device readerReadTagSectorData:3] == YES) {
+            if([mNfcA1Device readerGetTagUID] == YES) {
+                
+            }
+            else {
+                NSLog(@"readerReadTagSectorData false");
+            }
+        }
+    }
+}
+
+#pragma mark - UITextFieldDelegate
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    if (![self isHeadsetPluggedIn]) {
+        isStartListeningThread = NO;
+        isFocusOnRecordOper = NO;
+        isFocusOnVentNo = NO;
+        return;
+    }
+    
+    if (!isStartListeningThread) {
+        if (textField == _RecordOper && !isFocusOnRecordOper) {
+            NSLog(@"RecordOper");
+            isStartListeningThread = YES;
+            isFocusOnRecordOper = YES;
+            NSThread *thread = [[NSThread alloc] initWithTarget:self selector:@selector(listeningRecordOper) object:nil];
+            [thread start];
+        }
+        else if(textField == _VentNo && !isFocusOnVentNo) {
+            NSLog(@"VentNo");
+            isStartListeningThread = YES;
+            isFocusOnVentNo = YES;
+            
+            NSThread *thread = [[NSThread alloc] initWithTarget:self selector:@selector(listeningVentNo) object:nil];
+            [thread start];
+        }
+    }
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    if (textField == _RecordOper) {
+        isStartListeningThread = NO;
+        isFocusOnRecordOper = NO;
+        NSLog(@"RecordOper leave");
+    }
+    else if(textField == _VentNo) {
+        NSLog(@"VentNo leave");
+        isStartListeningThread = NO;
+        isFocusOnVentNo = NO;
+    }
 }
 
 #pragma mark - BLE
