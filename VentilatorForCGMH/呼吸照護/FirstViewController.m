@@ -308,7 +308,6 @@
             if (measureData != nil) {
                 NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
                 [dateFormatter setDateFormat:@"yyyy/MM/dd HH:mm:ss"];
-                NSDate *date = [[NSDate alloc] init];
                 NSString *stringDateTime = [dateFormatter stringFromDate:[NSDate date]];
                 measureData.RecordTime = stringDateTime;
                 _RecordTime.text = stringDateTime;
