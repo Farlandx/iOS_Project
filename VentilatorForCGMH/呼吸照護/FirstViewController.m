@@ -10,6 +10,8 @@
 #import "MeasureData.h"
 #import "DragerCommands.h"
 #import "MeasureTabBarViewController.h"
+#import "VentilatorDataViewController.h"
+#import "OtherDataViewController.h"
 
 @interface FirstViewController ()
 
@@ -102,7 +104,7 @@
 - (void) hexStringToData:(NSString *)str
                     Data: (void *) data
 {
-    int len = [str length] / 2;    // Target length
+    int len = (int)[str length] / 2;    // Target length
     
     unsigned char *whole_byte = data;
     char byte_chars[3] = {'\0','\0','\0'};
@@ -130,6 +132,14 @@
     return str;
 }
 
+- (NSString *) sectorHexDataToString:(UInt8 *)data
+                              Length:(int)len
+{
+    NSData *nData = [NSData dataWithBytes:data length:len];
+    NSString *str = [[NSString alloc] initWithData:nData encoding:NSUTF8StringEncoding];
+    return str;
+}
+
 - (void)listeningRecordOper {
     [self initAudioPlayer];
     if([mNfcA1Device readerGetTagUID] == NO) {
@@ -139,7 +149,7 @@
 
 - (void)listeningVentNo {
     [self initAudioPlayer];
-    if([mNfcA1Device readerGetTagUID] == NO) {
+    if([mNfcA1Device readerReadTagSectorData:3] == NO) {
         NSLog(@"readerReadTagSectorData false");
     }
 }
@@ -153,7 +163,7 @@
 - (void)receivedMessage:(SInt32)type Result:(Boolean)result Data:(void *)data {
     switch (type) {
         case MESSAGE_READER_GET_TAG_UID:
-            if (result == TRUE)
+            if (result)
             {
                 MSG_INFORM_DATA *infrom_data = data;
                 
@@ -166,6 +176,29 @@
                 NSString *strStatus =[NSString stringWithFormat:@"%02X",infrom_data->status];
                 
                 NSLog(@"tagUID:%@", [[NSString alloc] initWithFormat:@"Tag UID:%@,%@",tagUID,strStatus]);
+                
+                isStartListeningThread = NO;
+                isFocusOnRecordOper = NO;
+                [_RecordOper resignFirstResponder];
+            }
+            break;
+            
+        case MESSAGE_READER_READ_TAG_SECTOR_DATA:
+            if (result) {
+                MSG_INFORM_DATA *infrom_data = data;
+                
+                NSString *blockData =
+                [self sectorHexDataToString: infrom_data->data Length: 48];
+                
+                _VentNo.text = blockData;
+                
+                NSString *strStatus =[NSString stringWithFormat:@"%02X",infrom_data->status];
+                
+                NSLog(@"SectorData:%@", [[NSString alloc] initWithFormat:@"Read Tag Sector Data:\n%@,%@",blockData,strStatus]);
+                
+                isStartListeningThread = NO;
+                isFocusOnVentNo = NO;
+                [_VentNo resignFirstResponder];
             }
             break;
             
@@ -184,8 +217,7 @@
             }
         }
         else if (isFocusOnVentNo) {
-            //if([mNfcA1Device readerReadTagSectorData:3] == YES) {
-            if([mNfcA1Device readerGetTagUID] == YES) {
+            if([mNfcA1Device readerReadTagSectorData:3] == YES) {
                 
             }
             else {
@@ -399,7 +431,7 @@
         else if (bleStep == 3) {
             if ([self dataCheck:_mData header:SOH command:REQUEST_CURRENT_TEXT_MESSAGES]) {
                 NSString *strMode = [[NSString alloc] initWithData:characteristic.value encoding:NSUTF8StringEncoding];
-                int index = [strMode rangeOfString:@"*"].location + 1;
+                int index = (int)[strMode rangeOfString:@"*"].location + 1;
                 myMeasureData.VentilationMode = [strMode substringWithRange:NSMakeRange(index, 2)];
                 if (![myMeasureData.VentilationMode caseInsensitiveCompare:@"2E"]
                     || ![myMeasureData.VentilationMode caseInsensitiveCompare:@"2F"]
@@ -522,7 +554,6 @@
             if (measureData != nil) {
                 NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
                 [dateFormatter setDateFormat:@"yyyy/MM/dd HH:mm:ss"];
-                NSDate *date = [[NSDate alloc] init];
                 NSString *stringDateTime = [dateFormatter stringFromDate:[NSDate date]];
                 measureData.RecordTime = stringDateTime;
                 _RecordTime.text = stringDateTime;
@@ -538,6 +569,32 @@
 }
 
 #pragma mark - Methods
+- (IBAction)btnSaveClick:(id)sender {
+    for (UIViewController *child in self.childViewControllers) {
+        if ([child isKindOfClass:[MeasureTabBarViewController class]]) {
+            for (UIViewController *v in ((MeasureTabBarViewController *)child).viewControllers) {
+                if ([v isKindOfClass:[VentilatorDataViewController class]]) {
+                    if ([v isViewLoaded]) {
+                        VentilatorDataViewController *vc = (VentilatorDataViewController *)v;
+                        [vc getMeasureData:_measureData];
+                    }
+                }
+                else if ([v isKindOfClass:[OtherDataViewController class]]) {
+                    if ([v isViewLoaded]) {
+                        OtherDataViewController *vc = (OtherDataViewController *)v;
+                        [vc getMeasureData:_measureData];
+                    }
+                }
+            }
+
+        }
+    }
+}
+
+- (IBAction)btnCancleClick:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 - (void)disconnect {
     [_centralManager cancelPeripheralConnection:_peripheral];
     _notifyCharacteristic = nil;
@@ -580,7 +637,7 @@
 
 - (void)sendData:(NSData *)mData {
     @try {
-        int count = [mData length];
+        int count = (int)[mData length];
         NSLog(@"SendData:%d", count);
         [_peripheral writeValue:mData forCharacteristic:_writeCharacteristic type:CBCharacteristicWriteWithoutResponse];
     }
@@ -591,7 +648,7 @@
 
 #pragma mark - Drager Command 
 - (void)sendICC {
-    int esc = ESC, icc = ICC, soh = SOH, cr = CR;
+    int esc = ESC, icc = ICC, cr = CR;
     const char *chkSum = [self getChkSum:(esc + icc)];
     unsigned char cmd[5] = {esc, icc, chkSum[0], chkSum[1], cr};
     NSData *dataCmd = [NSData dataWithBytes:cmd length:sizeof(cmd)];
@@ -613,7 +670,6 @@
 #pragma mark - Drager
 - (NSData *)getData {
     NSData *data = [[NSData alloc] init];
-    int count = 0;
     while (YES) {
         if (_data != nil && [_data length] > 0) {
             NSLog(@"_data");
@@ -733,7 +789,7 @@
             [data appendData:[self getData]];
             const char *buffer = [data bytes];
             
-            int len = [data length] - 1;
+            int len = (int)[data length] - 1;
             if (buffer[len] == iCR) {
                 return data;
             }
@@ -915,7 +971,7 @@
 
 - (void)parseMeadused:(NSString *)values MeasureData:(MeasureData *)refData {
     NSString *strMeasure = [values substringWithRange:NSMakeRange(2, [values length] - 2)];
-    int size = [strMeasure length] / 6;
+    int size = (int)[strMeasure length] / 6;
     NSString *code, *value;
     for (int i = 0; i < size; i++) {
         code = [strMeasure substringWithRange:NSMakeRange((i * 2) + (i * 4), 2)];

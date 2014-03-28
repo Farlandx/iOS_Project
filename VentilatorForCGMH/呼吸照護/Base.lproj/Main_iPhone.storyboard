@@ -99,7 +99,7 @@
                             <constraint firstAttribute="centerY" secondItem="DcM-Fx-MKR" secondAttribute="centerY" id="lHZ-e8-ii2"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="歷史紀錄(0)" image="F4C9F50E-2ADB-4FE7-90F0-7C370FEE4303" id="Z7h-1E-pvt"/>
+                    <tabBarItem key="tabBarItem" title="歷史紀錄(0)" image="24B922F3-67D8-472F-A985-912A0E9F1095" id="Z7h-1E-pvt"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3qq-4t-Ow8" sceneMemberID="firstResponder"/>
             </objects>
@@ -1176,7 +1176,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="F4C9F50E-2ADB-4FE7-90F0-7C370FEE4303" width="30" height="30">
+        <image name="24B922F3-67D8-472F-A985-912A0E9F1095" width="30" height="30">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGOzxYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
 GxwgISksLzU4VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA

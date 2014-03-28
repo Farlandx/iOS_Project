@@ -18,12 +18,14 @@
 
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet DisplayView *displayView;
-@property (strong, nonatomic) IBOutlet UIButton *btnBreathSound;
 
 #pragma mark - 其他資料
 @property (strong, nonatomic) NSString *BreathSounds;
+//動脈血氧分析
 @property (strong, nonatomic) IBOutlet UITextField *PetCo2;
 @property (strong, nonatomic) IBOutlet UITextField *SpO2;
+
+//呼吸器及氣道狀況監視
 @property (strong, nonatomic) IBOutlet UITextField *RR;
 @property (strong, nonatomic) IBOutlet UITextField *TV;
 @property (strong, nonatomic) IBOutlet UITextField *MV;
@@ -33,10 +35,15 @@
 @property (strong, nonatomic) IBOutlet UITextField *EtSize;
 @property (strong, nonatomic) IBOutlet UITextField *Mark;
 @property (strong, nonatomic) IBOutlet UITextField *CuffPressure;
+@property (strong, nonatomic) IBOutlet UIButton *btnBreathSound;
+
+//血型力學
 @property (strong, nonatomic) IBOutlet UITextField *Pr;
 @property (strong, nonatomic) IBOutlet UITextField *Cvp;
 @property (strong, nonatomic) IBOutlet UITextField *BpS;
 @property (strong, nonatomic) IBOutlet UITextField *BpD;
+
+//備註
 @property (strong, nonatomic) IBOutlet UITextView *Xrem;
 
 #pragma mark - Method

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreBluetooth/CoreBluetooth.h>
+#import "MeasureData.h"
 #import "NfcA1Device.h"
 
 @interface FirstViewController : UIViewController<CBCentralManagerDelegate, CBPeripheralDelegate, UITextFieldDelegate, NfcA1ProtocolDelegate> {
@@ -18,8 +19,12 @@
     UInt8 gBlockData[16];
     UInt8 gNo;
     UInt8 gTagUID[7];
-    IBOutlet UIButton *btnRead;
 }
+@property (strong, nonatomic) MeasureData *measureData;
+
+#pragma mark - Bar Button Item
+- (IBAction)btnSaveClick:(id)sender;
+- (IBAction)btnCancleClick:(id)sender;
 
 @property (strong, nonatomic) CBCentralManager *centralManager;
 @property (strong, nonatomic) CBPeripheral *peripheral;
