@@ -171,7 +171,7 @@
                 [self hexDataToString: infrom_data->data Length: 7];
                 memcpy(gTagUID,infrom_data->data,sizeof(gTagUID));
                 
-                _RecordOper.text = tagUID;
+                _RecordOper.text = [tagUID substringWithRange:NSMakeRange(0, 8)];
                 
                 NSString *strStatus =[NSString stringWithFormat:@"%02X",infrom_data->status];
                 
@@ -179,6 +179,7 @@
                 
                 isStartListeningThread = NO;
                 isFocusOnRecordOper = NO;
+                [self indicatorROStop];
                 [_RecordOper resignFirstResponder];
             }
             break;
@@ -198,6 +199,7 @@
                 
                 isStartListeningThread = NO;
                 isFocusOnVentNo = NO;
+                [self indicatorVNOStop];
                 [_VentNo resignFirstResponder];
             }
             break;
@@ -209,6 +211,7 @@
     //持續listening直到讀到資料為止
     if (isStartListeningThread) {
         if (isFocusOnRecordOper) {
+            NSLog(@"FocusOnRecordOper");
             if([mNfcA1Device readerGetTagUID] == YES) {
                 
             }
@@ -217,6 +220,7 @@
             }
         }
         else if (isFocusOnVentNo) {
+            NSLog(@"FocusOnVentNo");
             if([mNfcA1Device readerReadTagSectorData:3] == YES) {
                 
             }
@@ -224,7 +228,31 @@
                 NSLog(@"readerReadTagSectorData false");
             }
         }
+        else {
+            NSLog(@"stop listening.");
+            isStartListeningThread = NO;
+        }
     }
+}
+
+- (void)indicatorROStart {
+    [_RecordOper setPlaceholder:@"讀取中......"];
+    [_indicatorRO startAnimating];
+}
+
+- (void)indicatorROStop {
+    [_RecordOper setPlaceholder:@"點選開始掃瞄治療師卡號"];
+    [_indicatorRO stopAnimating];
+}
+
+- (void)indicatorVNOStart {
+    [_VentNo setPlaceholder:@"讀取中......"];
+    [_indicatorVNO startAnimating];
+}
+
+- (void)indicatorVNOStop {
+    [_VentNo setPlaceholder:@"點選開始掃瞄儀器ID"];
+    [_indicatorVNO stopAnimating];
 }
 
 #pragma mark - UITextFieldDelegate
@@ -241,29 +269,44 @@
             NSLog(@"RecordOper");
             isStartListeningThread = YES;
             isFocusOnRecordOper = YES;
-            NSThread *thread = [[NSThread alloc] initWithTarget:self selector:@selector(listeningRecordOper) object:nil];
-            [thread start];
+            isFocusOnVentNo = NO;
+            [self indicatorROStart];
+            [self listeningRecordOper];
         }
         else if(textField == _VentNo && !isFocusOnVentNo) {
             NSLog(@"VentNo");
             isStartListeningThread = YES;
+            isFocusOnRecordOper = NO;
             isFocusOnVentNo = YES;
-            
-            NSThread *thread = [[NSThread alloc] initWithTarget:self selector:@selector(listeningVentNo) object:nil];
-            [thread start];
+            [self indicatorVNOStart];
+            [self listeningVentNo];
+        }
+    }
+    else {
+        if (textField == _RecordOper && !isFocusOnRecordOper) {
+            isStartListeningThread = YES;
+            isFocusOnRecordOper = YES;
+            isFocusOnVentNo = NO;
+            [self indicatorROStart];
+        }
+        else if(textField == _VentNo && !isFocusOnVentNo) {
+            isStartListeningThread = YES;
+            isFocusOnRecordOper = NO;
+            isFocusOnVentNo = YES;
+            [self indicatorVNOStart];
         }
     }
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     if (textField == _RecordOper) {
-        isStartListeningThread = NO;
         isFocusOnRecordOper = NO;
+        [self indicatorROStop];
         NSLog(@"RecordOper leave");
     }
     else if(textField == _VentNo) {
         NSLog(@"VentNo leave");
-        isStartListeningThread = NO;
+        [self indicatorVNOStop];
         isFocusOnVentNo = NO;
     }
 }

@@ -35,6 +35,9 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *btnReadData;
 
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicatorRO;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicatorVNO;
+
 //紀錄時間
 @property (strong, nonatomic) IBOutlet UITextField *RecordTime;
 //治療師ID

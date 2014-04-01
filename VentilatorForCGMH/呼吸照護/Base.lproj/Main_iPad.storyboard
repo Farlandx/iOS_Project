@@ -67,53 +67,53 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="時間" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y69-0u-NEa">
-                                <rect key="frame" x="237" y="71" width="34" height="21"/>
+                                <rect key="frame" x="147" y="67" width="34" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="治療師" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rwq-pY-qWf">
-                                <rect key="frame" x="220" y="109" width="51" height="21"/>
+                                <rect key="frame" x="130" y="105" width="51" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="病患" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="51p-E8-2K8">
-                                <rect key="frame" x="237" y="147" width="34" height="21"/>
+                                <rect key="frame" x="147" y="143" width="34" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="儀器" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bTE-9X-SSU">
-                                <rect key="frame" x="237" y="185" width="34" height="21"/>
+                                <rect key="frame" x="147" y="181" width="34" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="量測時間" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rvf-jW-sdq">
-                                <rect key="frame" x="279" y="67" width="270" height="30"/>
+                                <rect key="frame" x="189" y="63" width="450" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="點選開始掃瞄治療師卡號" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kZs-oC-drs">
-                                <rect key="frame" x="279" y="105" width="270" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="點選開始掃瞄治療師卡號" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="kZs-oC-drs">
+                                <rect key="frame" x="189" y="101" width="450" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hgs-Yd-jDi">
-                                <rect key="frame" x="279" y="143" width="270" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="hgs-Yd-jDi">
+                                <rect key="frame" x="189" y="139" width="450" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oZb-ya-z2X">
-                                <rect key="frame" x="279" y="181" width="270" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="點選開始掃瞄儀器ID" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="oZb-ya-z2X">
+                                <rect key="frame" x="189" y="177" width="450" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -126,6 +126,14 @@
                                     <segue destination="csN-Mc-g5Y" kind="embed" id="NGn-eZ-BkS"/>
                                 </connections>
                             </containerView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="3bI-C1-xGF">
+                                <rect key="frame" x="647" y="105" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="hH9-aY-XRm">
+                                <rect key="frame" x="647" y="182" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -147,11 +155,13 @@
                         <outlet property="RecordOper" destination="kZs-oC-drs" id="Umq-aU-5ZI"/>
                         <outlet property="RecordTime" destination="rvf-jW-sdq" id="WJ5-dM-wQW"/>
                         <outlet property="VentNo" destination="oZb-ya-z2X" id="66W-Dj-Ha6"/>
+                        <outlet property="indicatorRO" destination="3bI-C1-xGF" id="H4p-wJ-h2m"/>
+                        <outlet property="indicatorVNO" destination="hH9-aY-XRm" id="FcH-Hg-Jn3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TDY-Tx-pD6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4665" y="-2820"/>
+            <point key="canvasLocation" x="4767" y="-2885"/>
         </scene>
         <!--Measure Tab Bar View Controller - 量測-->
         <scene sceneID="mXv-nR-gEm">
@@ -721,7 +731,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="呼吸器資料" id="vfe-dq-Gqm"/>
+                    <tabBarItem key="tabBarItem" title="呼吸器資料" image="Respirator" id="vfe-dq-Gqm"/>
                     <connections>
                         <outlet property="AutoFlow" destination="hbv-pF-8ym" id="OGB-AA-SWa"/>
                         <outlet property="BaseFlow" destination="i93-AC-pZu" id="m1C-sB-Wzw"/>
@@ -1030,7 +1040,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="其他資料" id="m2O-Ju-RKC"/>
+                    <tabBarItem key="tabBarItem" title="其他資料" image="Other" id="m2O-Ju-RKC"/>
                     <connections>
                         <outlet property="BpD" destination="K18-L9-yVu" id="XMJ-hZ-fab"/>
                         <outlet property="BpS" destination="S0A-5d-yUB" id="7P0-8N-yXT"/>
@@ -1095,11 +1105,11 @@
             </objects>
             <point key="canvasLocation" x="7638" y="-2137"/>
         </scene>
-        <!--Navigation Controller - Item-->
+        <!--Navigation Controller - 照護記錄(0)-->
         <scene sceneID="vVx-Xk-hyd">
             <objects>
                 <navigationController definesPresentationContext="YES" id="Evp-Ev-Kef" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="VGA-Ci-8fV"/>
+                    <tabBarItem key="tabBarItem" title="照護記錄(0)" image="Record" id="VGA-Ci-8fV"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="wnb-EQ-bcS">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1111,7 +1121,7 @@
             </objects>
             <point key="canvasLocation" x="1649" y="-2820"/>
         </scene>
-        <!--Ventilator Second View Controller - Second-->
+        <!--Ventilator Second View Controller - 歷史記錄-->
         <scene sceneID="wg7-f3-ORb">
             <objects>
                 <viewController id="8rJ-Kc-sve" customClass="VentilatorSecondViewController" sceneMemberID="viewController">
@@ -1147,7 +1157,7 @@
                             <constraint firstItem="zEq-FU-wV5" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leading" constant="20" symbolic="YES" id="uRE-52-21w"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Second" image="second" id="cPa-gy-q4n"/>
+                    <tabBarItem key="tabBarItem" title="歷史記錄" image="History" id="cPa-gy-q4n"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
             </objects>
@@ -1174,7 +1184,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="second" width="30" height="30"/>
+        <image name="History" width="25" height="25"/>
+        <image name="Other" width="25" height="25"/>
+        <image name="Record" width="25" height="25"/>
+        <image name="Respirator" width="25" height="25"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackOpaque"/>
