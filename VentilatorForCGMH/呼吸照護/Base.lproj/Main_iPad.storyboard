@@ -54,10 +54,10 @@
             </objects>
             <point key="canvasLocation" x="3607" y="-2820"/>
         </scene>
-        <!--First View Controller - 量測-->
+        <!--Measure View Controller - 量測-->
         <scene sceneID="RnM-lA-reZ">
             <objects>
-                <viewController id="sB3-mS-iQr" customClass="FirstViewController" sceneMemberID="viewController">
+                <viewController id="sB3-mS-iQr" customClass="MeasureViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="WQs-cx-Zgn"/>
                         <viewControllerLayoutGuide type="bottom" id="DPt-bq-WY8"/>
@@ -141,22 +141,22 @@
                     <navigationItem key="navigationItem" title="量測" id="l3y-8Q-hm0">
                         <barButtonItem key="leftBarButtonItem" title="取消" id="kfC-mi-e65">
                             <connections>
-                                <action selector="btnCancleClick:" destination="sB3-mS-iQr" id="VHl-QN-5jU"/>
+                                <action selector="btnCancleClick:" destination="sB3-mS-iQr" id="qb8-sm-cRE"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="儲存" id="uFB-lp-Nin">
                             <connections>
-                                <action selector="btnSaveClick:" destination="sB3-mS-iQr" id="5Ey-Tq-ksM"/>
+                                <action selector="btnSaveClick:" destination="sB3-mS-iQr" id="Bz5-ga-Ogr"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="ChtNo" destination="hgs-Yd-jDi" id="pSy-Ah-PRl"/>
-                        <outlet property="RecordOper" destination="kZs-oC-drs" id="Umq-aU-5ZI"/>
-                        <outlet property="RecordTime" destination="rvf-jW-sdq" id="WJ5-dM-wQW"/>
-                        <outlet property="VentNo" destination="oZb-ya-z2X" id="66W-Dj-Ha6"/>
-                        <outlet property="indicatorRO" destination="3bI-C1-xGF" id="H4p-wJ-h2m"/>
-                        <outlet property="indicatorVNO" destination="hH9-aY-XRm" id="FcH-Hg-Jn3"/>
+                        <outlet property="ChtNo" destination="hgs-Yd-jDi" id="dhR-RD-RS1"/>
+                        <outlet property="RecordOper" destination="kZs-oC-drs" id="EZu-tD-V5l"/>
+                        <outlet property="RecordTime" destination="rvf-jW-sdq" id="RxK-4N-noI"/>
+                        <outlet property="VentNo" destination="oZb-ya-z2X" id="hRg-ic-0L7"/>
+                        <outlet property="indicatorRO" destination="3bI-C1-xGF" id="sSJ-Yt-DdL"/>
+                        <outlet property="indicatorVNO" destination="hH9-aY-XRm" id="X9j-eC-6LU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TDY-Tx-pD6" userLabel="First Responder" sceneMemberID="firstResponder"/>

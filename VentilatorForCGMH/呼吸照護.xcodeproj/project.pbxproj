@@ -28,6 +28,8 @@
 		1E5E56B518861184005EF6AC /* ____Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E5E56B418861184005EF6AC /* ____Tests.m */; };
 		1E781AEC18BC467600647ED3 /* VentilatorDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E781AEB18BC467600647ED3 /* VentilatorDataViewController.m */; };
 		1E781AEF18BC469200647ED3 /* OtherDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E781AEE18BC469200647ED3 /* OtherDataViewController.m */; };
+		1E8881E518EABF7E009B5E06 /* MeasureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E8881E418EABF7E009B5E06 /* MeasureViewController.m */; };
+		1E8881E918EAC373009B5E06 /* libBLE.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E8881E818EAC373009B5E06 /* libBLE.a */; };
 		1E8DD5D918D824DF005B41D2 /* DisplayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E8DD5D818D824DF005B41D2 /* DisplayView.m */; };
 		1E97B3FF18E01C8100704F07 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E97B3FE18E01C8100704F07 /* AudioToolbox.framework */; };
 		1E97B40118E01CC300704F07 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E97B40018E01CC300704F07 /* AVFoundation.framework */; };
@@ -86,6 +88,12 @@
 		1E781AEB18BC467600647ED3 /* VentilatorDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VentilatorDataViewController.m; sourceTree = "<group>"; };
 		1E781AED18BC469200647ED3 /* OtherDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OtherDataViewController.h; sourceTree = "<group>"; };
 		1E781AEE18BC469200647ED3 /* OtherDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherDataViewController.m; sourceTree = "<group>"; };
+		1E8881E318EABF7E009B5E06 /* MeasureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeasureViewController.h; sourceTree = "<group>"; };
+		1E8881E418EABF7E009B5E06 /* MeasureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeasureViewController.m; sourceTree = "<group>"; };
+		1E8881E718EAC35D009B5E06 /* BLE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLE.h; sourceTree = "<group>"; };
+		1E8881E818EAC373009B5E06 /* libBLE.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBLE.a; sourceTree = "<group>"; };
+		1E8881EA18EAC3C3009B5E06 /* VentilationData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VentilationData.h; sourceTree = "<group>"; };
+		1E8881EB18EAC3F7009B5E06 /* DeviceInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceInfo.h; sourceTree = "<group>"; };
 		1E8DD5D718D824DF005B41D2 /* DisplayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayView.h; sourceTree = "<group>"; };
 		1E8DD5D818D824DF005B41D2 /* DisplayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisplayView.m; sourceTree = "<group>"; };
 		1E97B3FE18E01C8100704F07 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -112,6 +120,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1E97B40318E01F4F00704F07 /* libNfcA1Device_D14E.a in Frameworks */,
+				1E8881E918EAC373009B5E06 /* libBLE.a in Frameworks */,
 				1E97B40118E01CC300704F07 /* AVFoundation.framework in Frameworks */,
 				1E97B3FF18E01C8100704F07 /* AudioToolbox.framework in Frameworks */,
 				1EDA9CCF18B206CA00AF987A /* libsqlite3.0.dylib in Frameworks */,
@@ -157,6 +166,7 @@
 		1E5E568218861184005EF6AC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1E8881E818EAC373009B5E06 /* libBLE.a */,
 				1E97B40218E01F4F00704F07 /* libNfcA1Device_D14E.a */,
 				1E97B40018E01CC300704F07 /* AVFoundation.framework */,
 				1E97B3FE18E01C8100704F07 /* AudioToolbox.framework */,
@@ -174,7 +184,7 @@
 		1E5E568918861184005EF6AC /* 呼吸照護 */ = {
 			isa = PBXGroup;
 			children = (
-				1E97B40418E01F6400704F07 /* NfcA1Device.h */,
+				1E8881E618EAC331009B5E06 /* Library */,
 				1E781AF018BC46A300647ED3 /* ViewControllers */,
 				1EDE9FC918B6FF2E004B8FE5 /* View */,
 				1EDA9CCA18B2067300AF987A /* Models */,
@@ -229,6 +239,8 @@
 			children = (
 				1E32C6B918B7064000DE4595 /* MeasureTabBarViewController.h */,
 				1E32C6BA18B7064000DE4595 /* MeasureTabBarViewController.m */,
+				1E8881E318EABF7E009B5E06 /* MeasureViewController.h */,
+				1E8881E418EABF7E009B5E06 /* MeasureViewController.m */,
 				1EFAD8C218C6B335002118C7 /* FirstViewController.h */,
 				1EFAD8C318C6B335002118C7 /* FirstViewController.m */,
 				1E781AEA18BC467600647ED3 /* VentilatorDataViewController.h */,
@@ -241,6 +253,17 @@
 				1E8DD5D818D824DF005B41D2 /* DisplayView.m */,
 			);
 			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		1E8881E618EAC331009B5E06 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				1E8881E718EAC35D009B5E06 /* BLE.h */,
+				1E8881EA18EAC3C3009B5E06 /* VentilationData.h */,
+				1E97B40418E01F6400704F07 /* NfcA1Device.h */,
+				1E8881EB18EAC3F7009B5E06 /* DeviceInfo.h */,
+			);
+			name = Library;
 			sourceTree = "<group>";
 		};
 		1EDA9CCA18B2067300AF987A /* Models */ = {
@@ -367,6 +390,7 @@
 				1EDE9FC818B6FEC5004B8FE5 /* DataTableViewCell.m in Sources */,
 				1E781AEF18BC469200647ED3 /* OtherDataViewController.m in Sources */,
 				1E32C6C218B742DB00DE4595 /* VentilatorMeasureViewController.m in Sources */,
+				1E8881E518EABF7E009B5E06 /* MeasureViewController.m in Sources */,
 				1EF0012B18B2EAEF003B5D58 /* DatabaseUtility.m in Sources */,
 				1E8DD5D918D824DF005B41D2 /* DisplayView.m in Sources */,
 				1EFAD8C418C6B335002118C7 /* FirstViewController.m in Sources */,
@@ -519,6 +543,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/呼吸照護",
+					"$(PROJECT_DIR)",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -536,6 +561,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/呼吸照護",
+					"$(PROJECT_DIR)",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
