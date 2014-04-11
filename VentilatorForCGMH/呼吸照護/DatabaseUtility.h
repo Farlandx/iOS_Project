@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <sqlite3.h>
-#import "MeasureData.h"
+#import "VentilationData.h"
 
 @interface DatabaseUtility : NSObject {
     sqlite3 *sqliteDb;
@@ -17,9 +17,9 @@
 @property (strong, nonatomic) NSString *databasePath;
 
 - (void) initDatabase;
-- (BOOL) saveMeasure:(MeasureData *)measureData;
-- (BOOL) deleteMeasure:(MeasureData *)measureData;
+- (BOOL) saveMeasure:(VentilationData *)measureData;
+- (BOOL) deleteMeasure:(VentilationData *)measureData;
 - (NSMutableArray *) getMeasures;
-- (MeasureData *) getMeasureDataById:(NSInteger) measureId;
+- (VentilationData *) getMeasureDataById:(NSInteger) measureId;
 
 @end

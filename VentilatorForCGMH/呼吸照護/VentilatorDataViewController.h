@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MeasureData.h"
+#import "VentilationData.h"
 #import "DisplayView.h"
 
 @interface VentilatorDataViewController : UIViewController<UITextFieldDelegate, DisplayViewDelegate> {
@@ -19,7 +19,7 @@
 @property (strong, nonatomic) IBOutlet DisplayView *displayView;
 
 #pragma mark - Methods
-- (void)getMeasureData:(MeasureData *)measureData;
+- (void)getMeasureData:(VentilationData *)measureData;
 
 #pragma mark - 量測資料
 //Ventilation

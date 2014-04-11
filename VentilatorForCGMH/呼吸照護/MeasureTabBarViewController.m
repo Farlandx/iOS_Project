@@ -29,7 +29,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    _measureData = [[MeasureData alloc] init];
+    _measureData = [[VentilationData alloc] init];
 }
 
 - (void)didReceiveMemoryWarning

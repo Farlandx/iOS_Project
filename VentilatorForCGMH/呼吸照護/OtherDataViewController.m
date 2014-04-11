@@ -14,7 +14,7 @@
 @end
 
 @implementation OtherDataViewController {
-    MeasureData *data;
+    VentilationData *data;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -73,7 +73,7 @@
         [self setMeasureData:data];
     }
     else {
-        data = [[MeasureData alloc] init];
+        data = [[VentilationData alloc] init];
     }
 }
 
@@ -164,7 +164,7 @@
 }
 
 #pragma mark - Methods
-- (void)setMeasureData:(MeasureData *)measureData {
+- (void)setMeasureData:(VentilationData *)measureData {
     _BreathSounds = measureData.BreathSounds;
     _PetCo2.text = measureData.PetCo2;
     _SpO2.text = measureData.SpO2;
@@ -184,7 +184,7 @@
     _Xrem.text = measureData.Xrem;
 }
 
-- (void)getMeasureData:(MeasureData *)measureData {
+- (void)getMeasureData:(VentilationData *)measureData {
     measureData.BreathSounds = _btnBreathSound.currentTitle;
     measureData.PetCo2 = _PetCo2.text;
     measureData.SpO2 = _SpO2.text;

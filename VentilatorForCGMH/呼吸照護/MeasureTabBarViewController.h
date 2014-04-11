@@ -7,16 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MeasureData.h"
+#import "VentilationData.h"
 
 @interface MeasureTabBarViewController : UITabBarController
 
-@property (strong, nonatomic) MeasureData *measureData;
+@property (strong, nonatomic) VentilationData *measureData;
 
 
 
 #pragma mark - Methods
-- (void)setMeasureData:(MeasureData *)measureData;
+- (void)setMeasureData:(VentilationData *)measureData;
 
 #pragma mark - Bar Button Item
 - (IBAction)btnSaveClick:(id)sender;

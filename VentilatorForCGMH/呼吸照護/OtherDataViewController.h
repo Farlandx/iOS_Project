@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "BreathSoundTableViewController.h"
-#import "MeasureData.h"
+#import "VentilationData.h"
 #import "DisplayView.h"
 
 @interface OtherDataViewController : UIViewController<UITextFieldDelegate, UITextViewDelegate, BreathSoundTableViewDelegate, DisplayViewDelegate> {
@@ -47,6 +47,6 @@
 @property (strong, nonatomic) IBOutlet UITextView *Xrem;
 
 #pragma mark - Method
-- (void)getMeasureData:(MeasureData *)measureData;
+- (void)getMeasureData:(VentilationData *)measureData;
 
 @end

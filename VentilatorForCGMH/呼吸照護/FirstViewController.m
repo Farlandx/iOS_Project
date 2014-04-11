@@ -7,7 +7,6 @@
 //
 
 #import "FirstViewController.h"
-#import "MeasureData.h"
 #import "DragerCommands.h"
 #import "MeasureTabBarViewController.h"
 #import "VentilatorDataViewController.h"
@@ -18,7 +17,7 @@
 @end
 
 @implementation FirstViewController {
-    MeasureData *myMeasureData;
+    VentilationData *myMeasureData;
     
     BOOL isStartListeningThread, isFocusOnRecordOper, isFocusOnVentNo;
 }
@@ -45,7 +44,7 @@
     bleStep = 0;
     _data = [[NSData alloc] init];
     _mData = [[NSMutableData alloc] init];
-    myMeasureData = [[MeasureData alloc] init];
+    myMeasureData = [[VentilationData alloc] init];
     _centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
     
     isStartListeningThread = NO;
@@ -379,7 +378,7 @@
             //MeasureData *measureData = [self readData];
             bleStep = 1;
             [self sendCmdStep];
-            MeasureData *measureData = nil;
+            VentilationData *measureData = nil;
             if (measureData != nil) {
                 NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
                 [dateFormatter setDateFormat:@"yyyy/MM/dd HH:mm:ss"];
@@ -593,7 +592,7 @@
             }
         }
         else if (bleStep == 12) {
-            MeasureData *measureData = myMeasureData;
+            VentilationData *measureData = myMeasureData;
             if (measureData != nil) {
                 NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
                 [dateFormatter setDateFormat:@"yyyy/MM/dd HH:mm:ss"];
@@ -934,7 +933,7 @@
     return code;
 }
 
-- (void)parseSet:(NSString *)values MeasureData:(MeasureData *)refData {
+- (void)parseSet:(NSString *)values MeasureData:(VentilationData *)refData {
     NSString *strSetting = [values substringWithRange:NSMakeRange(2, [values length] - 2)];
     NSInteger size = [strSetting length] / 7;
     NSString *code, *value;
@@ -1012,7 +1011,7 @@
     }
 }
 
-- (void)parseMeadused:(NSString *)values MeasureData:(MeasureData *)refData {
+- (void)parseMeadused:(NSString *)values MeasureData:(VentilationData *)refData {
     NSString *strMeasure = [values substringWithRange:NSMakeRange(2, [values length] - 2)];
     int size = (int)[strMeasure length] / 6;
     NSString *code, *value;
@@ -1099,8 +1098,8 @@
     }
 }
 
-- (MeasureData *)readData {
-    MeasureData *measureData = [[MeasureData alloc] init];
+- (VentilationData *)readData {
+    VentilationData *measureData = [[VentilationData alloc] init];
     
     @try {
         //初始化Drager

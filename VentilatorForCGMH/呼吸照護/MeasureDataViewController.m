@@ -7,7 +7,7 @@
 //
 
 #import "MeasureDataViewController.h"
-#import "MeasureData.h"
+#import "VentilationData.h"
 #import "DataTableViewCell.h"
 #import "MeasureTabBarViewController.h"
 
@@ -64,7 +64,7 @@
 {
     static NSString *CellIdentifier = @"Data Cell";
     DataTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    MeasureData *data = [measureDataList objectAtIndex:indexPath.row];
+    VentilationData *data = [measureDataList objectAtIndex:indexPath.row];
     // Configure the cell...
     cell.labelRecordOper.text = data.RecordOper;
     
@@ -123,7 +123,7 @@
         // 新增
         MeasureTabBarViewController *vc = [segue destinationViewController];
         
-        vc.measureData = [[MeasureData alloc] init];
+        vc.measureData = [[VentilationData alloc] init];
     }
     else if ([[segue identifier] isEqualToString:@"Edit segue"]) {
         // 編輯

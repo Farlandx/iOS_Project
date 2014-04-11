@@ -10,7 +10,7 @@
 
 @interface VentilationData : NSObject
 
-typedef NS_ENUM(NSInteger, Mode) {
+typedef NS_ENUM(NSInteger, VENTILATION_MODE) {
     AC,
     CPPV,
     SIMV,
@@ -121,7 +121,7 @@ typedef NS_ENUM(NSInteger, Mode) {
 @property (strong, nonatomic) NSString *ErrorMsg;
 
 #pragma mark - -methods
-- (NSString *) modeToString:(Mode)mode;
+- (NSString *) modeToString:(VENTILATION_MODE)mode;
 - (void) setDefaultValue;
 
 @end

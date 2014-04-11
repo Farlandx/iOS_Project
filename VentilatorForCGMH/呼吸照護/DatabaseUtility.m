@@ -121,7 +121,7 @@
     }
 }
 
-- (BOOL) saveMeasure:(MeasureData *)measureData {
+- (BOOL) saveMeasure:(VentilationData *)measureData {
     BOOL isSuccess = false;
     sqlite3_stmt *statement = NULL;
     const char *dbpath = [databasePath UTF8String];
@@ -304,7 +304,7 @@
         
         if (sqlite3_prepare_v2(sqliteDb, query_stmt, -1, &statement, NULL) == SQLITE_OK) {
             while (sqlite3_step(statement) == SQLITE_ROW) {
-                MeasureData *measureData = [[MeasureData alloc] init];
+                VentilationData *measureData = [[VentilationData alloc] init];
                 measureData.MeasureId = sqlite3_column_int(statement, 0);
                 measureData.ChtNo = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 1)];
                 measureData.RecordTime = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 2)];
@@ -383,8 +383,8 @@
     return measureList;
 }
 
-- (MeasureData *) getMeasureDataById:(NSInteger)measureId {
-    MeasureData *measureData = [[MeasureData alloc] init];
+- (VentilationData *) getMeasureDataById:(NSInteger)measureId {
+    VentilationData *measureData = [[VentilationData alloc] init];
     const char *dbpath = [databasePath UTF8String];
     sqlite3_stmt *statement;
     
@@ -472,7 +472,7 @@
     return measureData;
 }
 
-- (BOOL) deleteMeasure:(MeasureData *)measureData {
+- (BOOL) deleteMeasure:(VentilationData *)measureData {
     BOOL isSuccess = false;
     sqlite3_stmt *statement = NULL;
     const char *dbpath = [databasePath UTF8String];

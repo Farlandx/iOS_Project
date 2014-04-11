@@ -12,7 +12,7 @@
 #import "DeviceInfo.h"
 #import "BLE.h"
 
-@interface MeasureViewController : UIViewController<UITextFieldDelegate, NfcA1ProtocolDelegate> {
+@interface MeasureViewController : UIViewController<UITextFieldDelegate, NfcA1ProtocolDelegate, BleDelegate> {
     NfcA1Device* mNfcA1Device;
     UInt8 gBlockData[16];
     UInt8 gNo;

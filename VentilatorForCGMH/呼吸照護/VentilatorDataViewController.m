@@ -45,7 +45,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     //取得measureData並將資料塞入textfield中
-    MeasureData *data = ((MeasureTabBarViewController *)self.tabBarController).measureData;
+    VentilationData *data = ((MeasureTabBarViewController *)self.tabBarController).measureData;
     if (data != nil) {
         [self setMeasureData:data];
     }
@@ -99,7 +99,7 @@
 }
 
 #pragma mark - Methods
-- (void)setMeasureData:(MeasureData *)measureData {
+- (void)setMeasureData:(VentilationData *)measureData {
     //Ventilation
     _VentilationMode.text = measureData.VentilationMode;
     
@@ -186,7 +186,7 @@
     _ReliefPressure.text = measureData.ReliefPressure;
 }
 
-- (void)getMeasureData:(MeasureData *)measureData {
+- (void)getMeasureData:(VentilationData *)measureData {
     //Ventilation
     measureData.VentilationMode = _VentilationMode.text;
     

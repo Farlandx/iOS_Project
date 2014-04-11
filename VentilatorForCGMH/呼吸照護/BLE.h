@@ -12,20 +12,18 @@
 #import "DeviceInfo.h"
 
 typedef NS_ENUM(NSUInteger, BleReadStatus) {
-    NONE = 0,
-    CONNECTING,
-    READING_DATA,
-    DONE
+    BLE_READ_NONE = 0,
+    BLE_CONNECTING,
+    BLE_READING_DATA,
+    BLE_READ_ERROR,
+    BLE_READ_DONE
 };
 
 @class BLE;
 @protocol BleDelegate <NSObject>
 
 @required
-- (void)recievedVentilationData:(VentilationData *)data;
-
-@optional
-- (void)readStatusChange:(BleReadStatus)status;
+- (void)recievedVentilationDataAndReadStatus:(VentilationData *)data readStatus:(BleReadStatus)status;
 
 @end
 

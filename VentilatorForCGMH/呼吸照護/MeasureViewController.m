@@ -16,7 +16,7 @@
 @end
 
 @implementation MeasureViewController {
-    MeasureData *myMeasureData;
+    VentilationData *myMeasureData;
     
     BOOL isStartListeningThread, isFocusOnRecordOper, isFocusOnVentNo;
 }
@@ -26,6 +26,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        ble = [[BLE alloc] init];
     }
     return self;
 }
@@ -194,6 +195,8 @@
                 isFocusOnVentNo = NO;
                 [self indicatorVNOStop];
                 [_VentNo resignFirstResponder];
+                
+                [ble startReadByConnectionString:blockData];
             }
             break;
             
@@ -246,6 +249,28 @@
 - (void)indicatorVNOStop {
     [_VentNo setPlaceholder:@"點選開始掃瞄儀器ID"];
     [_indicatorVNO stopAnimating];
+}
+
+#pragma mark - BLE
+- (void)recievedVentilationDataAndReadStatus:(VentilationData *)data readStatus:(BleReadStatus)status {
+    switch (status) {
+        case BLE_READ_DONE:
+            myMeasureData = data;
+            NSLog(@"BLE Read Done.");
+            break;
+            
+        case BLE_READ_ERROR:
+            NSLog(@"BLE Read Error!");
+            break;
+            
+        case BLE_CONNECTING:
+            NSLog(@"BLE Connecting.");
+            break;
+            
+        default:
+            break;
+    }
+    myMeasureData = data;
 }
 
 #pragma mark - UITextFieldDelegate
@@ -312,13 +337,13 @@
                 if ([v isKindOfClass:[VentilatorDataViewController class]]) {
                     if ([v isViewLoaded]) {
                         VentilatorDataViewController *vc = (VentilatorDataViewController *)v;
-                        [vc getMeasureData:_measureData];
+                        [vc getMeasureData:myMeasureData];
                     }
                 }
                 else if ([v isKindOfClass:[OtherDataViewController class]]) {
                     if ([v isViewLoaded]) {
                         OtherDataViewController *vc = (OtherDataViewController *)v;
-                        [vc getMeasureData:_measureData];
+                        [vc getMeasureData:myMeasureData];
                     }
                 }
             }
