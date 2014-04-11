@@ -350,6 +350,10 @@
             
         }
     }
+    
+    if (myMeasureData != nil) {
+        //insert data to database
+    }
 }
 
 - (IBAction)btnCancleClick:(id)sender {
