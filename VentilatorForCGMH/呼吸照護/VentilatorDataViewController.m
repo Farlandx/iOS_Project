@@ -8,6 +8,7 @@
 
 #import "VentilatorDataViewController.h"
 #import "MeasureTabBarViewController.h"
+#import "MeasureViewController.h"
 
 @interface VentilatorDataViewController ()
 
@@ -45,7 +46,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     //取得measureData並將資料塞入textfield中
-    VentilationData *data = ((MeasureTabBarViewController *)self.tabBarController).measureData;
+    MeasureViewController *mvc = (MeasureViewController *)(self.tabBarController).parentViewController;
+    VentilationData *data = mvc.myMeasureData;
     if (data != nil) {
         [self setMeasureData:data];
     }

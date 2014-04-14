@@ -8,6 +8,7 @@
 
 #import "OtherDataViewController.h"
 #import "MeasureTabBarViewController.h"
+#import "MeasureViewController.h"
 
 @interface OtherDataViewController ()
 
@@ -68,7 +69,8 @@
     [super viewWillAppear:animated];
     
     //取得measureData並將資料塞入textfield中
-    data = ((MeasureTabBarViewController *)self.tabBarController).measureData;
+    MeasureViewController *mvc = (MeasureViewController *)(self.tabBarController).parentViewController;
+    data = mvc.myMeasureData;
     if (data != nil) {
         [self setMeasureData:data];
     }
@@ -166,6 +168,7 @@
 #pragma mark - Methods
 - (void)setMeasureData:(VentilationData *)measureData {
     _BreathSounds = measureData.BreathSounds;
+    [_btnBreathSound setTitle:measureData.BreathSounds forState:UIControlStateNormal];
     _PetCo2.text = measureData.PetCo2;
     _SpO2.text = measureData.SpO2;
     _RR.text = measureData.RR;

@@ -10,23 +10,25 @@
 #import "MeasureTabBarViewController.h"
 #import "VentilatorDataViewController.h"
 #import "OtherDataViewController.h"
+#import "DatabaseUtility.h"
 
 @interface MeasureViewController ()
 
 @end
 
 @implementation MeasureViewController {
-    VentilationData *myMeasureData;
+    DatabaseUtility *db;
     
     BOOL isStartListeningThread, isFocusOnRecordOper, isFocusOnVentNo;
 }
+
+@synthesize myMeasureData;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        ble = [[BLE alloc] init];
     }
     return self;
 }
@@ -44,6 +46,21 @@
     isStartListeningThread = NO;
     isFocusOnRecordOper = NO;
     isFocusOnVentNo = NO;
+    
+    ble = [[BLE alloc] init];
+    db = [[DatabaseUtility alloc] init];
+    [db initDatabase];
+    
+    if (myMeasureData != nil) {
+        _RecordTime.text = myMeasureData.RecordTime;
+        _RecordOper.text = myMeasureData.RecordOper;
+        _ChtNo.text = myMeasureData.ChtNo;
+        _VentNo.text = myMeasureData.VentNo;
+    }
+}
+
+- (void)dealloc {
+    _delegate = nil;
 }
 
 - (void)didReceiveMemoryWarning
@@ -331,6 +348,10 @@
 
 #pragma mark - Methods
 - (IBAction)btnSaveClick:(id)sender {
+    if (myMeasureData == nil) {
+        myMeasureData = [[VentilationData alloc] init];
+    }
+    
     for (UIViewController *child in self.childViewControllers) {
         if ([child isKindOfClass:[MeasureTabBarViewController class]]) {
             for (UIViewController *v in ((MeasureTabBarViewController *)child).viewControllers) {
@@ -351,8 +372,20 @@
         }
     }
     
-    if (myMeasureData != nil) {
-        //insert data to database
+    //insert data to database
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy/MM/dd HH:mm:ss"];
+    myMeasureData.RecordTime = [dateFormatter stringFromDate:[NSDate date]];
+    myMeasureData.RecordOper = _RecordOper.text;
+    myMeasureData.ChtNo = _ChtNo.text;
+    myMeasureData.VentNo = _VentNo.text;
+    
+    if (![db saveMeasure:myMeasureData]){
+        NSLog(@"Save fail.");
+    }
+    else {
+        [_delegate measureViewControllerDismissed:myMeasureData];
+        [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
 

@@ -9,13 +9,16 @@
 #import "MeasureDataViewController.h"
 #import "VentilationData.h"
 #import "DataTableViewCell.h"
-#import "MeasureTabBarViewController.h"
+#import "MeasureViewController.h"
+#import "DatabaseUtility.h"
 
-@interface MeasureDataViewController ()
+@interface MeasureDataViewController ()<MeasureViewControllerDelegate>
 
 @end
 
-@implementation MeasureDataViewController
+@implementation MeasureDataViewController {
+    DatabaseUtility *db;
+}
 
 @synthesize measureDataList;
 
@@ -37,12 +40,33 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    db = [[DatabaseUtility alloc] init];
+    [db initDatabase];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
+    
+    measureDataList = [db getMeasures];
+    
+    [self.tableView reloadData];
+}
+
+#pragma mark - Delegate
+- (void)measureViewControllerDismissed:(VentilationData *)measureData {
+    if (measureData != nil) {
+        //儲存成功後返回的資料
+    }
+    else {
+        NSLog(@"no");
+    }
 }
 
 #pragma mark - Table view data source
@@ -66,11 +90,22 @@
     DataTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     VentilationData *data = [measureDataList objectAtIndex:indexPath.row];
     // Configure the cell...
-    cell.labelRecordOper.text = data.RecordOper;
-    
     cell.labelRecordTime.text = data.RecordTime;
+    cell.labelChtNo.text = data.ChtNo;
+    cell.labelRecordOper.text = data.RecordOper;
+    cell.labelVentilationMode.text = data.VentilationMode;
     
     return cell;
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Detemine if it's in editing mode
+    if (self.editing)
+    {
+        return UITableViewCellEditingStyleDelete;
+    }
+    
+    return UITableViewCellEditingStyleNone;
 }
 
 /*
@@ -119,17 +154,24 @@
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    if ([[segue identifier] isEqualToString:@"Add segue"]) {
-        // 新增
-        MeasureTabBarViewController *vc = [segue destinationViewController];
-        
-        vc.measureData = [[VentilationData alloc] init];
-    }
-    else if ([[segue identifier] isEqualToString:@"Edit segue"]) {
-        // 編輯
-        MeasureTabBarViewController *vc = [segue destinationViewController];
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        vc.measureData = [measureDataList objectAtIndex: indexPath.row];
+    UINavigationController *nc = [segue destinationViewController];
+    for (UIView *v in nc.viewControllers) {
+        if ([v isKindOfClass:[MeasureViewController class]]) {
+            MeasureViewController *vc = (MeasureViewController *)v;
+            if ([[segue identifier] isEqualToString:@"Add segue"]) {
+                // 新增
+                VentilationData *foo = [[VentilationData alloc] init];
+                [foo setDefaultValue];
+                vc.myMeasureData = foo;
+                vc.delegate = self;
+            }
+            else if ([[segue identifier] isEqualToString:@"Edit segue"]) {
+                // 編輯
+                NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+                vc.myMeasureData = [measureDataList objectAtIndex: indexPath.row];
+                vc.delegate = self;
+            }
+        }
     }
 }
 

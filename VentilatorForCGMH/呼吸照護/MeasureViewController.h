@@ -12,6 +12,12 @@
 #import "DeviceInfo.h"
 #import "BLE.h"
 
+@protocol MeasureViewControllerDelegate <NSObject>
+
+- (void)measureViewControllerDismissed:(VentilationData *)measureData;
+
+@end
+
 @interface MeasureViewController : UIViewController<UITextFieldDelegate, NfcA1ProtocolDelegate, BleDelegate> {
     NfcA1Device* mNfcA1Device;
     UInt8 gBlockData[16];
@@ -29,6 +35,10 @@
 
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicatorRO;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicatorVNO;
+
+@property (strong, nonatomic) VentilationData *myMeasureData;
+
+@property (assign, nonatomic) id<MeasureViewControllerDelegate> delegate;
 
 //紀錄時間
 @property (strong, nonatomic) IBOutlet UITextField *RecordTime;

@@ -10,7 +10,9 @@
 
 @interface DataTableViewCell : UITableViewCell
 
+@property (strong, nonatomic) IBOutlet UILabel *labelChtNo;
 @property (strong, nonatomic) IBOutlet UILabel *labelRecordOper;
 @property (strong, nonatomic) IBOutlet UILabel *labelRecordTime;
+@property (strong, nonatomic) IBOutlet UILabel *labelVentilationMode;
 
 @end
