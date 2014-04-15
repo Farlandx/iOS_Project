@@ -63,10 +63,30 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="呼吸照護" id="zAu-O2-8XA">
-                        <barButtonItem key="rightBarButtonItem" tag="1" systemItem="add" id="a2U-hv-xeG">
-                            <connections>
-                                <segue destination="Lwe-Iw-lzf" kind="modal" identifier="Add segue" id="x00-2g-PwI"/>
-                            </connections>
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="QNW-pl-jhF">
+                            <view key="customView" contentMode="scaleToFill" id="Bfd-E2-Oa8">
+                                <rect key="frame" x="582" y="5" width="170" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TO9-EB-EZy">
+                                        <rect key="frame" x="124" y="2" width="46" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="新增">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="Lwe-Iw-lzf" kind="modal" identifier="Add segue" id="Zv5-Qe-jH4"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o7d-pA-sSw">
+                                        <rect key="frame" x="70" y="2" width="30" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="上傳">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                            </view>
                         </barButtonItem>
                     </navigationItem>
                 </tableViewController>
@@ -1230,6 +1250,6 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Ugc-h3-n50"/>
+        <segue reference="Zv5-Qe-jH4"/>
     </inferredMetricsTieBreakers>
 </document>

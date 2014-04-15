@@ -487,7 +487,7 @@
     if (sqlite3_open(dbpath, &sqliteDb) == SQLITE_OK) {
         if (measureData.MeasureId > 0) {
             NSLog(@"Existing data, Delete.");
-            NSString *deleteSQL = [NSString stringWithFormat:@"DELETE FROM MEASURE_DATA WHERE id = ?"];
+            NSString *deleteSQL = [NSString stringWithFormat:@"DELETE FROM MEASURE_DATA WHERE MeasureId = ?"];
             
             const char *delete_stmt = [deleteSQL UTF8String];
             sqlite3_prepare_v2(sqliteDb, delete_stmt, -1, &statement, NULL);

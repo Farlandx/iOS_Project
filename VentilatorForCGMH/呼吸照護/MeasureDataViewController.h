@@ -10,6 +10,6 @@
 
 @interface MeasureDataViewController : UITableViewController<UITableViewDelegate, UITableViewDataSource>
 
-@property (strong, nonatomic)NSArray *measureDataList;
+@property (strong, nonatomic)NSMutableArray *measureDataList;
 
 @end
