@@ -12,4 +12,6 @@
 
 @property (strong, nonatomic)NSMutableArray *measureDataList;
 
+- (IBAction)uploadClick:(id)sender;
+
 @end

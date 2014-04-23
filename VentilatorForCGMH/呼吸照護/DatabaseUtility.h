@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <sqlite3.h>
 #import "VentilationData.h"
+#import "DtoVentExchangeUploadBatch.h"
 
 @interface DatabaseUtility : NSObject {
     sqlite3 *sqliteDb;
@@ -17,9 +18,14 @@
 @property (strong, nonatomic) NSString *databasePath;
 
 - (void) initDatabase;
+
+#pragma mark - MeasureData
 - (BOOL) saveMeasure:(VentilationData *)measureData;
 - (BOOL) deleteMeasure:(VentilationData *)measureData;
 - (NSMutableArray *) getMeasures;
 - (VentilationData *) getMeasureDataById:(NSInteger) measureId;
+
+#pragma mark - UploadData
+- (BOOL) saveUploadData:(DtoVentExchangeUploadBatch *)uploadData;
 
 @end

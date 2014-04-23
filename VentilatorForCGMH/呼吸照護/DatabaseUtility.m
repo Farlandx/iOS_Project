@@ -44,6 +44,7 @@
             char *errMsg;
             NSString *sql_stmt = @"CREATE TABLE IF NOT EXISTS MEASURE_DATA (";
             sql_stmt = [sql_stmt stringByAppendingString:@"MeasureId INTEGER PRIMARY KEY AUTOINCREMENT, "];
+            sql_stmt = [sql_stmt stringByAppendingString:@"UploadId INTEGER, "];
             sql_stmt = [sql_stmt stringByAppendingString:@"ChtNo TEXT, "];
             sql_stmt = [sql_stmt stringByAppendingString:@"RecordTime TEXT, "];
             sql_stmt = [sql_stmt stringByAppendingString:@"RecordIp TEXT, "];
@@ -113,10 +114,25 @@
             sql_stmt = [sql_stmt stringByAppendingString:@"ErrorMsg TEXT)"];
 
             if (sqlite3_exec(sqliteDb, [sql_stmt UTF8String], NULL, NULL, &errMsg) != SQLITE_OK) {
-                NSLog(@"Failed to create table.");
+                NSLog(@"Failed to create MEASURE_DATA table.");
             }
             else {
                 NSLog(@"MEASURE_DATA Table craeted successfully.");
+            }
+            
+            sql_stmt = @"CREATE TABLE IF NOT EXISTS UPLOAD_DATA (";
+            sql_stmt = [sql_stmt stringByAppendingString:@"UploadId INTEGER PRIMARY KEY AUTOINCREMENT, "];
+            sql_stmt = [sql_stmt stringByAppendingString:@"UploadOper TEXT, "];
+            sql_stmt = [sql_stmt stringByAppendingString:@"UploadIp TEXT, "];
+            sql_stmt = [sql_stmt stringByAppendingString:@"UploadTime TEXT, "];
+            sql_stmt = [sql_stmt stringByAppendingString:@"Device TEXT, "];
+            sql_stmt = [sql_stmt stringByAppendingString:@"ClientVersion TEXT)"];
+            
+            if (sqlite3_exec(sqliteDb, [sql_stmt UTF8String], NULL, NULL, &errMsg) != SQLITE_OK) {
+                NSLog(@"Failed to create UPLOAD_DATA table.");
+            }
+            else {
+                NSLog(@"UPLOAD_DATA Table craeted successfully.");
             }
 
             sqlite3_close(sqliteDb);
@@ -208,7 +224,7 @@
             
             const char *update_stmt = [updateSQL UTF8String];
             sqlite3_prepare_v2(sqliteDb, update_stmt, -1, &statement, NULL);
-            sqlite3_bind_int(statement, 1, measureData.MeasureId);
+            sqlite3_bind_int(statement, 1, (int)measureData.MeasureId);
             if (sqlite3_step(statement)) {
                 isSuccess = true;
             }
@@ -397,7 +413,7 @@
     
     if (sqlite3_open(dbpath, &sqliteDb) == SQLITE_OK) {
         NSString *querySQL = [NSString stringWithFormat:
-                              @"SELECT * FROM MEASURE_DATA WHERE MeasureId = %d", measureId];
+                              @"SELECT * FROM MEASURE_DATA WHERE MeasureId = %d", (int)measureId];
         const char *query_stmt = [querySQL UTF8String];
         
         if (sqlite3_prepare_v2(sqliteDb, query_stmt, -1, &statement, NULL) == SQLITE_OK) {
@@ -491,7 +507,7 @@
             
             const char *delete_stmt = [deleteSQL UTF8String];
             sqlite3_prepare_v2(sqliteDb, delete_stmt, -1, &statement, NULL);
-            sqlite3_bind_int(statement, 1, measureData.MeasureId);
+            sqlite3_bind_int(statement, 1, (int)measureData.MeasureId);
             if (sqlite3_step(statement) == SQLITE_DONE) {
                 isSuccess = true;
             }

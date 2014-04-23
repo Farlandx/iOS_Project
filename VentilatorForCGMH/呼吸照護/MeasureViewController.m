@@ -11,6 +11,7 @@
 #import "VentilatorDataViewController.h"
 #import "OtherDataViewController.h"
 #import "DatabaseUtility.h"
+#import "DeviceStatus.h"
 
 @interface MeasureViewController ()
 
@@ -271,10 +272,24 @@
 #pragma mark - BLE
 - (void)recievedVentilationDataAndReadStatus:(VentilationData *)data readStatus:(BleReadStatus)status {
     switch (status) {
-        case BLE_READ_DONE:
+        case BLE_READ_DONE: {
+            //取的目前時間
+            _RecordTime.text = [DeviceStatus getSystemTime];
+            
+            //取得非量測值
+            myMeasureData.ChtNo = _ChtNo.text;
+            myMeasureData.RecordTime = _RecordTime.text;
+            myMeasureData.RecordIp = [DeviceStatus getCurrentIPAddress];
+            myMeasureData.RecordOper = _RecordOper.text;
+            myMeasureData.RecordDevice = [DeviceStatus getDeviceVendorUUID];
+            myMeasureData.VentNo = _VentNo.text;
+            myMeasureData.RecordClientVersion = [NSString stringWithFormat:@"Version %@",[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
+    
+            //取得量測值
             myMeasureData = data;
             NSLog(@"BLE Read Done.");
             break;
+        }
             
         case BLE_READ_ERROR:
             NSLog(@"BLE Read Error!");

@@ -11,13 +11,19 @@
 #import "DataTableViewCell.h"
 #import "MeasureViewController.h"
 #import "DatabaseUtility.h"
+#import "WebService.h"
+#import "DtoVentExchangeUploadBatch.h"
+#import "DtoUploadVentDataResult.h"
+#import "DeviceStatus.h"
 
-@interface MeasureDataViewController ()<MeasureViewControllerDelegate>
+@interface MeasureDataViewController ()<MeasureViewControllerDelegate, WebServiceDelegate>
 
 @end
 
 @implementation MeasureDataViewController {
     DatabaseUtility *db;
+    WebService *ws;
+    NSString *uploadOper;
 }
 
 @synthesize measureDataList;
@@ -40,9 +46,14 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    uploadOper = @"12345678";
+    NSLog(@"%@", [NSString stringWithFormat:@"Version %@",[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]]);
     
     db = [[DatabaseUtility alloc] init];
     [db initDatabase];
+    
+    ws = [[WebService alloc] init];
+    ws.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning
@@ -62,11 +73,44 @@
 #pragma mark - Delegate
 - (void)measureViewControllerDismissed:(VentilationData *)measureData {
     if (measureData != nil) {
-        //儲存成功後返回的資料
+        
     }
     else {
         NSLog(@"no");
     }
+}
+
+#pragma mark - WebService Delegate
+- (void)wsAppLogin:(NSString *)sessionId {
+    sessionId = sessionId;
+    NSLog(@"sessionId:%@", sessionId);
+    if (sessionId != nil && ![sessionId isEqualToString:@""]) {
+        [ws uploadVentDataBySessionId:sessionId DtoVentExchangeUploadBatch:[self getDataListToUploadDataByDeviceUUID:[DeviceStatus getDeviceVendorUUID]]];
+    }
+}
+
+- (void)wsUploadVentData:(NSMutableArray *)uploadResult DtoVentExchangeUploadBatch:(DtoVentExchangeUploadBatch *)batch{
+    NSLog(@"uploadResult count:%ld", [uploadResult count]);
+    for (DtoUploadVentDataResult *dvd in uploadResult) {
+        if (dvd.Success) {
+#warning 上傳成功的資料從list中移除
+        }
+        else {
+#warning 失敗的資料從batch中移除
+        }
+    }
+}
+
+- (void)wsResponseCurRtCardList:(NSMutableArray *)data {
+    NSLog(@"wsResponseCurRtCardList count:%ld", [data count]);
+}
+
+- (void)wsResponseCurRtCardListVerId:(int)verId {
+    NSLog(@"wsResponseCurRtCardListVerId:%d", verId);
+}
+
+- (void)wsResponsePatientList:(NSMutableArray *)data {
+    NSLog(@"wsResponsePatientList count:%ld", [data count]);
 }
 
 #pragma mark - Table view data source
@@ -79,7 +123,6 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
     return [measureDataList count];
 }
@@ -180,4 +223,30 @@
     }
 }
 
+#pragma mark - Button Click
+- (IBAction)uploadClick:(id)sender {
+    [ws appLoginDeviceName:[DeviceStatus getDeviceVendorUUID] idNo:uploadOper];
+    
+//    [ws getCurRtCardListVerId];
+//    
+//    [ws getCurRtCardList];
+//    
+//    [ws getPatientList];
+}
+
+#pragma mark - Private Method
+- (DtoVentExchangeUploadBatch *)getDataListToUploadDataByDeviceUUID:(NSString *)deviceUUID {
+    if (![uploadOper isEqualToString:@""] && [measureDataList count] > 0) {
+        //組上傳資料
+        DtoVentExchangeUploadBatch *batch = [[DtoVentExchangeUploadBatch alloc] init];
+        batch.UploadOper = uploadOper;
+        batch.UploadIp = [DeviceStatus getCurrentIPAddress];
+        batch.UploadTime = [DeviceStatus getSystemTime];
+        batch.Device = deviceUUID;
+        batch.ClientVersion = [NSString stringWithFormat:@"Version %@",[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];;
+        batch.VentRecList = measureDataList;
+        return batch;
+    }
+    return nil;
+}
 @end

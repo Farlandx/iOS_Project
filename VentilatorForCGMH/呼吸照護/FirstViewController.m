@@ -321,7 +321,7 @@
     NSLog(@"%@ connected.", peripheral.name);
     
     if(_peripheral != nil) {
-        NSLog(@"Connect To Peripheral with name: %@\nwith UUID:%@\n",peripheral.name,CFUUIDCreateString(nil, peripheral.UUID));
+        //NSLog(@"Connect To Peripheral with name: %@\nwith UUID:%@\n",peripheral.name,CFUUIDCreateString(nil, peripheral.UUID));
         
         peripheral.delegate = self;
         
@@ -1098,7 +1098,7 @@
     }
 }
 
-- (VentilationData *)readData {
+/*- (VentilationData *)readData {
     VentilationData *measureData = [[VentilationData alloc] init];
     
     @try {
@@ -1115,7 +1115,7 @@
         NSData *mode = [self sendBasicCommand:ESC cmdCode:REQUEST_CURRENT_TEXT_MESSAGES];
         if ([mode length] > 0) {
             NSString *strMode = [[NSString alloc] initWithData:mode encoding:NSUTF8StringEncoding];
-            NSInteger *index = [strMode rangeOfString:@"*"].location + 1;
+            NSUInteger *index = [strMode rangeOfString:@"*"].location + 1;
             measureData.VentilationMode = [strMode substringWithRange:NSMakeRange(index, index + 2)];
             if ([measureData.VentilationMode caseInsensitiveCompare:@"2E"]
                 || [measureData.VentilationMode caseInsensitiveCompare:@"2F"]
@@ -1187,6 +1187,6 @@
         NSLog(@"Read Data Exception: %@", exception);
     }
     return measureData;
-}
+}*/
 
 @end
