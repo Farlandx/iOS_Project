@@ -26,7 +26,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x547c;&#x5438;&#x7167;&#x8b77;/MeasureDataViewController.m"
-            timestampString = "420534756.915785"
+            timestampString = "420973352.460812"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "126"
@@ -42,7 +42,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x547c;&#x5438;&#x7167;&#x8b77;/MeasureDataViewController.m"
-            timestampString = "420534759.098432"
+            timestampString = "420973352.460812"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "130"
@@ -54,32 +54,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "&#x547c;&#x5438;&#x7167;&#x8b77;/MeasureDataViewController.m"
-            timestampString = "420534765.62344"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "134"
-            endingLineNumber = "134"
-            landmarkName = "-wsResponsePatientList:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "&#x547c;&#x5438;&#x7167;&#x8b77;/WebService.m"
-            timestampString = "420541538.159921"
+            filePath = "&#x547c;&#x5438;&#x7167;&#x8b77;/MeasureDataViewController.m"
+            timestampString = "420976329.922641"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "292"
-            endingLineNumber = "292"
-            landmarkName = "-getCurRtCardList"
+            startingLineNumber = "136"
+            endingLineNumber = "136"
+            landmarkName = "-wsResponsePatientList:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

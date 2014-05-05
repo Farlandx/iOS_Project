@@ -16,13 +16,14 @@
 #ifndef ___webservice
 #define ___webservice
 #define WS_NAMESPACE @"http://cgmh.org.tw/g27/"
-//#define WS_URL @"http://172.30.1.119:8883/VentDataExchangeSvc.asmx"
-#define WS_URL @"http://10.30.11.54/webwork/resp/VentDataExchangeSvc.asmx"
+#define WS_URL @"http://172.30.1.82:8883/VentDataExchangeSvc.asmx"
+//#define WS_URL @"http://10.30.11.54/webwork/resp/VentDataExchangeSvc.asmx"
 
 #define WS_GET_CUR_RT_CARD_LIST @"GetCurRtCardList"
 #define WS_GET_CUR_RT_CARD_LIST_VER_ID @"GetCurRtCardListVerId"
 #define WS_APPLOGIN @"AppLogin"
 #define WS_GET_PATIENT_LIST @"GetPatientList"
+#define WS_UPLOAD_VENT_DATA @"UploadVentData"
 
 #endif
 
@@ -237,7 +238,7 @@
                                                                                   "</soap12:Body>"
                                                                                   "</soap12:Envelope>", sessionId]];
     
-    NSMutableURLRequest *request = [self getSOAPRequestByWSString: WS_APPLOGIN soapMessage:soapMessage];
+    NSMutableURLRequest *request = [self getSOAPRequestByWSString: WS_UPLOAD_VENT_DATA soapMessage:soapMessage];
     
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         if (data.length > 0 && connectionError == nil) {
@@ -269,21 +270,12 @@
 }
 
 - (void)getCurRtCardList {
-//    NSURLRequest *request = [self getURLRequestByWSString: WS_GET_CUR_RT_CARD_LIST];
-    
-    
     NSString *soapMessage = @"<?xml version=\"1.0\" encoding=\"utf-8\"?>"
     "<soap12:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap12=\"http://www.w3.org/2003/05/soap-envelope\">"
     "<soap12:Body>"
-    "<AppLogin xmlns=\"http://cgmh.org.tw/g27/\">"
-    "<deviceName>%@</deviceName>"
-    "<app>CYH_Ventilator</app>"
-    "<appPwd>jkh3$kl52</appPwd>"
-    "<idNo>%@</idNo>"
-    "</AppLogin>"
+    "<GetCurRtCardList xmlns=\"http://cgmh.org.tw/g27/\" />"
     "</soap12:Body>"
     "</soap12:Envelope>";
-    soapMessage = [NSString stringWithFormat:soapMessage];
     
     NSMutableURLRequest *request = [self getSOAPRequestByWSString: WS_GET_CUR_RT_CARD_LIST soapMessage:soapMessage];
     
@@ -294,10 +286,8 @@
             NSDictionary *xmlDictionary = [XMLReader dictionaryForXMLData:data
                                                                   options:XMLReaderOptionsProcessNamespaces
                                                                     error:&error];
-            NSDictionary *cardDictionary = [xmlDictionary objectForKey:@"ArrayOfDtoRtCard"];
-            for (NSDictionary *card in [cardDictionary objectForKey:@"DtoRtCard"]) {
-                NSDictionary *cNo = [card objectForKey:@"CardNo"];
-                [result addObject:[cNo objectForKey:@"text"]];
+            for (NSDictionary *card in [xmlDictionary valueForKeyPath:@"Envelope.Body.GetCurRtCardListResponse.GetCurRtCardListResult.DtoRtCard"]) {
+                [result addObject:[card valueForKeyPath:@"CardNo.text"]];
             }
             
             [_delegate wsResponseCurRtCardList:result];
@@ -306,7 +296,14 @@
 }
 
 - (void)getCurRtCardListVerId {
-    NSURLRequest *request = [self getURLRequestByWSString: WS_GET_CUR_RT_CARD_LIST_VER_ID];
+    NSString *soapMessage = @"<?xml version=\"1.0\" encoding=\"utf-8\"?>"
+    "<soap12:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap12=\"http://www.w3.org/2003/05/soap-envelope\">"
+    "<soap12:Body>"
+    "<GetCurRtCardListVerId xmlns=\"http://cgmh.org.tw/g27/\" />"
+    "</soap12:Body>"
+    "</soap12:Envelope>";
+    
+    NSURLRequest *request = [self getSOAPRequestByWSString:WS_GET_CUR_RT_CARD_LIST_VER_ID soapMessage:soapMessage];
     
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         if (data.length > 0 && connectionError == nil) {
@@ -314,7 +311,7 @@
             NSDictionary *xmlDictionary = [XMLReader dictionaryForXMLData:data
                                                                   options:XMLReaderOptionsProcessNamespaces
                                                                     error:&error];
-            int result = [[xmlDictionary valueForKeyPath:@"int.text"] intValue];
+            int result = [[xmlDictionary valueForKeyPath:@"Envelope.Body.GetCurRtCardListVerIdResponse.GetCurRtCardListVerIdResult.text"] intValue];
             
             [_delegate wsResponseCurRtCardListVerId:result];
         }
@@ -322,7 +319,14 @@
 }
 
 - (void)getPatientList {
-    NSURLRequest *request = [self getURLRequestByWSString: WS_GET_PATIENT_LIST];
+    NSString *soapMessage = @"<?xml version=\"1.0\" encoding=\"utf-8\"?>"
+    "<soap12:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap12=\"http://www.w3.org/2003/05/soap-envelope\">"
+    "<soap12:Body>"
+    "<GetPatientList xmlns=\"http://cgmh.org.tw/g27/\" />"
+    "</soap12:Body>"
+    "</soap12:Envelope>";
+    
+    NSURLRequest *request = [self getSOAPRequestByWSString:WS_GET_PATIENT_LIST soapMessage:soapMessage];
     
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         if (data.length > 0 && connectionError == nil) {
@@ -331,8 +335,7 @@
             NSDictionary *xmlDictionary = [XMLReader dictionaryForXMLData:data
                                                                   options:XMLReaderOptionsProcessNamespaces
                                                                     error:&error];
-            NSDictionary *patientDictionary = [xmlDictionary objectForKey:@"ArrayOfDtoVentExchangeGetPatient"];
-            for (NSDictionary *card in [patientDictionary objectForKey:@"DtoVentExchangeGetPatient"]) {
+            for (NSDictionary *card in [xmlDictionary valueForKeyPath:@"Envelope.Body.GetPatientListResponse.GetPatientListResult.DtoVentExchangeGetPatient"]) {
                 [result addObject:card];
             }
             

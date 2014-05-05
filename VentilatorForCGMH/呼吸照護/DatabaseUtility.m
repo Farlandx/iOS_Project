@@ -721,6 +721,7 @@
         sqlite3_close(sqliteDb);
     }
     
-    return measureList;}
+    return measureList;
+}
 
 @end

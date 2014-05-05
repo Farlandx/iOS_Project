@@ -132,6 +132,9 @@
 
 - (void)wsResponsePatientList:(NSMutableArray *)data {
     NSLog(@"wsResponsePatientList count:%ld", [data count]);
+    for (int i = 0; i < data.count; i++) {
+        NSLog(@"patient.ChtNo:%@\tBedNo:%@", [data[i] valueForKeyPath:@"ChtNo.text"], [data[i] valueForKeyPath:@"BedNo.text"]);
+    }
 }
 
 #pragma mark - Table view data source
@@ -248,9 +251,9 @@
 - (IBAction)uploadClick:(id)sender {
     //[ws appLoginDeviceName:[DeviceStatus getDeviceVendorUUID] idNo:uploadOper];
     
-    [ws getCurRtCardListVerId];
+    //[ws getCurRtCardListVerId];
     
-    [ws getCurRtCardList];
+    //[ws getCurRtCardList];
     
     [ws getPatientList];
 }
