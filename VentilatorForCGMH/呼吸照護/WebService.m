@@ -16,7 +16,8 @@
 #ifndef ___webservice
 #define ___webservice
 #define WS_NAMESPACE @"http://cgmh.org.tw/g27/"
-#define WS_URL @"http://172.30.1.119:8883/VentDataExchangeSvc.asmx"
+//#define WS_URL @"http://172.30.1.119:8883/VentDataExchangeSvc.asmx"
+#define WS_URL @"http://10.30.11.54/webwork/resp/VentDataExchangeSvc.asmx"
 
 #define WS_GET_CUR_RT_CARD_LIST @"GetCurRtCardList"
 #define WS_GET_CUR_RT_CARD_LIST_VER_ID @"GetCurRtCardListVerId"
@@ -168,7 +169,7 @@
             tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<RecordClientVersion>%@</RecordClientVersion>", ventData.RecordClientVersion]];
             
             tmp = [tmp stringByAppendingString:@"<VentRecord>"];
-            tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<AutoFlow>%@</AutoFlow>", ventData.AutoFlow]];
+            tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<AutoFlow>%@</AutoFlow>", ![ventData.AutoFlow caseInsensitiveCompare:@"Yes"] ? @"1" : @"0"]];
             tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<BaseFlow>%@</BaseFlow>", ventData.BaseFlow]];
             tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<Compliance>%@</Compliance>", ventData.Compliance]];
             tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<FiO2Measured>%@</FiO2Measured>", ventData.FiO2Measured]];
@@ -268,7 +269,23 @@
 }
 
 - (void)getCurRtCardList {
-    NSURLRequest *request = [self getURLRequestByWSString: WS_GET_CUR_RT_CARD_LIST];
+//    NSURLRequest *request = [self getURLRequestByWSString: WS_GET_CUR_RT_CARD_LIST];
+    
+    
+    NSString *soapMessage = @"<?xml version=\"1.0\" encoding=\"utf-8\"?>"
+    "<soap12:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap12=\"http://www.w3.org/2003/05/soap-envelope\">"
+    "<soap12:Body>"
+    "<AppLogin xmlns=\"http://cgmh.org.tw/g27/\">"
+    "<deviceName>%@</deviceName>"
+    "<app>CYH_Ventilator</app>"
+    "<appPwd>jkh3$kl52</appPwd>"
+    "<idNo>%@</idNo>"
+    "</AppLogin>"
+    "</soap12:Body>"
+    "</soap12:Envelope>";
+    soapMessage = [NSString stringWithFormat:soapMessage];
+    
+    NSMutableURLRequest *request = [self getSOAPRequestByWSString: WS_GET_CUR_RT_CARD_LIST soapMessage:soapMessage];
     
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         if (data.length > 0 && connectionError == nil) {

@@ -49,6 +49,8 @@
     isFocusOnVentNo = NO;
     
     ble = [[BLE alloc] init];
+    ble.delegate = self;
+    
     db = [[DatabaseUtility alloc] init];
     [db initDatabase];
     
@@ -98,8 +100,20 @@
 - (void)ventNoTextFieldDone:(UITextField*)textField {
     [textField resignFirstResponder];
     
-    [self btnStart:_btnReadData];
+    if (![_VentNo.text isEqualToString:@""]) {
+        [ble startReadByConnectionString:_VentNo.text];
+    }
+    //[self btnStart:_btnReadData];
 }
+
+- (IBAction)testClick:(id)sender {
+    [ble startReadByConnectionString:@"CD8FC44D-4407-197A-068E-119EBD891976**HAMILTON"];
+}
+
+- (IBAction)testDisconnect:(id)sender {
+    [ble disconnect];
+}
+
 
 #pragma mark - NFC Dongle
 - (BOOL)isHeadsetPluggedIn
@@ -287,6 +301,21 @@
     
             //取得量測值
             myMeasureData = data;
+            
+            //將數據顯示出來
+            for (UIViewController *child in self.childViewControllers) {
+                if ([child isKindOfClass:[MeasureTabBarViewController class]]) {
+                    for (UIViewController *v in ((MeasureTabBarViewController *)child).viewControllers) {
+                        if ([v isKindOfClass:[VentilatorDataViewController class]]) {
+                            if ([v isViewLoaded]) {
+                                VentilatorDataViewController *vc = (VentilatorDataViewController *)v;
+                                [vc setMeasureData:myMeasureData];
+                            }
+                        }
+                    }
+                    
+                }
+            }
             NSLog(@"BLE Read Done.");
             break;
         }
@@ -299,10 +328,13 @@
             NSLog(@"BLE Connecting.");
             break;
             
+        case BLE_CONNECT_ERROR:
+            NSLog(@"BLE Connect Error.");
+            break;
+            
         default:
             break;
     }
-    myMeasureData = data;
 }
 
 #pragma mark - UITextFieldDelegate
@@ -388,14 +420,15 @@
     }
     
     //insert data to database
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy/MM/dd HH:mm:ss"];
-    myMeasureData.RecordTime = [dateFormatter stringFromDate:[NSDate date]];
+//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//    [dateFormatter setDateFormat:@"yyyy/MM/dd HH:mm:ss"];
+//    myMeasureData.RecordTime = [dateFormatter stringFromDate:[NSDate date]];
     myMeasureData.RecordOper = _RecordOper.text;
+    myMeasureData.RecordDevice = [DeviceStatus getDeviceVendorUUID];
     myMeasureData.ChtNo = _ChtNo.text;
     myMeasureData.VentNo = _VentNo.text;
     
-    if (![db saveMeasure:myMeasureData]){
+    if (![db saveMeasure:myMeasureData]) {
         NSLog(@"Save fail.");
     }
     else {
@@ -406,14 +439,6 @@
 
 - (IBAction)btnCancleClick:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-//CHECKSUM Least significant 8-bit sum of all preceding bytes beginning with "ESC" in ASCII HEX format
-- (const char *)getChkSum:(int)sum {
-    NSString *sumString = [NSString stringWithFormat:@"%02X", sum];
-    sumString = [sumString substringWithRange:NSMakeRange([sumString length] - 2, 2)];
-    return [sumString UTF8String];
-    
 }
 
 

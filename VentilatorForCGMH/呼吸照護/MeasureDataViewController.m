@@ -46,7 +46,7 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    uploadOper = @"12345678";
+    uploadOper = @"E221104037";
     NSLog(@"%@", [NSString stringWithFormat:@"Version %@",[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]]);
     
     db = [[DatabaseUtility alloc] init];
@@ -91,14 +91,35 @@
 
 - (void)wsUploadVentData:(NSMutableArray *)uploadResult DtoVentExchangeUploadBatch:(DtoVentExchangeUploadBatch *)batch{
     NSLog(@"uploadResult count:%ld", [uploadResult count]);
+    int index = 0;
+    NSMutableArray *removeList = [[NSMutableArray alloc] init];
+    NSMutableArray *removeBatchList = [[NSMutableArray alloc] init];
     for (DtoUploadVentDataResult *dvd in uploadResult) {
         if (dvd.Success) {
-#warning 上傳成功的資料從list中移除
+            //上傳成功的資料從list中移除
+            [removeList addObject:measureDataList[index]];
         }
         else {
-#warning 失敗的資料從batch中移除
+            //失敗的資料從batch中移除
+            [removeBatchList addObject:batch.VentRecList[index]];
         }
+        index++;
     }
+    
+    //刪除measureDataList中的資料
+    for (VentilationData *vd in removeList) {
+        [measureDataList removeObject:vd];
+    }
+    
+    //刪除batch中的資料
+    for (VentilationData *vd in removeBatchList) {
+        [batch.VentRecList removeObject:vd];
+    }
+    
+    if (batch.VentRecList.count > 0) {
+        [db saveUploadData:batch];
+    }
+    [self.tableView reloadData];
 }
 
 - (void)wsResponseCurRtCardList:(NSMutableArray *)data {
@@ -225,13 +246,13 @@
 
 #pragma mark - Button Click
 - (IBAction)uploadClick:(id)sender {
-    [ws appLoginDeviceName:[DeviceStatus getDeviceVendorUUID] idNo:uploadOper];
+    //[ws appLoginDeviceName:[DeviceStatus getDeviceVendorUUID] idNo:uploadOper];
     
-//    [ws getCurRtCardListVerId];
-//    
-//    [ws getCurRtCardList];
-//    
-//    [ws getPatientList];
+    [ws getCurRtCardListVerId];
+    
+    [ws getCurRtCardList];
+    
+    [ws getPatientList];
 }
 
 #pragma mark - Private Method

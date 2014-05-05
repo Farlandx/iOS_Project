@@ -20,6 +20,7 @@
 
 #pragma mark - Methods
 - (void)getMeasureData:(VentilationData *)measureData;
+- (void)setMeasureData:(VentilationData *)measureData;
 
 #pragma mark - 量測資料
 //Ventilation

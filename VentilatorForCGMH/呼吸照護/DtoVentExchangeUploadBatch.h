@@ -10,6 +10,7 @@
 
 @interface DtoVentExchangeUploadBatch : NSObject
 
+@property (nonatomic) NSInteger UploadId;
 @property (strong, nonatomic) NSString *UploadOper;
 @property (strong, nonatomic) NSString *UploadIp;
 @property (strong, nonatomic) NSString *UploadTime;

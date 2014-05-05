@@ -68,7 +68,7 @@
 }
 
 - (IBAction)btnStart:(id)sender {
-    _peripheral = [self getPeripheralByCode:@"2D1A5856-8987-F8C9-771E-5683182BF5F0"];
+    _peripheral = [self getPeripheralByCode:@"12909999-021A-21EB-3ED7-A49829039048"];
     [_centralManager connectPeripheral:_peripheral options:nil];
 }
 

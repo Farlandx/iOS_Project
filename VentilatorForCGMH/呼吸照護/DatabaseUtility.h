@@ -27,5 +27,6 @@
 
 #pragma mark - UploadData
 - (BOOL) saveUploadData:(DtoVentExchangeUploadBatch *)uploadData;
+- (NSMutableArray *) getUploadHistores;
 
 @end
