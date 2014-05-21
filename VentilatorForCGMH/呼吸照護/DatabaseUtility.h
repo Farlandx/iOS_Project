@@ -22,11 +22,20 @@
 #pragma mark - MeasureData
 - (BOOL) saveMeasure:(VentilationData *)measureData;
 - (BOOL) deleteMeasure:(VentilationData *)measureData;
+//取得尚未上傳的量測資料
 - (NSMutableArray *) getMeasures;
-- (VentilationData *) getMeasureDataById:(NSInteger) measureId;
+- (VentilationData *) getMeasureDataById:(NSInteger)measureId;
 
 #pragma mark - UploadData
 - (BOOL) saveUploadData:(DtoVentExchangeUploadBatch *)uploadData;
 - (NSMutableArray *) getUploadHistores;
+
+#pragma mark - CurRtCardListVerId
+- (int) getCurRtCardListVerId;
+- (BOOL) saveCurRtCardListVerId:(int)Id;
+
+#pragma mark - CurRtCardList
+- (void) saveCurRtCardList:(NSArray *)data;
+- (NSMutableArray *) getCurRtCardList;
 
 @end

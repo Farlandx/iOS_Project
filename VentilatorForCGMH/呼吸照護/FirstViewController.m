@@ -174,7 +174,7 @@
                 
                 NSString *strStatus =[NSString stringWithFormat:@"%02X",infrom_data->status];
                 
-                NSLog(@"tagUID:%@", [[NSString alloc] initWithFormat:@"Tag UID:%@,%@",tagUID,strStatus]);
+                NSLog(@"tagUID:%@", [NSString stringWithFormat:@"Tag UID:%@,%@",tagUID,strStatus]);
                 
                 isStartListeningThread = NO;
                 isFocusOnRecordOper = NO;
@@ -194,7 +194,7 @@
                 
                 NSString *strStatus =[NSString stringWithFormat:@"%02X",infrom_data->status];
                 
-                NSLog(@"SectorData:%@", [[NSString alloc] initWithFormat:@"Read Tag Sector Data:\n%@,%@",blockData,strStatus]);
+                NSLog(@"SectorData:%@", [NSString stringWithFormat:@"Read Tag Sector Data:\n%@,%@",blockData,strStatus]);
                 
                 isStartListeningThread = NO;
                 isFocusOnVentNo = NO;

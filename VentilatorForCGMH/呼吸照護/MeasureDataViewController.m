@@ -15,6 +15,7 @@
 #import "DtoVentExchangeUploadBatch.h"
 #import "DtoUploadVentDataResult.h"
 #import "DeviceStatus.h"
+#import "ProgressHUD.h"
 
 @interface MeasureDataViewController ()<MeasureViewControllerDelegate, WebServiceDelegate>
 
@@ -24,6 +25,7 @@
     DatabaseUtility *db;
     WebService *ws;
     NSString *uploadOper;
+    int curRtCardListVerId;
 }
 
 @synthesize measureDataList;
@@ -46,14 +48,18 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    uploadOper = @"E221104037";
+    //uploadOper = @"E221104037";
     NSLog(@"%@", [NSString stringWithFormat:@"Version %@",[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]]);
     
     db = [[DatabaseUtility alloc] init];
-    [db initDatabase];
     
     ws = [[WebService alloc] init];
     ws.delegate = self;
+    
+    //取得版本號合現有的做比對
+    curRtCardListVerId = [db getCurRtCardListVerId];
+    
+    [ws getCurRtCardListVerId];
 }
 
 - (void)didReceiveMemoryWarning
@@ -68,6 +74,11 @@
     measureDataList = [db getMeasures];
     
     [self.tableView reloadData];
+}
+
+- (void)getCardList {
+    [ProgressHUD show:@"資料更新中..." Interaction:NO];
+    [ws getCurRtCardList];
 }
 
 #pragma mark - Delegate
@@ -85,34 +96,22 @@
     sessionId = sessionId;
     NSLog(@"sessionId:%@", sessionId);
     if (sessionId != nil && ![sessionId isEqualToString:@""]) {
+        [ProgressHUD show:@"上傳中..." Interaction:NO];
         [ws uploadVentDataBySessionId:sessionId DtoVentExchangeUploadBatch:[self getDataListToUploadDataByDeviceUUID:[DeviceStatus getDeviceVendorUUID]]];
+    }
+    else {
+        [ProgressHUD showError:@"取得驗證資料失敗" Interaction:NO];
     }
 }
 
-- (void)wsUploadVentData:(NSMutableArray *)uploadResult DtoVentExchangeUploadBatch:(DtoVentExchangeUploadBatch *)batch{
-    NSLog(@"uploadResult count:%ld", [uploadResult count]);
-    int index = 0;
-    NSMutableArray *removeList = [[NSMutableArray alloc] init];
-    NSMutableArray *removeBatchList = [[NSMutableArray alloc] init];
-    for (DtoUploadVentDataResult *dvd in uploadResult) {
-        if (dvd.Success) {
-            //上傳成功的資料從list中移除
-            [removeList addObject:measureDataList[index]];
-        }
-        else {
-            //失敗的資料從batch中移除
-            [removeBatchList addObject:batch.VentRecList[index]];
-        }
-        index++;
-    }
-    
+- (void)wsUploadVentDataSuccess:(NSMutableArray *)uploadSuccessResult uploadFailed:(NSMutableArray *)uploadFailed DtoVentExchangeUploadBatch:(DtoVentExchangeUploadBatch *)batch {
     //刪除measureDataList中的資料
-    for (VentilationData *vd in removeList) {
+    for (VentilationData *vd in uploadSuccessResult) {
         [measureDataList removeObject:vd];
     }
     
     //刪除batch中的資料
-    for (VentilationData *vd in removeBatchList) {
+    for (VentilationData *vd in uploadFailed) {
         [batch.VentRecList removeObject:vd];
     }
     
@@ -120,14 +119,28 @@
         [db saveUploadData:batch];
     }
     [self.tableView reloadData];
+    [ProgressHUD dismiss];
 }
 
 - (void)wsResponseCurRtCardList:(NSMutableArray *)data {
-    NSLog(@"wsResponseCurRtCardList count:%ld", [data count]);
+    if (data != nil && data.count > 0) {
+        [db saveCurRtCardListVerId:curRtCardListVerId];
+        [db saveCurRtCardList:data];
+    }
+    [ProgressHUD dismiss];
 }
 
 - (void)wsResponseCurRtCardListVerId:(int)verId {
-    NSLog(@"wsResponseCurRtCardListVerId:%d", verId);
+    if (curRtCardListVerId == -1) {
+        curRtCardListVerId = verId;
+        //資料庫裡沒有東西，取得新的名單
+        [self getCardList];
+    }
+    else if (verId > curRtCardListVerId) {
+        [self getCardList];
+    }
+    
+    [ProgressHUD dismiss];
 }
 
 - (void)wsResponsePatientList:(NSMutableArray *)data {
@@ -135,6 +148,12 @@
     for (int i = 0; i < data.count; i++) {
         NSLog(@"patient.ChtNo:%@\tBedNo:%@", [data[i] valueForKeyPath:@"ChtNo.text"], [data[i] valueForKeyPath:@"BedNo.text"]);
     }
+    
+    [ProgressHUD dismiss];
+}
+
+- (void)wsConnectionError:(NSError *)error {
+    [ProgressHUD showError:[NSString stringWithFormat:@"連線錯誤(%ld)", [error code]]];
 }
 
 #pragma mark - Table view data source
@@ -249,13 +268,10 @@
 
 #pragma mark - Button Click
 - (IBAction)uploadClick:(id)sender {
-    //[ws appLoginDeviceName:[DeviceStatus getDeviceVendorUUID] idNo:uploadOper];
+    [ProgressHUD show:@"取得驗證資料中..." Interaction:NO];
+    [ws appLoginDeviceName:[DeviceStatus getDeviceVendorUUID] idNo:uploadOper];
     
-    //[ws getCurRtCardListVerId];
-    
-    //[ws getCurRtCardList];
-    
-    [ws getPatientList];
+    //[ws getPatientList];
 }
 
 #pragma mark - Private Method
@@ -267,8 +283,8 @@
         batch.UploadIp = [DeviceStatus getCurrentIPAddress];
         batch.UploadTime = [DeviceStatus getSystemTime];
         batch.Device = deviceUUID;
-        batch.ClientVersion = [NSString stringWithFormat:@"Version %@",[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];;
-        batch.VentRecList = measureDataList;
+        batch.ClientVersion = [NSString stringWithFormat:@"Version %@",[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
+        batch.VentRecList = [[NSMutableArray alloc] initWithArray:[measureDataList copy]];
         return batch;
     }
     return nil;

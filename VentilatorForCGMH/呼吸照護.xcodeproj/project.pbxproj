@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E0DD9E4192AFE62008E3F18 /* CollectionViewHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E0DD9E1192AFE62008E3F18 /* CollectionViewHeader.m */; };
+		1E0DD9E5192AFE62008E3F18 /* ContentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E0DD9E3192AFE62008E3F18 /* ContentCell.m */; };
+		1E0DD9E9192AFEB2008E3F18 /* ContentScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E0DD9E8192AFEB2008E3F18 /* ContentScrollView.m */; };
+		1E0DD9EE192AFFCB008E3F18 /* HeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E0DD9ED192AFFCB008E3F18 /* HeaderCell.m */; };
+		1E0DD9F1192B000D008E3F18 /* ContentCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E0DD9F0192B000D008E3F18 /* ContentCollectionView.m */; };
+		1E0DD9F6192B0022008E3F18 /* TitleLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E0DD9F3192B0022008E3F18 /* TitleLabel.m */; };
+		1E0DD9F7192B0022008E3F18 /* TitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E0DD9F5192B0022008E3F18 /* TitleView.m */; };
+		1E0DD9FA192B0040008E3F18 /* CollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E0DD9F9192B0040008E3F18 /* CollectionViewFlowLayout.m */; };
+		1E0DD9FD192B043A008E3F18 /* HistoryCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E0DD9FC192B043A008E3F18 /* HistoryCollectionViewController.m */; };
 		1E15858718CC660A009249AF /* MeasureDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E15858418CC660A009249AF /* MeasureDataViewController.m */; };
 		1E15858818CC660A009249AF /* VentilatorSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E15858618CC660A009249AF /* VentilatorSecondViewController.m */; };
 		1E32C6BB18B7064000DE4595 /* MeasureTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E32C6BA18B7064000DE4595 /* MeasureTabBarViewController.m */; };
@@ -38,8 +47,17 @@
 		1E97B3FF18E01C8100704F07 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E97B3FE18E01C8100704F07 /* AudioToolbox.framework */; };
 		1E97B40118E01CC300704F07 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E97B40018E01CC300704F07 /* AVFoundation.framework */; };
 		1E97B40318E01F4F00704F07 /* libNfcA1Device_D14E.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E97B40218E01F4F00704F07 /* libNfcA1Device_D14E.a */; };
-		1E98F5E11908F380009A1712 /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E98F5E01908F380009A1712 /* HistoryViewController.m */; };
 		1E9DDB3318D2DDD800643295 /* BreathSoundTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E9DDB3218D2DDD800643295 /* BreathSoundTableViewController.m */; };
+		1ECAB80B1918813800161572 /* ProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1ECAB8081918813800161572 /* ProgressHUD.bundle */; };
+		1ECAB80C1918813800161572 /* ProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ECAB80A1918813800161572 /* ProgressHUD.m */; };
+		1ECAB815192060D500161572 /* APLSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ECAB80F192060D500161572 /* APLSectionHeaderView.m */; };
+		1ECAB816192060D500161572 /* APLSectionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ECAB811192060D500161572 /* APLSectionInfo.m */; };
+		1ECAB817192060D500161572 /* carat-open.png in Resources */ = {isa = PBXBuildFile; fileRef = 1ECAB812192060D500161572 /* carat-open.png */; };
+		1ECAB818192060D500161572 /* carat.png in Resources */ = {isa = PBXBuildFile; fileRef = 1ECAB813192060D500161572 /* carat.png */; };
+		1ECAB819192060D500161572 /* SectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1ECAB814192060D500161572 /* SectionHeaderView.xib */; };
+		1ECAB81C1920612300161572 /* HistoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ECAB81B1920612300161572 /* HistoryTableViewController.m */; };
+		1ECAB8201920614D00161572 /* HistoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ECAB81F1920614D00161572 /* HistoryTableViewCell.m */; };
+		1ECAB8241920C8CA00161572 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ECAB8231920C8CA00161572 /* MainViewController.m */; };
 		1ED31B9F190E071D00E58228 /* BLE.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ED31B91190E071D00E58228 /* BLE.m */; };
 		1ED31BA0190E071D00E58228 /* DeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ED31B93190E071D00E58228 /* DeviceInfo.m */; };
 		1ED31BA1190E071D00E58228 /* DRAGER.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ED31B95190E071D00E58228 /* DRAGER.m */; };
@@ -63,12 +81,29 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1E0DD9E0192AFE62008E3F18 /* CollectionViewHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewHeader.h; sourceTree = "<group>"; };
+		1E0DD9E1192AFE62008E3F18 /* CollectionViewHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewHeader.m; sourceTree = "<group>"; };
+		1E0DD9E2192AFE62008E3F18 /* ContentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentCell.h; sourceTree = "<group>"; };
+		1E0DD9E3192AFE62008E3F18 /* ContentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContentCell.m; sourceTree = "<group>"; };
+		1E0DD9E7192AFEB2008E3F18 /* ContentScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentScrollView.h; sourceTree = "<group>"; };
+		1E0DD9E8192AFEB2008E3F18 /* ContentScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContentScrollView.m; sourceTree = "<group>"; };
+		1E0DD9EC192AFFCB008E3F18 /* HeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderCell.h; sourceTree = "<group>"; };
+		1E0DD9ED192AFFCB008E3F18 /* HeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeaderCell.m; sourceTree = "<group>"; };
+		1E0DD9EF192B000D008E3F18 /* ContentCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentCollectionView.h; sourceTree = "<group>"; };
+		1E0DD9F0192B000D008E3F18 /* ContentCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContentCollectionView.m; sourceTree = "<group>"; };
+		1E0DD9F2192B0022008E3F18 /* TitleLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TitleLabel.h; sourceTree = "<group>"; };
+		1E0DD9F3192B0022008E3F18 /* TitleLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TitleLabel.m; sourceTree = "<group>"; };
+		1E0DD9F4192B0022008E3F18 /* TitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TitleView.h; sourceTree = "<group>"; };
+		1E0DD9F5192B0022008E3F18 /* TitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TitleView.m; sourceTree = "<group>"; };
+		1E0DD9F8192B0040008E3F18 /* CollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewFlowLayout.h; sourceTree = "<group>"; };
+		1E0DD9F9192B0040008E3F18 /* CollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewFlowLayout.m; sourceTree = "<group>"; };
+		1E0DD9FB192B043A008E3F18 /* HistoryCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryCollectionViewController.h; sourceTree = "<group>"; };
+		1E0DD9FC192B043A008E3F18 /* HistoryCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryCollectionViewController.m; sourceTree = "<group>"; };
 		1E15858318CC660A009249AF /* MeasureDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeasureDataViewController.h; sourceTree = "<group>"; };
 		1E15858418CC660A009249AF /* MeasureDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeasureDataViewController.m; sourceTree = "<group>"; };
 		1E15858518CC660A009249AF /* VentilatorSecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VentilatorSecondViewController.h; sourceTree = "<group>"; };
 		1E15858618CC660A009249AF /* VentilatorSecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VentilatorSecondViewController.m; sourceTree = "<group>"; };
 		1E17DFE118D6D1B0007798C1 /* 呼吸照護 copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "呼吸照護 copy-Info.plist"; path = "/Users/farland/Desktop/Xcode/呼吸照護/呼吸照護 copy-Info.plist"; sourceTree = "<absolute>"; };
-		1E24E896190DFFC600B84BC9 /* libBLE.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libBLE.a; path = ../../iOS_Library/BLEForCGMH/libBLE.a; sourceTree = "<group>"; };
 		1E32C6B918B7064000DE4595 /* MeasureTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeasureTabBarViewController.h; sourceTree = "<group>"; };
 		1E32C6BA18B7064000DE4595 /* MeasureTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeasureTabBarViewController.m; sourceTree = "<group>"; };
 		1E32C6C018B742DB00DE4595 /* VentilatorMeasureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VentilatorMeasureViewController.h; sourceTree = "<group>"; };
@@ -117,10 +152,24 @@
 		1E97B40018E01CC300704F07 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		1E97B40218E01F4F00704F07 /* libNfcA1Device_D14E.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libNfcA1Device_D14E.a; path = "呼吸照護/libNfcA1Device_D14E.a"; sourceTree = "<group>"; };
 		1E97B40418E01F6400704F07 /* NfcA1Device.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NfcA1Device.h; sourceTree = "<group>"; };
-		1E98F5DF1908F380009A1712 /* HistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryViewController.h; sourceTree = "<group>"; };
-		1E98F5E01908F380009A1712 /* HistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryViewController.m; sourceTree = "<group>"; };
 		1E9DDB3118D2DDD800643295 /* BreathSoundTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BreathSoundTableViewController.h; sourceTree = "<group>"; };
 		1E9DDB3218D2DDD800643295 /* BreathSoundTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BreathSoundTableViewController.m; sourceTree = "<group>"; };
+		1ECAB8081918813800161572 /* ProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ProgressHUD.bundle; sourceTree = "<group>"; };
+		1ECAB8091918813800161572 /* ProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressHUD.h; sourceTree = "<group>"; };
+		1ECAB80A1918813800161572 /* ProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressHUD.m; sourceTree = "<group>"; };
+		1ECAB80E192060D500161572 /* APLSectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APLSectionHeaderView.h; sourceTree = "<group>"; };
+		1ECAB80F192060D500161572 /* APLSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APLSectionHeaderView.m; sourceTree = "<group>"; };
+		1ECAB810192060D500161572 /* APLSectionInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APLSectionInfo.h; sourceTree = "<group>"; };
+		1ECAB811192060D500161572 /* APLSectionInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APLSectionInfo.m; sourceTree = "<group>"; };
+		1ECAB812192060D500161572 /* carat-open.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "carat-open.png"; sourceTree = "<group>"; };
+		1ECAB813192060D500161572 /* carat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = carat.png; sourceTree = "<group>"; };
+		1ECAB814192060D500161572 /* SectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SectionHeaderView.xib; path = HistoryTableView/SectionHeaderView.xib; sourceTree = "<group>"; };
+		1ECAB81A1920612300161572 /* HistoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryTableViewController.h; sourceTree = "<group>"; };
+		1ECAB81B1920612300161572 /* HistoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryTableViewController.m; sourceTree = "<group>"; };
+		1ECAB81E1920614D00161572 /* HistoryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryTableViewCell.h; sourceTree = "<group>"; };
+		1ECAB81F1920614D00161572 /* HistoryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryTableViewCell.m; sourceTree = "<group>"; };
+		1ECAB8221920C8CA00161572 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		1ECAB8231920C8CA00161572 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		1ED31B90190E071D00E58228 /* BLE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLE.h; sourceTree = "<group>"; };
 		1ED31B91190E071D00E58228 /* BLE.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLE.m; sourceTree = "<group>"; };
 		1ED31B92190E071D00E58228 /* DeviceInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceInfo.h; sourceTree = "<group>"; };
@@ -174,6 +223,71 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1E0DD9DA192AFDBD008E3F18 /* HistoryCollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				1E0DD9DE192AFE33008E3F18 /* CollectionView */,
+				1E0DD9FB192B043A008E3F18 /* HistoryCollectionViewController.h */,
+				1E0DD9FC192B043A008E3F18 /* HistoryCollectionViewController.m */,
+			);
+			name = HistoryCollectionView;
+			sourceTree = "<group>";
+		};
+		1E0DD9DE192AFE33008E3F18 /* CollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				1E0DD9DF192AFE40008E3F18 /* CollectionHeader */,
+				1E0DD9E6192AFE76008E3F18 /* ScrollView */,
+				1E0DD9F8192B0040008E3F18 /* CollectionViewFlowLayout.h */,
+				1E0DD9F9192B0040008E3F18 /* CollectionViewFlowLayout.m */,
+			);
+			name = CollectionView;
+			sourceTree = "<group>";
+		};
+		1E0DD9DF192AFE40008E3F18 /* CollectionHeader */ = {
+			isa = PBXGroup;
+			children = (
+				1E0DD9E0192AFE62008E3F18 /* CollectionViewHeader.h */,
+				1E0DD9E1192AFE62008E3F18 /* CollectionViewHeader.m */,
+				1E0DD9EC192AFFCB008E3F18 /* HeaderCell.h */,
+				1E0DD9ED192AFFCB008E3F18 /* HeaderCell.m */,
+			);
+			name = CollectionHeader;
+			sourceTree = "<group>";
+		};
+		1E0DD9E6192AFE76008E3F18 /* ScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				1E0DD9E7192AFEB2008E3F18 /* ContentScrollView.h */,
+				1E0DD9E8192AFEB2008E3F18 /* ContentScrollView.m */,
+				1E0DD9EB192AFED5008E3F18 /* Title */,
+				1E0DD9EA192AFECE008E3F18 /* ContentView */,
+			);
+			name = ScrollView;
+			sourceTree = "<group>";
+		};
+		1E0DD9EA192AFECE008E3F18 /* ContentView */ = {
+			isa = PBXGroup;
+			children = (
+				1E0DD9EF192B000D008E3F18 /* ContentCollectionView.h */,
+				1E0DD9F0192B000D008E3F18 /* ContentCollectionView.m */,
+				1E0DD9E2192AFE62008E3F18 /* ContentCell.h */,
+				1E0DD9E3192AFE62008E3F18 /* ContentCell.m */,
+			);
+			name = ContentView;
+			sourceTree = "<group>";
+		};
+		1E0DD9EB192AFED5008E3F18 /* Title */ = {
+			isa = PBXGroup;
+			children = (
+				1E0DD9F4192B0022008E3F18 /* TitleView.h */,
+				1E0DD9F5192B0022008E3F18 /* TitleView.m */,
+				1E0DD9F2192B0022008E3F18 /* TitleLabel.h */,
+				1E0DD9F3192B0022008E3F18 /* TitleLabel.m */,
+			);
+			name = Title;
+			sourceTree = "<group>";
+		};
 		1E5E567718861184005EF6AC = {
 			isa = PBXGroup;
 			children = (
@@ -197,7 +311,6 @@
 		1E5E568218861184005EF6AC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				1E24E896190DFFC600B84BC9 /* libBLE.a */,
 				1E97B40218E01F4F00704F07 /* libNfcA1Device_D14E.a */,
 				1E97B40018E01CC300704F07 /* AVFoundation.framework */,
 				1E97B3FE18E01C8100704F07 /* AudioToolbox.framework */,
@@ -220,8 +333,6 @@
 				1EDE9FC918B6FF2E004B8FE5 /* View */,
 				1EDA9CCA18B2067300AF987A /* Models */,
 				1EFAD8CA18C6F92A002118C7 /* DragerCommands.h */,
-				1E98F5DF1908F380009A1712 /* HistoryViewController.h */,
-				1E98F5E01908F380009A1712 /* HistoryViewController.m */,
 				1E15858318CC660A009249AF /* MeasureDataViewController.h */,
 				1E15858418CC660A009249AF /* MeasureDataViewController.m */,
 				1E15858518CC660A009249AF /* VentilatorSecondViewController.h */,
@@ -232,8 +343,6 @@
 				1E32C6C118B742DB00DE4595 /* VentilatorMeasureViewController.m */,
 				1E5E56A118861184005EF6AC /* Images.xcassets */,
 				1E5E568A18861184005EF6AC /* Supporting Files */,
-				1E5E569518861184005EF6AC /* Main_iPhone.storyboard */,
-				1E5E569818861184005EF6AC /* Main_iPad.storyboard */,
 			);
 			path = "呼吸照護";
 			sourceTree = "<group>";
@@ -241,6 +350,9 @@
 		1E5E568A18861184005EF6AC /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				1ECAB814192060D500161572 /* SectionHeaderView.xib */,
+				1E5E569518861184005EF6AC /* Main_iPhone.storyboard */,
+				1E5E569818861184005EF6AC /* Main_iPad.storyboard */,
 				1E5E568B18861184005EF6AC /* 呼吸照護-Info.plist */,
 				1E5E568C18861184005EF6AC /* InfoPlist.strings */,
 				1E5E568F18861184005EF6AC /* main.m */,
@@ -270,6 +382,9 @@
 		1E781AF018BC46A300647ED3 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				1E0DD9DA192AFDBD008E3F18 /* HistoryCollectionView */,
+				1ECAB8221920C8CA00161572 /* MainViewController.h */,
+				1ECAB8231920C8CA00161572 /* MainViewController.m */,
 				1E32C6B918B7064000DE4595 /* MeasureTabBarViewController.h */,
 				1E32C6BA18B7064000DE4595 /* MeasureTabBarViewController.m */,
 				1E8881E318EABF7E009B5E06 /* MeasureViewController.h */,
@@ -291,6 +406,52 @@
 		1E8881E618EAC331009B5E06 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				1ECAB8211920B04F00161572 /* BLE */,
+				1ECAB8071918813800161572 /* ProgressHUD */,
+				1ECAB80D192060D500161572 /* HistoryTableView */,
+				1E97B40418E01F6400704F07 /* NfcA1Device.h */,
+			);
+			name = Library;
+			sourceTree = "<group>";
+		};
+		1ECAB8071918813800161572 /* ProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				1ECAB8081918813800161572 /* ProgressHUD.bundle */,
+				1ECAB8091918813800161572 /* ProgressHUD.h */,
+				1ECAB80A1918813800161572 /* ProgressHUD.m */,
+			);
+			path = ProgressHUD;
+			sourceTree = "<group>";
+		};
+		1ECAB80D192060D500161572 /* HistoryTableView */ = {
+			isa = PBXGroup;
+			children = (
+				1ECAB81D1920612B00161572 /* Cell */,
+				1ECAB81A1920612300161572 /* HistoryTableViewController.h */,
+				1ECAB81B1920612300161572 /* HistoryTableViewController.m */,
+				1ECAB80E192060D500161572 /* APLSectionHeaderView.h */,
+				1ECAB80F192060D500161572 /* APLSectionHeaderView.m */,
+				1ECAB810192060D500161572 /* APLSectionInfo.h */,
+				1ECAB811192060D500161572 /* APLSectionInfo.m */,
+				1ECAB812192060D500161572 /* carat-open.png */,
+				1ECAB813192060D500161572 /* carat.png */,
+			);
+			path = HistoryTableView;
+			sourceTree = "<group>";
+		};
+		1ECAB81D1920612B00161572 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				1ECAB81E1920614D00161572 /* HistoryTableViewCell.h */,
+				1ECAB81F1920614D00161572 /* HistoryTableViewCell.m */,
+			);
+			name = Cell;
+			sourceTree = "<group>";
+		};
+		1ECAB8211920B04F00161572 /* BLE */ = {
+			isa = PBXGroup;
+			children = (
 				1ED31B90190E071D00E58228 /* BLE.h */,
 				1ED31B91190E071D00E58228 /* BLE.m */,
 				1ED31B92190E071D00E58228 /* DeviceInfo.h */,
@@ -306,9 +467,8 @@
 				1ED31B9C190E071D00E58228 /* SERVOi.m */,
 				1ED31B9D190E071D00E58228 /* VentilationData.h */,
 				1ED31B9E190E071D00E58228 /* VentilationData.m */,
-				1E97B40418E01F6400704F07 /* NfcA1Device.h */,
 			);
-			name = Library;
+			name = BLE;
 			sourceTree = "<group>";
 		};
 		1EDA9CCA18B2067300AF987A /* Models */ = {
@@ -421,7 +581,11 @@
 				1E5E569A18861184005EF6AC /* Main_iPad.storyboard in Resources */,
 				1E5E56A218861184005EF6AC /* Images.xcassets in Resources */,
 				1E5E569718861184005EF6AC /* Main_iPhone.storyboard in Resources */,
+				1ECAB80B1918813800161572 /* ProgressHUD.bundle in Resources */,
 				1E5E568E18861184005EF6AC /* InfoPlist.strings in Resources */,
+				1ECAB818192060D500161572 /* carat.png in Resources */,
+				1ECAB817192060D500161572 /* carat-open.png in Resources */,
+				1ECAB819192060D500161572 /* SectionHeaderView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -440,16 +604,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1E0DD9F6192B0022008E3F18 /* TitleLabel.m in Sources */,
 				1E9219C8190641B2006ED639 /* XMLReader.m in Sources */,
+				1E0DD9FA192B0040008E3F18 /* CollectionViewFlowLayout.m in Sources */,
+				1E0DD9E5192AFE62008E3F18 /* ContentCell.m in Sources */,
 				1EDE9FC818B6FEC5004B8FE5 /* DataTableViewCell.m in Sources */,
+				1E0DD9E9192AFEB2008E3F18 /* ContentScrollView.m in Sources */,
 				1E9219D71907A8CD006ED639 /* DtoUploadVentDataResult.m in Sources */,
 				1E781AEF18BC469200647ED3 /* OtherDataViewController.m in Sources */,
 				1E32C6C218B742DB00DE4595 /* VentilatorMeasureViewController.m in Sources */,
-				1E98F5E11908F380009A1712 /* HistoryViewController.m in Sources */,
+				1ECAB8201920614D00161572 /* HistoryTableViewCell.m in Sources */,
 				1E9219CD19064F9E006ED639 /* WebService.m in Sources */,
 				1ED31BA3190E071D00E58228 /* SERVOi.m in Sources */,
 				1E8881E518EABF7E009B5E06 /* MeasureViewController.m in Sources */,
 				1EF0012B18B2EAEF003B5D58 /* DatabaseUtility.m in Sources */,
+				1E0DD9F1192B000D008E3F18 /* ContentCollectionView.m in Sources */,
+				1E0DD9EE192AFFCB008E3F18 /* HeaderCell.m in Sources */,
+				1ECAB80C1918813800161572 /* ProgressHUD.m in Sources */,
+				1E0DD9E4192AFE62008E3F18 /* CollectionViewHeader.m in Sources */,
 				1E8DD5D918D824DF005B41D2 /* DisplayView.m in Sources */,
 				1EFAD8C418C6B335002118C7 /* FirstViewController.m in Sources */,
 				1ED31BA2190E071D00E58228 /* Hamilton.m in Sources */,
@@ -458,12 +630,18 @@
 				1E32C6BB18B7064000DE4595 /* MeasureTabBarViewController.m in Sources */,
 				1ED31BA4190E071D00E58228 /* VentilationData.m in Sources */,
 				1E15858718CC660A009249AF /* MeasureDataViewController.m in Sources */,
+				1ECAB8241920C8CA00161572 /* MainViewController.m in Sources */,
+				1ECAB816192060D500161572 /* APLSectionInfo.m in Sources */,
+				1E0DD9F7192B0022008E3F18 /* TitleView.m in Sources */,
 				1E5E569418861184005EF6AC /* VentilatorAppDelegate.m in Sources */,
 				1ED31BA1190E071D00E58228 /* DRAGER.m in Sources */,
 				1E15858818CC660A009249AF /* VentilatorSecondViewController.m in Sources */,
+				1E0DD9FD192B043A008E3F18 /* HistoryCollectionViewController.m in Sources */,
 				1E9DDB3318D2DDD800643295 /* BreathSoundTableViewController.m in Sources */,
 				1E9219C219063CFB006ED639 /* DtoVentExchangeUploadBatch.m in Sources */,
 				1E781AEC18BC467600647ED3 /* VentilatorDataViewController.m in Sources */,
+				1ECAB815192060D500161572 /* APLSectionHeaderView.m in Sources */,
+				1ECAB81C1920612300161572 /* HistoryTableViewController.m in Sources */,
 				1E5E569018861184005EF6AC /* main.m in Sources */,
 				1E9219D1190750D7006ED639 /* DeviceStatus.m in Sources */,
 				1E32C6C618B746B600DE4595 /* VentilatorMeasureView.m in Sources */,

@@ -352,7 +352,7 @@
     sqlite3_stmt *statement;
     
     if (sqlite3_open(dbpath, &sqliteDb) == SQLITE_OK) {
-        NSString *querySQL = @"SELECT MeasureId, ChtNo, RecordTime, RecordIp, RecordOper, RecordDevice, RecordClientVersion, VentNo, RawData, VentilationMode, TidalVolumeSet, VolumeTarget, TidalVolumeMeasured, VentilationRateSet, SIMVRateSet, VentilationRateTotal, InspT, THigh, InspirationExpirationRatio, Tlow, AutoFlow, FlowSetting, FlowMeasured, Pattern, MVSet, PercentMinVolSet, MVTotal, PeakPressure, PlateauPressure, MeanPressure, PEEP, Plow, PressureSupport, PressureControl, PHigh, FiO2Set, FiO2Measured, Resistance, Compliance, BaseFlow, FlowSensitivity, LowerMV, HighPressureAlarm, Temperature, ReliefPressure, PetCo2, SpO2, RR, TV, MV, MaxPi, Mvv, Rsbi, EtSize, Mark, CuffPressure, BreathSounds, Pr, Cvp, BpS, BpD, Xrem, AutoPEEP, PlateauTimeSetting, RecordOperName, VentilatorModel, BedNo, ErrorMsg FROM MEASURE_DATA";
+        NSString *querySQL = @"SELECT MeasureId, ChtNo, RecordTime, RecordIp, RecordOper, RecordDevice, RecordClientVersion, VentNo, RawData, VentilationMode, TidalVolumeSet, VolumeTarget, TidalVolumeMeasured, VentilationRateSet, SIMVRateSet, VentilationRateTotal, InspT, THigh, InspirationExpirationRatio, Tlow, AutoFlow, FlowSetting, FlowMeasured, Pattern, MVSet, PercentMinVolSet, MVTotal, PeakPressure, PlateauPressure, MeanPressure, PEEP, Plow, PressureSupport, PressureControl, PHigh, FiO2Set, FiO2Measured, Resistance, Compliance, BaseFlow, FlowSensitivity, LowerMV, HighPressureAlarm, Temperature, ReliefPressure, PetCo2, SpO2, RR, TV, MV, MaxPi, Mvv, Rsbi, EtSize, Mark, CuffPressure, BreathSounds, Pr, Cvp, BpS, BpD, Xrem, AutoPEEP, PlateauTimeSetting, RecordOperName, VentilatorModel, BedNo, ErrorMsg FROM MEASURE_DATA WHERE UploadId IS NULL OR UploadId = ''";
         const char *query_stmt = [querySQL UTF8String];
         
         if (sqlite3_prepare_v2(sqliteDb, query_stmt, -1, &statement, NULL) == SQLITE_OK) {
@@ -620,7 +620,7 @@
     
     if (sqlite3_open(dbpath, &sqliteDb) == SQLITE_OK) {
         //取得上傳記錄
-        NSString *querySQL = @"SELECT UploadId, UploadOper, UploadIp, UploadTime, Device, ClientVersion FROM UPLOAD_DATA";
+        NSString *querySQL = @"SELECT UploadId, UploadOper, UploadIp, UploadTime, Device, ClientVersion FROM UPLOAD_DATA ORDER BY UploadTime";
         const char *query_stmt = [querySQL UTF8String];
         
         if (sqlite3_prepare_v2(sqliteDb, query_stmt, -1, &statement, NULL) == SQLITE_OK) {
@@ -638,7 +638,7 @@
         }
         
         for (int i = 0;i < batchList.count; i++) {
-            querySQL = [NSString stringWithFormat:@"SELECT MeasureId, ChtNo, RecordTime, RecordIp, RecordOper, RecordDevice, RecordClientVersion, VentNo, RawData, VentilationMode, TidalVolumeSet, VolumeTarget, TidalVolumeMeasured, VentilationRateSet, SIMVRateSet, VentilationRateTotal, InspT, THigh, InspirationExpirationRatio, Tlow, AutoFlow, FlowSetting, FlowMeasured, Pattern, MVSet, PercentMinVolSet, MVTotal, PeakPressure, PlateauPressure, MeanPressure, PEEP, Plow, PressureSupport, PressureControl, PHigh, FiO2Set, FiO2Measured, Resistance, Compliance, BaseFlow, FlowSensitivity, LowerMV, HighPressureAlarm, Temperature, ReliefPressure, PetCo2, SpO2, RR, TV, MV, MaxPi, Mvv, Rsbi, EtSize, Mark, CuffPressure, BreathSounds, Pr, Cvp, BpS, BpD, Xrem, AutoPEEP, PlateauTimeSetting, RecordOperName, VentilatorModel, BedNo, ErrorMsg FROM MEASURE_DATA WHERE UploadId = %ld", ((DtoVentExchangeUploadBatch *)batchList[i]).UploadId];
+            querySQL = [NSString stringWithFormat:@"SELECT MeasureId, ChtNo, RecordTime, RecordIp, RecordOper, RecordDevice, RecordClientVersion, VentNo, RawData, VentilationMode, TidalVolumeSet, VolumeTarget, TidalVolumeMeasured, VentilationRateSet, SIMVRateSet, VentilationRateTotal, InspT, THigh, InspirationExpirationRatio, Tlow, AutoFlow, FlowSetting, FlowMeasured, Pattern, MVSet, PercentMinVolSet, MVTotal, PeakPressure, PlateauPressure, MeanPressure, PEEP, Plow, PressureSupport, PressureControl, PHigh, FiO2Set, FiO2Measured, Resistance, Compliance, BaseFlow, FlowSensitivity, LowerMV, HighPressureAlarm, Temperature, ReliefPressure, PetCo2, SpO2, RR, TV, MV, MaxPi, Mvv, Rsbi, EtSize, Mark, CuffPressure, BreathSounds, Pr, Cvp, BpS, BpD, Xrem, AutoPEEP, PlateauTimeSetting, RecordOperName, VentilatorModel, BedNo, ErrorMsg FROM MEASURE_DATA WHERE UploadId = %ld ORDER BY RecordTime DESC", ((DtoVentExchangeUploadBatch *)batchList[i]).UploadId];
             query_stmt = [querySQL UTF8String];
             
             if (sqlite3_prepare_v2(sqliteDb, query_stmt, -1, &statement, NULL) == SQLITE_OK) {
@@ -721,7 +721,151 @@
         sqlite3_close(sqliteDb);
     }
     
-    return measureList;
+    return batchList;
+}
+
+#pragma mark - CurRtCardListVerId
+- (int) getCurRtCardListVerId {
+    int result = -1;    const char *dbpath = [databasePath UTF8String];
+    sqlite3_stmt *statement;
+    
+    if (sqlite3_open(dbpath, &sqliteDb) == SQLITE_OK) {
+        NSString *querySQL = @"SELECT Version FROM CARD_NO_VER_ID";
+        const char *query_stmt = [querySQL UTF8String];
+        
+        if (sqlite3_prepare_v2(sqliteDb, query_stmt, -1, &statement, NULL) == SQLITE_OK) {
+            while (sqlite3_step(statement) == SQLITE_ROW) {
+                result = sqlite3_column_int(statement, 0);
+            }
+            sqlite3_finalize(statement);
+        }
+        sqlite3_close(sqliteDb);
+    }
+    
+    return result;
+}
+
+- (BOOL) deleteCurRtCardListVerId {
+    BOOL isSuccess = false;
+    sqlite3_stmt *statement = NULL;
+    const char *dbpath = [databasePath UTF8String];
+    
+    if (sqlite3_open(dbpath, &sqliteDb) == SQLITE_OK) {
+        //刪掉所有的ID資料
+        NSString *deleteSQL = [NSString stringWithFormat:@"DELETE FROM CARD_NO_VER_ID"];
+        
+//        const char *delete_stmt = [deleteSQL UTF8String];
+//        sqlite3_prepare_v2(sqliteDb, delete_stmt, -1, &statement, NULL);
+//        sqlite3_bind_int(statement, 1, (int)measureData.MeasureId);
+//        if (sqlite3_step(statement) == SQLITE_DONE) {
+//            isSuccess = true;
+//        }
+        char *errMsg;
+        if (sqlite3_exec(sqliteDb, [deleteSQL UTF8String], NULL, NULL, &errMsg) != SQLITE_OK) {
+            isSuccess = true;
+        }
+        else {
+            NSLog(@"Delete Error:%s", errMsg);
+        }
+        
+        sqlite3_finalize(statement);
+        sqlite3_close(sqliteDb);
+    }
+    
+    return isSuccess;
+}
+
+- (BOOL) saveCurRtCardListVerId:(int)Id {
+    BOOL isSuccess = false;
+    sqlite3_stmt *statement = NULL;
+    const char *dbpath = [databasePath UTF8String];
+    
+    [self deleteCurRtCardListVerId];
+    if (sqlite3_open(dbpath, &sqliteDb) == SQLITE_OK) {
+        NSString *insertSQL = [NSString stringWithFormat:
+                               @"INSERT INTO CARD_NO_VER_ID (Version) VALUES (%d)", Id];
+        
+        const char *insert_stmt = [insertSQL UTF8String];
+        sqlite3_prepare_v2(sqliteDb, insert_stmt, -1, &statement, NULL);
+        int sqliteState = sqlite3_step(statement);
+        if (sqliteState == SQLITE_DONE) {
+            isSuccess = true;
+        }
+        
+        sqlite3_finalize(statement);
+        sqlite3_close(sqliteDb);
+    }
+    
+    return isSuccess;
+}
+
+#pragma mark - CurRtCardList
+- (void) saveCurRtCardList:(NSArray *)data {
+    sqlite3_stmt *statement = NULL;
+    const char *dbpath = [databasePath UTF8String];
+    
+    if (data.count > 0) {
+        [self deleteCurRtCardList];
+        if (sqlite3_open(dbpath, &sqliteDb) == SQLITE_OK) {
+            for (NSString *str in data) {
+                NSString *insertSQL = [NSString stringWithFormat:
+                                       @"INSERT INTO CARD_NO (CardNo) VALUES ('%@')", str];
+                
+                const char *insert_stmt = [insertSQL UTF8String];
+                sqlite3_prepare_v2(sqliteDb, insert_stmt, -1, &statement, NULL);
+                int sqliteState = sqlite3_step(statement);
+            }
+        }
+        
+        sqlite3_finalize(statement);
+        sqlite3_close(sqliteDb);
+    }
+}
+
+- (BOOL) deleteCurRtCardList {
+    BOOL isSuccess = false;
+    sqlite3_stmt *statement = NULL;
+    const char *dbpath = [databasePath UTF8String];
+    
+    if (sqlite3_open(dbpath, &sqliteDb) == SQLITE_OK) {
+        //刪掉所有資料
+        NSString *deleteSQL = [NSString stringWithFormat:@"DELETE FROM CARD_NO"];
+        
+        char *errMsg;
+        if (sqlite3_exec(sqliteDb, [deleteSQL UTF8String], NULL, NULL, &errMsg) != SQLITE_OK) {
+            isSuccess = true;
+        }
+        else {
+            NSLog(@"Delete Error:%s", errMsg);
+        }
+        
+        sqlite3_finalize(statement);
+        sqlite3_close(sqliteDb);
+    }
+    
+    return isSuccess;
+}
+
+
+- (NSMutableArray *) getCurRtCardList {
+    NSMutableArray *result = [[NSMutableArray alloc] init];
+    const char *dbpath = [databasePath UTF8String];
+    sqlite3_stmt *statement;
+    
+    if (sqlite3_open(dbpath, &sqliteDb) == SQLITE_OK) {
+        NSString *querySQL = @"SELECT Version FROM CARD_NO_VER_ID";
+        const char *query_stmt = [querySQL UTF8String];
+        
+        if (sqlite3_prepare_v2(sqliteDb, query_stmt, -1, &statement, NULL) == SQLITE_OK) {
+            while (sqlite3_step(statement) == SQLITE_ROW) {
+                [result addObject:[self getColumnString:(char *)sqlite3_column_text(statement, 0)]];
+            }
+            sqlite3_finalize(statement);
+        }
+        sqlite3_close(sqliteDb);
+    }
+    
+    return result;
 }
 
 @end

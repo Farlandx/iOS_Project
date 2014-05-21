@@ -22,4 +22,11 @@
     return self;
 }
 
+- (id)copyWithZone:(NSZone *)zone {
+    DtoVentExchangeUploadBatch *batch = [[DtoVentExchangeUploadBatch alloc] init];
+    batch.VentRecList = [_VentRecList copyWithZone:zone];
+    
+    return batch;
+}
+
 @end

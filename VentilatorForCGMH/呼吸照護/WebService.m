@@ -16,7 +16,7 @@
 #ifndef ___webservice
 #define ___webservice
 #define WS_NAMESPACE @"http://cgmh.org.tw/g27/"
-#define WS_URL @"http://172.30.1.82:8883/VentDataExchangeSvc.asmx"
+#define WS_URL @"http://172.30.1.119:8883/VentDataExchangeSvc.asmx"
 //#define WS_URL @"http://10.30.11.54/webwork/resp/VentDataExchangeSvc.asmx"
 
 #define WS_GET_CUR_RT_CARD_LIST @"GetCurRtCardList"
@@ -24,6 +24,7 @@
 #define WS_APPLOGIN @"AppLogin"
 #define WS_GET_PATIENT_LIST @"GetPatientList"
 #define WS_UPLOAD_VENT_DATA @"UploadVentData"
+#define WS_REQUEST_TIMEOUT_INTERVAL 10 //Second
 
 #endif
 
@@ -78,20 +79,20 @@
 }
 
 - (NSURLRequest *) getURLRequestByWSString:(NSString *) swString {
-    NSString *urlString = [[NSString alloc] initWithFormat:@"%@/%@", WS_URL, swString];
+    NSString *urlString = [NSString stringWithFormat:@"%@/%@", WS_URL, swString];
     NSURL *url = [NSURL URLWithString:urlString];
     return [NSURLRequest requestWithURL:url];
 }
 
 - (NSMutableURLRequest *) getMutableURLRequestByWSString:(NSString *) swString {
-    NSString *urlString = [[NSString alloc] initWithFormat:@"%@/%@", WS_URL, swString];
+    NSString *urlString = [NSString stringWithFormat:@"%@/%@", WS_URL, swString];
     NSURL *url = [NSURL URLWithString:urlString];
     return [NSMutableURLRequest requestWithURL:url];
 }
 
 - (NSMutableURLRequest *) getSOAPRequestByWSString:(NSString *) swString soapMessage:(NSString *)soapMessage {
     NSURL *url = [NSURL URLWithString:WS_URL];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:WS_REQUEST_TIMEOUT_INTERVAL];
     NSString *msgLength = [NSString stringWithFormat:@"%ld", [soapMessage length]];
     
     [request addValue: @"application/soap+xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
@@ -105,9 +106,6 @@
 
 #pragma mark - WebService Method
 - (void)appLoginDeviceName:(NSString *)deviceName idNo:(NSString *)idNo {
-    if (deviceName == nil || [deviceName isEqualToString:@""] || idNo == nil || [idNo isEqualToString:@""]) {
-        return;
-    }
     
     NSString *soapMessage = @"<?xml version=\"1.0\" encoding=\"utf-8\"?>"
                             "<soap12:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap12=\"http://www.w3.org/2003/05/soap-envelope\">"
@@ -133,6 +131,9 @@
             NSString *sessionId = [xmlDictionary valueForKeyPath:@"Envelope.Body.AppLoginResponse.AppLoginResult.text"];
             
             [_delegate wsAppLogin:sessionId];
+        }
+        else if (connectionError) {
+            [_delegate wsConnectionError:connectionError];
         }
     }];
 }
@@ -248,7 +249,9 @@
                                                                   options:XMLReaderOptionsProcessNamespaces
                                                                     error:&error];
             
-            NSMutableArray *result = [[NSMutableArray alloc] init];
+            NSMutableArray *uploadSuccess = [[NSMutableArray alloc] init];
+            NSMutableArray *uploadFailed = [[NSMutableArray alloc] init];
+            int index = 0;
             for (NSDictionary *dtoUploadVentDataResult in [xmlDictionary valueForKeyPath:@"Envelope.Body.UploadVentDataResponse.UploadVentDataResult.DtoUploadVentDataResult"]) {
                 DtoUploadVentDataResult *tmp = [[DtoUploadVentDataResult alloc] init];
                 tmp.ChtNo = [dtoUploadVentDataResult valueForKeyPath:@"ChtNo.text"];
@@ -260,11 +263,19 @@
                     tmp.UploadOperName = [dtoUploadVentDataResult valueForKeyPath:@"UploadOperName.text"];
                     tmp.VentilatorModel = [dtoUploadVentDataResult valueForKeyPath:@"VentilatorModel.text"];
                     tmp.BedNo = [[dtoUploadVentDataResult valueForKeyPath:@"BedNo.text"] stringValue];
+                    [uploadSuccess addObject:batch.VentRecList[index]];
                 }
-                [result addObject:tmp];
+                else {
+                    [uploadFailed addObject:batch.VentRecList[index]];
+                    
+                }
+                index++;
             }
             
-            [_delegate wsUploadVentData:result DtoVentExchangeUploadBatch:(DtoVentExchangeUploadBatch *)batch];
+            [_delegate wsUploadVentDataSuccess:uploadSuccess uploadFailed:uploadFailed DtoVentExchangeUploadBatch:batch];
+        }
+        else if (connectionError) {
+            [_delegate wsConnectionError:connectionError];
         }
     }];
 }
@@ -292,6 +303,9 @@
             
             [_delegate wsResponseCurRtCardList:result];
         }
+        else if (connectionError) {
+            [_delegate wsConnectionError:connectionError];
+        }
     }];
 }
 
@@ -314,6 +328,9 @@
             int result = [[xmlDictionary valueForKeyPath:@"Envelope.Body.GetCurRtCardListVerIdResponse.GetCurRtCardListVerIdResult.text"] intValue];
             
             [_delegate wsResponseCurRtCardListVerId:result];
+        }
+        else if (connectionError) {
+            [_delegate wsConnectionError:connectionError];
         }
     }];
 }
@@ -340,6 +357,9 @@
             }
             
             [_delegate wsResponsePatientList:result];
+        }
+        else if (connectionError) {
+            [_delegate wsConnectionError:connectionError];
         }
     }];}
 

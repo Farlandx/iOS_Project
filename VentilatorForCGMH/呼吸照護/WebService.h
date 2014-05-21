@@ -13,10 +13,11 @@
 @protocol WebServiceDelegate <NSObject>
 
 - (void)wsAppLogin:(NSString *)sessionId;
-- (void)wsUploadVentData:(NSMutableArray *)uploadResult DtoVentExchangeUploadBatch:(DtoVentExchangeUploadBatch *)batch;
+- (void)wsUploadVentDataSuccess:(NSMutableArray *)uploadSuccessResult uploadFailed:(NSMutableArray *)uploadFailed DtoVentExchangeUploadBatch:(DtoVentExchangeUploadBatch *)batch;
 - (void)wsResponseCurRtCardList:(NSMutableArray *)data;
 - (void)wsResponseCurRtCardListVerId:(int)verId;
 - (void)wsResponsePatientList:(NSMutableArray *)data;
+- (void)wsConnectionError:(NSError *)error;
 
 @end
 
