@@ -15,6 +15,7 @@
     BOOL heightChanged;
 }
 
+@property (nonatomic) BOOL viewMode;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet DisplayView *displayView;
 

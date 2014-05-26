@@ -101,6 +101,7 @@
         <scene sceneID="djc-NK-MX4">
             <objects>
                 <navigationController definesPresentationContext="YES" id="Lwe-Iw-lzf" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="oDm-wm-IRL"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="VWf-LZ-DrO">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -229,6 +230,7 @@
                         <outlet property="RecordOper" destination="kZs-oC-drs" id="EZu-tD-V5l"/>
                         <outlet property="RecordTime" destination="rvf-jW-sdq" id="RxK-4N-noI"/>
                         <outlet property="VentNo" destination="oZb-ya-z2X" id="hRg-ic-0L7"/>
+                        <outlet property="btnSave" destination="uFB-lp-Nin" id="uD9-hq-8T4"/>
                         <outlet property="indicatorRO" destination="3bI-C1-xGF" id="sSJ-Yt-DdL"/>
                         <outlet property="indicatorVNO" destination="hH9-aY-XRm" id="X9j-eC-6LU"/>
                     </connections>
@@ -1020,9 +1022,8 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="gU1-Vo-ZnY">
                                                 <rect key="frame" x="19" y="319" width="120" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <state key="normal" title="Clear">
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="15"/>
+                                                <state key="normal" title="Clear"/>
                                                 <connections>
                                                     <segue destination="rxj-WA-Y3z" kind="push" id="Jdw-ao-xaU"/>
                                                 </connections>
@@ -1171,11 +1172,11 @@
             </objects>
             <point key="canvasLocation" x="7638" y="-2137"/>
         </scene>
-        <!--Navigation Controller - 照護記錄(0)-->
+        <!--Navigation Controller - 照護記錄-->
         <scene sceneID="vVx-Xk-hyd">
             <objects>
                 <navigationController definesPresentationContext="YES" id="Evp-Ev-Kef" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="照護記錄(0)" image="Record" id="VGA-Ci-8fV"/>
+                    <tabBarItem key="tabBarItem" title="照護記錄" image="Record" id="VGA-Ci-8fV"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="wnb-EQ-bcS">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1235,6 +1236,7 @@
                                     <outlet property="RecordOper" destination="e0x-NL-uId" id="3ne-9O-cxa"/>
                                     <outlet property="RecordTime" destination="rDx-3o-N1h" id="ru0-Tl-Lja"/>
                                     <outlet property="VentilationMode" destination="s93-Im-YL8" id="6Vg-kS-kyR"/>
+                                    <segue destination="Lwe-Iw-lzf" kind="modal" id="CW4-WZ-cWu"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

@@ -18,6 +18,8 @@
     VentilationData *data;
 }
 
+@synthesize viewMode;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -33,16 +35,28 @@
 	// Do any additional setup after loading the view.
     _displayView.delegate = self;
     
-    for (UIView *v in [_displayView subviews]) {
-        if ([v isKindOfClass:[UITextField class]]) {
-            UITextField *txtField = (UITextField *)v;
-            if (txtField.tag == 1) {
-                txtField.keyboardType = UIKeyboardTypeDefault;
+    if (viewMode) {
+        for(UIView *v in _displayView.subviews) {
+            if ([v isKindOfClass:[UITextField class]]) {
+                ((UITextField *)v).enabled = NO;
             }
-            else {
-                txtField.keyboardType = UIKeyboardTypeDecimalPad;
+            else if ([v isKindOfClass:[UITextView class]]) {
+                ((UITextView *)v).editable = NO;
             }
-            txtField.delegate = self;
+        }
+    }
+    else {
+        for (UIView *v in [_displayView subviews]) {
+            if ([v isKindOfClass:[UITextField class]]) {
+                UITextField *txtField = (UITextField *)v;
+                if (txtField.tag == 1) {
+                    txtField.keyboardType = UIKeyboardTypeDefault;
+                }
+                else {
+                    txtField.keyboardType = UIKeyboardTypeDecimalPad;
+                }
+                txtField.delegate = self;
+            }
         }
     }
     
@@ -87,6 +101,10 @@
 }
 
 - (void)didKeyboardDismiss {
+    NSLog(@"%f, %f", _scrollView.frame.origin.x, _scrollView.frame.origin.y);
+    if (CGRectEqualToRect(_scrollView.frame, rect)) {
+        return;
+    }
     _scrollView.frame = rect;
     [UIView animateWithDuration:0.3 animations:^{
         _scrollView.frame = CGRectMake(0, 0, _scrollView.frame.size.width, _scrollView.frame.size.height);
@@ -168,7 +186,9 @@
 #pragma mark - Methods
 - (void)setMeasureData:(VentilationData *)measureData {
     _BreathSounds = measureData.BreathSounds;
-    [_btnBreathSound setTitle:measureData.BreathSounds forState:UIControlStateNormal];
+    if (![measureData.BreathSounds isEqualToString:@""]) {
+        [_btnBreathSound setTitle:measureData.BreathSounds forState:UIControlStateNormal];
+    }
     _PetCo2.text = measureData.PetCo2;
     _SpO2.text = measureData.SpO2;
     _RR.text = measureData.RR;

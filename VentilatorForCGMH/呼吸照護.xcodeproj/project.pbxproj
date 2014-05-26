@@ -81,6 +81,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1E046F781932E83800F10392 /* BLE_DEVICE_TYPE.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLE_DEVICE_TYPE.h; sourceTree = "<group>"; };
 		1E0DD9E0192AFE62008E3F18 /* CollectionViewHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewHeader.h; sourceTree = "<group>"; };
 		1E0DD9E1192AFE62008E3F18 /* CollectionViewHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewHeader.m; sourceTree = "<group>"; };
 		1E0DD9E2192AFE62008E3F18 /* ContentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentCell.h; sourceTree = "<group>"; };
@@ -223,6 +224,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1E046F791932E96F00F10392 /* Header */ = {
+			isa = PBXGroup;
+			children = (
+				1E046F781932E83800F10392 /* BLE_DEVICE_TYPE.h */,
+			);
+			name = Header;
+			sourceTree = "<group>";
+		};
 		1E0DD9DA192AFDBD008E3F18 /* HistoryCollectionView */ = {
 			isa = PBXGroup;
 			children = (
@@ -330,7 +339,6 @@
 			children = (
 				1E8881E618EAC331009B5E06 /* Library */,
 				1E781AF018BC46A300647ED3 /* ViewControllers */,
-				1EDE9FC918B6FF2E004B8FE5 /* View */,
 				1EDA9CCA18B2067300AF987A /* Models */,
 				1EFAD8CA18C6F92A002118C7 /* DragerCommands.h */,
 				1E15858318CC660A009249AF /* MeasureDataViewController.h */,
@@ -382,19 +390,14 @@
 		1E781AF018BC46A300647ED3 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				1EDE9FC918B6FF2E004B8FE5 /* MeasureView */,
 				1E0DD9DA192AFDBD008E3F18 /* HistoryCollectionView */,
 				1ECAB8221920C8CA00161572 /* MainViewController.h */,
 				1ECAB8231920C8CA00161572 /* MainViewController.m */,
 				1E32C6B918B7064000DE4595 /* MeasureTabBarViewController.h */,
 				1E32C6BA18B7064000DE4595 /* MeasureTabBarViewController.m */,
-				1E8881E318EABF7E009B5E06 /* MeasureViewController.h */,
-				1E8881E418EABF7E009B5E06 /* MeasureViewController.m */,
 				1EFAD8C218C6B335002118C7 /* FirstViewController.h */,
 				1EFAD8C318C6B335002118C7 /* FirstViewController.m */,
-				1E781AEA18BC467600647ED3 /* VentilatorDataViewController.h */,
-				1E781AEB18BC467600647ED3 /* VentilatorDataViewController.m */,
-				1E781AED18BC469200647ED3 /* OtherDataViewController.h */,
-				1E781AEE18BC469200647ED3 /* OtherDataViewController.m */,
 				1E9DDB3118D2DDD800643295 /* BreathSoundTableViewController.h */,
 				1E9DDB3218D2DDD800643295 /* BreathSoundTableViewController.m */,
 				1E8DD5D718D824DF005B41D2 /* DisplayView.h */,
@@ -452,6 +455,7 @@
 		1ECAB8211920B04F00161572 /* BLE */ = {
 			isa = PBXGroup;
 			children = (
+				1E046F791932E96F00F10392 /* Header */,
 				1ED31B90190E071D00E58228 /* BLE.h */,
 				1ED31B91190E071D00E58228 /* BLE.m */,
 				1ED31B92190E071D00E58228 /* DeviceInfo.h */,
@@ -490,15 +494,21 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
-		1EDE9FC918B6FF2E004B8FE5 /* View */ = {
+		1EDE9FC918B6FF2E004B8FE5 /* MeasureView */ = {
 			isa = PBXGroup;
 			children = (
+				1E8881E318EABF7E009B5E06 /* MeasureViewController.h */,
+				1E8881E418EABF7E009B5E06 /* MeasureViewController.m */,
+				1E781AEA18BC467600647ED3 /* VentilatorDataViewController.h */,
+				1E781AEB18BC467600647ED3 /* VentilatorDataViewController.m */,
+				1E781AED18BC469200647ED3 /* OtherDataViewController.h */,
+				1E781AEE18BC469200647ED3 /* OtherDataViewController.m */,
 				1E32C6C418B746B600DE4595 /* VentilatorMeasureView.h */,
 				1E32C6C518B746B600DE4595 /* VentilatorMeasureView.m */,
 				1EDE9FC618B6FEC5004B8FE5 /* DataTableViewCell.h */,
 				1EDE9FC718B6FEC5004B8FE5 /* DataTableViewCell.m */,
 			);
-			name = View;
+			name = MeasureView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

@@ -16,6 +16,8 @@
 
 @implementation VentilatorDataViewController
 
+@synthesize viewMode;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -31,11 +33,20 @@
 	// Do any additional setup after loading the view.
     _displayView.delegate = self;
     
-    for (UIView *v in [_displayView subviews]) {
-        if ([v isKindOfClass:[UITextField class]]) {
-            UITextField *txtField = (UITextField *)v;
-            txtField.keyboardType = UIKeyboardTypeDecimalPad;
-            txtField.delegate = self;
+    if (viewMode) {
+        for(UIView *v in _displayView.subviews) {
+            if ([v isKindOfClass:[UITextField class]]) {
+                ((UITextField *)v).enabled = NO;
+            }
+        }
+    }
+    else {
+        for (UIView *v in [_displayView subviews]) {
+            if ([v isKindOfClass:[UITextField class]]) {
+                UITextField *txtField = (UITextField *)v;
+                txtField.keyboardType = UIKeyboardTypeDecimalPad;
+                txtField.delegate = self;
+            }
         }
     }
     

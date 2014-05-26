@@ -16,8 +16,9 @@
 #import "DtoUploadVentDataResult.h"
 #import "DeviceStatus.h"
 #import "ProgressHUD.h"
+#import "NfcA1Device.h"
 
-@interface MeasureDataViewController ()<MeasureViewControllerDelegate, WebServiceDelegate>
+@interface MeasureDataViewController ()<UIAlertViewDelegate, UITextFieldDelegate, MeasureViewControllerDelegate, WebServiceDelegate, NfcA1ProtocolDelegate>
 
 @end
 
@@ -26,6 +27,16 @@
     WebService *ws;
     NSString *uploadOper;
     int curRtCardListVerId;
+    
+    NfcA1Device* mNfcA1Device;
+    UInt8 gBlockData[16];
+    UInt8 gNo;
+    UInt8 gTagUID[7];
+    
+    BOOL isStartListeningThread;
+    
+    UIAlertView *alertView;
+    UITextField *uploaderTextField;
 }
 
 @synthesize measureDataList;
@@ -48,8 +59,9 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    //uploadOper = @"E221104037";
     NSLog(@"%@", [NSString stringWithFormat:@"Version %@",[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]]);
+    
+    isStartListeningThread = NO;
     
     db = [[DatabaseUtility alloc] init];
     
@@ -268,10 +280,158 @@
 
 #pragma mark - Button Click
 - (IBAction)uploadClick:(id)sender {
-    [ProgressHUD show:@"取得驗證資料中..." Interaction:NO];
-    [ws appLoginDeviceName:[DeviceStatus getDeviceVendorUUID] idNo:uploadOper];
+    uploadOper = @"";
     
-    //[ws getPatientList];
+    alertView = [[UIAlertView alloc] initWithTitle:@"請掃瞄或輸入治療師卡號" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"送出", nil];
+    alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+    uploaderTextField = [alertView textFieldAtIndex:0];
+    [uploaderTextField setDelegate:self];
+    [alertView show];
+}
+
+#pragma mark - UITextFieldDelegate
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if (textField == uploaderTextField) {
+        [self alertView:alertView clickedButtonAtIndex:1];
+        [alertView dismissWithClickedButtonIndex:1 animated:YES];
+    }
+    return YES;
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    if (textField == uploaderTextField) {
+        if (![self isHeadsetPluggedIn]) {
+            isStartListeningThread = NO;
+            return;
+        }
+        
+        if (!isStartListeningThread) {
+            isStartListeningThread = YES;
+            [self initAudioPlayer];
+            if (![mNfcA1Device readerGetTagUID]) {
+                NSLog(@"ReadTagUID failed.");
+            }
+        }
+    }
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    if (textField == uploaderTextField && isStartListeningThread) {
+        isStartListeningThread = NO;
+    }
+}
+
+#pragma mark - UIAlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 1) {
+        if ([uploaderTextField.text isEqualToString:@""]) {
+            [ProgressHUD showError:@"治療師編號不得空白"];
+            return;
+        }
+        uploadOper = uploaderTextField.text;
+        
+        [ProgressHUD show:@"取得驗證資料中..." Interaction:NO];
+        [ws appLoginDeviceName:[DeviceStatus getDeviceVendorUUID] idNo:uploadOper];
+    }
+}
+
+#pragma mark - NFC Dongle
+- (void) initAudioPlayer {
+    if(!mNfcA1Device) {
+        mNfcA1Device = [[NfcA1Device alloc] init];
+        mNfcA1Device.delegate = self;
+    }
+}
+
+- (BOOL)isHeadsetPluggedIn
+{
+    NSArray *availableOutputs = [[AVAudioSession sharedInstance] currentRoute].outputs;
+    for (AVAudioSessionPortDescription *portDescription in availableOutputs) {
+        if ([portDescription.portType isEqualToString:AVAudioSessionPortHeadphones]) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
+- (void) hexStringToData:(NSString *)str
+                    Data: (void *) data
+{
+    int len = (int)[str length] / 2;    // Target length
+    
+    unsigned char *whole_byte = data;
+    char byte_chars[3] = {'\0','\0','\0'};
+    
+    int i;
+    for (i=0; i < len; i++)
+    {
+        byte_chars[0] = [str characterAtIndex:i*2];
+        byte_chars[1] = [str characterAtIndex:i*2+1];
+        *whole_byte = strtol(byte_chars, NULL, 16);
+        whole_byte++;
+    }
+}
+
+- (NSString *) hexDataToString:(UInt8 *)data
+                        Length:(int)len
+{
+    NSString *tmp = @"";
+    NSString *str = @"";
+    for(int i = 0; i < len; ++i)
+    {
+        tmp = [NSString stringWithFormat:@"%02X",data[i]];
+        str = [str stringByAppendingString:tmp];
+    }
+    return str;
+}
+
+- (NSString *) sectorHexDataToString:(UInt8 *)data
+                              Length:(int)len
+{
+    NSData *nData = [NSData dataWithBytes:data length:len];
+    NSString *str = [[NSString alloc] initWithData:nData encoding:NSUTF8StringEncoding];
+    return str;
+}
+
+- (void)receivedMessage:(SInt32)type Result:(Boolean)result Data:(void *)data {
+    switch (type) {
+        case MESSAGE_READER_GET_TAG_UID:
+            if (result)
+            {
+                MSG_INFORM_DATA *infrom_data = data;
+                
+                NSString *tagUID =
+                [self hexDataToString: infrom_data->data Length: 7];
+                memcpy(gTagUID,infrom_data->data,sizeof(gTagUID));
+                
+                uploaderTextField.text = tagUID;//[tagUID substringWithRange:NSMakeRange(0, 8)];
+                
+                
+                NSString *strStatus =[NSString stringWithFormat:@"%02X",infrom_data->status];
+                
+                NSLog(@"tagUID:%@", [NSString stringWithFormat:@"Tag UID:%@,%@",tagUID,strStatus]);
+                
+                isStartListeningThread = NO;
+                
+                [self alertView:alertView clickedButtonAtIndex:1];
+                [alertView dismissWithClickedButtonIndex:1 animated:YES];
+            }
+            break;
+            
+        default:
+            break;
+    }
+    
+    //持續listening直到讀到資料為止
+    if (isStartListeningThread) {
+        if(![mNfcA1Device readerGetTagUID]) {
+            NSLog(@"readerGetTagUID false");
+        }
+    }
+    else {
+        NSLog(@"stop listening.");
+        isStartListeningThread = NO;
+    }
 }
 
 #pragma mark - Private Method

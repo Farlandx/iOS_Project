@@ -37,9 +37,11 @@
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicatorVNO;
 
 @property (strong, nonatomic) VentilationData *myMeasureData;
-
+@property (nonatomic) BOOL viewMode;
 @property (assign, nonatomic) id<MeasureViewControllerDelegate> delegate;
 
+//儲存按鈕
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *btnSave;
 //紀錄時間
 @property (strong, nonatomic) IBOutlet UITextField *RecordTime;
 //治療師ID
@@ -48,5 +50,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *ChtNo;
 //呼吸器代號 (XXXXXXXXXXXX**YYYYY)
 @property (strong, nonatomic) IBOutlet UITextField *VentNo;
+
+- (void)setViewMode;
 
 @end

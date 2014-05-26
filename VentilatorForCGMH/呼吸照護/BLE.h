@@ -13,7 +13,9 @@
 
 typedef NS_ENUM(NSUInteger, BleReadStatus) {
     BLE_READ_NONE = 0,
+    BLE_SCANNING,
     BLE_CONNECTING,
+    BLE_DISCONNECTED,
     BLE_CONNECT_ERROR,
     BLE_READING_DATA,
     BLE_READ_ERROR,
@@ -41,7 +43,8 @@ typedef NS_ENUM(NSUInteger, BleReadStatus) {
 @property (strong, nonatomic) NSMutableData *mData;
 
 #pragma -mark Methods
-- (void)startReadByConnectionString:(NSString *)connectString;
+- (void)setConnectionString:(NSString *)connectionString;
+- (void)startRead;
 - (void)disconnect;
 
 @end

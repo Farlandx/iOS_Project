@@ -12,6 +12,7 @@
 #import "OtherDataViewController.h"
 #import "DatabaseUtility.h"
 #import "DeviceStatus.h"
+#import "ProgressHUD.h"
 
 @interface MeasureViewController ()
 
@@ -21,9 +22,19 @@
     DatabaseUtility *db;
     
     BOOL isStartListeningThread, isFocusOnRecordOper, isFocusOnVentNo;
+    NSString *mac_address;
 }
 
+@synthesize viewMode;
 @synthesize myMeasureData;
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        viewMode = NO;
+    }
+    return self;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -48,6 +59,8 @@
     isFocusOnRecordOper = NO;
     isFocusOnVentNo = NO;
     
+    mac_address = @"";
+    
     ble = [[BLE alloc] init];
     ble.delegate = self;
     
@@ -59,6 +72,28 @@
         _RecordOper.text = myMeasureData.RecordOper;
         _ChtNo.text = myMeasureData.ChtNo;
         _VentNo.text = myMeasureData.VentNo;
+        
+        if (viewMode) {
+            _RecordOper.enabled = NO;
+            _ChtNo.enabled = NO;
+            _VentNo.enabled = NO;
+            
+            for (UIViewController *child in self.childViewControllers) {
+                if ([child isKindOfClass:[MeasureTabBarViewController class]]) {
+                    for (UIViewController *v in ((MeasureTabBarViewController *)child).viewControllers) {
+                        if ([v isKindOfClass:[VentilatorDataViewController class]]) {
+                            VentilatorDataViewController *vc = (VentilatorDataViewController *)v;
+                            vc.viewMode = YES;
+                        }
+                        else if ([v isKindOfClass:[OtherDataViewController class]]) {
+                            OtherDataViewController *vc = (OtherDataViewController *)v;
+                            vc.viewMode = YES;
+                        }
+                    }
+                    
+                }
+            }
+        }
     }
 }
 
@@ -101,13 +136,16 @@
     [textField resignFirstResponder];
     
     if (![_VentNo.text isEqualToString:@""]) {
-        [ble startReadByConnectionString:_VentNo.text];
+        [ble setConnectionString:_VentNo.text];
+        [ble startRead];
     }
     //[self btnStart:_btnReadData];
 }
 
 - (IBAction)testClick:(id)sender {
-    [ble startReadByConnectionString:@"CD8FC44D-4407-197A-068E-119EBD891976**HAMILTON"];
+    //[ble startReadByConnectionString:@"CD8FC44D-4407-197A-068E-119EBD891976**HAMILTON"];
+    [ble setConnectionString:@"BLE-DEMO_01**DRAGER**123456789012"];
+    [ble startRead];
 }
 
 - (IBAction)testDisconnect:(id)sender {
@@ -181,9 +219,10 @@
 }
 
 - (void) initAudioPlayer {
-    if(!mNfcA1Device)
+    if(!mNfcA1Device) {
         mNfcA1Device = [[NfcA1Device alloc] init];
-    mNfcA1Device.delegate = self;
+        mNfcA1Device.delegate = self;
+    }
 }
 
 - (void)receivedMessage:(SInt32)type Result:(Boolean)result Data:(void *)data {
@@ -197,7 +236,7 @@
                 [self hexDataToString: infrom_data->data Length: 7];
                 memcpy(gTagUID,infrom_data->data,sizeof(gTagUID));
                 
-                _RecordOper.text = [tagUID substringWithRange:NSMakeRange(0, 8)];
+                _RecordOper.text = tagUID;//[tagUID substringWithRange:NSMakeRange(0, 8)];
                 
                 NSString *strStatus =[NSString stringWithFormat:@"%02X",infrom_data->status];
                 
@@ -228,7 +267,8 @@
                 [self indicatorVNOStop];
                 [_VentNo resignFirstResponder];
                 
-                [ble startReadByConnectionString:blockData];
+                [ble setConnectionString:blockData];
+                [ble startRead];
             }
             break;
             
@@ -287,6 +327,7 @@
 - (void)recievedVentilationDataAndReadStatus:(VentilationData *)data readStatus:(BleReadStatus)status {
     switch (status) {
         case BLE_READ_DONE: {
+            [ProgressHUD dismiss];
             //取的目前時間
             _RecordTime.text = [DeviceStatus getSystemTime];
             
@@ -320,16 +361,31 @@
             break;
         }
             
+        case BLE_SCANNING:
+            [ProgressHUD show:@"尋找設備中..." Interaction:YES];
+            break;
+            
+        case BLE_READING_DATA:
+            [ProgressHUD show:@"讀取中..." Interaction:YES];
+            break;
+            
         case BLE_READ_ERROR:
+            [ProgressHUD dismiss];
             NSLog(@"BLE Read Error!");
             break;
             
         case BLE_CONNECTING:
+            [ProgressHUD show:@"連接設備中..." Interaction:YES];
             NSLog(@"BLE Connecting.");
             break;
             
         case BLE_CONNECT_ERROR:
+            [ProgressHUD showError:@"連接失敗！" Interaction:NO];
             NSLog(@"BLE Connect Error.");
+            break;
+            
+        case BLE_DISCONNECTED:
+            [ProgressHUD dismiss];
             break;
             
         default:
@@ -439,6 +495,12 @@
 
 - (IBAction)btnCancleClick:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)setViewMode {
+    viewMode = YES;
+    
+    [_btnSave setEnabled:NO];
 }
 
 

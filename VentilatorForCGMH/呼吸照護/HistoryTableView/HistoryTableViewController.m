@@ -13,6 +13,7 @@
 #import "MainViewController.h"
 #import "DtoVentExchangeUploadBatch.h"
 #import "HistoryCollectionViewController.h"
+#import "MeasureViewController.h"
 
 #pragma mark - HistoryTableViewController
 
@@ -143,7 +144,8 @@ static NSString *SectionHeaderViewIdentifier = @"SectionHeaderViewIdentifier";
     HistoryTableViewCell *cell = (HistoryTableViewCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     DtoVentExchangeUploadBatch *batch = (DtoVentExchangeUploadBatch *)[(self.sectionInfoArray)[indexPath.section] batch];
-    
+    NSArray *tagAry = [[NSArray alloc] initWithObjects:[NSNumber numberWithInteger:indexPath.section], [NSNumber numberWithInteger:indexPath.row], nil];
+    [cell setTag:(NSInteger)tagAry];
     cell.ChtNo.text = ((VentilationData *)batch.VentRecList[indexPath.row]).ChtNo;
     cell.RecordOper.text = ((VentilationData *)batch.VentRecList[indexPath.row]).RecordOper;
     cell.VentilationMode.text = ((VentilationData *)batch.VentRecList[indexPath.row]).VentilationMode;
@@ -204,6 +206,20 @@ static NSString *SectionHeaderViewIdentifier = @"SectionHeaderViewIdentifier";
 	APLSectionInfo *sectionInfo = (self.sectionInfoArray)[indexPath.section];
     return [[sectionInfo objectInRowHeightsAtIndex:indexPath.row] floatValue];
     // Alternatively, return rowHeight.
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
+    VentilationData *data = ((DtoVentExchangeUploadBatch *)self.batchAry[indexPath.section]).VentRecList[indexPath.row];
+    
+    UINavigationController *nc = [segue destinationViewController];
+    for (UIView *v in nc.viewControllers) {
+        if ([v isKindOfClass:[MeasureViewController class]]) {
+            MeasureViewController *vc = (MeasureViewController *)v;
+            vc.myMeasureData = data;
+            [vc setViewMode];
+        }
+    }
 }
 
 #pragma mark - SectionHeaderViewDelegate

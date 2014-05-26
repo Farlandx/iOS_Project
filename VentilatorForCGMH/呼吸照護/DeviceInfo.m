@@ -11,14 +11,30 @@
 @implementation DeviceInfo
 
 - (id)init {
-    return [self initWithDeviceInfo:@"" :@""];
+    return [self initWithDeviceInfoByBleName:@"" DeviceType:@"NONE" BleMacAddress:@""];
 }
 
-- (id)initWithDeviceInfo:(NSString *)uuid :(NSString *)name {
+- (id)initWithDeviceInfoByBleName:(NSString *)BleName DeviceType:(NSString *)DeviceType BleMacAddress:(NSString *)BleMacAddress {
     self = [super init];
     if (self) {
-        self.DeviceUUID = uuid;
-        self.DeviceName = name;
+        self.BleMacAddress = BleMacAddress;
+        self.BleName = BleName;
+        
+        if (![DeviceType caseInsensitiveCompare:@"DRAGER"]) {
+            self.DeviceType = DEVICE_TYPE_DRAGER;
+        }
+        else if (![DeviceType caseInsensitiveCompare:@"HAMILTON"]) {
+            self.DeviceType = DEVICE_TYPE_HAMILTON;
+        }
+        else if (![DeviceType caseInsensitiveCompare:@"SERVOI"]) {
+            self.DeviceType = DEVICE_TYPE_SERVOI;
+        }
+        else if (![DeviceType caseInsensitiveCompare:@"NONE"]) {
+            self.DeviceType = DEVICE_TYPE_NONE;
+        }
+        else {
+            self.DeviceType = DEVICE_TYPE_UNKNOW;
+        }
     }
     return self;
 }

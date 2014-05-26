@@ -18,6 +18,7 @@
 
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet DisplayView *displayView;
+@property (nonatomic) BOOL viewMode;
 
 #pragma mark - 其他資料
 @property (strong, nonatomic) NSString *BreathSounds;
