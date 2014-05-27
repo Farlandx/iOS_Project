@@ -362,11 +362,11 @@
         }
             
         case BLE_SCANNING:
-            [ProgressHUD show:@"尋找設備中..." Interaction:YES];
+            [ProgressHUD show:@"尋找設備中..." Interaction:NO];
             break;
             
         case BLE_READING_DATA:
-            [ProgressHUD show:@"讀取中..." Interaction:YES];
+            [ProgressHUD show:@"讀取中..." Interaction:NO];
             break;
             
         case BLE_READ_ERROR:
@@ -375,7 +375,7 @@
             break;
             
         case BLE_CONNECTING:
-            [ProgressHUD show:@"連接設備中..." Interaction:YES];
+            [ProgressHUD show:@"連接設備中..." Interaction:NO];
             NSLog(@"BLE Connecting.");
             break;
             
