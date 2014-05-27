@@ -17,9 +17,7 @@
 		1E0DD9FA192B0040008E3F18 /* CollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E0DD9F9192B0040008E3F18 /* CollectionViewFlowLayout.m */; };
 		1E0DD9FD192B043A008E3F18 /* HistoryCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E0DD9FC192B043A008E3F18 /* HistoryCollectionViewController.m */; };
 		1E15858718CC660A009249AF /* MeasureDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E15858418CC660A009249AF /* MeasureDataViewController.m */; };
-		1E15858818CC660A009249AF /* VentilatorSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E15858618CC660A009249AF /* VentilatorSecondViewController.m */; };
 		1E32C6BB18B7064000DE4595 /* MeasureTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E32C6BA18B7064000DE4595 /* MeasureTabBarViewController.m */; };
-		1E32C6C218B742DB00DE4595 /* VentilatorMeasureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E32C6C118B742DB00DE4595 /* VentilatorMeasureViewController.m */; };
 		1E32C6C618B746B600DE4595 /* VentilatorMeasureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E32C6C518B746B600DE4595 /* VentilatorMeasureView.m */; };
 		1E5E568418861184005EF6AC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E5E568318861184005EF6AC /* Foundation.framework */; };
 		1E5E568618861184005EF6AC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E5E568518861184005EF6AC /* CoreGraphics.framework */; };
@@ -102,13 +100,9 @@
 		1E0DD9FC192B043A008E3F18 /* HistoryCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryCollectionViewController.m; sourceTree = "<group>"; };
 		1E15858318CC660A009249AF /* MeasureDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeasureDataViewController.h; sourceTree = "<group>"; };
 		1E15858418CC660A009249AF /* MeasureDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeasureDataViewController.m; sourceTree = "<group>"; };
-		1E15858518CC660A009249AF /* VentilatorSecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VentilatorSecondViewController.h; sourceTree = "<group>"; };
-		1E15858618CC660A009249AF /* VentilatorSecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VentilatorSecondViewController.m; sourceTree = "<group>"; };
 		1E17DFE118D6D1B0007798C1 /* 呼吸照護 copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "呼吸照護 copy-Info.plist"; path = "/Users/farland/Desktop/Xcode/呼吸照護/呼吸照護 copy-Info.plist"; sourceTree = "<absolute>"; };
 		1E32C6B918B7064000DE4595 /* MeasureTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeasureTabBarViewController.h; sourceTree = "<group>"; };
 		1E32C6BA18B7064000DE4595 /* MeasureTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeasureTabBarViewController.m; sourceTree = "<group>"; };
-		1E32C6C018B742DB00DE4595 /* VentilatorMeasureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VentilatorMeasureViewController.h; sourceTree = "<group>"; };
-		1E32C6C118B742DB00DE4595 /* VentilatorMeasureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VentilatorMeasureViewController.m; sourceTree = "<group>"; };
 		1E32C6C418B746B600DE4595 /* VentilatorMeasureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VentilatorMeasureView.h; sourceTree = "<group>"; };
 		1E32C6C518B746B600DE4595 /* VentilatorMeasureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VentilatorMeasureView.m; sourceTree = "<group>"; };
 		1E4E497D18B1AF9200B1721B /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
@@ -193,7 +187,6 @@
 		1EF0012A18B2EAEF003B5D58 /* DatabaseUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabaseUtility.m; sourceTree = "<group>"; };
 		1EFAD8C218C6B335002118C7 /* FirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
 		1EFAD8C318C6B335002118C7 /* FirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
-		1EFAD8CA18C6F92A002118C7 /* DragerCommands.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DragerCommands.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -340,15 +333,8 @@
 				1E8881E618EAC331009B5E06 /* Library */,
 				1E781AF018BC46A300647ED3 /* ViewControllers */,
 				1EDA9CCA18B2067300AF987A /* Models */,
-				1EFAD8CA18C6F92A002118C7 /* DragerCommands.h */,
-				1E15858318CC660A009249AF /* MeasureDataViewController.h */,
-				1E15858418CC660A009249AF /* MeasureDataViewController.m */,
-				1E15858518CC660A009249AF /* VentilatorSecondViewController.h */,
-				1E15858618CC660A009249AF /* VentilatorSecondViewController.m */,
 				1E5E569218861184005EF6AC /* VentilatorAppDelegate.h */,
 				1E5E569318861184005EF6AC /* VentilatorAppDelegate.m */,
-				1E32C6C018B742DB00DE4595 /* VentilatorMeasureViewController.h */,
-				1E32C6C118B742DB00DE4595 /* VentilatorMeasureViewController.m */,
 				1E5E56A118861184005EF6AC /* Images.xcassets */,
 				1E5E568A18861184005EF6AC /* Supporting Files */,
 			);
@@ -392,8 +378,12 @@
 			children = (
 				1EDE9FC918B6FF2E004B8FE5 /* MeasureView */,
 				1E0DD9DA192AFDBD008E3F18 /* HistoryCollectionView */,
+				1EDE9FC618B6FEC5004B8FE5 /* DataTableViewCell.h */,
+				1EDE9FC718B6FEC5004B8FE5 /* DataTableViewCell.m */,
 				1ECAB8221920C8CA00161572 /* MainViewController.h */,
 				1ECAB8231920C8CA00161572 /* MainViewController.m */,
+				1E15858318CC660A009249AF /* MeasureDataViewController.h */,
+				1E15858418CC660A009249AF /* MeasureDataViewController.m */,
 				1E32C6B918B7064000DE4595 /* MeasureTabBarViewController.h */,
 				1E32C6BA18B7064000DE4595 /* MeasureTabBarViewController.m */,
 				1EFAD8C218C6B335002118C7 /* FirstViewController.h */,
@@ -469,8 +459,6 @@
 				1ED31B9A190E071D00E58228 /* SERVOi_Commands.h */,
 				1ED31B9B190E071D00E58228 /* SERVOi.h */,
 				1ED31B9C190E071D00E58228 /* SERVOi.m */,
-				1ED31B9D190E071D00E58228 /* VentilationData.h */,
-				1ED31B9E190E071D00E58228 /* VentilationData.m */,
 			);
 			name = BLE;
 			sourceTree = "<group>";
@@ -478,6 +466,8 @@
 		1EDA9CCA18B2067300AF987A /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				1ED31B9D190E071D00E58228 /* VentilationData.h */,
+				1ED31B9E190E071D00E58228 /* VentilationData.m */,
 				1E9219C6190641B2006ED639 /* XMLReader.h */,
 				1E9219C7190641B2006ED639 /* XMLReader.m */,
 				1E9219C919064D82006ED639 /* WebService.h */,
@@ -505,8 +495,6 @@
 				1E781AEE18BC469200647ED3 /* OtherDataViewController.m */,
 				1E32C6C418B746B600DE4595 /* VentilatorMeasureView.h */,
 				1E32C6C518B746B600DE4595 /* VentilatorMeasureView.m */,
-				1EDE9FC618B6FEC5004B8FE5 /* DataTableViewCell.h */,
-				1EDE9FC718B6FEC5004B8FE5 /* DataTableViewCell.m */,
 			);
 			name = MeasureView;
 			sourceTree = "<group>";
@@ -622,7 +610,6 @@
 				1E0DD9E9192AFEB2008E3F18 /* ContentScrollView.m in Sources */,
 				1E9219D71907A8CD006ED639 /* DtoUploadVentDataResult.m in Sources */,
 				1E781AEF18BC469200647ED3 /* OtherDataViewController.m in Sources */,
-				1E32C6C218B742DB00DE4595 /* VentilatorMeasureViewController.m in Sources */,
 				1ECAB8201920614D00161572 /* HistoryTableViewCell.m in Sources */,
 				1E9219CD19064F9E006ED639 /* WebService.m in Sources */,
 				1ED31BA3190E071D00E58228 /* SERVOi.m in Sources */,
@@ -645,7 +632,6 @@
 				1E0DD9F7192B0022008E3F18 /* TitleView.m in Sources */,
 				1E5E569418861184005EF6AC /* VentilatorAppDelegate.m in Sources */,
 				1ED31BA1190E071D00E58228 /* DRAGER.m in Sources */,
-				1E15858818CC660A009249AF /* VentilatorSecondViewController.m in Sources */,
 				1E0DD9FD192B043A008E3F18 /* HistoryCollectionViewController.m in Sources */,
 				1E9DDB3318D2DDD800643295 /* BreathSoundTableViewController.m in Sources */,
 				1E9219C219063CFB006ED639 /* DtoVentExchangeUploadBatch.m in Sources */,

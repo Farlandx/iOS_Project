@@ -21,14 +21,14 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="labelChtNo" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KKS-Zn-Vqy">
-                                            <rect key="frame" x="20" y="2" width="86" height="21"/>
+                                            <rect key="frame" x="48" y="2" width="130" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="labelRecordOper" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZrR-F1-u2I">
-                                            <rect key="frame" x="20" y="20" width="130" height="21"/>
+                                            <rect key="frame" x="48" y="20" width="130" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -46,9 +46,14 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <imageView clipsSubviews="YES" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="unchecked" id="NeL-nU-bad">
+                                            <rect key="frame" x="0.0" y="0.0" width="43" height="43"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="imgCheckbox" destination="NeL-nU-bad" id="bAi-1r-pc7"/>
                                     <outlet property="labelChtNo" destination="KKS-Zn-Vqy" id="QJr-lS-le3"/>
                                     <outlet property="labelRecordOper" destination="ZrR-F1-u2I" id="N2u-2o-FiJ"/>
                                     <outlet property="labelRecordTime" destination="ALM-XG-d29" id="F8r-kR-lOI"/>
@@ -1357,6 +1362,7 @@
         <image name="Other" width="25" height="25"/>
         <image name="Record" width="25" height="25"/>
         <image name="Respirator" width="25" height="25"/>
+        <image name="unchecked" width="16" height="16"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackOpaque"/>

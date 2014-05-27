@@ -85,6 +85,7 @@
 @synthesize VentilatorModel;
 @synthesize BedNo;
 @synthesize ErrorMsg;
+@synthesize checked;
 
 - (id)init {
     self = [super init];
@@ -218,6 +219,7 @@
     Xrem = @"";
     AutoPEEP = @"";
     PlateauTimeSetting = @"";
+    checked = NO;
 }
 
 @end

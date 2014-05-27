@@ -257,7 +257,7 @@
                 NSString *blockData =
                 [self sectorHexDataToString: infrom_data->data Length: 48];
                 
-                _VentNo.text = blockData;
+                _VentNo.text = [blockData componentsSeparatedByString:@"**"][0];
                 
                 NSString *strStatus =[NSString stringWithFormat:@"%02X",infrom_data->status];
                 
@@ -450,9 +450,32 @@
     }
 }
 
+- (BOOL)validTextIsAllEmpty:(NSArray *)textAry {
+    for (NSString *str in textAry) {
+        if ([str isEqualToString:@""]) {
+            return NO;
+        }
+    }
+    return YES;
+}
+
+- (BOOL)textFieldShouldClear:(UITextField *)textField {
+    if (textField == _RecordOper) {
+        
+    }
+    else if (textField == _ChtNo) {
+        
+    }
+    else if (textField == _VentNo) {
+        
+    }
+    return YES;
+}
+
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:string];
     if (textField == _ChtNo) {
-        _btnSave.enabled = [textField.text stringByReplacingCharactersInRange:range withString:string].length;
+        _btnSave.enabled = newString.length;
     }
     return YES;
 }

@@ -12,6 +12,22 @@
 
 @synthesize databasePath;
 
+- (id)init {
+    self = [super init];
+    if (self) {
+        NSString *docsDir;
+        NSArray *dirPaths;
+        
+        // Get the documents directory
+        dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        docsDir = [dirPaths objectAtIndex:0]; //dirPaths[0]
+        
+        // Build the path to the database file
+        databasePath = [[NSString alloc] initWithString:
+                        [docsDir stringByAppendingPathComponent:@"measuredata.db"]];
+    }
+    return self;
+}
 
 #pragma mark - Private Methods
 - (NSString *)getColumnString:(const char*)text {
@@ -23,16 +39,16 @@
 
 #pragma mark - Public Methods
 - (void) initDatabase {
-    NSString *docsDir;
-    NSArray *dirPaths;
-    
-    // Get the documents directory
-    dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    docsDir = [dirPaths objectAtIndex:0]; //dirPaths[0]
-    
-    // Build the path to the database file
-    databasePath = [[NSString alloc] initWithString:
-                    [docsDir stringByAppendingPathComponent:@"measuredata.db"]];
+//    NSString *docsDir;
+//    NSArray *dirPaths;
+//    
+//    // Get the documents directory
+//    dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//    docsDir = [dirPaths objectAtIndex:0]; //dirPaths[0]
+//    
+//    // Build the path to the database file
+//    databasePath = [[NSString alloc] initWithString:
+//                    [docsDir stringByAppendingPathComponent:@"measuredata.db"]];
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
@@ -612,7 +628,7 @@
     return isSuccess || isUpdateAllSuccess;
 }
 
-- (NSMutableArray *) getUploadHistores {
+- (NSMutableArray *) getUploadHistories {
     NSMutableArray *batchList = [[NSMutableArray alloc] init];
     NSMutableArray *measureList = [[NSMutableArray alloc] init];
     const char *dbpath = [databasePath UTF8String];

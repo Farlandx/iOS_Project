@@ -34,7 +34,7 @@
     db = [[DatabaseUtility alloc] init];
     [db initDatabase];
     
-    self.historyList = [db getUploadHistores];
+    self.historyList = [db getUploadHistories];
 }
 
 - (void)didReceiveMemoryWarning

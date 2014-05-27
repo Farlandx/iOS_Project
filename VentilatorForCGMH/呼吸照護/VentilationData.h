@@ -119,6 +119,8 @@ typedef NS_ENUM(NSInteger, VENTILATION_MODE) {
 @property (strong, nonatomic) NSString *BedNo;
 //錯誤訊息
 @property (strong, nonatomic) NSString *ErrorMsg;
+//Checkbox用
+@property (nonatomic) BOOL checked;
 
 #pragma mark - -methods
 - (NSString *) modeToString:(VENTILATION_MODE)mode;

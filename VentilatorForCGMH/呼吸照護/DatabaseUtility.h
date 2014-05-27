@@ -28,7 +28,7 @@
 
 #pragma mark - UploadData
 - (BOOL) saveUploadData:(DtoVentExchangeUploadBatch *)uploadData;
-- (NSMutableArray *) getUploadHistores;
+- (NSMutableArray *) getUploadHistories;
 
 #pragma mark - CurRtCardListVerId
 - (int) getCurRtCardListVerId;

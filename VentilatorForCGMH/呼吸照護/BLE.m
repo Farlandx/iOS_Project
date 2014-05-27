@@ -176,27 +176,6 @@
             default:
                 break;
         }
-        /*if ([deviceInfo.DeviceName isEqualToString:@"DRAGER"]) {
-            deviceType = DEVICE_TYPE_DRAGER;
-            device = [[DRAGER alloc] init];
-            ((DRAGER *)device).delegate = self;
-            NSData *cmdICC = [device getICC_Command];
-            [self sendData:cmdICC];
-        }
-        else if ([deviceInfo.DeviceName isEqualToString:@"HAMILTON"]) {
-            deviceType = DEVICE_TYPE_HAMILTON;
-            device = [[Hamilton alloc] init];
-            ((Hamilton *)device).delegate = self;
-            NSData *cmdFirst = [device getCommand:40];
-            [self sendData:cmdFirst];
-        }
-        else if ([deviceInfo.DeviceName isEqualToString:@"SERVOI"]) {
-            deviceType = DEVICE_TYPE_SERVOI;
-            device = [[SERVOi alloc] init];
-            ((SERVOi *)device).delegate = self;
-            NSData *cmdInit = [device getInitCommand];
-            [self sendData:cmdInit];
-        }*/
     }
 }
 

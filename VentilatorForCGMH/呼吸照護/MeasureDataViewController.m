@@ -166,10 +166,10 @@
 
 - (void)wsConnectionError:(NSError *)error {
     [ProgressHUD showError:[NSString stringWithFormat:@"連線錯誤(%ld)", [error code]]];
+    NSLog(@"連線錯誤(%ld)", [error code]);
 }
 
 #pragma mark - Table view data source
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
@@ -182,10 +182,26 @@
     return [measureDataList count];
 }
 
+- (void)checkboxTapped:(UITapGestureRecognizer *)sender {
+    UIImageView *img = (UIImageView *)[sender view];
+    VentilationData *data = self.measureDataList[img.tag];
+    if (data.checked) {
+        data.checked = NO;
+        [img setImage:[UIImage imageNamed:@"unchecked"]];
+    }
+    else {
+        data.checked = YES;
+        [img setImage:[UIImage imageNamed:@"checked"]];
+    }
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Data Cell";
     DataTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    [cell.imgCheckbox setTag:indexPath.row];
+    [cell.imgCheckbox addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(checkboxTapped:)]];
+    
     VentilationData *data = [measureDataList objectAtIndex:indexPath.row];
     // Configure the cell...
     cell.labelRecordTime.text = data.RecordTime;
@@ -280,6 +296,12 @@
 
 #pragma mark - Button Click
 - (IBAction)uploadClick:(id)sender {
+    NSMutableArray *selectedItems = [self getSelectedItem];
+    if (![selectedItems count]) {
+        [ProgressHUD showError:@"請選擇資料"];
+        return;
+    }
+    NSLog(@"%ld", selectedItems.count);
     uploadOper = @"";
     
     alertView = [[UIAlertView alloc] initWithTitle:@"請掃瞄或輸入治療師卡號" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"送出", nil];
@@ -436,7 +458,8 @@
 
 #pragma mark - Private Method
 - (DtoVentExchangeUploadBatch *)getDataListToUploadDataByDeviceUUID:(NSString *)deviceUUID {
-    if (![uploadOper isEqualToString:@""] && [measureDataList count] > 0) {
+    NSMutableArray *selectedItems = [self getSelectedItem];
+    if (![uploadOper isEqualToString:@""] && [selectedItems count] > 0) {
         //組上傳資料
         DtoVentExchangeUploadBatch *batch = [[DtoVentExchangeUploadBatch alloc] init];
         batch.UploadOper = uploadOper;
@@ -444,9 +467,19 @@
         batch.UploadTime = [DeviceStatus getSystemTime];
         batch.Device = deviceUUID;
         batch.ClientVersion = [NSString stringWithFormat:@"Version %@",[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
-        batch.VentRecList = [[NSMutableArray alloc] initWithArray:[measureDataList copy]];
+        batch.VentRecList = [[NSMutableArray alloc] initWithArray:[selectedItems copy]];
         return batch;
     }
     return nil;
+}
+
+- (NSMutableArray *)getSelectedItem {
+    NSMutableArray *selectedItems = [[NSMutableArray alloc] init];
+    for (VentilationData *item in measureDataList) {
+        if (item.checked) {
+            [selectedItems addObject:item];
+        }
+    }
+    return selectedItems;
 }
 @end
