@@ -12,9 +12,8 @@
 @interface DeviceInfo : NSObject
 
 @property (strong, nonatomic) NSString *BleMacAddress;
-@property (strong, nonatomic) NSString *BleName;
 @property (nonatomic) DEVICE_TYPE DeviceType;
 
-- (id)initWithDeviceInfoByBleName:(NSString *)BleName DeviceType:(NSString *)DeviceType BleMacAddress:(NSString *)BleMacAddress;
+- (id)initWithDeviceInfoByBleMacAddress:(NSString *)BleMacAddress DeviceType:(NSString *)DeviceType;
 
 @end

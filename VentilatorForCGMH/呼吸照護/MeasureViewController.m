@@ -54,6 +54,7 @@
     [_VentNo addTarget:self action:@selector(ventNoTextFieldDone:) forControlEvents:UIControlEventEditingDidEndOnExit];
     _RecordOper.delegate = self;
     _VentNo.delegate = self;
+    _ChtNo.delegate = self;
     
     isStartListeningThread = NO;
     isFocusOnRecordOper = NO;
@@ -144,7 +145,7 @@
 
 - (IBAction)testClick:(id)sender {
     //[ble startReadByConnectionString:@"CD8FC44D-4407-197A-068E-119EBD891976**HAMILTON"];
-    [ble setConnectionString:@"BLE-DEMO_01**DRAGER**123456789012"];
+    [ble setConnectionString:@"000150671100**DRAGER"];
     [ble startRead];
 }
 
@@ -447,6 +448,13 @@
         [self indicatorVNOStop];
         isFocusOnVentNo = NO;
     }
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    if (textField == _ChtNo) {
+        _btnSave.enabled = [textField.text stringByReplacingCharactersInRange:range withString:string].length;
+    }
+    return YES;
 }
 
 #pragma mark - Methods

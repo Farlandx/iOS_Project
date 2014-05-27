@@ -63,7 +63,7 @@
     NSString *peripheralName = [peripheral.name stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     NSLog(@"Discovered %@, UUID:%@, RSSI:%@", peripheralName, [[peripheral identifier] UUIDString], RSSI);
     
-    if (deviceInfo != nil && [peripheralName isEqualToString:deviceInfo.BleName] && !isFindDevice) {
+    if (deviceInfo != nil && [peripheralName isEqualToString:deviceInfo.BleMacAddress] && !isFindDevice) {
         //NSUUID *uuid = [[NSUUID alloc] initWithUUIDString:[NSString stringWithFormat:@"%@", [[peripheral identifier] UUIDString]]];
         NSArray *ary = [_centralMgr retrievePeripheralsWithIdentifiers:@[peripheral.identifier]];
         if (ary == nil || ary.count == 0) {
@@ -317,7 +317,7 @@
     }
     else {
         NSArray *ary = [code componentsSeparatedByString:@"**"];
-        di = [di initWithDeviceInfoByBleName:[ary objectAtIndex:0] DeviceType:[ary objectAtIndex:1] BleMacAddress:[ary objectAtIndex:2]];
+        di = [di initWithDeviceInfoByBleMacAddress:[ary objectAtIndex:0] DeviceType:[ary objectAtIndex:1]];
     }
     
     return di;

@@ -11,14 +11,13 @@
 @implementation DeviceInfo
 
 - (id)init {
-    return [self initWithDeviceInfoByBleName:@"" DeviceType:@"NONE" BleMacAddress:@""];
+    return [self initWithDeviceInfoByBleMacAddress:@"" DeviceType:@"NONE"];
 }
 
-- (id)initWithDeviceInfoByBleName:(NSString *)BleName DeviceType:(NSString *)DeviceType BleMacAddress:(NSString *)BleMacAddress {
+- (id)initWithDeviceInfoByBleMacAddress:(NSString *)BleMacAddress DeviceType:(NSString *)DeviceType {
     self = [super init];
     if (self) {
         self.BleMacAddress = BleMacAddress;
-        self.BleName = BleName;
         
         if (![DeviceType caseInsensitiveCompare:@"DRAGER"]) {
             self.DeviceType = DEVICE_TYPE_DRAGER;

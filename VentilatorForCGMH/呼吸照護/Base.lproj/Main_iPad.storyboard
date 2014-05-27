@@ -219,7 +219,7 @@
                                 <action selector="btnCancleClick:" destination="sB3-mS-iQr" id="qb8-sm-cRE"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="儲存" id="uFB-lp-Nin">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="儲存" id="uFB-lp-Nin">
                             <connections>
                                 <action selector="btnSaveClick:" destination="sB3-mS-iQr" id="Bz5-ga-Ogr"/>
                             </connections>
