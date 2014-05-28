@@ -32,7 +32,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
     _displayView.delegate = self;
     
     if (viewMode) {
@@ -66,6 +65,7 @@
     
     [_Xrem.layer setBorderColor:[[[UIColor grayColor] colorWithAlphaComponent:0.5f] CGColor]];
     [_Xrem.layer setBorderWidth:0.5f];
+    [_Xrem.layer setCornerRadius:5.0f];
     _Xrem.delegate = self;
     
     _btnBreathSound.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
@@ -100,77 +100,34 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)didKeyboardDismiss {
-    NSLog(@"%f, %f", _scrollView.frame.origin.x, _scrollView.frame.origin.y);
-    if (CGRectEqualToRect(_scrollView.frame, rect)) {
-        return;
-    }
-    _scrollView.frame = rect;
-    [UIView animateWithDuration:0.3 animations:^{
-        _scrollView.frame = CGRectMake(0, 0, _scrollView.frame.size.width, _scrollView.frame.size.height);
-    }];
-    heightChanged = NO;
-}
-
 #pragma mark - TextFieldDelegate
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    CGPoint pt;
-    CGRect rc = [textField bounds];
-    rc = [textField convertRect:rc toView:nil];
-    pt = rc.origin;
-    pt.x = 0;
-    if (!heightChanged) {
-        if (pt.y > 162) {
-            pt.y -= 162;
-            [_scrollView setContentOffset:pt animated:YES];
-        }
-        
-        CGRect newRect;
-        newRect.origin = _scrollView.frame.origin;
-        newRect.size = CGSizeMake(_scrollView.frame.size.width, _scrollView.frame.size.height - 172);
-        [UIView animateWithDuration:0.3 animations:^{
-            _scrollView.frame = newRect;
-        }];
-        heightChanged = YES;
-    }
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [self didKeyboardDismiss];
-    
-    [textField resignFirstResponder];
+    return YES;
+
+}
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    return YES;
+}
+
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
     return YES;
 }
 
 #pragma mark - TextViewDelegate
-- (void)textViewDidBeginEditing:(UITextView *)textView {
-    CGPoint pt;
-    CGRect rc = [textView bounds];
-    rc = [textView convertRect:rc toView:nil];
-    pt = rc.origin;
-    pt.x = 0;
-    if (!heightChanged) {
-        pt.y -= 230;
-        [_scrollView setContentOffset:pt animated:YES];
-        CGRect newRect;
-        newRect.origin = _scrollView.frame.origin;
-        newRect.size = CGSizeMake(_scrollView.frame.size.width, _scrollView.frame.size.height - 172);
-        [UIView animateWithDuration:0.3 animations:^{
-            _scrollView.frame = newRect;
-        }];
-        heightChanged = YES;
-    }
-}
-
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
-    [self didKeyboardDismiss];
-    
     [textView resignFirstResponder];
     return YES;
 }
 
+- (BOOL)textViewShouldEndEditing:(UITextView *)textView {
+    return YES;
+}
+
 - (void)displayViewTouchesBeganDone {
-    [self didKeyboardDismiss];
 }
 
 - (void)breathSoundTableViewDismissWithStringData:(NSString *)sound {

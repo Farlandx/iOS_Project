@@ -31,7 +31,8 @@
 - (IBAction)btnSaveClick:(id)sender;
 - (IBAction)btnCancleClick:(id)sender;
 
-@property (strong, nonatomic) IBOutlet UIButton *btnReadData;
+@property (strong, nonatomic) IBOutlet UIButton *btnTest1;
+@property (strong, nonatomic) IBOutlet UIButton *btnTest2;
 
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicatorRO;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicatorVNO;

@@ -176,7 +176,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="點選開始掃瞄治療師卡號" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" id="kZs-oC-drs">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="點選開始掃瞄治療師卡號" minimumFontSize="17" clearButtonMode="whileEditing" id="kZs-oC-drs">
                                 <rect key="frame" x="189" y="101" width="450" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -188,7 +188,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="點選開始掃瞄儀器ID" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" id="oZb-ya-z2X">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="點選開始掃瞄儀器ID" minimumFontSize="17" clearButtonMode="whileEditing" id="oZb-ya-z2X">
                                 <rect key="frame" x="189" y="177" width="450" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -252,6 +252,8 @@
                         <outlet property="RecordTime" destination="rvf-jW-sdq" id="RxK-4N-noI"/>
                         <outlet property="VentNo" destination="oZb-ya-z2X" id="hRg-ic-0L7"/>
                         <outlet property="btnSave" destination="uFB-lp-Nin" id="uD9-hq-8T4"/>
+                        <outlet property="btnTest1" destination="v8N-HZ-G7Q" id="tov-me-iDu"/>
+                        <outlet property="btnTest2" destination="E0O-Lz-L6C" id="o2b-bW-P5t"/>
                         <outlet property="indicatorRO" destination="3bI-C1-xGF" id="sSJ-Yt-DdL"/>
                         <outlet property="indicatorVNO" destination="hH9-aY-XRm" id="X9j-eC-6LU"/>
                     </connections>

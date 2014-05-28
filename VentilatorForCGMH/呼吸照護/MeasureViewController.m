@@ -49,6 +49,10 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    //這是測試用按鈕
+    _btnTest1.hidden = YES;
+    _btnTest2.hidden = YES;
+    
     [_RecordOper addTarget:self action:@selector(recordOperTextFieldDone:) forControlEvents:UIControlEventEditingDidEndOnExit];
     [_ChtNo addTarget:self action:@selector(chtNoTextFieldDone:) forControlEvents:UIControlEventEditingDidEndOnExit];
     [_VentNo addTarget:self action:@selector(ventNoTextFieldDone:) forControlEvents:UIControlEventEditingDidEndOnExit];
@@ -460,23 +464,26 @@
 }
 
 - (BOOL)textFieldShouldClear:(UITextField *)textField {
-    if (textField == _RecordOper) {
-        
-    }
-    else if (textField == _ChtNo) {
-        
-    }
-    else if (textField == _VentNo) {
-        
+    if (textField == _RecordOper || textField == _ChtNo || textField == _VentNo) {
+        _btnSave.enabled = NO;
     }
     return YES;
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:string];
-    if (textField == _ChtNo) {
-        _btnSave.enabled = newString.length;
+    BOOL isModeEmpty = [myMeasureData.VentilationMode isEqualToString:@""];
+    
+    if (textField == _RecordOper) {
+        _btnSave.enabled = newString.length && _ChtNo.text.length && _VentNo.text.length && !isModeEmpty;
     }
+    else if (textField == _ChtNo) {
+        _btnSave.enabled = _RecordOper.text.length && newString.length && _VentNo.text.length && !isModeEmpty;
+    }
+    else if (textField == _VentNo) {
+        _btnSave.enabled = _RecordOper.text.length && _ChtNo.text.length && newString.length && !isModeEmpty;
+    }
+    
     return YES;
 }
 

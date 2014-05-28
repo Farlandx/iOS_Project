@@ -172,12 +172,9 @@
 - (void)wsResponseCurRtCardListVerId:(int)verId {
     if (curRtCardListVerId == -1) {
         curRtCardListVerId = verId;
-        //資料庫裡沒有東西，取得新的名單
-        [self getCardList];
     }
-    else if (verId > curRtCardListVerId) {
-        [self getCardList];
-    }
+    
+    [self getCardList];
     
     [ProgressHUD dismiss];
 }

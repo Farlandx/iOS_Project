@@ -90,13 +90,13 @@
     pt = rc.origin;
     pt.x = 0;
     if (!heightChanged) {
-        if (pt.y > 162) {
-            pt.y -= 162;
+        if (pt.y > 352) {
+            pt.y -= 352;
             [_scrollView setContentOffset:pt animated:YES];
         }
         CGRect newRect;
         newRect.origin = _scrollView.frame.origin;
-        newRect.size = CGSizeMake(_scrollView.frame.size.width, _scrollView.frame.size.height - 172);
+        newRect.size = CGSizeMake(_scrollView.frame.size.width, _scrollView.frame.size.height - 352);
         [UIView animateWithDuration:0.3 animations:^{
             _scrollView.frame = newRect;
         }];
