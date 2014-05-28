@@ -61,6 +61,8 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     NSLog(@"%@", [NSString stringWithFormat:@"Version %@",[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]]);
     
+    [self.imgSelectAll addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectAllToggle)]];
+    
     isStartListeningThread = NO;
     
     db = [[DatabaseUtility alloc] init];
@@ -91,6 +93,31 @@
 - (void)getCardList {
     [ProgressHUD show:@"資料更新中..." Interaction:NO];
     [ws getCurRtCardList];
+}
+
+- (void)selectAllToggle {
+    if ([self getSelectedItem].count != measureDataList.count) {
+        [self.imgSelectAll setImage:[UIImage imageNamed:@"checked"]];
+        
+        for (VentilationData *item in measureDataList) {
+            item.checked = YES;
+        }
+        
+        for (DataTableViewCell* cell in [self.tableView visibleCells]) {
+            [cell.imgCheckbox setImage:[UIImage imageNamed:@"checked"]];
+        }
+    }
+    else {
+        [self.imgSelectAll setImage:[UIImage imageNamed:@"unchecked"]];
+        
+        for (VentilationData *item in measureDataList) {
+            item.checked = NO;
+        }
+        
+        for (DataTableViewCell *cell in [self.tableView visibleCells]) {
+            [cell.imgCheckbox setImage:[UIImage imageNamed:@"unchecked"]];
+        }
+    }
 }
 
 #pragma mark - Delegate
@@ -192,6 +219,13 @@
     else {
         data.checked = YES;
         [img setImage:[UIImage imageNamed:@"checked"]];
+    }
+    
+    if (measureDataList.count > 0 && [self getSelectedItem].count == measureDataList.count) {
+        [self.imgSelectAll setImage:[UIImage imageNamed:@"checked"]];
+    }
+    else {
+        [self.imgSelectAll setImage:[UIImage imageNamed:@"unchecked"]];
     }
 }
 
