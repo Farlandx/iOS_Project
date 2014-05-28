@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>07DA0A2A-6C14-47D3-8ED0-FD25FE2CC487</string>
+	<key>IDESourceControlProjectName</key>
+	<string>呼吸照護</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>11D9AD97-5387-46B6-9AC2-B5058D6849DA</key>
+		<string>https://github.com/Farlandx/iOS_Library.git</string>
+		<key>B6A5F7D3-DD69-4629-B242-8E539C90EFA5</key>
+		<string>https://github.com/Farlandx/iOS_Project.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Ventilator/呼吸照護.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>11D9AD97-5387-46B6-9AC2-B5058D6849DA</key>
+		<string>../../../../iOS_Library</string>
+		<key>B6A5F7D3-DD69-4629-B242-8E539C90EFA5</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/Farlandx/iOS_Project.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>B6A5F7D3-DD69-4629-B242-8E539C90EFA5</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>11D9AD97-5387-46B6-9AC2-B5058D6849DA</string>
+			<key>IDESourceControlWCCName</key>
+			<string>iOS_Library</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>B6A5F7D3-DD69-4629-B242-8E539C90EFA5</string>
+			<key>IDESourceControlWCCName</key>
+			<string>iOS_Project</string>
+		</dict>
+	</array>
+</dict>
+</plist>
