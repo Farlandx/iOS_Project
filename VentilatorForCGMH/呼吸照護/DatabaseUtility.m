@@ -570,6 +570,26 @@
     return isSuccess;
 }
 
+- (void) deleteMeasuresByUploadId:(int)uploadId {
+    sqlite3_stmt *statement = NULL;
+    const char *dbpath = [databasePath UTF8String];
+    
+    if (sqlite3_open(dbpath, &sqliteDb) == SQLITE_OK) {
+        NSString *deleteSQL = [NSString stringWithFormat:@"DELETE FROM MEASURE_DATA WHERE UploadId = ?"];
+        
+        const char *delete_stmt = [deleteSQL UTF8String];
+        sqlite3_prepare_v2(sqliteDb, delete_stmt, -1, &statement, NULL);
+        sqlite3_bind_int(statement, 1, uploadId);
+        int foo = sqlite3_step(statement);
+        if (foo != SQLITE_DONE) {
+            NSLog(@"Error. %s", __func__);
+        }
+        
+        sqlite3_finalize(statement);
+        sqlite3_close(sqliteDb);
+    }
+}
+
 #pragma mark - UploadData
 - (BOOL)saveUploadData:(DtoVentExchangeUploadBatch *)uploadData {
     if (uploadData.VentRecList.count == 0) {
@@ -633,6 +653,9 @@
     NSMutableArray *measureList = [[NSMutableArray alloc] init];
     const char *dbpath = [databasePath UTF8String];
     sqlite3_stmt *statement;
+    
+    //刪除過期資料
+    [self deleteExpiredHistories];
     
     if (sqlite3_open(dbpath, &sqliteDb) == SQLITE_OK) {
         //取得上傳記錄
@@ -738,6 +761,71 @@
     }
     
     return batchList;
+}
+
+- (void) deleteUploadHistoryByUploadId:(int)uploadId {
+    sqlite3_stmt *statement = NULL;
+    const char *dbpath = [databasePath UTF8String];
+    
+    if (sqlite3_open(dbpath, &sqliteDb) == SQLITE_OK) {
+        NSString *deleteSQL = [NSString stringWithFormat:@"DELETE FROM UPLOAD_DATA WHERE UploadId = ?"];
+        
+        const char *delete_stmt = [deleteSQL UTF8String];
+        sqlite3_prepare_v2(sqliteDb, delete_stmt, -1, &statement, NULL);
+        sqlite3_bind_int(statement, 1, uploadId);
+        int foo = sqlite3_step(statement);
+        if (foo != SQLITE_DONE) {
+            NSLog(@"Error. %s", __func__);
+        }
+        
+        sqlite3_finalize(statement);
+        sqlite3_close(sqliteDb);
+    }
+}
+
+- (void) deleteExpiredHistories {
+    NSMutableArray *uploadIdArray = [[NSMutableArray alloc] init];
+    
+    const char *dbpath = [databasePath UTF8String];
+    sqlite3_stmt *statement;
+    
+    if (sqlite3_open(dbpath, &sqliteDb) == SQLITE_OK) {
+        //取得三天前的上傳記錄
+        NSDateComponents *dateComponets = [[NSDateComponents alloc] init];
+        [dateComponets setDay:-3];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
+        
+        NSString *querySQL = [NSString stringWithFormat:@"SELECT UploadId FROM UPLOAD_DATA WHERE UploadTime < '%@'", [dateFormatter stringFromDate:[[NSCalendar currentCalendar] dateByAddingComponents:dateComponets toDate:[NSDate date] options:0]]];
+        const char *query_stmt = [querySQL UTF8String];
+        
+        if (sqlite3_prepare_v2(sqliteDb, query_stmt, -1, &statement, NULL) == SQLITE_OK) {
+            while (sqlite3_step(statement) == SQLITE_ROW) {
+                [uploadIdArray addObject:[NSNumber numberWithInt:sqlite3_column_int(statement, 0)]];
+            }
+        }
+        
+        if (uploadIdArray.count) {
+            NSString *deleteSQL = [NSString stringWithFormat:@"DELETE FROM UPLOAD_DATA WHERE UploadId = ?"];
+            
+            for (NSNumber *uploadId in uploadIdArray) {
+                //Delete UploadHistory
+                const char *delete_stmt = [deleteSQL UTF8String];
+                sqlite3_prepare_v2(sqliteDb, delete_stmt, -1, &statement, NULL);
+                sqlite3_bind_int(statement, 1, [uploadId intValue]);
+                int foo = sqlite3_step(statement);
+                if (foo != SQLITE_DONE) {
+                    NSLog(@"Error. %@ (%s)", deleteSQL, __func__);
+                }
+                
+                //Delete MeasureData
+                [self deleteMeasuresByUploadId:[uploadId intValue]];
+            }
+        }
+        
+        sqlite3_finalize(statement);
+        sqlite3_close(sqliteDb);
+    }
 }
 
 #pragma mark - CurRtCardListVerId
