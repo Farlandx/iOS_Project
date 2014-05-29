@@ -374,6 +374,10 @@
             [ProgressHUD show:@"讀取中..." Interaction:NO];
             break;
             
+        case BLE_SCAN_TIMEOUT:
+            [ProgressHUD showError:@"找不到設備"];
+            break;
+            
         case BLE_READ_ERROR:
             [ProgressHUD dismiss];
             NSLog(@"BLE Read Error!");
