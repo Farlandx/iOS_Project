@@ -23,12 +23,10 @@
 
 @interface WebService : NSObject
 
+@property (strong, nonatomic) NSString *ServerPath;
 @property (assign, nonatomic) id<WebServiceDelegate> delegate;
 
-- (void)appLoginDeviceName:(NSString *)deviceName idNo:(NSString *)idNo;
-- (void)uploadVentDataBySessionId:(NSString *)sessionId DtoVentExchangeUploadBatch:(DtoVentExchangeUploadBatch *)vData;
-- (void)getCurRtCardList;
-- (void)getCurRtCardListVerId;
+- (void)getUserList;
 - (void)getPatientList;
 
 @end

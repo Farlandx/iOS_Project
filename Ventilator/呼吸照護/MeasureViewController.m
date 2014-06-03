@@ -13,6 +13,9 @@
 #import "DatabaseUtility.h"
 #import "DeviceStatus.h"
 #import "ProgressHUD.h"
+#import <stdlib.h>
+
+#define DEMO_MODE_INTERVAL 3.0f
 
 @interface MeasureViewController ()
 
@@ -26,12 +29,13 @@
 }
 
 @synthesize viewMode;
+@synthesize demoMode;
 @synthesize myMeasureData;
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        viewMode = NO;
+        
     }
     return self;
 }
@@ -49,9 +53,11 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    
     //這是測試用按鈕
-    _btnTest1.hidden = YES;
-    _btnTest2.hidden = YES;
+    _btnDemo.hidden = !demoMode;
+    _btnTest.hidden = YES;
     
     [_RecordOper addTarget:self action:@selector(recordOperTextFieldDone:) forControlEvents:UIControlEventEditingDidEndOnExit];
     [_ChtNo addTarget:self action:@selector(chtNoTextFieldDone:) forControlEvents:UIControlEventEditingDidEndOnExit];
@@ -141,16 +147,138 @@
     [textField resignFirstResponder];
     
     if (![_VentNo.text isEqualToString:@""]) {
-        [ble setConnectionString:_VentNo.text];
-        [ble startRead];
+        if (demoMode) {
+            [self btnDemoClick:nil];
+        }
+        else {
+            [ble setConnectionString:_VentNo.text];
+            [ble startRead];
+        }
     }
     //[self btnStart:_btnReadData];
 }
 
-- (IBAction)testClick:(id)sender {
-    //[ble startReadByConnectionString:@"CD8FC44D-4407-197A-068E-119EBD891976**HAMILTON"];
-    [ble setConnectionString:@"000150671100**DRAGER"];
-    [ble startRead];
+- (void)setDemoData {
+    //取的目前時間
+    _RecordTime.text = [DeviceStatus getSystemTime];
+    
+    //取得非量測值
+    myMeasureData.ChtNo = _ChtNo.text;
+    myMeasureData.RecordTime = _RecordTime.text;
+    myMeasureData.RecordIp = [DeviceStatus getCurrentIPAddress];
+    myMeasureData.RecordOper = _RecordOper.text;
+    myMeasureData.RecordDevice = [DeviceStatus getDeviceVendorUUID];
+    myMeasureData.VentNo = _VentNo.text;
+    myMeasureData.RecordClientVersion = [NSString stringWithFormat:@"Version %@",[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
+    
+    //塞生理量測DEMO資料
+    //Ventilatioin
+    myMeasureData.VentilationMode = @"DEMO Mode";
+    
+    //Tidal Volume
+    myMeasureData.TidalVolumeSet = [NSString stringWithFormat:@"%d", arc4random() % 100];
+    myMeasureData.TidalVolumeMeasured = [NSString stringWithFormat:@"%d", arc4random() % 100];
+    
+    //Ventilation Rate
+    myMeasureData.VentilationRateSet = [NSString stringWithFormat:@"%d", arc4random() % 100];
+    myMeasureData.VentilationRateTotal = [NSString stringWithFormat:@"%d", arc4random() % 100];
+    
+    //MV
+    myMeasureData.MVSet = [NSString stringWithFormat:@"%d", arc4random() % 100];
+    myMeasureData.MVTotal = [NSString stringWithFormat:@"%d", arc4random() % 100];
+    
+    //SIMV Rate
+    myMeasureData.SIMVRateSet = [NSString stringWithFormat:@"%d", arc4random() % 100];
+    
+    //%min Vol
+    //Minute Volume Set
+    myMeasureData.PercentMinVolSet = [NSString stringWithFormat:@"%d", arc4random() % 100];
+    
+    //Pattern
+    myMeasureData.Pattern = [NSString stringWithFormat:@"%d", arc4random() % 100];
+    
+    //Vol Target
+    myMeasureData.VolumeTarget = [NSString stringWithFormat:@"%d", arc4random() % 100];
+    
+    //Insp. T
+    myMeasureData.InspTime = [NSString stringWithFormat:@"%d", arc4random() % 100];
+    
+    //I:E
+    //I:E Ratio
+    myMeasureData.IERatio = [NSString stringWithFormat:@"%d", arc4random() % 100];
+    
+    
+    //THigh
+    myMeasureData.THigh = [NSString stringWithFormat:@"%d", arc4random() % 100];
+    
+    //TLow
+    myMeasureData.Tlow = [NSString stringWithFormat:@"%d", arc4random() % 100];
+    
+    //Flow
+    myMeasureData.FlowSetting = [NSString stringWithFormat:@"%d", arc4random() % 100];
+    myMeasureData.FlowMeasured = [NSString stringWithFormat:@"%d", arc4random() % 100];
+    myMeasureData.BaseFlow = [NSString stringWithFormat:@"%d", arc4random() % 100];
+    myMeasureData.FlowSensitivity = [NSString stringWithFormat:@"%d", arc4random() % 100];
+    myMeasureData.AutoFlow = [NSString stringWithFormat:@"%d", arc4random() % 100];
+    
+    //Pressure
+    myMeasureData.PeakPressure = [NSString stringWithFormat:@"%d", arc4random() % 100];
+    myMeasureData.PlateauPressure = [NSString stringWithFormat:@"%d", arc4random() % 100];
+    myMeasureData.MeanPressure = [NSString stringWithFormat:@"%d", arc4random() % 100];
+    myMeasureData.PEEP = [NSString stringWithFormat:@"%d", arc4random() % 100];
+    myMeasureData.PressureSupport = [NSString stringWithFormat:@"%d", arc4random() % 100];
+    myMeasureData.PressureControl = [NSString stringWithFormat:@"%d", arc4random() % 100];
+    
+    //PHigh
+    myMeasureData.PHigh = [NSString stringWithFormat:@"%d", arc4random() % 100];
+    
+    //Plow
+    myMeasureData.Plow = [NSString stringWithFormat:@"%d", arc4random() % 100];
+    
+    //Temp.
+    myMeasureData.Temperature = [NSString stringWithFormat:@"%d", arc4random() % 100];
+    
+    //FiO2
+    myMeasureData.FiO2Set = [NSString stringWithFormat:@"%d", arc4random() % 100];
+    myMeasureData.FiO2Measured = [NSString stringWithFormat:@"%d", arc4random() % 100];
+    
+    //Resistance
+    myMeasureData.Resistance = [NSString stringWithFormat:@"%d", arc4random() % 100];
+    
+    //Compliance
+    myMeasureData.Compliance = [NSString stringWithFormat:@"%d", arc4random() % 100];
+    
+    //L. MV
+    myMeasureData.LowerMV = [NSString stringWithFormat:@"%d", arc4random() % 100];
+    
+    //H. Pr. Alarm
+    myMeasureData.HighPressureAlarm = [NSString stringWithFormat:@"%d", arc4random() % 100];
+    
+    //Relief. Pr.
+    myMeasureData.ReliefPressure = [NSString stringWithFormat:@"%d", arc4random() % 100];
+    
+    //將數據顯示出來
+    for (UIViewController *child in self.childViewControllers) {
+        if ([child isKindOfClass:[MeasureTabBarViewController class]]) {
+            for (UIViewController *v in ((MeasureTabBarViewController *)child).viewControllers) {
+                if ([v isKindOfClass:[VentilatorDataViewController class]]) {
+                    if ([v isViewLoaded]) {
+                        VentilatorDataViewController *vc = (VentilatorDataViewController *)v;
+                        [vc setMeasureData:myMeasureData];
+                    }
+                }
+            }
+            
+        }
+    }
+    
+    _btnSave.enabled = _RecordOper.text.length && _ChtNo.text.length && _VentNo.text.length;
+    [ProgressHUD dismiss];
+}
+
+- (IBAction)btnDemoClick:(id)sender {
+    [ProgressHUD show:@"讀取中......(此為展示模式)" Interaction:NO];
+    [NSTimer scheduledTimerWithTimeInterval:DEMO_MODE_INTERVAL target:self selector:@selector(setDemoData) userInfo:nil repeats:NO];
 }
 
 - (IBAction)testDisconnect:(id)sender {
@@ -272,8 +400,13 @@
                 [self indicatorVNOStop];
                 [_VentNo resignFirstResponder];
                 
-                [ble setConnectionString:blockData];
-                [ble startRead];
+                if (demoMode) {
+                    [self btnDemoClick:nil];
+                }
+                else {
+                    [ble setConnectionString:blockData];
+                    [ble startRead];
+                }
             }
             break;
             
@@ -370,6 +503,10 @@
             [ProgressHUD show:@"尋找設備中..." Interaction:NO];
             break;
             
+        case BLE_SCAN_TIMEOUT:
+            [ProgressHUD showError:@"找不到設備"];
+            break;
+            
         case BLE_READING_DATA:
             [ProgressHUD show:@"讀取中..." Interaction:NO];
             break;
@@ -452,15 +589,6 @@
         [self indicatorVNOStop];
         isFocusOnVentNo = NO;
     }
-}
-
-- (BOOL)validTextIsAllEmpty:(NSArray *)textAry {
-    for (NSString *str in textAry) {
-        if ([str isEqualToString:@""]) {
-            return NO;
-        }
-    }
-    return YES;
 }
 
 - (BOOL)textFieldShouldClear:(UITextField *)textField {

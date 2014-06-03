@@ -59,10 +59,10 @@ typedef NS_ENUM(NSInteger, VENTILATION_MODE) {
 @property (strong, nonatomic) NSString *VentilationRateSet;
 @property (strong, nonatomic) NSString *SIMVRateSet;
 @property (strong, nonatomic) NSString *VentilationRateTotal;
-@property (strong, nonatomic) NSString *InspT;
+@property (strong, nonatomic) NSString *InspTime;
 @property (strong, nonatomic) NSString *THigh;
 //I:E Ratio
-@property (strong, nonatomic) NSString *InspirationExpirationRatio;
+@property (strong, nonatomic) NSString *IERatio;
 @property (strong, nonatomic) NSString *Tlow;
 @property (strong, nonatomic) NSString *AutoFlow;
 @property (strong, nonatomic) NSString *FlowSetting;
@@ -106,9 +106,20 @@ typedef NS_ENUM(NSInteger, VENTILATION_MODE) {
 @property (strong, nonatomic) NSString *Cvp;
 @property (strong, nonatomic) NSString *BpS;
 @property (strong, nonatomic) NSString *BpD;
-@property (strong, nonatomic) NSString *Xrem;
+@property (strong, nonatomic) NSString *Memo;
 @property (strong, nonatomic) NSString *AutoPEEP;
 @property (strong, nonatomic) NSString *PlateauTimeSetting;
+
+@property (strong, nonatomic) NSString *HR;
+@property (strong, nonatomic) NSString *PH;
+@property (strong, nonatomic) NSString *PaCO2;
+@property (strong, nonatomic) NSString *PaO2;
+@property (strong, nonatomic) NSString *SaO2;
+@property (strong, nonatomic) NSString *HCO3;
+@property (strong, nonatomic) NSString *BE;
+@property (strong, nonatomic) NSString *PAaDO2;
+@property (strong, nonatomic) NSString *Shunt;
+@property (strong, nonatomic) NSString *EndTidalCO2;
 
 #pragma mark - 以下參數顯示用,不須上傳
 //治療師姓名
@@ -125,5 +136,6 @@ typedef NS_ENUM(NSInteger, VENTILATION_MODE) {
 #pragma mark - -methods
 - (NSString *) modeToString:(VENTILATION_MODE)mode;
 - (void) setDefaultValue;
+- (NSDictionary *)toDictionary;
 
 @end

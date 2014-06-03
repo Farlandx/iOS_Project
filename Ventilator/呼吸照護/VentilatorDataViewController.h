@@ -53,11 +53,11 @@
 @property (strong, nonatomic) IBOutlet UITextField *VolumeTarget;
 
 //Insp. T
-@property (strong, nonatomic) IBOutlet UITextField *InspT;
+@property (strong, nonatomic) IBOutlet UITextField *InspTime;
 
 //I:E
 //I:E Ratio
-@property (strong, nonatomic) IBOutlet UITextField *InspirationExpirationRatio;
+@property (strong, nonatomic) IBOutlet UITextField *IERatio;
 
 
 //THigh

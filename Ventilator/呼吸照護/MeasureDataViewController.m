@@ -12,19 +12,21 @@
 #import "MeasureViewController.h"
 #import "DatabaseUtility.h"
 #import "WebService.h"
-#import "DtoVentExchangeUploadBatch.h"
-#import "DtoUploadVentDataResult.h"
 #import "DeviceStatus.h"
 #import "ProgressHUD.h"
 #import "NfcA1Device.h"
+#import "MainViewController.h"
+#import "RespiratoryRecord.h"
+#import "WebAPI.h"
+#import "MainViewController.h"
 
-@interface MeasureDataViewController ()<UIAlertViewDelegate, UITextFieldDelegate, MeasureViewControllerDelegate, WebServiceDelegate, NfcA1ProtocolDelegate>
+@interface MeasureDataViewController ()<UIAlertViewDelegate, UITextFieldDelegate, MeasureViewControllerDelegate, WebServiceDelegate, NfcA1ProtocolDelegate, WebAPIDelegate>
 
 @end
 
 @implementation MeasureDataViewController {
     DatabaseUtility *db;
-    WebService *ws;
+    WebAPI *api;
     NSString *uploadOper;
     int curRtCardListVerId;
     
@@ -65,15 +67,12 @@
     
     isStartListeningThread = NO;
     
+    api = [[WebAPI alloc] init];
+    api.delegate = self;
+    
     db = [[DatabaseUtility alloc] init];
     
-    ws = [[WebService alloc] init];
-    ws.delegate = self;
-    
-    //取得版本號合現有的做比對
-    curRtCardListVerId = [db getCurRtCardListVerId];
-    
-    [ws getCurRtCardListVerId];
+//    [ws getCurRtCardListVerId];
 }
 
 - (void)didReceiveMemoryWarning
@@ -90,9 +89,8 @@
     [self.tableView reloadData];
 }
 
-- (void)getCardList {
+- (void)getUserList {
     [ProgressHUD show:@"資料更新中..." Interaction:NO];
-    [ws getCurRtCardList];
 }
 
 - (void)selectAllToggle {
@@ -131,66 +129,23 @@
 }
 
 #pragma mark - WebService Delegate
-- (void)wsAppLogin:(NSString *)sessionId {
-    sessionId = sessionId;
-    NSLog(@"sessionId:%@", sessionId);
-    if (sessionId != nil && ![sessionId isEqualToString:@""]) {
-        [ProgressHUD show:@"上傳中..." Interaction:NO];
-        [ws uploadVentDataBySessionId:sessionId DtoVentExchangeUploadBatch:[self getDataListToUploadDataByDeviceUUID:[DeviceStatus getDeviceVendorUUID]]];
-    }
-    else {
-        [ProgressHUD showError:@"取得驗證資料失敗" Interaction:NO];
-    }
-}
-
-- (void)wsUploadVentDataSuccess:(NSMutableArray *)uploadSuccessResult uploadFailed:(NSMutableArray *)uploadFailed DtoVentExchangeUploadBatch:(DtoVentExchangeUploadBatch *)batch {
-    //刪除measureDataList中的資料
-    for (VentilationData *vd in uploadSuccessResult) {
-        [measureDataList removeObject:vd];
-    }
-    
-    //刪除batch中的資料
-    for (VentilationData *vd in uploadFailed) {
-        [batch.VentRecList removeObject:vd];
-    }
-    
-    if (batch.VentRecList.count > 0) {
-        [db saveUploadData:batch];
-    }
-    [self.tableView reloadData];
-    [ProgressHUD dismiss];
-}
-
-- (void)wsResponseCurRtCardList:(NSMutableArray *)data {
-    if (data != nil && data.count > 0) {
-        [db saveCurRtCardListVerId:curRtCardListVerId];
-        [db saveCurRtCardList:data];
-    }
-    [ProgressHUD dismiss];
-}
-
-- (void)wsResponseCurRtCardListVerId:(int)verId {
-    if (curRtCardListVerId == -1) {
-        curRtCardListVerId = verId;
-    }
-    
-    [self getCardList];
-    
-    [ProgressHUD dismiss];
-}
-
-- (void)wsResponsePatientList:(NSMutableArray *)data {
-    NSLog(@"wsResponsePatientList count:%ld", [data count]);
-    for (int i = 0; i < data.count; i++) {
-        NSLog(@"patient.ChtNo:%@\tBedNo:%@", [data[i] valueForKeyPath:@"ChtNo.text"], [data[i] valueForKeyPath:@"BedNo.text"]);
-    }
-    
-    [ProgressHUD dismiss];
-}
 
 - (void)wsConnectionError:(NSError *)error {
     [ProgressHUD showError:[NSString stringWithFormat:@"連線錯誤(%ld)", [error code]]];
     NSLog(@"連線錯誤(%ld)", [error code]);
+}
+
+#pragma mark - WebAPI Delegate
+- (void)uploadDone:(NSInteger)measureId {
+    for (VentilationData *data in measureDataList) {
+        if (data.MeasureId == measureId) {
+            [db deleteMeasure:data];
+            [measureDataList removeObject:data];
+            
+            [self.tableView reloadData];
+            return;
+        }
+    }
 }
 
 #pragma mark - Table view data source
@@ -314,12 +269,16 @@
                 [foo setDefaultValue];
                 vc.myMeasureData = foo;
                 vc.delegate = self;
+                
+                vc.demoMode = [MainViewController IsDemoMode];
             }
             else if ([[segue identifier] isEqualToString:@"Edit segue"]) {
                 // 編輯
                 NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
                 vc.myMeasureData = [measureDataList objectAtIndex: indexPath.row];
                 vc.delegate = self;
+                
+                vc.demoMode = [MainViewController IsDemoMode];
             }
         }
     }
@@ -383,8 +342,31 @@
         }
         uploadOper = uploaderTextField.text;
         
-        [ProgressHUD show:@"取得驗證資料中..." Interaction:NO];
-        [ws appLoginDeviceName:[DeviceStatus getDeviceVendorUUID] idNo:uploadOper];
+        MainViewController *mainView = (MainViewController *)self.parentViewController.parentViewController;
+        [api setServerPath:mainView.serverPath];
+        
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy/MM/dd HH:mm:ss"];
+        
+        NSError *error;
+        NSMutableArray *selectedItems =  [self getSelectedItem];
+        for (VentilationData *data in selectedItems) {
+            error = nil;
+            RespiratoryRecord *record = [[RespiratoryRecord alloc] init];
+            record.RespiratoryIdString = [NSString stringWithFormat:@"%ld", data.MeasureId];
+            record.PatientId = data.ChtNo;
+            record.PatientName = @"";
+            record.CreatedUserId = uploadOper;
+            record.UserName = @"";
+            record.IPAddress = [DeviceStatus getCurrentIPAddress];
+            record.CreatedDatetime = [dateFormatter stringFromDate:[NSDate date]];
+            record.VentNo = @"";
+            record.Ventilation = data;
+            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[record toDictionary] options:NSJSONWritingPrettyPrinted error:&error];
+            
+            [api uploadVentData:jsonData patientId:data.ChtNo measureId:data.MeasureId];
+        }
+        [self.imgSelectAll setImage:[UIImage imageNamed:@"unchecked"]];
     }
 }
 

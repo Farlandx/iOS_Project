@@ -23,8 +23,17 @@
 #pragma mark - 其他資料
 @property (strong, nonatomic) NSString *BreathSounds;
 //動脈血氧分析
+@property (strong, nonatomic) IBOutlet UITextField *PH;
+@property (strong, nonatomic) IBOutlet UITextField *PaCO2;
 @property (strong, nonatomic) IBOutlet UITextField *PetCo2;
+@property (strong, nonatomic) IBOutlet UITextField *PaO2;
+@property (strong, nonatomic) IBOutlet UITextField *SaO2;
+@property (strong, nonatomic) IBOutlet UITextField *HCO3;
+@property (strong, nonatomic) IBOutlet UITextField *BE;
+@property (strong, nonatomic) IBOutlet UITextField *PAaDO2;
+@property (strong, nonatomic) IBOutlet UITextField *SHunt;
 @property (strong, nonatomic) IBOutlet UITextField *SpO2;
+@property (strong, nonatomic) IBOutlet UITextField *EndTidalCO2;
 
 //呼吸器及氣道狀況監視
 @property (strong, nonatomic) IBOutlet UITextField *RR;
@@ -45,7 +54,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *BpD;
 
 //備註
-@property (strong, nonatomic) IBOutlet UITextView *Xrem;
+@property (strong, nonatomic) IBOutlet UITextView *Memo;
 
 #pragma mark - Method
 - (void)getMeasureData:(VentilationData *)measureData;

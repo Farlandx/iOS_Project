@@ -214,7 +214,7 @@
             /**
 			 * InspT(113) retuen XX.XX
 			 */
-            ventilation.InspT = strData;
+            ventilation.InspTime = strData;
             step = HAMILTON_GET_IE_RATION;
             [self resetMData];
             [_delegate nextCommand:[self getCommand:HAMILTON_GET_IE_RATION]];
@@ -226,7 +226,7 @@
 			 */
             if (mode == 1 || mode == 19 || mode == 21 || mode == 26) {
                 if (![strData isEqualToString:@""]) {
-                    ventilation.InspirationExpirationRatio = [@"1:" stringByAppendingString:strData];
+                    ventilation.IERatio = [@"1:" stringByAppendingString:strData];
                 }
             }
             

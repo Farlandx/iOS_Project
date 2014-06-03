@@ -64,7 +64,7 @@
     NSLog(@"Discovered %@, UUID:%@, RSSI:%@", peripheralName, [[peripheral identifier] UUIDString], RSSI);
     
     if (deviceInfo != nil && [peripheralName isEqualToString:deviceInfo.BleMacAddress] && !isFindDevice) {
-        //NSUUID *uuid = [[NSUUID alloc] initWithUUIDString:[NSString stringWithFormat:@"%@", [[peripheral identifier] UUIDString]]];
+        [timeoutTimer invalidate];
         NSArray *ary = [_centralMgr retrievePeripheralsWithIdentifiers:@[peripheral.identifier]];
         if (ary == nil || ary.count == 0) {
             [_delegate recievedVentilationDataAndReadStatus:nil readStatus:BLE_CONNECT_ERROR];
@@ -74,6 +74,10 @@
         [_centralMgr connectPeripheral:_peripheral options:nil];
         
         ventilation = [[VentilationData alloc] init];
+    }
+    else {
+        [timeoutTimer invalidate];
+        timeoutTimer = [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(scanStop:) userInfo:nil repeats:NO];
     }
 }
 
@@ -305,7 +309,7 @@
 - (void)scanDevices {
     [_centralMgr scanForPeripheralsWithServices:nil options:nil];
     //五秒後停止scan
-    [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(scanStop:) userInfo:nil repeats:NO];
+    timeoutTimer = [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(scanStop:) userInfo:nil repeats:NO];
 }
 
 #pragma mark - Timer
@@ -317,6 +321,7 @@
 - (void)scanStop:(NSTimer*)timer {
     if (_centralMgr != nil){
         [_centralMgr stopScan];
+        [_delegate recievedVentilationDataAndReadStatus:nil readStatus:BLE_SCAN_TIMEOUT];
     }else{
         NSLog(@"_centralMgr is Null!");
     }

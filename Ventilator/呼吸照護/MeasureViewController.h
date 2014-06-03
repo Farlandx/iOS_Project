@@ -31,14 +31,15 @@
 - (IBAction)btnSaveClick:(id)sender;
 - (IBAction)btnCancleClick:(id)sender;
 
-@property (strong, nonatomic) IBOutlet UIButton *btnTest1;
-@property (strong, nonatomic) IBOutlet UIButton *btnTest2;
+@property (strong, nonatomic) IBOutlet UIButton *btnDemo;
+@property (strong, nonatomic) IBOutlet UIButton *btnTest;
 
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicatorRO;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicatorVNO;
 
 @property (strong, nonatomic) VentilationData *myMeasureData;
 @property (nonatomic) BOOL viewMode;
+@property (nonatomic) BOOL demoMode;
 @property (assign, nonatomic) id<MeasureViewControllerDelegate> delegate;
 
 //儲存按鈕

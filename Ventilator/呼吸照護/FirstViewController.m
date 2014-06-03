@@ -953,12 +953,12 @@
             refData.TidalVolumeSet = [NSString stringWithFormat:@"%.2lf", [value floatValue] * 1000];
         } else if (![code caseInsensitiveCompare:@"05"]) {
             // XX.XX
-            refData.InspT = value;
+            refData.InspTime = value;
         } else if (![code caseInsensitiveCompare:@"07"]) {
             // XXX.X
-            refData.InspirationExpirationRatio = value;
+            refData.IERatio = value;
         } else if (![code caseInsensitiveCompare:@"08"]) {
-            refData.InspirationExpirationRatio = [@"1:" stringByAppendingString:value];
+            refData.IERatio = [@"1:" stringByAppendingString:value];
         } else if (![code caseInsensitiveCompare:@"09"]) {
             // XXX.X
             refData.VentilationRateSet = value;

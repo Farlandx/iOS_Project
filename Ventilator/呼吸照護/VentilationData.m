@@ -29,10 +29,10 @@
 @synthesize VentilationRateSet;
 @synthesize SIMVRateSet;
 @synthesize VentilationRateTotal;
-@synthesize InspT;
+@synthesize InspTime;
 @synthesize THigh;
 //I:E Ratio
-@synthesize InspirationExpirationRatio;
+@synthesize IERatio;
 @synthesize Tlow;
 @synthesize AutoFlow;
 @synthesize FlowSetting;
@@ -76,9 +76,20 @@
 @synthesize Cvp;
 @synthesize BpS;
 @synthesize BpD;
-@synthesize Xrem;
+@synthesize Memo;
 @synthesize AutoPEEP;
 @synthesize PlateauTimeSetting;
+
+@synthesize HR;
+@synthesize PH;
+@synthesize PaCO2;
+@synthesize PaO2;
+@synthesize SaO2;
+@synthesize HCO3;
+@synthesize BE;
+@synthesize PAaDO2;
+@synthesize Shunt;
+@synthesize EndTidalCO2;
 
 //以下參數顯示用,不須上傳
 @synthesize RecordOperName;
@@ -171,9 +182,9 @@
     VentilationRateSet = @"";
     SIMVRateSet = @"";
     VentilationRateTotal = @"";
-    InspT = @"";
+    InspTime = @"";
     THigh = @"";
-    InspirationExpirationRatio = @"";
+    IERatio = @"";
     Tlow = @"";
     AutoFlow = @"";
     FlowSetting = @"";
@@ -216,10 +227,102 @@
     Cvp = @"";
     BpS = @"";
     BpD = @"";
-    Xrem = @"";
+    Memo = @"";
     AutoPEEP = @"";
     PlateauTimeSetting = @"";
+    HR = @"";
+    PH = @"";
+    PaCO2 = @"";
+    PaO2 = @"";
+    SaO2 = @"";
+    HCO3 = @"";
+    BE = @"";
+    PAaDO2 = @"";
+    Shunt = @"";
+    EndTidalCO2 = @"";
     checked = NO;
+}
+
+- (NSString *)getStringWithoutNil:(NSString *)string {
+    return string == nil ? @"" : string;
+}
+
+- (NSDictionary *)toDictionary {
+    return [NSDictionary dictionaryWithObjectsAndKeys:
+            [NSString stringWithFormat:@"%ld", MeasureId], @"MeasureId",
+            [self getStringWithoutNil:ChtNo], @"ChtNo",
+            [self getStringWithoutNil:RecordTime], @"RecordTime",
+            [self getStringWithoutNil:RecordIp], @"RecordIp",
+            [self getStringWithoutNil:RecordOper], @"RecordOper",
+            [self getStringWithoutNil:RecordDevice], @"RecordDevice",
+            [self getStringWithoutNil:RecordClientVersion], @"RecordClientVersion",
+            [self getStringWithoutNil:VentNo], @"VentNo",
+            [self getStringWithoutNil:RawData], @"RawData",
+            [self getStringWithoutNil:VentilationMode], @"VentilationMode",
+            [self getStringWithoutNil:TidalVolumeSet], @"TidalVolumeSet",
+            [self getStringWithoutNil:VolumeTarget], @"VolumeTarget",
+            [self getStringWithoutNil:TidalVolumeMeasured], @"TidalVolumeMeasured",
+            [self getStringWithoutNil:VentilationRateSet], @"VentilationRateSet",
+            [self getStringWithoutNil:SIMVRateSet], @"SIMVRateSet",
+            [self getStringWithoutNil:VentilationRateTotal], @"VentilationRateTotal",
+            [self getStringWithoutNil:InspTime], @"InspTime",
+            [self getStringWithoutNil:THigh], @"THigh",
+            [self getStringWithoutNil:IERatio], @"IERatio",
+            [self getStringWithoutNil:Tlow], @"Tlow",
+            [self getStringWithoutNil:AutoFlow], @"AutoFlow",
+            [self getStringWithoutNil:FlowSetting], @"FlowSetting",
+            [self getStringWithoutNil:FlowMeasured], @"FlowMeasured",
+            [self getStringWithoutNil:Pattern], @"Pattern",
+            [self getStringWithoutNil:MVSet], @"MVSet",
+            [self getStringWithoutNil:PercentMinVolSet], @"PercentMinVolSet",
+            [self getStringWithoutNil:MVTotal], @"MVTotal",
+            [self getStringWithoutNil:PeakPressure], @"PeakPressure",
+            [self getStringWithoutNil:PlateauPressure], @"PlateauPressure",
+            [self getStringWithoutNil:MeanPressure], @"MeanPressure",
+            [self getStringWithoutNil:PEEP], @"PEEP",
+            [self getStringWithoutNil:Plow], @"Plow",
+            [self getStringWithoutNil:PressureSupport], @"PressureSupport",
+            [self getStringWithoutNil:PressureControl], @"PressureControl",
+            [self getStringWithoutNil:PHigh], @"PHigh",
+            [self getStringWithoutNil:FiO2Set], @"FiO2Set",
+            [self getStringWithoutNil:FiO2Measured], @"FiO2Measured",
+            [self getStringWithoutNil:Resistance], @"Resistance",
+            [self getStringWithoutNil:Compliance], @"Compliance",
+            [self getStringWithoutNil:BaseFlow], @"BaseFlow",
+            [self getStringWithoutNil:FlowSensitivity], @"FlowSensitivity",
+            [self getStringWithoutNil:LowerMV], @"LowerMV",
+            [self getStringWithoutNil:HighPressureAlarm], @"HighPressureAlarm",
+            [self getStringWithoutNil:Temperature], @"Temperature",
+            [self getStringWithoutNil:ReliefPressure], @"ReliefPressure",
+            [self getStringWithoutNil:PetCo2], @"PetCo2",
+            [self getStringWithoutNil:SpO2], @"SpO2",
+            [self getStringWithoutNil:RR], @"RR",
+            [self getStringWithoutNil:TV], @"TV",
+            [self getStringWithoutNil:MV], @"MV",
+            [self getStringWithoutNil:MaxPi], @"MaxPi",
+            [self getStringWithoutNil:Mvv], @"Mvv",
+            [self getStringWithoutNil:Rsbi], @"Rsbi",
+            [self getStringWithoutNil:EtSize], @"EtSize",
+            [self getStringWithoutNil:Mark], @"Mark",
+            [self getStringWithoutNil:CuffPressure], @"CuffPressure",
+            [self getStringWithoutNil:BreathSounds], @"BreathSounds",
+            [self getStringWithoutNil:Pr], @"Pr",
+            [self getStringWithoutNil:Cvp], @"Cvp",
+            [self getStringWithoutNil:BpS], @"BpS",
+            [self getStringWithoutNil:BpD], @"BpD",
+            [self getStringWithoutNil:Memo], @"Memo",
+            [self getStringWithoutNil:AutoPEEP], @"AutoPEEP",
+            [self getStringWithoutNil:PlateauTimeSetting], @"PlateauTimeSetting",
+            [self getStringWithoutNil:HR], @"HR",
+            [self getStringWithoutNil:PH], @"PH",
+            [self getStringWithoutNil:PaCO2], @"PaCO2",
+            [self getStringWithoutNil:PaO2], @"PaO2",
+            [self getStringWithoutNil:SaO2], @"SaO2",
+            [self getStringWithoutNil:HCO3], @"HCO3",
+            [self getStringWithoutNil:BE], @"BE",
+            [self getStringWithoutNil:PAaDO2], @"PAaDO2",
+            [self getStringWithoutNil:Shunt], @"Shunt",
+            [self getStringWithoutNil:EndTidalCO2], @"EndTidalCO2", nil];
 }
 
 @end

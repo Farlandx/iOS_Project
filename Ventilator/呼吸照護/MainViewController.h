@@ -11,5 +11,9 @@
 @interface MainViewController : UITabBarController
 
 @property (strong, nonatomic)NSMutableArray *historyList;
+@property (strong, nonatomic) NSString *serverPath;
+
++ (BOOL)IsDemoMode;
++ (void)SetDemoMode:(BOOL)value;
 
 @end

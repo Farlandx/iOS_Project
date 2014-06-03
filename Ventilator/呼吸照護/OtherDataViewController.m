@@ -63,10 +63,10 @@
     rect.origin = _scrollView.frame.origin;
     rect.size = CGSizeMake(_scrollView.frame.size.width, _scrollView.frame.size.height);
     
-    [_Xrem.layer setBorderColor:[[[UIColor grayColor] colorWithAlphaComponent:0.5f] CGColor]];
-    [_Xrem.layer setBorderWidth:0.5f];
-    [_Xrem.layer setCornerRadius:5.0f];
-    _Xrem.delegate = self;
+    [_Memo.layer setBorderColor:[[[UIColor grayColor] colorWithAlphaComponent:0.5f] CGColor]];
+    [_Memo.layer setBorderWidth:0.5f];
+    [_Memo.layer setCornerRadius:5.0f];
+    _Memo.delegate = self;
     
     _btnBreathSound.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     
@@ -161,7 +161,7 @@
     _Cvp.text = measureData.Cvp;
     _BpS.text = measureData.BpS;
     _BpD.text = measureData.BpD;
-    _Xrem.text = measureData.Xrem;
+    _Memo.text = measureData.Memo;
 }
 
 - (void)getMeasureData:(VentilationData *)measureData {
@@ -181,7 +181,7 @@
     measureData.Cvp = _Cvp.text;
     measureData.BpS = _BpS.text;
     measureData.BpD = _BpD.text;
-    measureData.Xrem = _Xrem.text;
+    measureData.Memo = _Memo.text;
 }
 
 @end

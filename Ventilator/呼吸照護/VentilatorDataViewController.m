@@ -142,11 +142,11 @@
     _VolumeTarget.text = measureData.VolumeTarget;
     
     //Insp. T
-    _InspT.text = measureData.InspT;
+    _InspTime.text = measureData.InspTime;
     
     //I:E
     //I:E Ratio
-    _InspirationExpirationRatio.text = measureData.InspirationExpirationRatio;
+    _IERatio.text = measureData.IERatio;
     
     
     //THigh
@@ -229,11 +229,11 @@
     measureData.VolumeTarget = _VolumeTarget.text;
     
     //Insp. T
-    measureData.InspT = _InspT.text;
+    measureData.InspTime = _InspTime.text;
     
     //I:E
     //I:E Ratio
-    measureData.InspirationExpirationRatio = _InspirationExpirationRatio.text;
+    measureData.IERatio = _IERatio.text;
     
     
     //THigh

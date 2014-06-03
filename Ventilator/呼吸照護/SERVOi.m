@@ -252,9 +252,9 @@
             }
             
             // InspT(343)
-            ventilation.InspT = [NSString stringWithFormat:@"%d", [[self getValue:4 value:settings] intValue]];
-            if (![ventilation.InspT isEqualToString:@""]) {
-                ventilation.InspT = [NSString stringWithFormat:@"%.1lf", [ventilation.InspT floatValue] / 100.0f];
+            ventilation.InspTime = [NSString stringWithFormat:@"%d", [[self getValue:4 value:settings] intValue]];
+            if (![ventilation.InspTime isEqualToString:@""]) {
+                ventilation.InspTime = [NSString stringWithFormat:@"%.1lf", [ventilation.InspTime floatValue] / 100.0f];
             }
             
             // FlowSetting(348)
@@ -300,16 +300,16 @@
             }
             
             // I:E Ratio Set(333)
-            ventilation.InspirationExpirationRatio = [NSString stringWithFormat:@"%d", [[self getValue:14 value:settings] intValue]];
-            if (![ventilation.InspirationExpirationRatio isEqualToString:@""]) {
-                ventilation.InspirationExpirationRatio = [NSString stringWithFormat:@"%.1lf", [ventilation.InspirationExpirationRatio floatValue] / 100.0f];
-                float tmp = [ventilation.InspirationExpirationRatio floatValue];
+            ventilation.IERatio = [NSString stringWithFormat:@"%d", [[self getValue:14 value:settings] intValue]];
+            if (![ventilation.IERatio isEqualToString:@""]) {
+                ventilation.IERatio = [NSString stringWithFormat:@"%.1lf", [ventilation.IERatio floatValue] / 100.0f];
+                float tmp = [ventilation.IERatio floatValue];
                 
                 if (tmp >= 1.0f) {
-                    ventilation.InspirationExpirationRatio = [ventilation.InspirationExpirationRatio stringByAppendingString:@":1"];
+                    ventilation.IERatio = [ventilation.IERatio stringByAppendingString:@":1"];
                 }
                 else {
-                    ventilation.InspirationExpirationRatio = [@"1:" stringByAppendingString:[NSString stringWithFormat:@"%.1f", 1 / tmp]];
+                    ventilation.IERatio = [@"1:" stringByAppendingString:[NSString stringWithFormat:@"%.1f", 1 / tmp]];
                 }
             }
             

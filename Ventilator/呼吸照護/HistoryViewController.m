@@ -1,25 +1,18 @@
 //
-//  MainViewController.m
+//  HistoryViewController.m
 //  呼吸照護
 //
-//  Created by Farland on 2014/5/12.
+//  Created by Farland on 2014/5/28.
 //  Copyright (c) 2014年 Farland. All rights reserved.
 //
 
-#import "MainViewController.h"
-#import "DatabaseUtility.h"
+#import "HistoryViewController.h"
 
-@interface MainViewController ()
+@interface HistoryViewController ()
 
 @end
 
-@implementation MainViewController {
-    DatabaseUtility *db;
-}
-
-static bool _demoMode = NO;
-
-@synthesize serverPath;
+@implementation HistoryViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -34,27 +27,15 @@ static bool _demoMode = NO;
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-    db = [[DatabaseUtility alloc] init];
-    [db initDatabase];
-    
-    serverPath = [db getServerPath];
-    
-    self.historyList = [db getUploadHistories];
+    NSURL *url = [NSURL URLWithString:@"http://dts.hct24.com/mobile#/respiration"];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    [self.webView loadRequest:request];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-+ (BOOL)IsDemoMode {
-    return _demoMode;
-}
-
-+ (void)SetDemoMode:(BOOL)value {
-    _demoMode = value;
 }
 
 /*

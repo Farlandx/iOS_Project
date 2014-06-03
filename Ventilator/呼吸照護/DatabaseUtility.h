@@ -38,4 +38,8 @@
 - (void) saveCurRtCardList:(NSArray *)data;
 - (NSMutableArray *) getCurRtCardList;
 
+#pragma mark - ServerPath
+- (void) saveServerPath:(NSString *)serverPath;
+- (NSString *) getServerPath;
+
 @end
