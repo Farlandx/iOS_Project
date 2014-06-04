@@ -67,8 +67,9 @@
     
     isStartListeningThread = NO;
     
-    api = [[WebAPI alloc] init];
+    api = [[WebAPI alloc] initWithServerPath:((MainViewController *)self.parentViewController.parentViewController).serverPath];
     api.delegate = self;
+    [api getUserList];
     
     db = [[DatabaseUtility alloc] init];
     
@@ -146,6 +147,16 @@
             return;
         }
     }
+}
+
+- (void)userListDelegate:(NSArray *)userList {
+    [db saveUserList:userList];
+    
+    [api getPatientList];
+}
+
+- (void)patientListDelegate:(NSArray *)patientList {
+    [db savePatientList:patientList];
 }
 
 #pragma mark - Table view data source

@@ -7,12 +7,14 @@
 //
 
 #import "WebAPI.h"
+#import "User.h"
+#import "Patient.h"
 
 #ifndef ___webapi
 #define ___webapi
 
-#define API_GET_USER @"api/user"
-#define API_GET_PATIENT @"api/patient"
+#define API_GET_USERS @"api/user"
+#define API_GET_PATIENTS @"api/patient"
 #define API_UPLOAD @"api/respiratory/"
 #define API_REQUEST_TIMEOUT_INTERVAL 10. //Second
 
@@ -51,10 +53,7 @@
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
         if (data.length > 0 && connectionError == nil) {
-            NSMutableArray *result = [[NSMutableArray alloc] init];
-            NSError *error = nil;
             
-//            [_delegate wsResponsePatientList:result];
         }
         else if ([httpResponse statusCode] == 200) {
             [_delegate uploadDone:measureId];
@@ -71,24 +70,70 @@
 }
 
 #pragma mark - User
-- (void)getUserList:(NSData *)ventData patientId:(NSString *)patientId {
-    NSURLRequest *theRequest=[NSURLRequest requestWithURL:[NSURL URLWithString:[_serverPath stringByAppendingString:API_GET_USER]]
-                                              cachePolicy:NSURLRequestUseProtocolCachePolicy
-                                          timeoutInterval:API_REQUEST_TIMEOUT_INTERVAL];
+- (void)getUserList {
+    NSURL *url = [NSURL URLWithString:[_serverPath stringByAppendingString:API_GET_USERS]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:API_REQUEST_TIMEOUT_INTERVAL];
     
-    // Create the NSMutableData to hold the received data.
-    // receivedData is an instance variable declared elsewhere.
-//    vebtData = [NSMutableData dataWithCapacity: 0];
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
+        NSMutableArray *result = [[NSMutableArray alloc] init];
+        if (data.length > 0 && connectionError == nil) {
+            NSError *error = nil;
+            
+            for (NSDictionary *dict in [NSJSONSerialization JSONObjectWithData:data options:0 error:&error]) {
+                User *u = [[User alloc] init];
+                u.UserIdString = [dict valueForKey:@"$id"];
+                u.EmployeeId = [dict valueForKey:@"EmployeeId"] == [NSNull null] ? @"" : [dict valueForKey:@"EmployeeId"];
+                u.RFID = [dict valueForKey:@"RFID"] == [NSNull null] ? @"" : [dict valueForKey:@"RFID"];
+                u.BarCode = [dict valueForKey:@"BarCode"] == [NSNull null] ? @"" : [dict valueForKey:@"BarCode"];
+                u.Name = [dict valueForKeyPath:@"Name"] == [NSNull null] ? @"" : [dict valueForKeyPath:@"Name"];
+                
+                [result addObject:u];
+            }
+        }
+        else if ([httpResponse statusCode] == 200) {
+//            [_delegate ];
+        }
+        else if (connectionError) {
+            //            [_delegate wsConnectionError:connectionError];
+        }
+        [_delegate userListDelegate:result];
+    }];
+}
+
+#pragma mark - Patient
+- (void)getPatientList {
+    NSURL *url = [NSURL URLWithString:[_serverPath stringByAppendingString:API_GET_PATIENTS]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:API_REQUEST_TIMEOUT_INTERVAL];
     
-    // create the connection with the request
-    // and start loading the data
-    NSURLConnection *theConnection=[[NSURLConnection alloc] initWithRequest:theRequest delegate:self];
-    if (!theConnection) {
-        // Release the receivedData object.
-        ventData = nil;
-        
-        // Inform the user that the connection failed.
-    }
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
+        NSMutableArray *result = [[NSMutableArray alloc] init];
+        if (data.length > 0 && connectionError == nil) {
+            NSError *error = nil;
+            
+            for (NSDictionary *dict in [NSJSONSerialization JSONObjectWithData:data options:0 error:&error]) {
+                Patient *p = [[Patient alloc] init];
+                p.PatientIdString = [dict valueForKey:@"$id"];
+                p.IdentifierId = [dict valueForKey:@"IdentifierId"] == [NSNull null] ? @"" : [dict valueForKey:@"IdentifierId"];
+                p.MedicalId = [dict valueForKey:@"MedicalId"] == [NSNull null] ? @"" : [dict valueForKey:@"MedicalId"];
+                p.RFID = [dict valueForKey:@"RFID"] == [NSNull null] ? @"" : [dict valueForKey:@"RFID"];
+                p.BarCode = [dict valueForKey:@"BarCode"] == [NSNull null] ? @"" : [dict valueForKey:@"BarCode"];
+                p.Name = [dict valueForKeyPath:@"Name"] == [NSNull null] ? @"" : [dict valueForKeyPath:@"Name"];
+                p.BedNo = [dict valueForKey:@"BedNo"] == [NSNull null] ? @"" : [dict valueForKey:@"BedNo"];
+                p.Gender = [dict valueForKey:@"Gender"] == [NSNull null] ? @"" : [dict valueForKey:@"Gender"];
+                
+                [result addObject:p];
+            }
+        }
+        else if ([httpResponse statusCode] == 200) {
+            //            [_delegate ];
+        }
+        else if (connectionError) {
+            //            [_delegate wsConnectionError:connectionError];
+        }
+        [_delegate patientListDelegate:result];
+    }];
 }
 
 @end

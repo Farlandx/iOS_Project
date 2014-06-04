@@ -37,6 +37,30 @@
     return [NSString stringWithUTF8String:text];
 }
 
+- (BOOL) clearTable:(NSString *)tableName {
+    BOOL isSuccess = false;
+    sqlite3_stmt *statement = NULL;
+    const char *dbpath = [databasePath UTF8String];
+    
+    if (sqlite3_open(dbpath, &sqliteDb) == SQLITE_OK) {
+        //刪掉所有資料
+        NSString *deleteSQL = [NSString stringWithFormat:@"DELETE FROM %@", tableName];
+        
+        char *errMsg;
+        if (sqlite3_exec(sqliteDb, [deleteSQL UTF8String], NULL, NULL, &errMsg) != SQLITE_OK) {
+            isSuccess = true;
+        }
+        else {
+            NSLog(@"ClearTable Error:%s", errMsg);
+        }
+        
+        sqlite3_finalize(statement);
+        sqlite3_close(sqliteDb);
+    }
+    
+    return isSuccess;
+}
+
 #pragma mark - Public Methods
 - (void) initDatabase {
 //    NSString *docsDir;
@@ -153,7 +177,7 @@
         }
         
         //建立治療師table
-        sql_stmt = @"CREATE TABLE IF NOT EXISTS USER_DATA (CardNo TEXT PRIMARY KEY)";
+        sql_stmt = @"CREATE TABLE IF NOT EXISTS USER_DATA (UserIdString TEXT PRIMARY KEY, EmployeeId TEXT, RFID TEXT, BarCode TEXT, Name TEXT)";
         if (sqlite3_exec(sqliteDb, [sql_stmt UTF8String], NULL, NULL, &errMsg) != SQLITE_OK) {
             NSLog(@"Failed to create CardNo table.");
         }
@@ -162,7 +186,7 @@
         }
         
         //建立病患table
-        sql_stmt = @"CREATE TABLE IF NOT EXISTS PATIENT (ChtNo TEXT PRIMARY KEY, BedNo TEXT)";
+        sql_stmt = @"CREATE TABLE IF NOT EXISTS PATIENT_DATA (PatientIdString TEXT PRIMARY KEY, IdentifierId TEXT, MedicalId TEXT, RFID TEXT, BarCode TEXT, Name TEXT, BedNo TEXT, Gender TEXT)";
         if (sqlite3_exec(sqliteDb, [sql_stmt UTF8String], NULL, NULL, &errMsg) != SQLITE_OK) {
             NSLog(@"Failed to create PATIENT table.");
         }
@@ -826,17 +850,22 @@
     }
 }
 
-#pragma mark - CurRtCardList
-- (void) saveCurRtCardList:(NSArray *)data {
+#pragma mark - UserList
+- (void) saveUserList:(NSArray *)data {
     sqlite3_stmt *statement = NULL;
     const char *dbpath = [databasePath UTF8String];
     
     if (data.count > 0) {
-        [self deleteCurRtCardList];
+        [self clearTable:@"USER_DATA"];
         if (sqlite3_open(dbpath, &sqliteDb) == SQLITE_OK) {
-            for (NSString *str in data) {
+            for (User *u in data) {
                 NSString *insertSQL = [NSString stringWithFormat:
-                                       @"INSERT INTO CARD_NO (CardNo) VALUES ('%@')", str];
+                                       @"INSERT INTO USER_DATA (UserIdString, EmployeeId, RFID, BarCode, Name) VALUES ('%@','%@','%@','%@','%@')",
+                                       u.UserIdString,
+                                       u.EmployeeId,
+                                       u.RFID,
+                                       u.BarCode,
+                                       u.Name];
                 
                 const char *insert_stmt = [insertSQL UTF8String];
                 sqlite3_prepare_v2(sqliteDb, insert_stmt, -1, &statement, NULL);
@@ -849,50 +878,91 @@
     }
 }
 
-- (BOOL) deleteCurRtCardList {
-    BOOL isSuccess = false;
-    sqlite3_stmt *statement = NULL;
-    const char *dbpath = [databasePath UTF8String];
-    
-    if (sqlite3_open(dbpath, &sqliteDb) == SQLITE_OK) {
-        //刪掉所有資料
-        NSString *deleteSQL = [NSString stringWithFormat:@"DELETE FROM CARD_NO"];
-        
-        char *errMsg;
-        if (sqlite3_exec(sqliteDb, [deleteSQL UTF8String], NULL, NULL, &errMsg) != SQLITE_OK) {
-            isSuccess = true;
-        }
-        else {
-            NSLog(@"Delete Error:%s", errMsg);
-        }
-        
-        sqlite3_finalize(statement);
-        sqlite3_close(sqliteDb);
-    }
-    
-    return isSuccess;
-}
 
-
-- (NSMutableArray *) getCurRtCardList {
-    NSMutableArray *result = [[NSMutableArray alloc] init];
+- (User *) getUserById:(NSString *)userId {
+    User *u = [[User alloc] init];
     const char *dbpath = [databasePath UTF8String];
     sqlite3_stmt *statement;
     
     if (sqlite3_open(dbpath, &sqliteDb) == SQLITE_OK) {
-        NSString *querySQL = @"SELECT Version FROM CARD_NO_VER_ID";
+        NSString *querySQL = [NSString stringWithFormat:
+                              @"SELECT UserIdString, EmployeeId, RFID, BarCode, Name FROM USER_DATA WHERE UserIdString = %@", userId];
         const char *query_stmt = [querySQL UTF8String];
         
         if (sqlite3_prepare_v2(sqliteDb, query_stmt, -1, &statement, NULL) == SQLITE_OK) {
-            while (sqlite3_step(statement) == SQLITE_ROW) {
-                [result addObject:[self getColumnString:(char *)sqlite3_column_text(statement, 0)]];
+            if (sqlite3_step(statement) == SQLITE_ROW) {
+                u.UserIdString = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 0)];
+                u.EmployeeId = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 1)];
+                u.RFID = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 2)];
+                u.BarCode = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 3)];
+                u.Name = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 4)];
             }
             sqlite3_finalize(statement);
         }
         sqlite3_close(sqliteDb);
     }
     
-    return result;
+    return u;
+}
+
+#pragma mark - PatientList
+- (void) savePatientList:(NSArray *)data {
+    sqlite3_stmt *statement = NULL;
+    const char *dbpath = [databasePath UTF8String];
+    
+    if (data.count > 0) {
+        [self clearTable:@"PATIENT_DATA"];
+        if (sqlite3_open(dbpath, &sqliteDb) == SQLITE_OK) {
+            for (Patient *p in data) {
+                NSString *insertSQL = [NSString stringWithFormat:
+                                       @"INSERT INTO PATIENT_DATA (PatientIdString, IdentifierId, MedicalId, RFID, BarCode, Name, BedNo, Gender) VALUES ('%@','%@','%@','%@','%@','%@','%@','%@')",
+                                       p.PatientIdString,
+                                       p.IdentifierId,
+                                       p.MedicalId,
+                                       p.RFID,
+                                       p.BarCode,
+                                       p.Name,
+                                       p.BedNo,
+                                       p.Gender];
+                
+                const char *insert_stmt = [insertSQL UTF8String];
+                sqlite3_prepare_v2(sqliteDb, insert_stmt, -1, &statement, NULL);
+                int sqliteState = sqlite3_step(statement);
+            }
+        }
+        
+        sqlite3_finalize(statement);
+        sqlite3_close(sqliteDb);
+    }
+}
+
+- (Patient *) getPatientById:(NSString *)patientId {
+    Patient *p = [[Patient alloc] init];
+    const char *dbpath = [databasePath UTF8String];
+    sqlite3_stmt *statement;
+    
+    if (sqlite3_open(dbpath, &sqliteDb) == SQLITE_OK) {
+        NSString *querySQL = [NSString stringWithFormat:
+                              @"SELECT PatientIdString, IdentifierId, MedicalId, RFID, BarCode, Name, BedNo, Gender FROM USER_DATA WHERE UserIdString = %@", patientId];
+        const char *query_stmt = [querySQL UTF8String];
+        
+        if (sqlite3_prepare_v2(sqliteDb, query_stmt, -1, &statement, NULL) == SQLITE_OK) {
+            if (sqlite3_step(statement) == SQLITE_ROW) {
+                p.PatientIdString = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 0)];
+                p.IdentifierId = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 1)];
+                p.MedicalId = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 2)];
+                p.RFID = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 3)];
+                p.BarCode = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 4)];
+                p.Name = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 5)];
+                p.BedNo = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 6)];
+                p.Gender = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 7)];
+            }
+            sqlite3_finalize(statement);
+        }
+        sqlite3_close(sqliteDb);
+    }
+    
+    return p;
 }
 
 #pragma mark - ServerPath

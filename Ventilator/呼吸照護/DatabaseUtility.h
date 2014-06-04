@@ -10,6 +10,8 @@
 #import <sqlite3.h>
 #import "VentilationData.h"
 #import "DtoVentExchangeUploadBatch.h"
+#import "User.h"
+#import "Patient.h"
 
 @interface DatabaseUtility : NSObject {
     sqlite3 *sqliteDb;
@@ -30,13 +32,13 @@
 - (BOOL) saveUploadData:(DtoVentExchangeUploadBatch *)uploadData;
 - (NSMutableArray *) getUploadHistories;
 
-#pragma mark - CurRtCardListVerId
-- (int) getCurRtCardListVerId;
-- (BOOL) saveCurRtCardListVerId:(int)Id;
+#pragma mark - UserList
+- (void) saveUserList:(NSArray *)data;
+- (User *) getUserById:(NSString *)userId;
 
-#pragma mark - CurRtCardList
-- (void) saveCurRtCardList:(NSArray *)data;
-- (NSMutableArray *) getCurRtCardList;
+#pragma mark - PatientList
+- (void) savePatientList:(NSArray *)data;
+- (Patient *) getPatientById:(NSString *)patientId;
 
 #pragma mark - ServerPath
 - (void) saveServerPath:(NSString *)serverPath;

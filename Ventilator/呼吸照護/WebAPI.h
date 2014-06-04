@@ -12,6 +12,8 @@
 
 @required
 - (void)uploadDone:(NSInteger)measureId;
+- (void)userListDelegate:(NSArray *)userList;
+- (void)patientListDelegate:(NSArray *)patientList;
 
 @end
 
@@ -23,5 +25,7 @@
 - (void)setServerPath:(NSString *)serverPath;
 
 - (void)uploadVentData:(NSData *)jsonData patientId:(NSString *)patientId measureId:(NSInteger)measureId;
+- (void)getUserList;
+- (void)getPatientList;
 
 @end

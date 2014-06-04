@@ -50,7 +50,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     //這是測試用按鈕
-    _btnTest1.hidden = YES;
+//    _btnTest1.hidden = YES;
     _btnTest2.hidden = YES;
     
     [_RecordOper addTarget:self action:@selector(recordOperTextFieldDone:) forControlEvents:UIControlEventEditingDidEndOnExit];
