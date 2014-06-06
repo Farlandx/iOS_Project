@@ -41,7 +41,7 @@
 - (Patient *) getPatientById:(NSString *)patientId;
 
 #pragma mark - ServerPath
-- (void) saveServerPath:(NSString *)serverPath;
+- (BOOL) saveServerPath:(NSString *)serverPath;
 - (NSString *) getServerPath;
 
 @end

@@ -10,7 +10,7 @@
 #import "MainViewController.h"
 #import "DatabaseUtility.h"
 
-@interface SettingsTableViewController () <UIAlertViewDelegate>
+@interface SettingsTableViewController () <UITextFieldDelegate>
 
 @end
 
@@ -24,15 +24,19 @@
     
     mainView = (MainViewController *)(self.parentViewController).parentViewController;
     
-    [self.cellServer addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showServerPathDialog)]];
-    self.labelServer.text = mainView.serverPath;
+    self.textServer.text = mainView.serverPath;
+    self.textServer.delegate = self;
     
-    if ([MainViewController IsDemoMode]) {
-        [self.imgCheckbox setImage:[UIImage imageNamed:@"checked"]];
-    }
-    [self.imgCheckbox addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toggleDemoMode)]];
+//    [self.switchDemoMode addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toggleDemoMode:)]];
+    [self.switchDemoMode addTarget:self action:@selector(toggleDemoMode:) forControlEvents:UIControlEventValueChanged];
     
     self.labelVersion.text = [NSString stringWithFormat:@"版本: %@", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    self.textServer.text = mainView.serverPath;
+    
+    [super viewWillAppear:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -41,46 +45,44 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)showServerPathDialog {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"請輸入伺服器位置" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"確定", nil];
-    alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
-    UITextField *textField = [alertView textFieldAtIndex:0];
-    textField.text = self.labelServer.text;
-    [textField setPlaceholder:@"ex: http://example.com/"];
-    [textField setKeyboardType:UIKeyboardTypeURL];
-    [alertView show];
+- (void)toggleDemoMode:(id)sender {
+    [MainViewController SetDemoMode:((UISwitch *)sender).on];
 }
 
-- (void)toggleDemoMode {
-    [MainViewController SetDemoMode:![MainViewController IsDemoMode]];
-    if ([MainViewController IsDemoMode]) {
-        [self.imgCheckbox setImage:[UIImage imageNamed:@"checked"]];
-    }
-    else {
-        [self.imgCheckbox setImage:[UIImage imageNamed:@"unchecked"]];
-    }
-}
-
-#pragma mark - UIAlertViewDelegate
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (buttonIndex == 1) {
-        NSString *path = [alertView textFieldAtIndex:0].text;
-        
-        if (path.length) {
-            //開頭加上http://
-            if (path.length < 7 || ![[path substringWithRange:NSMakeRange(0, 7)] isEqualToString:@"http://"]) {
-                path = [@"http://" stringByAppendingString:path];
-            }
-            //尾巴加上/
-            if (![[path substringFromIndex:path.length - 1] isEqualToString:@"/"]) {
-                path = [path stringByAppendingString:@"/"];
-            }
-            
+- (void)saveServerPath:(UITextField *)textField {
+    NSString *path = textField.text;
+    
+    if (path.length) {
+        //開頭加上http://
+        if (path.length < 7 || ![[path substringWithRange:NSMakeRange(0, 7)] isEqualToString:@"http://"]) {
+            path = [@"http://" stringByAppendingString:path];
         }
-        self.labelServer.text = path;
-        DatabaseUtility *db = [[DatabaseUtility alloc] init];
-        [db saveServerPath:self.labelServer.text];
+        //尾巴加上/
+        if (![[path substringFromIndex:path.length - 1] isEqualToString:@"/"]) {
+            path = [path stringByAppendingString:@"/"];
+        }
+        
     }
+    self.textServer.text = path;
+    DatabaseUtility *db = [[DatabaseUtility alloc] init];
+    if ([db saveServerPath:path]) {
+        mainView.serverPath = path;
+    }
+}
+
+#pragma mark - UITextFieldDelegate
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    if (textField == self.textServer) {
+        [self saveServerPath:textField];
+    }
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if (textField == self.textServer) {
+        [self saveServerPath:textField];
+        [textField resignFirstResponder];
+    }
+    return YES;
 }
 
 #pragma mark - Table view data source

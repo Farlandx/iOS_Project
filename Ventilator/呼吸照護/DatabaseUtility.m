@@ -990,9 +990,10 @@
     return isSuccess;
 }
 
-- (void) saveServerPath:(NSString *)serverPath {
+- (BOOL) saveServerPath:(NSString *)serverPath {
     sqlite3_stmt *statement = NULL;
     const char *dbpath = [databasePath UTF8String];
+    bool isSuccess = false;
     
     if (serverPath.length > 0) {
         [self deleteServerPath];
@@ -1003,11 +1004,15 @@
             const char *insert_stmt = [insertSQL UTF8String];
             sqlite3_prepare_v2(sqliteDb, insert_stmt, -1, &statement, NULL);
             int sqliteState = sqlite3_step(statement);
+            if (sqliteState == SQLITE_DONE) {
+                isSuccess = true;
+            }
         }
         
         sqlite3_finalize(statement);
         sqlite3_close(sqliteDb);
     }
+    return isSuccess;
 }
 
 - (NSString *) getServerPath {

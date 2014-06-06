@@ -11,9 +11,10 @@
 @interface SettingsTableViewController : UITableViewController
 
 @property (strong, nonatomic) IBOutlet UITableViewCell *cellServer;
-@property (strong, nonatomic) IBOutlet UILabel *labelServer;
+@property (strong, nonatomic) IBOutlet UITextField *textServer;
 
-@property (strong, nonatomic) IBOutlet UIImageView *imgCheckbox;
+@property (strong, nonatomic) IBOutlet UISwitch *switchDemoMode;
+
 
 @property (strong, nonatomic) IBOutlet UILabel *labelVersion;
 

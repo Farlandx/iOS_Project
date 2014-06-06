@@ -91,9 +91,6 @@
                 [result addObject:u];
             }
         }
-        else if ([httpResponse statusCode] == 200) {
-//            [_delegate ];
-        }
         else if (connectionError) {
             //            [_delegate wsConnectionError:connectionError];
         }
@@ -125,9 +122,6 @@
                 
                 [result addObject:p];
             }
-        }
-        else if ([httpResponse statusCode] == 200) {
-            //            [_delegate ];
         }
         else if (connectionError) {
             //            [_delegate wsConnectionError:connectionError];
