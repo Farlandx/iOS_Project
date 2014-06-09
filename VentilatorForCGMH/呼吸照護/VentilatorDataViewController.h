@@ -10,10 +10,7 @@
 #import "VentilationData.h"
 #import "DisplayView.h"
 
-@interface VentilatorDataViewController : UIViewController<UITextFieldDelegate, DisplayViewDelegate> {
-    CGRect rect;
-    BOOL heightChanged;
-}
+@interface VentilatorDataViewController : UIViewController<UITextFieldDelegate, DisplayViewDelegate>
 
 @property (nonatomic) BOOL viewMode;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;

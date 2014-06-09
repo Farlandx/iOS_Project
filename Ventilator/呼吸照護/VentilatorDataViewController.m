@@ -14,7 +14,10 @@
 
 @end
 
-@implementation VentilatorDataViewController
+@implementation VentilatorDataViewController {
+    CGPoint svos;
+    CGRect textRect;
+}
 
 @synthesize viewMode;
 
@@ -50,9 +53,16 @@
         }
     }
     
-    heightChanged = NO;
-    rect.origin = _scrollView.frame.origin;
-    rect.size = CGSizeMake(_scrollView.frame.size.width, _scrollView.frame.size.height);
+    svos = _scrollView.contentOffset;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -70,43 +80,36 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)didKeyboardDismiss {
-    _scrollView.frame = rect;
-    [UIView animateWithDuration:0.3 animations:^{
-        _scrollView.frame = CGRectMake(0, 0, _scrollView.frame.size.width, _scrollView.frame.size.height);
-    }];
-    heightChanged = NO;
+- (void)displayViewTouchesBeganDone {
 }
 
-- (void)displayViewTouchesBeganDone {
-    [self didKeyboardDismiss];
+#pragma mark - Keyboard
+- (void)keyboardWillShow:(NSNotification *)notification {
+    if (!CGRectIsEmpty(textRect)) {
+        // Get the size of the keyboard.
+        CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+        
+        CGFloat textPos = textRect.origin.y + textRect.size.height;
+        if (_scrollView.frame.size.height - textPos < keyboardSize.height) {
+            CGPoint pt = textRect.origin;
+            pt.x = 0;
+            pt.y = keyboardSize.height;
+            [_scrollView setContentOffset:pt animated:YES];
+        }
+    }
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification {
+    [_scrollView setContentOffset:svos animated:YES];
 }
 
 #pragma mark - TextFieldDelegate
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    CGPoint pt;
-    CGRect rc = [textField bounds];
-    rc = [textField convertRect:rc toView:_scrollView];
-    pt = rc.origin;
-    pt.x = 0;
-    if (!heightChanged) {
-        if (pt.y > 352) {
-            pt.y -= 352;
-            [_scrollView setContentOffset:pt animated:YES];
-        }
-        CGRect newRect;
-        newRect.origin = _scrollView.frame.origin;
-        newRect.size = CGSizeMake(_scrollView.frame.size.width, _scrollView.frame.size.height - 352);
-        [UIView animateWithDuration:0.3 animations:^{
-            _scrollView.frame = newRect;
-        }];
-        heightChanged = YES;
-    }
+    textRect = [textField bounds];
+    textRect = [textField convertRect:textRect toView:_scrollView];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [self didKeyboardDismiss];
-    
     [textField resignFirstResponder];
     return YES;
 }

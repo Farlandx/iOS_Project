@@ -11,10 +11,7 @@
 #import "VentilationData.h"
 #import "DisplayView.h"
 
-@interface OtherDataViewController : UIViewController<UITextFieldDelegate, UITextViewDelegate, BreathSoundTableViewDelegate, DisplayViewDelegate> {
-    CGRect rect;
-    BOOL heightChanged;
-}
+@interface OtherDataViewController : UIViewController<UITextFieldDelegate, UITextViewDelegate, BreathSoundTableViewDelegate, DisplayViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet DisplayView *displayView;

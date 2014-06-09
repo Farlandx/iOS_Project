@@ -303,8 +303,6 @@
 				1EFAD8C318C6B335002118C7 /* FirstViewController.m */,
 				1E9DDB3118D2DDD800643295 /* BreathSoundTableViewController.h */,
 				1E9DDB3218D2DDD800643295 /* BreathSoundTableViewController.m */,
-				1E8DD5D718D824DF005B41D2 /* DisplayView.h */,
-				1E8DD5D818D824DF005B41D2 /* DisplayView.m */,
 				1E849AFC1935CE21008238EE /* HistoryViewController.h */,
 				1E849AFD1935CE21008238EE /* HistoryViewController.m */,
 			);
@@ -403,6 +401,8 @@
 		1EDE9FC918B6FF2E004B8FE5 /* MeasureView */ = {
 			isa = PBXGroup;
 			children = (
+				1E8DD5D718D824DF005B41D2 /* DisplayView.h */,
+				1E8DD5D818D824DF005B41D2 /* DisplayView.m */,
 				1E8881E318EABF7E009B5E06 /* MeasureViewController.h */,
 				1E8881E418EABF7E009B5E06 /* MeasureViewController.m */,
 				1E781AEA18BC467600647ED3 /* VentilatorDataViewController.h */,

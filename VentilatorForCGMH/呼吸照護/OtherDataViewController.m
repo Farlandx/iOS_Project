@@ -16,6 +16,8 @@
 
 @implementation OtherDataViewController {
     VentilationData *data;
+    CGPoint svos;
+    CGRect textRect;
 }
 
 @synthesize viewMode;
@@ -59,9 +61,16 @@
         }
     }
     
-    heightChanged = NO;
-    rect.origin = _scrollView.frame.origin;
-    rect.size = CGSizeMake(_scrollView.frame.size.width, _scrollView.frame.size.height);
+    svos = _scrollView.contentOffset;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
     
     [_Xrem.layer setBorderColor:[[[UIColor grayColor] colorWithAlphaComponent:0.5f] CGColor]];
     [_Xrem.layer setBorderWidth:0.5f];
@@ -100,26 +109,42 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - Keyboard
+- (void)keyboardWillShow:(NSNotification *)notification {
+    if (!CGRectIsEmpty(textRect)) {
+        // Get the size of the keyboard.
+        CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+        
+        CGFloat textPos = textRect.origin.y + textRect.size.height;
+        if (_scrollView.frame.size.height - textPos < keyboardSize.height) {
+            CGPoint pt = textRect.origin;
+            pt.x = 0;
+            pt.y = keyboardSize.height;
+            [_scrollView setContentOffset:pt animated:YES];
+        }
+    }
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification {
+    [_scrollView setContentOffset:svos animated:YES];
+}
+
 #pragma mark - TextFieldDelegate
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
+    textRect = [textField bounds];
+    textRect = [textField convertRect:textRect toView:_scrollView];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
     return YES;
-
-}
-
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-    return YES;
-}
-
-- (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
-    return YES;
+    
 }
 
 #pragma mark - TextViewDelegate
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
-    [textView resignFirstResponder];
+    textRect = [textView bounds];
+    textRect = [textView convertRect:textRect toView:_scrollView];
     return YES;
 }
 
