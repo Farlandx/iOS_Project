@@ -1260,8 +1260,8 @@
                         <outlet property="Pr" destination="etg-D5-Oiy" id="n4w-cg-tDD"/>
                         <outlet property="RR" destination="d98-bq-G2K" id="gQ6-cn-dHE"/>
                         <outlet property="Rsbi" destination="Ghv-YO-HxK" id="Vwg-m1-fBx"/>
-                        <outlet property="SHunt" destination="sfa-4s-2t6" id="fxF-tu-4OS"/>
                         <outlet property="SaO2" destination="Vse-8p-3fr" id="LE4-hQ-h4w"/>
+                        <outlet property="Shunt" destination="sfa-4s-2t6" id="869-vi-seX"/>
                         <outlet property="SpO2" destination="gfj-Vg-0rs" id="W9Y-X9-skb"/>
                         <outlet property="TV" destination="CyD-gj-8cF" id="AFf-7b-0IN"/>
                         <outlet property="btnBreathSound" destination="gU1-Vo-ZnY" id="97g-mQ-2nd"/>

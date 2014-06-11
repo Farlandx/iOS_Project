@@ -87,13 +87,9 @@
     else {
         _BreathSounds = @"Clear";
     }
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
     
     //取得measureData並將資料塞入textfield中
-    MeasureViewController *mvc = (MeasureViewController *)(self.tabBarController).parentViewController;
+    MeasureViewController *mvc = (MeasureViewController *)self.tabBarController.parentViewController;
     data = mvc.myMeasureData;
     if (data != nil) {
         [self setMeasureData:data];
@@ -102,6 +98,26 @@
         data = [[VentilationData alloc] init];
     }
 }
+
+//- (void)viewWillAppear:(BOOL)animated {
+//    [super viewWillAppear:animated];
+//    
+//    //取得measureData並將資料塞入textfield中
+//    MeasureViewController *mvc = (MeasureViewController *)(self.tabBarController).parentViewController;
+//    data = mvc.myMeasureData;
+//    if (data != nil) {
+//        [self setMeasureData:data];
+//    }
+//    else {
+//        data = [[VentilationData alloc] init];
+//    }
+//}
+//
+//- (void)viewWillDisappear:(BOOL)animated {
+//    [super viewWillDisappear:animated];
+//    //將目前的數值存下來
+//    [self getMeasureData:data];
+//}
 
 - (void)didReceiveMemoryWarning
 
@@ -159,6 +175,7 @@
 - (void)breathSoundTableViewDismissWithStringData:(NSString *)sound {
     [_btnBreathSound setTitle:sound forState:UIControlStateNormal];
     _BreathSounds = sound;
+    data.BreathSounds = sound;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -172,6 +189,15 @@
     if (![measureData.BreathSounds isEqualToString:@""]) {
         [_btnBreathSound setTitle:measureData.BreathSounds forState:UIControlStateNormal];
     }
+    _PH.text = measureData.PH;
+    _PaCO2.text = measureData.PaCO2;
+    _PaO2.text = measureData.PaO2;
+    _SaO2.text = measureData.SaO2;
+    _HCO3.text = measureData.HCO3;
+    _BE.text = measureData.BE;
+    _PAaDO2.text = measureData.PAaDO2;
+    _Shunt.text = measureData.Shunt;
+    _EndTidalCO2.text = measureData.EndTidalCO2;
     _PetCo2.text = measureData.PetCo2;
     _SpO2.text = measureData.SpO2;
     _RR.text = measureData.RR;
@@ -191,7 +217,15 @@
 }
 
 - (void)getMeasureData:(VentilationData *)measureData {
-    measureData.BreathSounds = _btnBreathSound.currentTitle;
+    measureData.PH = _PH.text;
+    measureData.PaCO2 = _PaCO2.text;
+    measureData.PaO2 = _PaO2.text;
+    measureData.SaO2 = _SaO2.text;
+    measureData.HCO3 = _HCO3.text;
+    measureData.BE = _BE.text;
+    measureData.PAaDO2 = _PAaDO2.text;
+    measureData.Shunt = _Shunt.text;
+    measureData.EndTidalCO2 = _EndTidalCO2.text;
     measureData.PetCo2 = _PetCo2.text;
     measureData.SpO2 = _SpO2.text;
     measureData.RR = _RR.text;
@@ -203,6 +237,7 @@
     measureData.EtSize = _EtSize.text;
     measureData.Mark = _Mark.text;
     measureData.CuffPressure = _CuffPressure.text;
+    measureData.BreathSounds = _btnBreathSound.currentTitle;
     measureData.Pr = _Pr.text;
     measureData.Cvp = _Cvp.text;
     measureData.BpS = _BpS.text;

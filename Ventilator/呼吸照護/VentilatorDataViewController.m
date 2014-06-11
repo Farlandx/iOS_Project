@@ -63,9 +63,6 @@
                                              selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
     //取得measureData並將資料塞入textfield中
     MeasureViewController *mvc = (MeasureViewController *)(self.tabBarController).parentViewController;
     VentilationData *data = mvc.myMeasureData;
@@ -73,6 +70,15 @@
         [self setMeasureData:data];
     }
 }
+
+//- (void)viewWillAppear:(BOOL)animated {
+//    //取得measureData並將資料塞入textfield中
+//    MeasureViewController *mvc = (MeasureViewController *)(self.tabBarController).parentViewController;
+//    VentilationData *data = mvc.myMeasureData;
+//    if (data != nil) {
+//        [self setMeasureData:data];
+//    }
+//}
 
 - (void)didReceiveMemoryWarning
 {

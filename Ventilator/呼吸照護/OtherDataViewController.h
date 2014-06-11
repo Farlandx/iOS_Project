@@ -28,7 +28,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *HCO3;
 @property (strong, nonatomic) IBOutlet UITextField *BE;
 @property (strong, nonatomic) IBOutlet UITextField *PAaDO2;
-@property (strong, nonatomic) IBOutlet UITextField *SHunt;
+@property (strong, nonatomic) IBOutlet UITextField *Shunt;
 @property (strong, nonatomic) IBOutlet UITextField *SpO2;
 @property (strong, nonatomic) IBOutlet UITextField *EndTidalCO2;
 

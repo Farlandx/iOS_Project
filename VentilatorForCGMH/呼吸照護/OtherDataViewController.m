@@ -86,10 +86,6 @@
     else {
         _BreathSounds = @"Clear";
     }
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
     
     //取得measureData並將資料塞入textfield中
     MeasureViewController *mvc = (MeasureViewController *)(self.tabBarController).parentViewController;
