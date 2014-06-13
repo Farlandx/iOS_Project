@@ -972,4 +972,97 @@
     return result;
 }
 
+#pragma mark - Patient
+- (void) savePatient:(NSArray *)data {
+    sqlite3_stmt *statement = NULL;
+    const char *dbpath = [databasePath UTF8String];
+    
+    if (data.count > 0) {
+        [self deletePatients];
+        if (sqlite3_open(dbpath, &sqliteDb) == SQLITE_OK) {
+            for (Patient *p in data) {
+                NSString *insertSQL = [NSString stringWithFormat:
+                                       @"INSERT INTO PATIENT_DATA (ChtNo, BedNo) VALUES ('%@', '%@')", p.ChtNo, p.BedNo];
+                
+                const char *insert_stmt = [insertSQL UTF8String];
+                sqlite3_prepare_v2(sqliteDb, insert_stmt, -1, &statement, NULL);
+                int sqliteState = sqlite3_step(statement);
+            }
+        }
+        
+        sqlite3_finalize(statement);
+        sqlite3_close(sqliteDb);
+    }
+}
+
+- (BOOL) deletePatients {
+    BOOL isSuccess = false;
+    sqlite3_stmt *statement = NULL;
+    const char *dbpath = [databasePath UTF8String];
+    
+    if (sqlite3_open(dbpath, &sqliteDb) == SQLITE_OK) {
+        //刪掉所有資料
+        NSString *deleteSQL = [NSString stringWithFormat:@"DELETE FROM PATIENT_DATA"];
+        
+        char *errMsg;
+        if (sqlite3_exec(sqliteDb, [deleteSQL UTF8String], NULL, NULL, &errMsg) != SQLITE_OK) {
+            isSuccess = true;
+        }
+        else {
+            NSLog(@"Delete Error:%s", errMsg);
+        }
+        
+        sqlite3_finalize(statement);
+        sqlite3_close(sqliteDb);
+    }
+    
+    return isSuccess;
+}
+
+- (NSMutableArray *) getPatientList {
+    NSMutableArray *result = [[NSMutableArray alloc] init];
+    const char *dbpath = [databasePath UTF8String];
+    sqlite3_stmt *statement;
+    
+    if (sqlite3_open(dbpath, &sqliteDb) == SQLITE_OK) {
+        NSString *querySQL = @"SELECT ChtNo, BedNo FROM PATIENT_DATA";
+        const char *query_stmt = [querySQL UTF8String];
+        
+        if (sqlite3_prepare_v2(sqliteDb, query_stmt, -1, &statement, NULL) == SQLITE_OK) {
+            while (sqlite3_step(statement) == SQLITE_ROW) {
+                Patient *p = [[Patient alloc] init];
+                p.ChtNo = [self getColumnString:(char *)sqlite3_column_text(statement, 0)];
+                p.BedNo = [self getColumnString:(char *)sqlite3_column_text(statement, 1)];
+                [result addObject:p];
+            }
+            sqlite3_finalize(statement);
+        }
+        sqlite3_close(sqliteDb);
+    }
+    
+    return result;
+}
+
+- (Patient *) getPatientByBedNo:(NSString *)bedNo {
+    Patient *result = [[Patient alloc] init];
+    const char *dbpath = [databasePath UTF8String];
+    sqlite3_stmt *statement;
+    
+    if (sqlite3_open(dbpath, &sqliteDb) == SQLITE_OK) {
+        NSString *querySQL = [NSString stringWithFormat:@"SELECT ChtNo, BedNo FROM PATIENT_DATA WHERE bedNo = '%@'", bedNo];
+        const char *query_stmt = [querySQL UTF8String];
+        
+        if (sqlite3_prepare_v2(sqliteDb, query_stmt, -1, &statement, NULL) == SQLITE_OK) {
+            while (sqlite3_step(statement) == SQLITE_ROW) {
+                result.ChtNo = [self getColumnString:(char *)sqlite3_column_text(statement, 0)];
+                result.BedNo = [self getColumnString:(char *)sqlite3_column_text(statement, 1)];
+            }
+            sqlite3_finalize(statement);
+        }
+        sqlite3_close(sqliteDb);
+    }
+    
+    return result;
+}
+
 @end

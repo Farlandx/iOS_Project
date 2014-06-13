@@ -11,6 +11,7 @@
 #import "VentilationData.h"
 #import "DeviceInfo.h"
 #import "BLE.h"
+#import "NameTextField.h"
 
 @protocol MeasureViewControllerDelegate <NSObject>
 
@@ -47,9 +48,9 @@
 //紀錄時間
 @property (strong, nonatomic) IBOutlet UITextField *RecordTime;
 //治療師ID
-@property (strong, nonatomic) IBOutlet UITextField *RecordOper;
+@property (strong, nonatomic) IBOutlet NameTextField *RecordOper;
 //病歷號
-@property (strong, nonatomic) IBOutlet UITextField *ChtNo;
+@property (strong, nonatomic) IBOutlet NameTextField *ChtNo;
 //呼吸器代號 (XXXXXXXXXXXX**YYYYY)
 @property (strong, nonatomic) IBOutlet UITextField *VentNo;
 

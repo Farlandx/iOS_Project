@@ -184,7 +184,6 @@
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <tabBarItem key="tabBarItem" title="量測資料" image="Record" id="u9d-HM-qxr"/>
                     <connections>
-                        <outlet property="ChtNo" destination="1Z8-0S-NGS" id="r8T-6M-IuM"/>
                         <outlet property="RecordOper" destination="8e0-DO-98t" id="ew7-gz-MhN"/>
                         <outlet property="RecordTime" destination="MUq-u5-AfC" id="q0n-AC-dMn"/>
                         <outlet property="VentNo" destination="ewO-D8-IhI" id="eRr-UT-hkH"/>

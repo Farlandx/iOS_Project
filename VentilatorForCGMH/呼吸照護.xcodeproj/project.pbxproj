@@ -33,6 +33,9 @@
 		1E5E56AB18861184005EF6AC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E5E568718861184005EF6AC /* UIKit.framework */; };
 		1E5E56B318861184005EF6AC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1E5E56B118861184005EF6AC /* InfoPlist.strings */; };
 		1E5E56B518861184005EF6AC /* ____Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E5E56B418861184005EF6AC /* ____Tests.m */; };
+		1E75E335194AA16C00593E17 /* NameLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E75E334194AA16C00593E17 /* NameLabel.m */; };
+		1E75E338194AA19600593E17 /* NameTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E75E337194AA19600593E17 /* NameTextField.m */; };
+		1E75E33B194AF1C300593E17 /* Patient.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E75E33A194AF1C300593E17 /* Patient.m */; };
 		1E781AEC18BC467600647ED3 /* VentilatorDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E781AEB18BC467600647ED3 /* VentilatorDataViewController.m */; };
 		1E781AEF18BC469200647ED3 /* OtherDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E781AEE18BC469200647ED3 /* OtherDataViewController.m */; };
 		1E8881E518EABF7E009B5E06 /* MeasureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E8881E418EABF7E009B5E06 /* MeasureViewController.m */; };
@@ -125,6 +128,12 @@
 		1E5E56B018861184005EF6AC /* 呼吸照護Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "呼吸照護Tests-Info.plist"; sourceTree = "<group>"; };
 		1E5E56B218861184005EF6AC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1E5E56B418861184005EF6AC /* ____Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "____Tests.m"; sourceTree = "<group>"; };
+		1E75E333194AA16C00593E17 /* NameLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NameLabel.h; sourceTree = "<group>"; };
+		1E75E334194AA16C00593E17 /* NameLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NameLabel.m; sourceTree = "<group>"; };
+		1E75E336194AA19600593E17 /* NameTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NameTextField.h; sourceTree = "<group>"; };
+		1E75E337194AA19600593E17 /* NameTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NameTextField.m; sourceTree = "<group>"; };
+		1E75E339194AF1C300593E17 /* Patient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Patient.h; sourceTree = "<group>"; };
+		1E75E33A194AF1C300593E17 /* Patient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Patient.m; sourceTree = "<group>"; };
 		1E781AEA18BC467600647ED3 /* VentilatorDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VentilatorDataViewController.h; sourceTree = "<group>"; };
 		1E781AEB18BC467600647ED3 /* VentilatorDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VentilatorDataViewController.m; sourceTree = "<group>"; };
 		1E781AED18BC469200647ED3 /* OtherDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OtherDataViewController.h; sourceTree = "<group>"; };
@@ -373,6 +382,19 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		1E75E332194AA15900593E17 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1E8DD5D718D824DF005B41D2 /* DisplayView.h */,
+				1E8DD5D818D824DF005B41D2 /* DisplayView.m */,
+				1E75E333194AA16C00593E17 /* NameLabel.h */,
+				1E75E334194AA16C00593E17 /* NameLabel.m */,
+				1E75E336194AA19600593E17 /* NameTextField.h */,
+				1E75E337194AA19600593E17 /* NameTextField.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		1E781AF018BC46A300647ED3 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -386,12 +408,6 @@
 				1E15858418CC660A009249AF /* MeasureDataViewController.m */,
 				1E32C6B918B7064000DE4595 /* MeasureTabBarViewController.h */,
 				1E32C6BA18B7064000DE4595 /* MeasureTabBarViewController.m */,
-				1EFAD8C218C6B335002118C7 /* FirstViewController.h */,
-				1EFAD8C318C6B335002118C7 /* FirstViewController.m */,
-				1E9DDB3118D2DDD800643295 /* BreathSoundTableViewController.h */,
-				1E9DDB3218D2DDD800643295 /* BreathSoundTableViewController.m */,
-				1E8DD5D718D824DF005B41D2 /* DisplayView.h */,
-				1E8DD5D818D824DF005B41D2 /* DisplayView.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -480,6 +496,8 @@
 				1EF0012A18B2EAEF003B5D58 /* DatabaseUtility.m */,
 				1E9219CF190750D7006ED639 /* DeviceStatus.h */,
 				1E9219D0190750D7006ED639 /* DeviceStatus.m */,
+				1E75E339194AF1C300593E17 /* Patient.h */,
+				1E75E33A194AF1C300593E17 /* Patient.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -487,6 +505,11 @@
 		1EDE9FC918B6FF2E004B8FE5 /* MeasureView */ = {
 			isa = PBXGroup;
 			children = (
+				1E75E332194AA15900593E17 /* View */,
+				1EFAD8C218C6B335002118C7 /* FirstViewController.h */,
+				1EFAD8C318C6B335002118C7 /* FirstViewController.m */,
+				1E9DDB3118D2DDD800643295 /* BreathSoundTableViewController.h */,
+				1E9DDB3218D2DDD800643295 /* BreathSoundTableViewController.m */,
 				1E8881E318EABF7E009B5E06 /* MeasureViewController.h */,
 				1E8881E418EABF7E009B5E06 /* MeasureViewController.m */,
 				1E781AEA18BC467600647ED3 /* VentilatorDataViewController.h */,
@@ -611,6 +634,7 @@
 				1E9219D71907A8CD006ED639 /* DtoUploadVentDataResult.m in Sources */,
 				1E781AEF18BC469200647ED3 /* OtherDataViewController.m in Sources */,
 				1ECAB8201920614D00161572 /* HistoryTableViewCell.m in Sources */,
+				1E75E33B194AF1C300593E17 /* Patient.m in Sources */,
 				1E9219CD19064F9E006ED639 /* WebService.m in Sources */,
 				1ED31BA3190E071D00E58228 /* SERVOi.m in Sources */,
 				1E8881E518EABF7E009B5E06 /* MeasureViewController.m in Sources */,
@@ -627,6 +651,7 @@
 				1E32C6BB18B7064000DE4595 /* MeasureTabBarViewController.m in Sources */,
 				1ED31BA4190E071D00E58228 /* VentilationData.m in Sources */,
 				1E15858718CC660A009249AF /* MeasureDataViewController.m in Sources */,
+				1E75E338194AA19600593E17 /* NameTextField.m in Sources */,
 				1ECAB8241920C8CA00161572 /* MainViewController.m in Sources */,
 				1ECAB816192060D500161572 /* APLSectionInfo.m in Sources */,
 				1E0DD9F7192B0022008E3F18 /* TitleView.m in Sources */,
@@ -641,6 +666,7 @@
 				1E5E569018861184005EF6AC /* main.m in Sources */,
 				1E9219D1190750D7006ED639 /* DeviceStatus.m in Sources */,
 				1E32C6C618B746B600DE4595 /* VentilatorMeasureView.m in Sources */,
+				1E75E335194AA16C00593E17 /* NameLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

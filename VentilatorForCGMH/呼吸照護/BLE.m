@@ -345,6 +345,7 @@
         }
         [_delegate recievedVentilationDataAndReadStatus:nil readStatus:BLE_SCANNING];
     }
+    else [_delegate recievedVentilationDataAndReadStatus:nil readStatus:BLE_CONNECT_ERROR];
 }
 
 - (void)disconnect {

@@ -582,7 +582,24 @@
     if (textField == _RecordOper) {
         isFocusOnRecordOper = NO;
         [self indicatorROStop];
+        
+        User *u = [db getUserById:textField.text];
+        if (u && u .Name.length > 0) {
+            [_RecordOper setLabel:u.Name];
+        }
+        else {
+            [_RecordOper clearLabel];
+        }
         NSLog(@"RecordOper leave");
+    }
+    else if(textField == _ChtNo) {
+        Patient *p = [db getPatientById:textField.text];
+        if (p && p.Name.length > 0) {
+            [_ChtNo setLabel:p.Name];
+        }
+        else {
+            [_ChtNo clearLabel];
+        }
     }
     else if(textField == _VentNo) {
         NSLog(@"VentNo leave");
@@ -592,8 +609,12 @@
 }
 
 - (BOOL)textFieldShouldClear:(UITextField *)textField {
-    if (textField == _RecordOper || textField == _ChtNo || textField == _VentNo) {
+    if (textField == _RecordOper || textField == _VentNo) {
         _btnSave.enabled = NO;
+    }
+    else if (textField == _ChtNo) {
+        _btnSave.enabled = NO;
+        [_ChtNo clearLabel];
     }
     return YES;
 }

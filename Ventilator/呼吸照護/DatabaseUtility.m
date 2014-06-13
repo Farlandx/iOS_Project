@@ -940,7 +940,7 @@
     
     if (sqlite3_open(dbpath, &sqliteDb) == SQLITE_OK) {
         NSString *querySQL = [NSString stringWithFormat:
-                              @"SELECT UserIdString, EmployeeId, RFID, BarCode, Name FROM USER_DATA WHERE UserIdString = %@", userId];
+                              @"SELECT UserIdString, EmployeeId, RFID, BarCode, Name FROM USER_DATA WHERE EmployeeId = '%@'", userId];
         const char *query_stmt = [querySQL UTF8String];
         
         if (sqlite3_prepare_v2(sqliteDb, query_stmt, -1, &statement, NULL) == SQLITE_OK) {
@@ -997,7 +997,7 @@
     
     if (sqlite3_open(dbpath, &sqliteDb) == SQLITE_OK) {
         NSString *querySQL = [NSString stringWithFormat:
-                              @"SELECT PatientIdString, IdentifierId, MedicalId, RFID, BarCode, Name, BedNo, Gender FROM USER_DATA WHERE UserIdString = %@", patientId];
+                              @"SELECT PatientIdString, IdentifierId, MedicalId, RFID, BarCode, Name, BedNo, Gender FROM PATIENT_DATA WHERE IdentifierId = '%@'", patientId];
         const char *query_stmt = [querySQL UTF8String];
         
         if (sqlite3_prepare_v2(sqliteDb, query_stmt, -1, &statement, NULL) == SQLITE_OK) {

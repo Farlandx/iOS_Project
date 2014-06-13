@@ -156,6 +156,7 @@
 }
 
 - (void)patientListDelegate:(NSArray *)patientList {
+    NSLog(@"%@", [db getUserById:@"qq"].Name);
     [db savePatientList:patientList];
 }
 

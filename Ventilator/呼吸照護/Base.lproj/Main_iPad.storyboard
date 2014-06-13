@@ -175,13 +175,13 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="點選開始掃瞄治療師卡號" minimumFontSize="17" clearButtonMode="whileEditing" id="kZs-oC-drs">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="點選開始掃瞄治療師卡號" minimumFontSize="17" clearButtonMode="whileEditing" id="kZs-oC-drs" customClass="NameTextField">
                                 <rect key="frame" x="189" y="101" width="450" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" clearButtonMode="whileEditing" id="hgs-Yd-jDi">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" clearButtonMode="whileEditing" id="hgs-Yd-jDi" customClass="NameTextField">
                                 <rect key="frame" x="189" y="139" width="450" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -246,8 +246,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="ChtNo" destination="hgs-Yd-jDi" id="dhR-RD-RS1"/>
-                        <outlet property="RecordOper" destination="kZs-oC-drs" id="EZu-tD-V5l"/>
+                        <outlet property="ChtNo" destination="hgs-Yd-jDi" id="gUg-aL-qI6"/>
+                        <outlet property="RecordOper" destination="kZs-oC-drs" id="9Bs-If-CtU"/>
                         <outlet property="RecordTime" destination="rvf-jW-sdq" id="RxK-4N-noI"/>
                         <outlet property="VentNo" destination="oZb-ya-z2X" id="hRg-ic-0L7"/>
                         <outlet property="btnDemo" destination="v8N-HZ-G7Q" id="gMG-5t-nCx"/>

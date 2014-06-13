@@ -10,6 +10,7 @@
 #import <CoreBluetooth/CoreBluetooth.h>
 #import "VentilationData.h"
 #import "NfcA1Device.h"
+#import "NameTextField.h"
 
 @interface FirstViewController : UIViewController<CBCentralManagerDelegate, CBPeripheralDelegate, UITextFieldDelegate, NfcA1ProtocolDelegate> {
     NSString *deviceUUID;
@@ -43,7 +44,7 @@
 //治療師ID
 @property (strong, nonatomic) IBOutlet UITextField *RecordOper;
 //病歷號
-@property (strong, nonatomic) IBOutlet UITextField *ChtNo;
+@property (strong, nonatomic) IBOutlet NameTextField *ChtNo;
 //呼吸器代號 (XXXXXXXXXXXX**YYYYY)
 @property (strong, nonatomic) IBOutlet UITextField *VentNo;
 

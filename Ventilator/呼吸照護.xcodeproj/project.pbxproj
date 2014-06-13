@@ -43,6 +43,8 @@
 		1E97B40118E01CC300704F07 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E97B40018E01CC300704F07 /* AVFoundation.framework */; };
 		1E97B40318E01F4F00704F07 /* libNfcA1Device_D14E.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E97B40218E01F4F00704F07 /* libNfcA1Device_D14E.a */; };
 		1E9DDB3318D2DDD800643295 /* BreathSoundTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E9DDB3218D2DDD800643295 /* BreathSoundTableViewController.m */; };
+		1EAB09FD194A8D2600FFF9E4 /* NameTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EAB09FC194A8D2600FFF9E4 /* NameTextField.m */; };
+		1EAB0A01194A8D5D00FFF9E4 /* NameLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EAB0A00194A8D5D00FFF9E4 /* NameLabel.m */; };
 		1ECAB80B1918813800161572 /* ProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1ECAB8081918813800161572 /* ProgressHUD.bundle */; };
 		1ECAB80C1918813800161572 /* ProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ECAB80A1918813800161572 /* ProgressHUD.m */; };
 		1ECAB819192060D500161572 /* SectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1ECAB814192060D500161572 /* SectionHeaderView.xib */; };
@@ -135,6 +137,10 @@
 		1E97B40418E01F6400704F07 /* NfcA1Device.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NfcA1Device.h; sourceTree = "<group>"; };
 		1E9DDB3118D2DDD800643295 /* BreathSoundTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BreathSoundTableViewController.h; sourceTree = "<group>"; };
 		1E9DDB3218D2DDD800643295 /* BreathSoundTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BreathSoundTableViewController.m; sourceTree = "<group>"; };
+		1EAB09FB194A8D2600FFF9E4 /* NameTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NameTextField.h; sourceTree = "<group>"; };
+		1EAB09FC194A8D2600FFF9E4 /* NameTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NameTextField.m; sourceTree = "<group>"; };
+		1EAB09FF194A8D5D00FFF9E4 /* NameLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NameLabel.h; sourceTree = "<group>"; };
+		1EAB0A00194A8D5D00FFF9E4 /* NameLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NameLabel.m; sourceTree = "<group>"; };
 		1ECAB8081918813800161572 /* ProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ProgressHUD.bundle; sourceTree = "<group>"; };
 		1ECAB8091918813800161572 /* ProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressHUD.h; sourceTree = "<group>"; };
 		1ECAB80A1918813800161572 /* ProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressHUD.m; sourceTree = "<group>"; };
@@ -325,6 +331,19 @@
 			name = Library;
 			sourceTree = "<group>";
 		};
+		1EAB09FE194A8D3200FFF9E4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1E8DD5D718D824DF005B41D2 /* DisplayView.h */,
+				1E8DD5D818D824DF005B41D2 /* DisplayView.m */,
+				1EAB09FB194A8D2600FFF9E4 /* NameTextField.h */,
+				1EAB09FC194A8D2600FFF9E4 /* NameTextField.m */,
+				1EAB09FF194A8D5D00FFF9E4 /* NameLabel.h */,
+				1EAB0A00194A8D5D00FFF9E4 /* NameLabel.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		1ECAB8071918813800161572 /* ProgressHUD */ = {
 			isa = PBXGroup;
 			children = (
@@ -397,10 +416,9 @@
 		1EDE9FC918B6FF2E004B8FE5 /* MeasureView */ = {
 			isa = PBXGroup;
 			children = (
+				1EAB09FE194A8D3200FFF9E4 /* View */,
 				1E9DDB3118D2DDD800643295 /* BreathSoundTableViewController.h */,
 				1E9DDB3218D2DDD800643295 /* BreathSoundTableViewController.m */,
-				1E8DD5D718D824DF005B41D2 /* DisplayView.h */,
-				1E8DD5D818D824DF005B41D2 /* DisplayView.m */,
 				1EFAD8C218C6B335002118C7 /* FirstViewController.h */,
 				1EFAD8C318C6B335002118C7 /* FirstViewController.m */,
 				1E8881E318EABF7E009B5E06 /* MeasureViewController.h */,
@@ -517,6 +535,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1E044099193D7F0E00825AA3 /* User.m in Sources */,
+				1EAB0A01194A8D5D00FFF9E4 /* NameLabel.m in Sources */,
 				1E849B021936D5A8008238EE /* SettingsTableViewController.m in Sources */,
 				1E9219C8190641B2006ED639 /* XMLReader.m in Sources */,
 				1EDE9FC818B6FEC5004B8FE5 /* DataTableViewCell.m in Sources */,
@@ -528,6 +547,7 @@
 				1E8881E518EABF7E009B5E06 /* MeasureViewController.m in Sources */,
 				1EF0012B18B2EAEF003B5D58 /* DatabaseUtility.m in Sources */,
 				1ECAB80C1918813800161572 /* ProgressHUD.m in Sources */,
+				1EAB09FD194A8D2600FFF9E4 /* NameTextField.m in Sources */,
 				1E8DD5D918D824DF005B41D2 /* DisplayView.m in Sources */,
 				1EFAD8C418C6B335002118C7 /* FirstViewController.m in Sources */,
 				1ED31BA2190E071D00E58228 /* Hamilton.m in Sources */,

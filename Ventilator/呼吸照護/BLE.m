@@ -334,10 +334,10 @@
     
     deviceInfo = [self getDeviceInfoByCode:connectionString];
 }
-
 - (void)startRead {
     if (deviceInfo != nil) {
         if (!_centralMgr) {
+
             _centralMgr = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
         }
         else {
@@ -345,6 +345,7 @@
         }
         [_delegate recievedVentilationDataAndReadStatus:nil readStatus:BLE_SCANNING];
     }
+    else [_delegate recievedVentilationDataAndReadStatus:nil readStatus:BLE_CONNECT_ERROR];
 }
 
 - (void)disconnect {

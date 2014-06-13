@@ -10,6 +10,7 @@
 #import <sqlite3.h>
 #import "VentilationData.h"
 #import "DtoVentExchangeUploadBatch.h"
+#import "Patient.h"
 
 @interface DatabaseUtility : NSObject {
     sqlite3 *sqliteDb;
@@ -37,5 +38,10 @@
 #pragma mark - CurRtCardList
 - (void) saveCurRtCardList:(NSArray *)data;
 - (NSMutableArray *) getCurRtCardList;
+
+#pragma mark - Patient
+- (void) savePatient:(NSArray *)data;
+- (NSMutableArray *) getPatientList;
+- (Patient *) getPatientByBedNo:(NSString *)bedNo;
 
 @end

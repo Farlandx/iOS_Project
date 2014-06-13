@@ -449,8 +449,25 @@
     if (textField == _RecordOper) {
         isFocusOnRecordOper = NO;
         [self indicatorROStop];
+        
+//        User *u = [db getUserById:textField.text];
+//        if (u && u .Name.length > 0) {
+//            [_RecordOper setLabel:u.Name];
+//        }
+//        else {
+//            [_RecordOper clearLabel];
+//        }
         NSLog(@"RecordOper leave");
     }
+//    else if(textField == _ChtNo) {
+//        Patient *p = [db getPatientById:textField.text];
+//        if (p && p.Name.length > 0) {
+//            [_ChtNo setLabel:p.Name];
+//        }
+//        else {
+//            [_ChtNo clearLabel];
+//        }
+//    }
     else if(textField == _VentNo) {
         NSLog(@"VentNo leave");
         [self indicatorVNOStop];
