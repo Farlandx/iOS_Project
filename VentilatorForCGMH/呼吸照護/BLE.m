@@ -77,7 +77,7 @@
     }
     else {
         [timeoutTimer invalidate];
-        timeoutTimer = [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(scanStop:) userInfo:nil repeats:NO];
+//        timeoutTimer = [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(scanStop:) userInfo:nil repeats:NO];
     }
 }
 
@@ -309,7 +309,7 @@
 - (void)scanDevices {
     [_centralMgr scanForPeripheralsWithServices:nil options:nil];
     //五秒後停止scan
-    [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(scanStop:) userInfo:nil repeats:NO];
+//    [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(scanStop:) userInfo:nil repeats:NO];
 }
 
 #pragma mark - Timer

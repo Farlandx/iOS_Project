@@ -219,6 +219,10 @@
     Xrem = @"";
     AutoPEEP = @"";
     PlateauTimeSetting = @"";
+    RecordOperName = @"";
+    VentilatorModel = @"";
+    BedNo = @"";
+    ErrorMsg = @"";
     checked = NO;
 }
 

@@ -42,6 +42,6 @@
 #pragma mark - Patient
 - (void) savePatient:(NSArray *)data;
 - (NSMutableArray *) getPatientList;
-- (Patient *) getPatientByBedNo:(NSString *)bedNo;
+- (Patient *) getPatientByChtNo:(NSString *)chtNo;
 
 @end

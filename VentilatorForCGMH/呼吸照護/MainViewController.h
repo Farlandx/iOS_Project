@@ -12,4 +12,6 @@
 
 @property (strong, nonatomic)NSMutableArray *historyList;
 
+- (void)refreshHistoryList;
+
 @end

@@ -98,13 +98,15 @@
             NSMutableArray *dataArray = [[NSMutableArray alloc] init];
             
             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-            [dateFormatter setDateFormat:@"yyyy/MM/dd HH:mm:s"];
+            [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
             
             for (VentilationData *data in batchData.VentRecList) {
                 //CollectionViewHeader
                 //不這樣轉會出現尾巴有+0000奇怪的格式
                 NSDate *d = [dateFormatter dateFromString:data.RecordTime];
-                [timeArray addObject:[dateFormatter stringFromDate:d]];
+                if (d) {
+                    [timeArray addObject:[dateFormatter stringFromDate:d]];
+                }
                 
                 //ContentCollectionView
                 [dataArray addObject:[self getContentCollectionData:data]];

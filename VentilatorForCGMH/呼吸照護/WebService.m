@@ -12,12 +12,13 @@
 #import "XMLReader.h"
 #import "VentilationData.h"
 #import "DeviceStatus.h"
+#import "Patient.h"
 
 #ifndef ___webservice
 #define ___webservice
 #define WS_NAMESPACE @"http://cgmh.org.tw/g27/"
-#define WS_URL @"http://172.30.1.119:8883/VentDataExchangeSvc.asmx"
-//#define WS_URL @"http://10.30.11.54/webwork/resp/VentDataExchangeSvc.asmx"
+//#define WS_URL @"http://172.30.1.119:8883/VentDataExchangeSvc.asmx"
+#define WS_URL @"http://10.30.11.54/webwork/resp/VentDataExchangeSvc.asmx"
 
 #define WS_GET_CUR_RT_CARD_LIST @"GetCurRtCardList"
 #define WS_GET_CUR_RT_CARD_LIST_VER_ID @"GetCurRtCardListVerId"
@@ -165,7 +166,8 @@
             tmp = [tmp stringByAppendingString:@"<RawData></RawData>"];
             tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<RecordIp>%@</RecordIp>", ventData.RecordIp]];
             tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<RecordOper>%@</RecordOper>", ventData.RecordOper]];
-            tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<RecordTime>%@</RecordTime>", [self getSOAPDateStringByNSString:ventData.RecordTime]]];
+//            tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<RecordTime>%@</RecordTime>", [self getSOAPDateStringByNSString:ventData.RecordTime]]];
+            tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<RecordTime>%@</RecordTime>", ventData.RecordTime]];
             tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<VentNo>%@</VentNo>", ventData.VentNo]];
             tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<RecordDevice>%@</RecordDevice>", ventData.RecordDevice]];
             tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<RecordClientVersion>%@</RecordClientVersion>", ventData.RecordClientVersion]];
@@ -203,7 +205,7 @@
             tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<TidalVolumeMeasured>%@</TidalVolumeMeasured>", ventData.TidalVolumeMeasured]];
             tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<TidalVolumeSet>%@</TidalVolumeSet>", ventData.TidalVolumeSet]];
             tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<Tlow>%@</Tlow>", ventData.Tlow]];
-            tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<VentilationMode>%@</VentilationMode>", @"IPPV"]];
+            tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<VentilationMode>%@</VentilationMode>", ventData.VentilationMode]];
             tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<VentilationRateSet>%@</VentilationRateSet>", ventData.VentilationRateSet]];
             tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<VentilationRateTotal>%@</VentilationRateTotal>", ventData.VentilationRateTotal]];
             tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<VolumeTarget>%@</VolumeTarget>", ventData.VolumeTarget]];
@@ -252,24 +254,46 @@
             NSMutableArray *uploadSuccess = [[NSMutableArray alloc] init];
             NSMutableArray *uploadFailed = [[NSMutableArray alloc] init];
             int index = 0;
-            for (NSDictionary *dtoUploadVentDataResult in [xmlDictionary valueForKeyPath:@"Envelope.Body.UploadVentDataResponse.UploadVentDataResult.DtoUploadVentDataResult"]) {
+            NSDictionary *dtoUploadVentDataResultList = [xmlDictionary valueForKeyPath:@"Envelope.Body.UploadVentDataResponse.UploadVentDataResult.DtoUploadVentDataResult"];
+            if (batch.VentRecList.count > 1) {
+                for (NSDictionary *dtoUploadVentDataResult in dtoUploadVentDataResultList) {
+                    DtoUploadVentDataResult *tmp = [[DtoUploadVentDataResult alloc] init];
+                    tmp.ChtNo = [dtoUploadVentDataResult valueForKeyPath:@"ChtNo.text"];
+                    tmp.RecordTime = [dtoUploadVentDataResult valueForKeyPath:@"RecordTime.text"];
+                    tmp.Success = [[dtoUploadVentDataResult valueForKeyPath:@"Success.text"] boolValue];
+                    tmp.Message = [dtoUploadVentDataResult valueForKeyPath:@"Message.text"];
+                    if (tmp.Success) {
+                        tmp.RecordOperName = [dtoUploadVentDataResult valueForKeyPath:@"RecordOperName.text"];
+                        tmp.UploadOperName = [dtoUploadVentDataResult valueForKeyPath:@"UploadOperName.text"];
+                        tmp.VentilatorModel = [dtoUploadVentDataResult valueForKeyPath:@"VentilatorModel.text"];
+                        tmp.BedNo = [dtoUploadVentDataResult valueForKeyPath:@"BedNo.text"];
+                        [uploadSuccess addObject:batch.VentRecList[index]];
+                    }
+                    else {
+                        [uploadFailed addObject:batch.VentRecList[index]];
+                        
+                    }
+                    index++;
+                }
+                
+            }
+            else {
                 DtoUploadVentDataResult *tmp = [[DtoUploadVentDataResult alloc] init];
-                tmp.ChtNo = [dtoUploadVentDataResult valueForKeyPath:@"ChtNo.text"];
-                tmp.RecordTime = [dtoUploadVentDataResult valueForKeyPath:@"RecordTime.text"];
-                tmp.Success = [[dtoUploadVentDataResult valueForKeyPath:@"Success.text"] boolValue];
-                tmp.Message = [dtoUploadVentDataResult valueForKeyPath:@"Message.text"];
+                tmp.ChtNo = [dtoUploadVentDataResultList valueForKeyPath:@"ChtNo.text"];
+                tmp.RecordTime = [dtoUploadVentDataResultList valueForKeyPath:@"RecordTime.text"];
+                tmp.Success = [[dtoUploadVentDataResultList valueForKeyPath:@"Success.text"] boolValue];
+                tmp.Message = [dtoUploadVentDataResultList valueForKeyPath:@"Message.text"];
                 if (tmp.Success) {
-                    tmp.RecordOperName = [dtoUploadVentDataResult valueForKeyPath:@"RecordOperName.text"];
-                    tmp.UploadOperName = [dtoUploadVentDataResult valueForKeyPath:@"UploadOperName.text"];
-                    tmp.VentilatorModel = [dtoUploadVentDataResult valueForKeyPath:@"VentilatorModel.text"];
-                    tmp.BedNo = [[dtoUploadVentDataResult valueForKeyPath:@"BedNo.text"] stringValue];
+                    tmp.RecordOperName = [dtoUploadVentDataResultList valueForKeyPath:@"RecordOperName.text"];
+                    tmp.UploadOperName = [dtoUploadVentDataResultList valueForKeyPath:@"UploadOperName.text"];
+                    tmp.VentilatorModel = [dtoUploadVentDataResultList valueForKeyPath:@"VentilatorModel.text"];
+                    tmp.BedNo = [dtoUploadVentDataResultList valueForKeyPath:@"BedNo.text"];
                     [uploadSuccess addObject:batch.VentRecList[index]];
                 }
                 else {
                     [uploadFailed addObject:batch.VentRecList[index]];
                     
                 }
-                index++;
             }
             
             [_delegate wsUploadVentDataSuccess:uploadSuccess uploadFailed:uploadFailed DtoVentExchangeUploadBatch:batch];
@@ -353,7 +377,10 @@
                                                                   options:XMLReaderOptionsProcessNamespaces
                                                                     error:&error];
             for (NSDictionary *card in [xmlDictionary valueForKeyPath:@"Envelope.Body.GetPatientListResponse.GetPatientListResult.DtoVentExchangeGetPatient"]) {
-                [result addObject:card];
+                Patient *p = [[Patient alloc] init];
+                p.ChtNo = [card valueForKeyPath:@"ChtNo.text"];
+                p.BedNo = [card valueForKeyPath:@"BedNo.text"];
+                [result addObject:p];
             }
             
             [_delegate wsResponsePatientList:result];

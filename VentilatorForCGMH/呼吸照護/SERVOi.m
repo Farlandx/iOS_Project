@@ -162,6 +162,13 @@
     step = SERVOI_INIT;
 }
 
+- (NSString *)stringZeroFilter:(NSString *)value {
+    if ([value isEqualToString:@"0.0"] || [value isEqualToString:@"0"]) {
+        return @"";
+    }
+    return  value;
+}
+
 - (BOOL)chkStopByte:(NSData *)data {
     if (data != nil) {
         const char* bytes = [data bytes];
@@ -239,70 +246,71 @@
             NSString *settings = [[NSString alloc] initWithData:mData encoding:NSUTF8StringEncoding];
             
             // VentilationMode(310)
-            ventilation.VentilationMode = [NSString stringWithFormat:@"%d", [[self getValue:1 value:settings] intValue]];
+            ventilation.VentilationMode = [self stringZeroFilter:[NSString stringWithFormat:@"%d", [[self getValue:1 value:settings] intValue]]];
             
             // TidalVolumeSet(334)
-            ventilation.TidalVolumeSet = [NSString stringWithFormat:@"%d", [[self getValue:2 value:settings] intValue]];
+            ventilation.TidalVolumeSet = [self stringZeroFilter:[NSString stringWithFormat:@"%d", [[self getValue:2 value:settings] intValue]]];
             
             // VentilationRateSet(300)
-            ventilation.VentilationRateSet = [NSString stringWithFormat:@"%d", [[self getValue:3 value:settings] intValue]];
+            ventilation.VentilationRateSet = [self stringZeroFilter:[NSString stringWithFormat:@"%d", [[self getValue:3 value:settings] intValue]]];
             if (![ventilation.VentilationRateSet isEqualToString:@""]) {
-                ventilation.VentilationRateSet = [NSString stringWithFormat:@"%.1lf", [ventilation.VentilationRateSet floatValue] / 10.0f];
+                ventilation.VentilationRateSet = [self stringZeroFilter:[NSString stringWithFormat:@"%.0f", [ventilation.VentilationRateSet floatValue] / 10.0f]];
                 
             }
             
             // InspT(343)
-            ventilation.InspT = [NSString stringWithFormat:@"%d", [[self getValue:4 value:settings] intValue]];
+            ventilation.InspT = [self stringZeroFilter:[NSString stringWithFormat:@"%d", [[self getValue:4 value:settings] intValue]]];
             if (![ventilation.InspT isEqualToString:@""]) {
-                ventilation.InspT = [NSString stringWithFormat:@"%.1lf", [ventilation.InspT floatValue] / 100.0f];
+                ventilation.InspT = [self stringZeroFilter:[NSString stringWithFormat:@"%.2lf", [ventilation.InspT floatValue] / 100.0f]];
             }
             
             // FlowSetting(348)
-            ventilation.FlowSetting = [NSString stringWithFormat:@"%d", [[self getValue:5 value:settings] intValue]];
+//            ventilation.FlowSetting = [self stringZeroFilter:[NSString stringWithFormat:@"%d", [[self getValue:5 value:settings] intValue]]];
+            ventilation.FlowSetting = [self stringZeroFilter:[NSString stringWithFormat:@"%.2lf", [[self getValue:3 value:settings] floatValue]]];
             
             // MVSet(305)
-            ventilation.MVSet = [NSString stringWithFormat:@"%d", [[self getValue:6 value:settings] intValue]];
+            ventilation.MVSet = [self stringZeroFilter:[NSString stringWithFormat:@"%d", [[self getValue:6 value:settings] intValue]]];
             if (![ventilation.MVSet isEqualToString:@""]) {
-                ventilation.MVSet = [NSString stringWithFormat:@"%.1lf", [ventilation.MVSet floatValue] / 100.0f];
+                ventilation.MVSet = [self stringZeroFilter:[NSString stringWithFormat:@"%.1lf", [ventilation.MVSet floatValue] / 100.0f]];
             }
             
             // PressureControl(306)
-            ventilation.PressureControl = [NSString stringWithFormat:@"%d", [[self getValue:7 value:settings] intValue]];
+            ventilation.PressureControl = [self stringZeroFilter:[NSString stringWithFormat:@"%d", [[self getValue:7 value:settings] intValue]]];
             if (![ventilation.PressureControl isEqualToString:@""]) {
-                ventilation.PressureControl = [NSString stringWithFormat:@"%.1lf", [ventilation.PressureControl floatValue] / 10.0f];
+                ventilation.PressureControl = [self stringZeroFilter:[NSString stringWithFormat:@"%.0f", [ventilation.PressureControl floatValue] / 10.0f]];
             }
             
             // FiO2Set(323)
-            ventilation.FiO2Set = [NSString stringWithFormat:@"%d", [[self getValue:9 value:settings] intValue]];
+            ventilation.FiO2Set = [self stringZeroFilter:[NSString stringWithFormat:@"%d", [[self getValue:9 value:settings] intValue]]];
             if (![ventilation.FiO2Set isEqualToString:@""]) {
-                ventilation.FiO2Set = [NSString stringWithFormat:@"%.1lf", [ventilation.FiO2Set floatValue] / 10.0f];
+                ventilation.FiO2Set = [self stringZeroFilter:[NSString stringWithFormat:@"%.1lf", [ventilation.FiO2Set floatValue] / 10.0f]];
             }
             
             // LowerMV(314)
-            ventilation.LowerMV = [NSString stringWithFormat:@"%d", [[self getValue:10 value:settings] intValue]];
+            ventilation.LowerMV = [self stringZeroFilter:[NSString stringWithFormat:@"%d", [[self getValue:10 value:settings] intValue]]];
             if (![ventilation.LowerMV isEqualToString:@""]) {
-                ventilation.LowerMV = [NSString stringWithFormat:@"%.1lf", [ventilation.LowerMV floatValue] / 10.0f];
+                ventilation.LowerMV = [self stringZeroFilter:[NSString stringWithFormat:@"%.1lf", [ventilation.LowerMV floatValue] / 10.0f]];
             }
             
             // HighPressureAlarm Set(315)
-            ventilation.HighPressureAlarm = [NSString stringWithFormat:@"%d", [[self getValue:11 value:settings] intValue]];
+            ventilation.HighPressureAlarm = [self stringZeroFilter:[NSString stringWithFormat:@"%d", [[self getValue:11 value:settings] intValue]]];
             
             // PEEP Set(308)
-            ventilation.PEEP = [NSString stringWithFormat:@"%d", [[self getValue:12 value:settings] intValue]];
+            ventilation.PEEP = [self stringZeroFilter:[NSString stringWithFormat:@"%d", [[self getValue:12 value:settings] intValue]]];
             if (![ventilation.PEEP isEqualToString:@""]) {
-                ventilation.PEEP = [NSString stringWithFormat:@"%.1lf", [ventilation.PEEP floatValue] / 10.0f];
+                ventilation.PEEP = [self stringZeroFilter:[NSString stringWithFormat:@"%.0f", [ventilation.PEEP floatValue] / 10.0f]];
             }
             
             // SIMVRateSet(303)
-            ventilation.SIMVRateSet = [NSString stringWithFormat:@"%d", [[self getValue:13 value:settings] intValue]];
+            ventilation.SIMVRateSet = [self stringZeroFilter:[NSString stringWithFormat:@"%d", [[self getValue:13 value:settings] intValue]]];
             if (![ventilation.SIMVRateSet isEqualToString:@""]) {
-                ventilation.SIMVRateSet = [NSString stringWithFormat:@"%.1lf", [ventilation.SIMVRateSet floatValue] / 10.0f];
+                ventilation.SIMVRateSet = [self stringZeroFilter:[NSString stringWithFormat:@"%.0f", [ventilation.SIMVRateSet floatValue] / 10.0f]];
             }
             
             // I:E Ratio Set(333)
-            ventilation.InspirationExpirationRatio = [NSString stringWithFormat:@"%d", [[self getValue:14 value:settings] intValue]];
+            ventilation.InspirationExpirationRatio = [self stringZeroFilter:[NSString stringWithFormat:@"%d", [[self getValue:14 value:settings] intValue]]];
             if (![ventilation.InspirationExpirationRatio isEqualToString:@""]) {
-                ventilation.InspirationExpirationRatio = [NSString stringWithFormat:@"%.1lf", [ventilation.InspirationExpirationRatio floatValue] / 100.0f];
+                ventilation.InspirationExpirationRatio = [self stringZeroFilter:[NSString stringWithFormat:@"%.1lf", [ventilation.InspirationExpirationRatio floatValue] / 100.0f]];
                 float tmp = [ventilation.InspirationExpirationRatio floatValue];
                 
                 if (tmp >= 1.0f) {
@@ -314,36 +322,36 @@
             }
             
             // 依模式不同取值
-            if ([ventilation.VentilationMode caseInsensitiveCompare:@"11"]) {
+            if (![ventilation.VentilationMode caseInsensitiveCompare:@"11"]) {
                 // THigh(339)
-                ventilation.THigh = [NSString stringWithFormat:@"%d", [[self getValue:15 value:settings] intValue]];
+                ventilation.THigh = [self stringZeroFilter:[NSString stringWithFormat:@"%d", [[self getValue:15 value:settings] intValue]]];
                 if (![ventilation.THigh isEqualToString:@""]) {
-                    ventilation.THigh = [NSString stringWithFormat:@"%.1lf", [ventilation.THigh floatValue] / 100.0f];
+                    ventilation.THigh = [self stringZeroFilter:[NSString stringWithFormat:@"%.1lf", [ventilation.THigh floatValue] / 100.0f]];
                 }
                 // Tlow(340)
-                ventilation.Tlow = [NSString stringWithFormat:@"%d", [[self getValue:16 value:settings] intValue]];
+                ventilation.Tlow = [self stringZeroFilter:[NSString stringWithFormat:@"%d", [[self getValue:16 value:settings] intValue]]];
                 if (![ventilation.Tlow isEqualToString:@""]) {
-                    ventilation.Tlow = [NSString stringWithFormat:@"%.1lf", [ventilation.Tlow floatValue] / 100.0f];
+                    ventilation.Tlow = [self stringZeroFilter:[NSString stringWithFormat:@"%.1lf", [ventilation.Tlow floatValue] / 100.0f]];
                 }
                 // Plow(308)
                 ventilation.Plow = ventilation.PEEP;
                 
                 // PHigh(338)
-                ventilation.PHigh = [NSString stringWithFormat:@"%d", [[self getValue:17 value:settings] intValue]];
+                ventilation.PHigh = [self stringZeroFilter:[NSString stringWithFormat:@"%d", [[self getValue:17 value:settings] intValue]]];
                 if (![ventilation.PHigh isEqualToString:@""]) {
-                    ventilation.PHigh = [NSString stringWithFormat:@"%.1lf", [ventilation.PHigh floatValue] / 10.0f];
+                    ventilation.PHigh = [self stringZeroFilter:[NSString stringWithFormat:@"%.1lf", [ventilation.PHigh floatValue] / 10.0f]];
                 }
                 
                 // PressureSupport(341)
-                ventilation.PressureSupport = [NSString stringWithFormat:@"%d", [[self getValue:18 value:settings] intValue]];
+                ventilation.PressureSupport = [self stringZeroFilter:[NSString stringWithFormat:@"%d", [[self getValue:18 value:settings] intValue]]];
             }
             else {
                 // PressureSupport(307)
-                ventilation.PressureSupport = [NSString stringWithFormat:@"%d", [[self getValue:8 value:settings] intValue]];
+                ventilation.PressureSupport = [self stringZeroFilter:[NSString stringWithFormat:@"%d", [[self getValue:8 value:settings] intValue]]];
             }
             
             if (![ventilation.PressureSupport isEqualToString:@""]) {
-                ventilation.PressureSupport = [NSString stringWithFormat:@"%.1lf", [ventilation.PressureSupport floatValue] / 10.0f];
+                ventilation.PressureSupport = [self stringZeroFilter:[NSString stringWithFormat:@"%.1lf", [ventilation.PressureSupport floatValue] / 10.0f]];
             }
             
             /*
@@ -369,40 +377,40 @@
             NSString *measureds = [[NSString alloc] initWithData:mData encoding:NSUTF8StringEncoding];
             
             // TidalVolumeMeasured(201)
-            ventilation.TidalVolumeMeasured = [NSString stringWithFormat:@"%d", [[self getValue:1 value:measureds] intValue]];
+            ventilation.TidalVolumeMeasured = [self stringZeroFilter:[NSString stringWithFormat:@"%d", [[self getValue:1 value:measureds] intValue]]];
             
             // Measured breath frequency(200)
-            ventilation.VentilationRateTotal = [NSString stringWithFormat:@"%d", [[self getValue:2 value:measureds] intValue]];
+            ventilation.VentilationRateTotal = [self stringZeroFilter:[NSString stringWithFormat:@"%d", [[self getValue:2 value:measureds] intValue]]];
             if (![ventilation.VentilationRateTotal isEqualToString:@""]) {
-                ventilation.VentilationRateTotal = [NSString stringWithFormat:@"%.1lf", [ventilation.VentilationRateTotal floatValue] / 10.0f];
+                ventilation.VentilationRateTotal = [self stringZeroFilter:[NSString stringWithFormat:@"%.0f", [ventilation.VentilationRateTotal floatValue] / 10.0f]];
             }
             
             // MVTotal(204)
-            ventilation.MVTotal = [NSString stringWithFormat:@"%d", [[self getValue:3 value:measureds] intValue]];
+            ventilation.MVTotal = [self stringZeroFilter:[NSString stringWithFormat:@"%d", [[self getValue:3 value:measureds] intValue]]];
             if (![ventilation.MVTotal isEqualToString:@""]) {
-                ventilation.MVTotal = [NSString stringWithFormat:@"%.1lf", [ventilation.MVTotal floatValue] / 10.0f];
+                ventilation.MVTotal = [self stringZeroFilter:[NSString stringWithFormat:@"%.1lf", [ventilation.MVTotal floatValue] / 10.0f]];
             }
             
             // Peak pressure(205)
-            ventilation.PeakPressure = [NSString stringWithFormat:@"%d", [[self getValue:4 value:measureds] intValue]];
+            ventilation.PeakPressure = [self stringZeroFilter:[NSString stringWithFormat:@"%d", [[self getValue:4 value:measureds] intValue]]];
             if (![ventilation.PeakPressure isEqualToString:@""]) {
-                ventilation.PeakPressure = [NSString stringWithFormat:@"%.1lf", [ventilation.PeakPressure floatValue] / 10.0f];
+                ventilation.PeakPressure = [self stringZeroFilter:[NSString stringWithFormat:@"%.0f", [ventilation.PeakPressure floatValue] / 10.0f]];
             }
             
             // PlateauPressure(207)
-            ventilation.PlateauPressure = [NSString stringWithFormat:@"%d", [[self getValue:5 value:measureds] intValue]];
+            ventilation.PlateauPressure = [self stringZeroFilter:[NSString stringWithFormat:@"%d", [[self getValue:5 value:measureds] intValue]]];
             if (![ventilation.PlateauPressure isEqualToString:@""]) {
-                ventilation.PlateauPressure = [NSString stringWithFormat:@"%.1lf", [ventilation.PlateauPressure floatValue] / 10.0f];
+                ventilation.PlateauPressure = [self stringZeroFilter:[NSString stringWithFormat:@"%.0f", [ventilation.PlateauPressure floatValue] / 10.0f]];
             }
             
             // MeanPressure(206)
-            ventilation.MeanPressure = [NSString stringWithFormat:@"%d", [[self getValue:6 value:measureds] intValue]];
+            ventilation.MeanPressure = [self stringZeroFilter:[NSString stringWithFormat:@"%d", [[self getValue:6 value:measureds] intValue]]];
             if (![ventilation.MeanPressure isEqualToString:@""]) {
-                ventilation.MeanPressure = [NSString stringWithFormat:@"%.1lf", [ventilation.MeanPressure floatValue] / 10.0f];
+                ventilation.MeanPressure = [self stringZeroFilter:[NSString stringWithFormat:@"%.0f", [ventilation.MeanPressure floatValue] / 10.0f]];
             }
             
             // FiO2Measured(209)
-            ventilation.FiO2Measured = [NSString stringWithFormat:@"%d", [[self getValue:7 value:measureds] intValue]];
+            ventilation.FiO2Measured = [self stringZeroFilter:[NSString stringWithFormat:@"%d", [[self getValue:7 value:measureds] intValue]]];
             
             // Static Compliance(241)
             //ventilation.Compliance = [self getValue:8 value:measureds];

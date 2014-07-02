@@ -16,7 +16,9 @@
 
 @end
 
-@implementation CollectionViewHeader
+@implementation CollectionViewHeader {
+    NSUInteger dataCount;
+}
 
 @synthesize protocol;
 @synthesize timeArray;
@@ -66,7 +68,19 @@
     
     [label setText:[NSString stringWithFormat:@"%@", [timeArray objectAtIndex:indexPath.row]]];
     
+    //最後一筆，畫右邊的線
+    if (dataCount == timeArray.count - 1) {
+        CALayer *rightBorder = [CALayer layer];
+        rightBorder.frame = CGRectMake(HEADER_WIDTH - borderSize, 0.0f, borderSize, HEADER_HEIGHT);
+        
+        rightBorder.backgroundColor = [UIColor grayColor].CGColor;
+        
+        [label.layer addSublayer:rightBorder];
+    }
+    
     [cell addSubview:label];
+    
+    dataCount++;
     
     return cell;
 }

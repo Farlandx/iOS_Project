@@ -157,7 +157,13 @@
     if (batch.VentRecList.count > 0) {
         [db saveUploadData:batch];
     }
+    
+    for (VentilationData *data in measureDataList) {
+        data.checked = NO;
+    }
+    
     [self.tableView reloadData];
+    [self.imgSelectAll setImage:[UIImage imageNamed:@"unchecked"]];
     [ProgressHUD dismiss];
 }
 
@@ -165,25 +171,29 @@
     if (data != nil && data.count > 0) {
         [db saveCurRtCardListVerId:curRtCardListVerId];
         [db saveCurRtCardList:data];
+        
+        [ws getPatientList];
     }
     [ProgressHUD dismiss];
 }
 
 - (void)wsResponseCurRtCardListVerId:(int)verId {
-    if (curRtCardListVerId == -1) {
+    if (curRtCardListVerId == verId) {
         curRtCardListVerId = verId;
     }
-    
-    [self getCardList];
+    else {
+        [self getCardList];
+    }
     
     [ProgressHUD dismiss];
 }
 
 - (void)wsResponsePatientList:(NSMutableArray *)data {
     NSLog(@"wsResponsePatientList count:%ld", [data count]);
-    for (int i = 0; i < data.count; i++) {
-        NSLog(@"patient.ChtNo:%@\tBedNo:%@", [data[i] valueForKeyPath:@"ChtNo.text"], [data[i] valueForKeyPath:@"BedNo.text"]);
-    }
+//    for (int i = 0; i < data.count; i++) {
+//        NSLog(@"patient.ChtNo:%@\tBedNo:%@", [data[i] valueForKeyPath:@"ChtNo.text"], [data[i] valueForKeyPath:@"BedNo.text"]);
+//    }
+    [db savePatient:data];
     
     [ProgressHUD dismiss];
 }
@@ -443,7 +453,16 @@
 {
     NSData *nData = [NSData dataWithBytes:data length:len];
     NSString *str = [[NSString alloc] initWithData:nData encoding:NSUTF8StringEncoding];
-    return str;
+    
+    const char *c = [str UTF8String];
+    NSString *result = [[NSString alloc] init];
+    for (int i = 0; i < [str length]; i++) {
+        if (c[i] != 0x00) {
+            result = [result stringByAppendingString:[NSString stringWithFormat:@"%c", c[i]]];
+        }
+    }
+    
+    return result;
 }
 
 - (void)receivedMessage:(SInt32)type Result:(Boolean)result Data:(void *)data {
@@ -457,7 +476,7 @@
                 [self hexDataToString: infrom_data->data Length: 7];
                 memcpy(gTagUID,infrom_data->data,sizeof(gTagUID));
                 
-                uploaderTextField.text = tagUID;//[tagUID substringWithRange:NSMakeRange(0, 8)];
+                uploaderTextField.text = [tagUID substringWithRange:NSMakeRange(0, 8)];
                 
                 
                 NSString *strStatus =[NSString stringWithFormat:@"%02X",infrom_data->status];

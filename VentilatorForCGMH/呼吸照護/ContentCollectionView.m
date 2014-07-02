@@ -16,7 +16,9 @@
 
 @end
 
-@implementation ContentCollectionView
+@implementation ContentCollectionView {
+    NSUInteger dataCount;
+}
 
 @synthesize protocol;
 @synthesize dataArray;
@@ -26,6 +28,7 @@
     if (self) {
         [self setDataSource:self];
         [self setDelegate:self];
+        dataCount = 0;
         
         dataArray = [[NSMutableArray alloc] init];
     }
@@ -40,7 +43,7 @@
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
-{
+{3
     // Drawing code
 }
 */
@@ -77,21 +80,20 @@
         
         [label.layer addSublayer:bottomBorder];
         
+        //最後一筆，畫右邊的線
+        if (dataCount == dataArray.count - 1) {
+            CALayer *rightBorder = [CALayer layer];
+            rightBorder.frame = CGRectMake(HEADER_WIDTH - borderSize, 0.0f, borderSize, HEADER_HEIGHT);
+            
+            rightBorder.backgroundColor = [UIColor grayColor].CGColor;
+            
+            [label.layer addSublayer:rightBorder];
+        }
+        
         [cell addSubview:label];
     }
     
-//    [cell.label setText:[NSString stringWithFormat:@"%@", [dataArray objectAtIndex:indexPath.row]]];
-    
-//    CGFloat y = 0;
-//    
-//    for (int i = 0; i < [dataArray count];i++) {
-//        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, y, self.frame.size.width, HEADER_HEIGHT)];
-//        [label setText:[dataArray objectAtIndex:i]];
-//        
-//        [cell addSubview:label];
-//        
-//        y += HEADER_HEIGHT;
-//    }
+    dataCount++;
     
     return cell;
 }

@@ -13,6 +13,7 @@
 #import "DatabaseUtility.h"
 #import "DeviceStatus.h"
 #import "ProgressHUD.h"
+#import "Patient.h"
 
 @interface MeasureViewController ()
 
@@ -206,7 +207,16 @@
 {
     NSData *nData = [NSData dataWithBytes:data length:len];
     NSString *str = [[NSString alloc] initWithData:nData encoding:NSUTF8StringEncoding];
-    return str;
+    
+    const char *c = [str UTF8String];
+    NSString *result = [[NSString alloc] init];
+    for (int i = 0; i < [str length]; i++) {
+        if (c[i] != 0x00) {
+            result = [result stringByAppendingString:[NSString stringWithFormat:@"%c", c[i]]];
+        }
+    }
+    
+    return result;
 }
 
 - (void)listeningRecordOper {
@@ -241,7 +251,7 @@
                 [self hexDataToString: infrom_data->data Length: 7];
                 memcpy(gTagUID,infrom_data->data,sizeof(gTagUID));
                 
-                _RecordOper.text = tagUID;//[tagUID substringWithRange:NSMakeRange(0, 8)];
+                _RecordOper.text = [tagUID substringWithRange:NSMakeRange(0, 8)];
                 
                 NSString *strStatus =[NSString stringWithFormat:@"%02X",infrom_data->status];
                 
@@ -362,6 +372,8 @@
                     
                 }
             }
+            _btnSave.enabled = _RecordOper.text.length && _ChtNo.text.length && _VentNo.text.length;
+            
             NSLog(@"BLE Read Done.");
             break;
         }
@@ -374,14 +386,18 @@
             [ProgressHUD show:@"讀取中..." Interaction:NO];
             break;
             
-        case BLE_SCAN_TIMEOUT:
+        case BLE_SCAN_TIMEOUT: {
+            [ble disconnect];
             [ProgressHUD showError:@"找不到設備"];
             break;
+        }
             
-        case BLE_READ_ERROR:
+        case BLE_READ_ERROR: {
+            [ble disconnect];
             [ProgressHUD dismiss];
             NSLog(@"BLE Read Error!");
             break;
+        }
             
         case BLE_CONNECTING:
             [ProgressHUD show:@"連接設備中..." Interaction:NO];
@@ -538,10 +554,14 @@
 //    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
 //    [dateFormatter setDateFormat:@"yyyy/MM/dd HH:mm:ss"];
 //    myMeasureData.RecordTime = [dateFormatter stringFromDate:[NSDate date]];
+    myMeasureData.RecordTime = _RecordTime.text;
     myMeasureData.RecordOper = _RecordOper.text;
     myMeasureData.RecordDevice = [DeviceStatus getDeviceVendorUUID];
     myMeasureData.ChtNo = _ChtNo.text;
     myMeasureData.VentNo = _VentNo.text;
+    
+    Patient *p = [db getPatientByChtNo:_ChtNo.text];
+    myMeasureData.BedNo = p.BedNo;
     
     if (![db saveMeasure:myMeasureData]) {
         NSLog(@"Save fail.");

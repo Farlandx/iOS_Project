@@ -240,6 +240,10 @@
     PAaDO2 = @"";
     Shunt = @"";
     EndTidalCO2 = @"";
+    RecordOperName = @"";
+    VentilatorModel = @"";
+    BedNo = @"";
+    ErrorMsg = @"";
     checked = NO;
 }
 
@@ -322,7 +326,11 @@
             [self getStringWithoutNil:BE], @"BE",
             [self getStringWithoutNil:PAaDO2], @"PAaDO2",
             [self getStringWithoutNil:Shunt], @"Shunt",
-            [self getStringWithoutNil:EndTidalCO2], @"EndTidalCO2", nil];
+            [self getStringWithoutNil:EndTidalCO2], @"EndTidalCO2",
+            [self getStringWithoutNil:EndTidalCO2], @"RecordOperName",
+            [self getStringWithoutNil:EndTidalCO2], @"VentilatorModel",
+            [self getStringWithoutNil:EndTidalCO2], @"BedNo",
+            [self getStringWithoutNil:EndTidalCO2], @"ErrorMsg", nil];
 }
 
 @end

@@ -172,7 +172,7 @@
             }
             
             //建立病患table
-            sql_stmt = @"CREATE TABLE IF NOT EXISTS PATIENT (ChtNo TEXT PRIMARY KEY, BedNo TEXT)";
+            sql_stmt = @"CREATE TABLE IF NOT EXISTS PATIENT_DATA (ChtNo TEXT PRIMARY KEY, BedNo TEXT)";
             if (sqlite3_exec(sqliteDb, [sql_stmt UTF8String], NULL, NULL, &errMsg) != SQLITE_OK) {
                 NSLog(@"Failed to create PATIENT table.");
             }
@@ -650,7 +650,6 @@
 
 - (NSMutableArray *) getUploadHistories {
     NSMutableArray *batchList = [[NSMutableArray alloc] init];
-    NSMutableArray *measureList = [[NSMutableArray alloc] init];
     const char *dbpath = [databasePath UTF8String];
     sqlite3_stmt *statement;
     
@@ -677,6 +676,7 @@
         }
         
         for (int i = 0;i < batchList.count; i++) {
+            NSMutableArray *measureList = [[NSMutableArray alloc] init];
             querySQL = [NSString stringWithFormat:@"SELECT MeasureId, ChtNo, RecordTime, RecordIp, RecordOper, RecordDevice, RecordClientVersion, VentNo, RawData, VentilationMode, TidalVolumeSet, VolumeTarget, TidalVolumeMeasured, VentilationRateSet, SIMVRateSet, VentilationRateTotal, InspT, THigh, InspirationExpirationRatio, Tlow, AutoFlow, FlowSetting, FlowMeasured, Pattern, MVSet, PercentMinVolSet, MVTotal, PeakPressure, PlateauPressure, MeanPressure, PEEP, Plow, PressureSupport, PressureControl, PHigh, FiO2Set, FiO2Measured, Resistance, Compliance, BaseFlow, FlowSensitivity, LowerMV, HighPressureAlarm, Temperature, ReliefPressure, PetCo2, SpO2, RR, TV, MV, MaxPi, Mvv, Rsbi, EtSize, Mark, CuffPressure, BreathSounds, Pr, Cvp, BpS, BpD, Xrem, AutoPEEP, PlateauTimeSetting, RecordOperName, VentilatorModel, BedNo, ErrorMsg FROM MEASURE_DATA WHERE UploadId = %ld ORDER BY RecordTime DESC", ((DtoVentExchangeUploadBatch *)batchList[i]).UploadId];
             query_stmt = [querySQL UTF8String];
             
@@ -911,6 +911,9 @@
     if (data.count > 0) {
         [self deleteCurRtCardList];
         if (sqlite3_open(dbpath, &sqliteDb) == SQLITE_OK) {
+            
+            sqlite3_exec(sqliteDb, "BEGIN EXCLUSIVE TRANSACTION", 0, 0, 0);
+            
             for (NSString *str in data) {
                 NSString *insertSQL = [NSString stringWithFormat:
                                        @"INSERT INTO CARD_NO (CardNo) VALUES ('%@')", str];
@@ -919,6 +922,8 @@
                 sqlite3_prepare_v2(sqliteDb, insert_stmt, -1, &statement, NULL);
                 int sqliteState = sqlite3_step(statement);
             }
+            
+            sqlite3_exec(sqliteDb, "COMMIT TRANSACTION", 0, 0, 0);
         }
         
         sqlite3_finalize(statement);
@@ -980,6 +985,9 @@
     if (data.count > 0) {
         [self deletePatients];
         if (sqlite3_open(dbpath, &sqliteDb) == SQLITE_OK) {
+            
+            sqlite3_exec(sqliteDb, "BEGIN EXCLUSIVE TRANSACTION", 0, 0, 0);
+            
             for (Patient *p in data) {
                 NSString *insertSQL = [NSString stringWithFormat:
                                        @"INSERT INTO PATIENT_DATA (ChtNo, BedNo) VALUES ('%@', '%@')", p.ChtNo, p.BedNo];
@@ -987,7 +995,10 @@
                 const char *insert_stmt = [insertSQL UTF8String];
                 sqlite3_prepare_v2(sqliteDb, insert_stmt, -1, &statement, NULL);
                 int sqliteState = sqlite3_step(statement);
+                NSLog(@"%s", __func__);
             }
+            
+            sqlite3_exec(sqliteDb, "COMMIT TRANSACTION", 0, 0, 0);
         }
         
         sqlite3_finalize(statement);
@@ -1043,13 +1054,13 @@
     return result;
 }
 
-- (Patient *) getPatientByBedNo:(NSString *)bedNo {
+- (Patient *) getPatientByChtNo:(NSString *)chtNo {
     Patient *result = [[Patient alloc] init];
     const char *dbpath = [databasePath UTF8String];
     sqlite3_stmt *statement;
     
     if (sqlite3_open(dbpath, &sqliteDb) == SQLITE_OK) {
-        NSString *querySQL = [NSString stringWithFormat:@"SELECT ChtNo, BedNo FROM PATIENT_DATA WHERE bedNo = '%@'", bedNo];
+        NSString *querySQL = [NSString stringWithFormat:@"SELECT ChtNo, BedNo FROM PATIENT_DATA WHERE ChtNo = '%@'", chtNo];
         const char *query_stmt = [querySQL UTF8String];
         
         if (sqlite3_prepare_v2(sqliteDb, query_stmt, -1, &statement, NULL) == SQLITE_OK) {

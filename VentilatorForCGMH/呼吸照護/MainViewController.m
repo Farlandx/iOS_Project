@@ -34,6 +34,10 @@
     db = [[DatabaseUtility alloc] init];
     [db initDatabase];
     
+    [self refreshHistoryList];
+}
+
+- (void)refreshHistoryList {
     self.historyList = [db getUploadHistories];
 }
 

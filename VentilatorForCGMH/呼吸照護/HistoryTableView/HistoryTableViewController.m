@@ -97,6 +97,7 @@ static NSString *SectionHeaderViewIdentifier = @"SectionHeaderViewIdentifier";
         
         // For each play, set up a corresponding SectionInfo object to contain the default height for each row.
 		NSMutableArray *infoArray = [[NSMutableArray alloc] init];
+        [mainViewController refreshHistoryList];
         self.batchAry = mainViewController.historyList;
         
 		for (DtoVentExchangeUploadBatch *batch in self.batchAry) {

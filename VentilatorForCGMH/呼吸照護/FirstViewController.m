@@ -136,7 +136,16 @@
 {
     NSData *nData = [NSData dataWithBytes:data length:len];
     NSString *str = [[NSString alloc] initWithData:nData encoding:NSUTF8StringEncoding];
-    return str;
+    
+    const char *c = [str UTF8String];
+    NSString *result = [[NSString alloc] init];
+    for (int i = 0; i < [str length]; i++) {
+        if (c[i] != 0x00) {
+            result = [result stringByAppendingString:[NSString stringWithFormat:@"%c", c[i]]];
+        }
+    }
+    
+    return result;
 }
 
 - (void)listeningRecordOper {
