@@ -54,5 +54,6 @@
 @property (strong, nonatomic) IBOutlet UITextField *VentNo;
 
 - (void)setViewMode;
+- (void)setEditMode;
 
 @end

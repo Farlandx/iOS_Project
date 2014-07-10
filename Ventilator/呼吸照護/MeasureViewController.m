@@ -152,6 +152,9 @@
         }
         else {
             [ble setConnectionString:_VentNo.text];
+            
+            _VentNo.text = [_VentNo.text componentsSeparatedByString:@"**"][0];
+            
             [ble startRead];
         }
     }

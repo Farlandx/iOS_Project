@@ -103,6 +103,11 @@
     }
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [_RecordOper becomeFirstResponder];
+    [super viewDidAppear:animated];
+}
+
 - (void)dealloc {
     _delegate = nil;
 }
@@ -143,6 +148,9 @@
     
     if (![_VentNo.text isEqualToString:@""]) {
         [ble setConnectionString:_VentNo.text];
+        
+        _VentNo.text = [_VentNo.text componentsSeparatedByString:@"**"][0];
+        
         [ble startRead];
     }
     //[self btnStart:_btnReadData];
@@ -261,6 +269,7 @@
                 isFocusOnRecordOper = NO;
                 [self indicatorROStop];
                 [_RecordOper resignFirstResponder];
+                [_ChtNo becomeFirstResponder];
             }
             break;
             
@@ -387,6 +396,7 @@
             break;
             
         case BLE_SCAN_TIMEOUT: {
+            NSLog(@"找不到設備");
             [ble disconnect];
             [ProgressHUD showError:@"找不到設備"];
             break;
@@ -580,6 +590,10 @@
     viewMode = YES;
     
     [_btnSave setEnabled:NO];
+}
+
+- (void)setEditMode {
+    [_btnSave setEnabled:YES];
 }
 
 

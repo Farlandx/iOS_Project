@@ -77,7 +77,7 @@
     }
     else {
         [timeoutTimer invalidate];
-//        timeoutTimer = [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(scanStop:) userInfo:nil repeats:NO];
+        timeoutTimer = [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(scanStop:) userInfo:nil repeats:NO];
     }
 }
 

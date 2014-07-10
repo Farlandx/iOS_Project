@@ -481,6 +481,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = Farland;
 				TargetAttributes = {
+					1E5E567F18861184005EF6AC = {
+						DevelopmentTeam = 65JD5K58S3;
+					};
 					1E5E56A618861184005EF6AC = {
 						TestTargetID = 1E5E567F18861184005EF6AC;
 					};
@@ -703,6 +706,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "呼吸照護/呼吸照護-Prefix.pch";
 				INFOPLIST_FILE = "呼吸照護/呼吸照護-Info.plist";
@@ -713,6 +718,7 @@
 					/Users/farland/Dropbox/Git/iOS_Library/BLEForCGMH,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -722,6 +728,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "呼吸照護/呼吸照護-Prefix.pch";
 				INFOPLIST_FILE = "呼吸照護/呼吸照護-Info.plist";
@@ -732,6 +740,7 @@
 					/Users/farland/Dropbox/Git/iOS_Library/BLEForCGMH,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

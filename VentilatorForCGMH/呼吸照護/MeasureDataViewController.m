@@ -162,6 +162,10 @@
         data.checked = NO;
     }
     
+    for (DataTableViewCell *cell in [self.tableView visibleCells]) {
+        [cell.imgCheckbox setImage:[UIImage imageNamed:@"unchecked"]];
+    }
+    
     [self.tableView reloadData];
     [self.imgSelectAll setImage:[UIImage imageNamed:@"unchecked"]];
     [ProgressHUD dismiss];
@@ -329,10 +333,21 @@
                 // 編輯
                 NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
                 vc.myMeasureData = [measureDataList objectAtIndex: indexPath.row];
+                [vc setEditMode];
                 vc.delegate = self;
             }
         }
     }
+    
+    for (VentilationData *data in measureDataList) {
+        data.checked = NO;
+    }
+    
+    for (DataTableViewCell *cell in [self.tableView visibleCells]) {
+        [cell.imgCheckbox setImage:[UIImage imageNamed:@"unchecked"]];
+    }
+    
+    [self.imgSelectAll setImage:[UIImage imageNamed:@"unchecked"]];
 }
 
 #pragma mark - Button Click

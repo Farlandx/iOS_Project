@@ -77,7 +77,7 @@
     }
     else {
         [timeoutTimer invalidate];
-        timeoutTimer = [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(scanStop:) userInfo:nil repeats:NO];
+        //        timeoutTimer = [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(scanStop:) userInfo:nil repeats:NO];
     }
 }
 
@@ -309,7 +309,7 @@
 - (void)scanDevices {
     [_centralMgr scanForPeripheralsWithServices:nil options:nil];
     //五秒後停止scan
-    timeoutTimer = [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(scanStop:) userInfo:nil repeats:NO];
+    //    [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(scanStop:) userInfo:nil repeats:NO];
 }
 
 #pragma mark - Timer
@@ -334,10 +334,10 @@
     
     deviceInfo = [self getDeviceInfoByCode:connectionString];
 }
+
 - (void)startRead {
     if (deviceInfo != nil) {
         if (!_centralMgr) {
-
             _centralMgr = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
         }
         else {

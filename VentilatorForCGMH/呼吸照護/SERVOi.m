@@ -41,7 +41,7 @@
 		case 2:
 			return @"Pressure Control";
 		case 3:
-			return @"Voulme Control";
+			return @"Volume Control";
 		case 4:
 			return @"Pressure Reg. Volume Control";
 		case 5:
@@ -266,7 +266,7 @@
             
             // FlowSetting(348)
 //            ventilation.FlowSetting = [self stringZeroFilter:[NSString stringWithFormat:@"%d", [[self getValue:5 value:settings] intValue]]];
-            ventilation.FlowSetting = [self stringZeroFilter:[NSString stringWithFormat:@"%.2lf", [[self getValue:3 value:settings] floatValue]]];
+//            ventilation.FlowSetting = [self stringZeroFilter:[NSString stringWithFormat:@"%.2lf", [[self getValue:3 value:settings] floatValue]]];
             
             // MVSet(305)
             ventilation.MVSet = [self stringZeroFilter:[NSString stringWithFormat:@"%d", [[self getValue:6 value:settings] intValue]]];

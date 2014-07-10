@@ -157,7 +157,7 @@
             /**
 			 * VentilationRateSet(41) return XXXX.
 			 */
-            if (mode != 17) {
+            if (mode != 2 && mode != 17) {
                 ventilation.VentilationRateSet = strData;
             }
             
@@ -171,7 +171,7 @@
 			 * SIMVRateSet(42) return XXX.X
 			 */
             if (mode == 2 || mode == 17 || mode == 20) {
-                ventilation.SIMVRateSet = strData;
+                ventilation.SIMVRateSet = [NSString stringWithFormat:@"%.1lf", [strData floatValue]];
             }
             
             step = HAMILTON_GET_TIDAL_VOLUME;
@@ -190,8 +190,11 @@
                 ventilation.VolumeTarget = strData;
             }
             
-            if (![ventilation.VentilationRateSet isEqualToString:@""] && ![ventilation.TidalVolumeSet isEqualToString:@""]) {
-                ventilation.MVSet = [NSString stringWithFormat:@"%f", [ventilation.TidalVolumeSet floatValue] / 1000 * [ventilation.VentilationRateSet integerValue]];
+            if (mode == 2 || mode == 17) {
+                ventilation.MVSet = [NSString stringWithFormat:@"%.1lf", [ventilation.TidalVolumeSet floatValue] / 1000 * [ventilation.SIMVRateSet integerValue]];
+            }
+            else if (![ventilation.VentilationRateSet isEqualToString:@""] && ![ventilation.TidalVolumeSet isEqualToString:@""]) {
+                ventilation.MVSet = [NSString stringWithFormat:@"%.1lf", [ventilation.TidalVolumeSet floatValue] / 1000 * [ventilation.VentilationRateSet integerValue]];
             }
             
             step = HAMILTON_GET_PERCENT_MIN_VOL_SET;
@@ -214,17 +217,25 @@
             /**
 			 * InspT(113) retuen XX.XX
 			 */
-            ventilation.InspT = strData;
+            if (mode != 4) {
+                ventilation.InspT = strData;
+            }
+            
             step = HAMILTON_GET_IE_RATION;
             [self resetMData];
-            [_delegate nextCommand:[self getCommand:HAMILTON_GET_IE_RATION]];
+            if (mode == 2) {
+                [_delegate nextCommand:[self getCommand:HAMILTON_GET_SIMV_MODE_IE_RATION]];
+            }
+            else {
+                [_delegate nextCommand:[self getCommand:HAMILTON_GET_IE_RATION]];
+            }
             break;
             
         case HAMILTON_GET_IE_RATION:
             /**
 			 * I:E Ratio XX.XX
 			 */
-            if (mode == 1 || mode == 19 || mode == 21 || mode == 26) {
+            if (mode == 1 || mode == 2 || mode == 19 || mode == 21 || mode == 26) {
                 if (![strData isEqualToString:@""]) {
                     ventilation.InspirationExpirationRatio = [@"1:" stringByAppendingString:strData];
                 }
@@ -334,7 +345,9 @@
             /**
 			 * FlowMeasured(75) return XXXX.
 			 */
-            ventilation.FlowMeasured = strData;
+            if (mode != 4) {
+                ventilation.FlowMeasured = strData;
+            }
             
             step = HAMILTON_GET_MV_TOTAL;
             [self resetMData];
@@ -378,7 +391,9 @@
             /**
 			 * MeanPressure(67) return XXXX.
 			 */
-            ventilation.MeanPressure = strData;
+            if (mode != 4) {
+                ventilation.MeanPressure = strData;
+            }
             
             step = HAMILTON_GET_FIO2_MEAUSRE;
             [self resetMData];
