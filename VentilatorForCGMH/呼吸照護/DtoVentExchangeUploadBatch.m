@@ -18,6 +18,7 @@
         _UploadTime = @"";
         _Device = @"";
         _ClientVersion = @"";
+        _BedNo = @"";
     }
     return self;
 }

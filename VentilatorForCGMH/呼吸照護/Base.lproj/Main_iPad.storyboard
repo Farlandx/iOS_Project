@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6154.21" systemVersion="13E28" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="49e-Tb-3d3">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6153.13"/>
+        <deployment defaultVersion="1792" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
         <!--Measure Data View Controller - 呼吸照護-->
@@ -1236,14 +1237,14 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1234567890" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fEb-mu-lSt">
-                                            <rect key="frame" x="20" y="0.0" width="96" height="21"/>
+                                            <rect key="frame" x="20" y="0.0" width="366" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A123456789" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="e0x-NL-uId">
-                                            <rect key="frame" x="20" y="22" width="97" height="21"/>
+                                            <rect key="frame" x="20" y="22" width="366" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="highlightedColor"/>
@@ -1255,7 +1256,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="VentilationMode" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="s93-Im-YL8">
-                                            <rect key="frame" x="394" y="22" width="355" height="21"/>
+                                            <rect key="frame" x="393" y="22" width="355" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="highlightedColor"/>
@@ -1294,11 +1295,6 @@
                                 <rect key="frame" x="0.0" y="25" width="768" height="999"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" id="K8w-0c-F97" customClass="TitleView">
-                                        <rect key="frame" x="0.0" y="0.0" width="200" height="999"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                    </view>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="CE6-7W-F2G" customClass="ContentCollectionView">
                                         <rect key="frame" x="200" y="0.0" width="568" height="999"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
@@ -1317,6 +1313,11 @@
                                             </collectionViewCell>
                                         </cells>
                                     </collectionView>
+                                    <view contentMode="scaleToFill" id="K8w-0c-F97" customClass="TitleView">
+                                        <rect key="frame" x="0.0" y="0.0" width="200" height="999"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </scrollView>
@@ -1347,6 +1348,225 @@
             </objects>
             <point key="canvasLocation" x="3621" y="-1476"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="um4-B4-RvF">
+            <objects>
+                <navigationController id="oJV-9r-rEM" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ZVt-70-ytG">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="kmJ-XJ-bUu" kind="relationship" relationship="rootViewController" id="hqu-N2-aQ2"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pe9-BT-t34" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2631" y="-246"/>
+        </scene>
+        <!--Scanner Settings View Controller - 步驟一-->
+        <scene sceneID="QZP-Ya-5Ej">
+            <objects>
+                <viewController id="kmJ-XJ-bUu" customClass="ScannerSettingsViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="wP2-ag-dNV">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="請依序向下掃描" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="psq-Zh-u5O">
+                                <rect key="frame" x="314" y="109" width="140" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BC_1-1" id="0ct-4i-xUY">
+                                <rect key="frame" x="161" y="141" width="447" height="125"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BC_1-3" id="Hew-LE-Vja">
+                                <rect key="frame" x="278" y="529" width="213" height="108"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BC_1-5" id="sWV-iq-ApQ">
+                                <rect key="frame" x="247" y="879" width="275" height="125"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BC_1-4" id="nI9-1n-VTk">
+                                <rect key="frame" x="247" y="693" width="275" height="125"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BC_1-2" id="4Ip-uv-BEw">
+                                <rect key="frame" x="228" y="345" width="312" height="107"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="d0Q-w0-1Z2">
+                                <rect key="frame" x="645" y="974" width="103" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="25"/>
+                                <state key="normal" title="下一步>"/>
+                                <connections>
+                                    <segue destination="Lh6-vV-xVy" kind="push" id="ok9-aH-l5J"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="步驟一" id="GSj-yn-yQX">
+                        <barButtonItem key="rightBarButtonItem" title="結束" id="qhJ-Gd-E06">
+                            <connections>
+                                <action selector="closeView:" destination="kmJ-XJ-bUu" id="HXp-KR-0KQ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uEf-jj-rnN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3621" y="-246"/>
+        </scene>
+        <!--Scanner Settings View Controller - 步驟二-->
+        <scene sceneID="dtn-QX-idK">
+            <objects>
+                <viewController id="Lh6-vV-xVy" customClass="ScannerSettingsViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="05g-8Z-GB8">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="請依序向下掃描" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ImC-ne-mCK">
+                                <rect key="frame" x="314" y="109" width="140" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BC_2-1" id="hKC-vc-4Yj">
+                                <rect key="frame" x="161" y="182" width="447" height="125"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BC_2-2" id="P98-Mz-ax8">
+                                <rect key="frame" x="278" y="419" width="213" height="185"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="pmL-9Z-BFa">
+                                <rect key="frame" x="645" y="974" width="103" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="25"/>
+                                <state key="normal" title="下一步>"/>
+                                <connections>
+                                    <segue destination="2v9-OL-zyh" kind="push" id="1Tg-AJ-le2"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BC_2-3" id="c4p-Hg-RQr">
+                                <rect key="frame" x="247" y="785" width="275" height="125"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="步驟二" id="PZU-4w-M7m">
+                        <barButtonItem key="rightBarButtonItem" title="結束" id="sjq-MK-R79">
+                            <connections>
+                                <action selector="closeView:" destination="Lh6-vV-xVy" id="gkK-Hd-cbY"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7Tm-Wv-XPe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4544" y="-246"/>
+        </scene>
+        <!--Scanner Settings View Controller - 步驟三-->
+        <scene sceneID="r8d-7y-aB4">
+            <objects>
+                <viewController id="2v9-OL-zyh" customClass="ScannerSettingsViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="jkT-pv-ohk">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="請依序向下掃描" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9j6-ns-cDp">
+                                <rect key="frame" x="314" y="109" width="140" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BC_3-1" id="OlS-ic-ewl">
+                                <rect key="frame" x="161" y="182" width="447" height="125"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BC_3-3" id="5Xp-RX-giQ">
+                                <rect key="frame" x="247" y="785" width="275" height="125"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BC_3-2" id="yZD-Ec-0sK">
+                                <rect key="frame" x="278" y="455" width="213" height="113"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="pDr-pu-bve">
+                                <rect key="frame" x="645" y="974" width="103" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="25"/>
+                                <state key="normal" title="下一步>"/>
+                                <connections>
+                                    <segue destination="Fay-wr-iik" kind="push" id="eHp-7S-nbt"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="步驟三" id="nle-Id-dzm">
+                        <barButtonItem key="rightBarButtonItem" title="結束" id="Q5L-3z-6qD">
+                            <connections>
+                                <action selector="closeView:" destination="2v9-OL-zyh" id="ehx-Jg-IBH"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZAR-du-8qP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5462" y="-246"/>
+        </scene>
+        <!--Scanner Settings View Controller - 步驟四-->
+        <scene sceneID="3gJ-Bb-k0h">
+            <objects>
+                <viewController id="Fay-wr-iik" customClass="ScannerSettingsViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="q43-nO-5ts">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="請依序向下掃描" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="W45-oD-CBc">
+                                <rect key="frame" x="314" y="109" width="140" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BC_4-1" id="uyc-Tm-Uc5">
+                                <rect key="frame" x="161" y="182" width="447" height="125"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BC_4-2" id="r45-zP-TL9">
+                                <rect key="frame" x="278" y="454" width="213" height="116"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BC_4-3" id="GMe-EX-cvS">
+                                <rect key="frame" x="247" y="785" width="275" height="125"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="步驟四" id="q1n-Ge-IqC">
+                        <barButtonItem key="rightBarButtonItem" title="結束" style="done" id="osq-Sx-Yr4">
+                            <connections>
+                                <action selector="closeView:" destination="Fay-wr-iik" id="aCZ-ln-0Sx"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SVj-GL-fpE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6418" y="-246"/>
+        </scene>
         <!--Navigation Controller - 歷史記錄-->
         <scene sceneID="K2D-C2-d2J">
             <objects>
@@ -1363,6 +1583,43 @@
             </objects>
             <point key="canvasLocation" x="1649" y="-1498"/>
         </scene>
+        <!--View Controller - 掃描器設定-->
+        <scene sceneID="JlZ-nR-PF9">
+            <objects>
+                <viewController id="VFE-Ta-h0h" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="dpp-kk-H5R">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BC_ReturnToDefault" id="3fu-sm-xjK">
+                                <rect key="frame" x="252" y="337" width="265" height="100"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="掃描回復原廠值" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ss0-Dc-Yse">
+                                <rect key="frame" x="314" y="294" width="140" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="YIk-dS-QAg">
+                                <rect key="frame" x="333" y="497" width="103" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
+                                <state key="normal" title="下一步>"/>
+                                <connections>
+                                    <segue destination="oJV-9r-rEM" kind="modal" id="ACy-29-REM"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="掃描器設定" image="Settings_Icon" id="1bO-Ke-QFV"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VaQ-bB-MZS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1649" y="-246"/>
+        </scene>
         <!--Main View Controller-->
         <scene sceneID="yl2-sM-qoP">
             <objects>
@@ -1376,6 +1633,7 @@
                     <connections>
                         <segue destination="Evp-Ev-Kef" kind="relationship" relationship="viewControllers" id="1bj-mE-gS6"/>
                         <segue destination="5TN-FP-GrJ" kind="relationship" relationship="viewControllers" id="SDz-Sh-h3V"/>
+                        <segue destination="VFE-Ta-h0h" kind="relationship" relationship="viewControllers" id="K09-YG-c2n"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>
@@ -1384,10 +1642,26 @@
         </scene>
     </scenes>
     <resources>
+        <image name="BC_1-1" width="447" height="125"/>
+        <image name="BC_1-2" width="213" height="107"/>
+        <image name="BC_1-3" width="213" height="108"/>
+        <image name="BC_1-4" width="275" height="125"/>
+        <image name="BC_1-5" width="275" height="125"/>
+        <image name="BC_2-1" width="447" height="125"/>
+        <image name="BC_2-2" width="213" height="185"/>
+        <image name="BC_2-3" width="275" height="125"/>
+        <image name="BC_3-1" width="447" height="125"/>
+        <image name="BC_3-2" width="213" height="113"/>
+        <image name="BC_3-3" width="275" height="125"/>
+        <image name="BC_4-1" width="447" height="125"/>
+        <image name="BC_4-2" width="213" height="116"/>
+        <image name="BC_4-3" width="275" height="125"/>
+        <image name="BC_ReturnToDefault" width="338" height="152"/>
         <image name="History" width="25" height="25"/>
         <image name="Other" width="25" height="25"/>
         <image name="Record" width="25" height="25"/>
         <image name="Respirator" width="25" height="25"/>
+        <image name="Settings_Icon" width="24" height="24"/>
         <image name="unchecked" width="16" height="16"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
@@ -1396,6 +1670,6 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Ugc-h3-n50"/>
+        <segue reference="CW4-WZ-cWu"/>
     </inferredMetricsTieBreakers>
 </document>

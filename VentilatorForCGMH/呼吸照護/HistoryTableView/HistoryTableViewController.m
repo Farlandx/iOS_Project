@@ -92,32 +92,29 @@ static NSString *SectionHeaderViewIdentifier = @"SectionHeaderViewIdentifier";
     /*
      Check whether the section info array has been created, and if so whether the section count still matches the current section count. In general, you need to keep the section info synchronized with the rows and section. If you support editing in the table view, you need to appropriately update the section info during editing operations.
      */
-	if ((self.sectionInfoArray == nil) ||
-        ([self.sectionInfoArray count] != [self numberOfSectionsInTableView:self.tableView])) {
+    
+    // For each play, set up a corresponding SectionInfo object to contain the default height for each row.
+    NSMutableArray *infoArray = [[NSMutableArray alloc] init];
+    [mainViewController refreshHistoryList];
+    self.batchAry = mainViewController.historyList;
+    
+    for (DtoVentExchangeUploadBatch *batch in self.batchAry) {
         
-        // For each play, set up a corresponding SectionInfo object to contain the default height for each row.
-		NSMutableArray *infoArray = [[NSMutableArray alloc] init];
-        [mainViewController refreshHistoryList];
-        self.batchAry = mainViewController.historyList;
+        APLSectionInfo *sectionInfo = [[APLSectionInfo alloc] init];
+        sectionInfo.batch = batch;
+        sectionInfo.open = NO;
         
-		for (DtoVentExchangeUploadBatch *batch in self.batchAry) {
-            
-			APLSectionInfo *sectionInfo = [[APLSectionInfo alloc] init];
-			sectionInfo.batch = batch;
-			sectionInfo.open = NO;
-            
-            NSNumber *defaultRowHeight = @(DEFAULT_ROW_HEIGHT);
-			NSInteger countOfVentRecList = [[sectionInfo.batch VentRecList] count];
-			for (NSInteger i = 0; i < countOfVentRecList; i++) {
-				[sectionInfo insertObject:defaultRowHeight inRowHeightsAtIndex:i];
-			}
-            
-			[infoArray addObject:sectionInfo];
-		}
+        NSNumber *defaultRowHeight = @(DEFAULT_ROW_HEIGHT);
+        NSInteger countOfVentRecList = [[sectionInfo.batch VentRecList] count];
+        for (NSInteger i = 0; i < countOfVentRecList; i++) {
+            [sectionInfo insertObject:defaultRowHeight inRowHeightsAtIndex:i];
+        }
         
-		self.sectionInfoArray = infoArray;
-        [self.tableView reloadData];
-	}
+        [infoArray addObject:sectionInfo];
+    }
+    
+    self.sectionInfoArray = infoArray;
+    [self.tableView reloadData];
 }
 
 #pragma mark - Table view data source
@@ -147,9 +144,9 @@ static NSString *SectionHeaderViewIdentifier = @"SectionHeaderViewIdentifier";
     DtoVentExchangeUploadBatch *batch = (DtoVentExchangeUploadBatch *)[(self.sectionInfoArray)[indexPath.section] batch];
     NSArray *tagAry = [[NSArray alloc] initWithObjects:[NSNumber numberWithInteger:indexPath.section], [NSNumber numberWithInteger:indexPath.row], nil];
     [cell setTag:(NSInteger)tagAry];
-    cell.ChtNo.text = ((VentilationData *)batch.VentRecList[indexPath.row]).ChtNo;
-    cell.RecordOper.text = ((VentilationData *)batch.VentRecList[indexPath.row]).RecordOper;
-    cell.VentilationMode.text = ((VentilationData *)batch.VentRecList[indexPath.row]).VentilationMode;
+    cell.ChtNo.text = [NSString stringWithFormat:@"%@ - %@", ((VentilationData *)batch.VentRecList[indexPath.row]).BedNo, ((VentilationData *)batch.VentRecList[indexPath.row]).ChtNo];
+    cell.RecordOper.text = ((VentilationData *)batch.VentRecList[indexPath.row]).RecordOperName;
+    cell.VentilationMode.text = [NSString stringWithFormat:@"%@ - %@",((VentilationData *)batch.VentRecList[indexPath.row]).VentilatorModel, ((VentilationData *)batch.VentRecList[indexPath.row]).VentilationMode];
     cell.RecordTime.text = ((VentilationData *)batch.VentRecList[indexPath.row]).RecordTime;
     
     return cell;
@@ -191,10 +188,15 @@ static NSString *SectionHeaderViewIdentifier = @"SectionHeaderViewIdentifier";
     
     if (sectionInfo.batch.VentRecList.count > 0) {
         //取得第一筆，即最新的資料放在section
-        sectionHeaderView.ChtNo.text = ((VentilationData *)sectionInfo.batch.VentRecList[0]).ChtNo;
-        sectionHeaderView.RecordOper.text = ((VentilationData *)sectionInfo.batch.VentRecList[0]).RecordOper;
-        sectionHeaderView.RecordTime.text = ((VentilationData *)sectionInfo.batch.VentRecList[0]).RecordTime;
-        sectionHeaderView.VentilationMode.text = ((VentilationData *)sectionInfo.batch.VentRecList[0]).VentilationMode;
+        sectionHeaderView.ChtNo.text = [NSString stringWithFormat:@"%@ - %@", ((VentilationData *)sectionInfo.batch.VentRecList[0]).BedNo, ((VentilationData *)sectionInfo.batch.VentRecList[0]).ChtNo];
+        sectionHeaderView.RecordOper.text = ((VentilationData *)sectionInfo.batch.VentRecList[0]).RecordOperName;
+        sectionHeaderView.RecordTime.text = [NSString stringWithFormat:@"%@(%ld)", ((VentilationData *)sectionInfo.batch.VentRecList[0]).RecordTime, sectionInfo.batch.VentRecList.count];
+        if (![((VentilationData *)sectionInfo.batch.VentRecList[0]).VentilatorModel isEqualToString:@""]) {
+            sectionHeaderView.VentilationMode.text = [NSString stringWithFormat:@"%@ - %@", ((VentilationData *)sectionInfo.batch.VentRecList[0]).VentilatorModel, ((VentilationData *)sectionInfo.batch.VentRecList[0]).VentilationMode];
+        }
+        else {
+            sectionHeaderView.VentilationMode.text = ((VentilationData *)sectionInfo.batch.VentRecList[0]).VentilationMode;
+        }
     }
     sectionHeaderView.section = section;
     sectionHeaderView.delegate = self;

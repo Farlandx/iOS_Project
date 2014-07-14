@@ -203,7 +203,20 @@
 }
 
 - (void)wsConnectionError:(NSError *)error {
-    [ProgressHUD showError:[NSString stringWithFormat:@"連線錯誤(%ld)", [error code]]];
+    
+    switch ((CFNetworkErrors)[error code]) {
+        case kCFURLErrorTimedOut:
+            [ProgressHUD showError:@"連線遇時"];
+            break;
+            
+        case kCFURLErrorCannotConnectToHost:
+            [ProgressHUD showError:@"與伺服器連線失敗，請確認網路是否暢通"];
+            break;
+            
+        default:
+            [ProgressHUD showError:[NSString stringWithFormat:@"連線錯誤(%ld)", [error code]]];
+            break;
+    }
     NSLog(@"連線錯誤(%ld)", [error code]);
 }
 

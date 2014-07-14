@@ -256,6 +256,7 @@
             int index = 0;
             NSDictionary *dtoUploadVentDataResultList = [xmlDictionary valueForKeyPath:@"Envelope.Body.UploadVentDataResponse.UploadVentDataResult.DtoUploadVentDataResult"];
             if (batch.VentRecList.count > 1) {
+                //多筆
                 for (NSDictionary *dtoUploadVentDataResult in dtoUploadVentDataResultList) {
                     DtoUploadVentDataResult *tmp = [[DtoUploadVentDataResult alloc] init];
                     tmp.ChtNo = [dtoUploadVentDataResult valueForKeyPath:@"ChtNo.text"];
@@ -267,6 +268,10 @@
                         tmp.UploadOperName = [dtoUploadVentDataResult valueForKeyPath:@"UploadOperName.text"];
                         tmp.VentilatorModel = [dtoUploadVentDataResult valueForKeyPath:@"VentilatorModel.text"];
                         tmp.BedNo = [dtoUploadVentDataResult valueForKeyPath:@"BedNo.text"];
+                        
+                        ((VentilationData *)batch.VentRecList[index]).RecordOperName = tmp.RecordOperName;
+                        ((VentilationData *)batch.VentRecList[index]).VentilatorModel = tmp.VentilatorModel;
+                        ((VentilationData *)batch.VentRecList[index]).BedNo = tmp.BedNo;
                         [uploadSuccess addObject:batch.VentRecList[index]];
                     }
                     else {
@@ -278,6 +283,7 @@
                 
             }
             else {
+                //單筆
                 DtoUploadVentDataResult *tmp = [[DtoUploadVentDataResult alloc] init];
                 tmp.ChtNo = [dtoUploadVentDataResultList valueForKeyPath:@"ChtNo.text"];
                 tmp.RecordTime = [dtoUploadVentDataResultList valueForKeyPath:@"RecordTime.text"];
@@ -288,6 +294,10 @@
                     tmp.UploadOperName = [dtoUploadVentDataResultList valueForKeyPath:@"UploadOperName.text"];
                     tmp.VentilatorModel = [dtoUploadVentDataResultList valueForKeyPath:@"VentilatorModel.text"];
                     tmp.BedNo = [dtoUploadVentDataResultList valueForKeyPath:@"BedNo.text"];
+                    
+                    ((VentilationData *)batch.VentRecList[index]).RecordOperName = tmp.RecordOperName;
+                    ((VentilationData *)batch.VentRecList[index]).VentilatorModel = tmp.VentilatorModel;
+                    ((VentilationData *)batch.VentRecList[index]).BedNo = tmp.BedNo;
                     [uploadSuccess addObject:batch.VentRecList[index]];
                 }
                 else {

@@ -19,6 +19,7 @@
 		1E15858718CC660A009249AF /* MeasureDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E15858418CC660A009249AF /* MeasureDataViewController.m */; };
 		1E32C6BB18B7064000DE4595 /* MeasureTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E32C6BA18B7064000DE4595 /* MeasureTabBarViewController.m */; };
 		1E32C6C618B746B600DE4595 /* VentilatorMeasureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E32C6C518B746B600DE4595 /* VentilatorMeasureView.m */; };
+		1E345E83196F701800967B44 /* ScannerSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E345E82196F701800967B44 /* ScannerSettingsViewController.m */; };
 		1E5E568418861184005EF6AC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E5E568318861184005EF6AC /* Foundation.framework */; };
 		1E5E568618861184005EF6AC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E5E568518861184005EF6AC /* CoreGraphics.framework */; };
 		1E5E568818861184005EF6AC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E5E568718861184005EF6AC /* UIKit.framework */; };
@@ -45,6 +46,7 @@
 		1E9219CD19064F9E006ED639 /* WebService.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E9219CC19064F9E006ED639 /* WebService.m */; };
 		1E9219D1190750D7006ED639 /* DeviceStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E9219D0190750D7006ED639 /* DeviceStatus.m */; };
 		1E9219D71907A8CD006ED639 /* DtoUploadVentDataResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E9219D61907A8CD006ED639 /* DtoUploadVentDataResult.m */; };
+		1E948E50197387170031F415 /* libBLE.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E948E4F197387170031F415 /* libBLE.a */; };
 		1E97B3FF18E01C8100704F07 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E97B3FE18E01C8100704F07 /* AudioToolbox.framework */; };
 		1E97B40118E01CC300704F07 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E97B40018E01CC300704F07 /* AVFoundation.framework */; };
 		1E97B40318E01F4F00704F07 /* libNfcA1Device_D14E.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E97B40218E01F4F00704F07 /* libNfcA1Device_D14E.a */; };
@@ -59,11 +61,6 @@
 		1ECAB81C1920612300161572 /* HistoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ECAB81B1920612300161572 /* HistoryTableViewController.m */; };
 		1ECAB8201920614D00161572 /* HistoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ECAB81F1920614D00161572 /* HistoryTableViewCell.m */; };
 		1ECAB8241920C8CA00161572 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ECAB8231920C8CA00161572 /* MainViewController.m */; };
-		1ED31B9F190E071D00E58228 /* BLE.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ED31B91190E071D00E58228 /* BLE.m */; };
-		1ED31BA0190E071D00E58228 /* DeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ED31B93190E071D00E58228 /* DeviceInfo.m */; };
-		1ED31BA1190E071D00E58228 /* DRAGER.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ED31B95190E071D00E58228 /* DRAGER.m */; };
-		1ED31BA2190E071D00E58228 /* Hamilton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ED31B98190E071D00E58228 /* Hamilton.m */; };
-		1ED31BA3190E071D00E58228 /* SERVOi.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ED31B9C190E071D00E58228 /* SERVOi.m */; };
 		1ED31BA4190E071D00E58228 /* VentilationData.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ED31B9E190E071D00E58228 /* VentilationData.m */; };
 		1EDA9CCF18B206CA00AF987A /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EDA9CCE18B206CA00AF987A /* libsqlite3.0.dylib */; };
 		1EDE9FC818B6FEC5004B8FE5 /* DataTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EDE9FC718B6FEC5004B8FE5 /* DataTableViewCell.m */; };
@@ -108,6 +105,8 @@
 		1E32C6BA18B7064000DE4595 /* MeasureTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeasureTabBarViewController.m; sourceTree = "<group>"; };
 		1E32C6C418B746B600DE4595 /* VentilatorMeasureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VentilatorMeasureView.h; sourceTree = "<group>"; };
 		1E32C6C518B746B600DE4595 /* VentilatorMeasureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VentilatorMeasureView.m; sourceTree = "<group>"; };
+		1E345E81196F701800967B44 /* ScannerSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScannerSettingsViewController.h; sourceTree = "<group>"; };
+		1E345E82196F701800967B44 /* ScannerSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScannerSettingsViewController.m; sourceTree = "<group>"; };
 		1E4E497D18B1AF9200B1721B /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		1E5BCA4018AB05DA00DF2355 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		1E5E568018861184005EF6AC /* 呼吸照護.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "呼吸照護.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -152,6 +151,7 @@
 		1E9219D0190750D7006ED639 /* DeviceStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceStatus.m; sourceTree = "<group>"; };
 		1E9219D51907A8CD006ED639 /* DtoUploadVentDataResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DtoUploadVentDataResult.h; sourceTree = "<group>"; };
 		1E9219D61907A8CD006ED639 /* DtoUploadVentDataResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DtoUploadVentDataResult.m; sourceTree = "<group>"; };
+		1E948E4F197387170031F415 /* libBLE.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libBLE.a; path = "../../../../Library/Developer/Xcode/DerivedData/VentilatorForCGMH-dyudrecbvqqzanaurovqukqoednr/Build/Products/Debug-iphoneos/libBLE.a"; sourceTree = "<group>"; };
 		1E97B3FE18E01C8100704F07 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		1E97B40018E01CC300704F07 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		1E97B40218E01F4F00704F07 /* libNfcA1Device_D14E.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libNfcA1Device_D14E.a; path = "呼吸照護/libNfcA1Device_D14E.a"; sourceTree = "<group>"; };
@@ -175,18 +175,13 @@
 		1ECAB8221920C8CA00161572 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		1ECAB8231920C8CA00161572 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		1ED31B90190E071D00E58228 /* BLE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLE.h; sourceTree = "<group>"; };
-		1ED31B91190E071D00E58228 /* BLE.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLE.m; sourceTree = "<group>"; };
 		1ED31B92190E071D00E58228 /* DeviceInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceInfo.h; sourceTree = "<group>"; };
-		1ED31B93190E071D00E58228 /* DeviceInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceInfo.m; sourceTree = "<group>"; };
 		1ED31B94190E071D00E58228 /* DRAGER.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DRAGER.h; sourceTree = "<group>"; };
-		1ED31B95190E071D00E58228 /* DRAGER.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DRAGER.m; sourceTree = "<group>"; };
 		1ED31B96190E071D00E58228 /* DragerLibrary_Commands.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DragerLibrary_Commands.h; sourceTree = "<group>"; };
 		1ED31B97190E071D00E58228 /* Hamilton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Hamilton.h; sourceTree = "<group>"; };
-		1ED31B98190E071D00E58228 /* Hamilton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Hamilton.m; sourceTree = "<group>"; };
 		1ED31B99190E071D00E58228 /* HamiltonLibrary_Commands.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HamiltonLibrary_Commands.h; sourceTree = "<group>"; };
 		1ED31B9A190E071D00E58228 /* SERVOi_Commands.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SERVOi_Commands.h; sourceTree = "<group>"; };
 		1ED31B9B190E071D00E58228 /* SERVOi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SERVOi.h; sourceTree = "<group>"; };
-		1ED31B9C190E071D00E58228 /* SERVOi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SERVOi.m; sourceTree = "<group>"; };
 		1ED31B9D190E071D00E58228 /* VentilationData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VentilationData.h; sourceTree = "<group>"; };
 		1ED31B9E190E071D00E58228 /* VentilationData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VentilationData.m; sourceTree = "<group>"; };
 		1EDA9CCE18B206CA00AF987A /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
@@ -203,6 +198,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1E948E50197387170031F415 /* libBLE.a in Frameworks */,
 				1E97B40318E01F4F00704F07 /* libNfcA1Device_D14E.a in Frameworks */,
 				1E97B40118E01CC300704F07 /* AVFoundation.framework in Frameworks */,
 				1E97B3FF18E01C8100704F07 /* AudioToolbox.framework in Frameworks */,
@@ -322,6 +318,7 @@
 		1E5E568218861184005EF6AC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1E948E4F197387170031F415 /* libBLE.a */,
 				1E97B40218E01F4F00704F07 /* libNfcA1Device_D14E.a */,
 				1E97B40018E01CC300704F07 /* AVFoundation.framework */,
 				1E97B3FE18E01C8100704F07 /* AudioToolbox.framework */,
@@ -408,6 +405,8 @@
 				1E15858418CC660A009249AF /* MeasureDataViewController.m */,
 				1E32C6B918B7064000DE4595 /* MeasureTabBarViewController.h */,
 				1E32C6BA18B7064000DE4595 /* MeasureTabBarViewController.m */,
+				1E345E81196F701800967B44 /* ScannerSettingsViewController.h */,
+				1E345E82196F701800967B44 /* ScannerSettingsViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -463,18 +462,13 @@
 			children = (
 				1E046F791932E96F00F10392 /* Header */,
 				1ED31B90190E071D00E58228 /* BLE.h */,
-				1ED31B91190E071D00E58228 /* BLE.m */,
 				1ED31B92190E071D00E58228 /* DeviceInfo.h */,
-				1ED31B93190E071D00E58228 /* DeviceInfo.m */,
 				1ED31B94190E071D00E58228 /* DRAGER.h */,
-				1ED31B95190E071D00E58228 /* DRAGER.m */,
 				1ED31B96190E071D00E58228 /* DragerLibrary_Commands.h */,
 				1ED31B97190E071D00E58228 /* Hamilton.h */,
-				1ED31B98190E071D00E58228 /* Hamilton.m */,
 				1ED31B99190E071D00E58228 /* HamiltonLibrary_Commands.h */,
 				1ED31B9A190E071D00E58228 /* SERVOi_Commands.h */,
 				1ED31B9B190E071D00E58228 /* SERVOi.h */,
-				1ED31B9C190E071D00E58228 /* SERVOi.m */,
 			);
 			name = BLE;
 			sourceTree = "<group>";
@@ -639,7 +633,6 @@
 				1ECAB8201920614D00161572 /* HistoryTableViewCell.m in Sources */,
 				1E75E33B194AF1C300593E17 /* Patient.m in Sources */,
 				1E9219CD19064F9E006ED639 /* WebService.m in Sources */,
-				1ED31BA3190E071D00E58228 /* SERVOi.m in Sources */,
 				1E8881E518EABF7E009B5E06 /* MeasureViewController.m in Sources */,
 				1EF0012B18B2EAEF003B5D58 /* DatabaseUtility.m in Sources */,
 				1E0DD9F1192B000D008E3F18 /* ContentCollectionView.m in Sources */,
@@ -648,9 +641,6 @@
 				1E0DD9E4192AFE62008E3F18 /* CollectionViewHeader.m in Sources */,
 				1E8DD5D918D824DF005B41D2 /* DisplayView.m in Sources */,
 				1EFAD8C418C6B335002118C7 /* FirstViewController.m in Sources */,
-				1ED31BA2190E071D00E58228 /* Hamilton.m in Sources */,
-				1ED31BA0190E071D00E58228 /* DeviceInfo.m in Sources */,
-				1ED31B9F190E071D00E58228 /* BLE.m in Sources */,
 				1E32C6BB18B7064000DE4595 /* MeasureTabBarViewController.m in Sources */,
 				1ED31BA4190E071D00E58228 /* VentilationData.m in Sources */,
 				1E15858718CC660A009249AF /* MeasureDataViewController.m in Sources */,
@@ -659,7 +649,7 @@
 				1ECAB816192060D500161572 /* APLSectionInfo.m in Sources */,
 				1E0DD9F7192B0022008E3F18 /* TitleView.m in Sources */,
 				1E5E569418861184005EF6AC /* VentilatorAppDelegate.m in Sources */,
-				1ED31BA1190E071D00E58228 /* DRAGER.m in Sources */,
+				1E345E83196F701800967B44 /* ScannerSettingsViewController.m in Sources */,
 				1E0DD9FD192B043A008E3F18 /* HistoryCollectionViewController.m in Sources */,
 				1E9DDB3318D2DDD800643295 /* BreathSoundTableViewController.m in Sources */,
 				1E9219C219063CFB006ED639 /* DtoVentExchangeUploadBatch.m in Sources */,
@@ -814,6 +804,7 @@
 					"$(PROJECT_DIR)/呼吸照護",
 					"$(PROJECT_DIR)",
 					/Users/farland/Dropbox/Git/iOS_Library/BLEForCGMH,
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/VentilatorForCGMH-dyudrecbvqqzanaurovqukqoednr/Build/Products/Debug-iphoneos",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -836,6 +827,7 @@
 					"$(PROJECT_DIR)/呼吸照護",
 					"$(PROJECT_DIR)",
 					/Users/farland/Dropbox/Git/iOS_Library/BLEForCGMH,
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/VentilatorForCGMH-dyudrecbvqqzanaurovqukqoednr/Build/Products/Debug-iphoneos",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

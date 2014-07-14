@@ -18,4 +18,7 @@
 @property (strong, nonatomic) NSString *ClientVersion;
 @property (strong, nonatomic) NSMutableArray *VentRecList;
 
+
+@property (strong, nonatomic) NSString *BedNo;
+
 @end

@@ -311,10 +311,10 @@
 {
 	@autoreleasepool
 	{
-		double length = label.text.length;
-		NSTimeInterval sleep = 2 * length * 0.04 + 0.5;
+//		double length = label.text.length;
+//		NSTimeInterval sleep = 4 * length * 0.04 + 0.5;
 		
-		[NSThread sleepForTimeInterval:sleep];
+		[NSThread sleepForTimeInterval:3.0f];
 		[self hudHide];
 	}
 }
