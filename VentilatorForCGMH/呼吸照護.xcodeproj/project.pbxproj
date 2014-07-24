@@ -100,7 +100,6 @@
 		1E0DD9FC192B043A008E3F18 /* HistoryCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryCollectionViewController.m; sourceTree = "<group>"; };
 		1E15858318CC660A009249AF /* MeasureDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeasureDataViewController.h; sourceTree = "<group>"; };
 		1E15858418CC660A009249AF /* MeasureDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeasureDataViewController.m; sourceTree = "<group>"; };
-		1E17DFE118D6D1B0007798C1 /* 呼吸照護 copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "呼吸照護 copy-Info.plist"; path = "/Users/farland/Desktop/Xcode/呼吸照護/呼吸照護 copy-Info.plist"; sourceTree = "<absolute>"; };
 		1E32C6B918B7064000DE4595 /* MeasureTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeasureTabBarViewController.h; sourceTree = "<group>"; };
 		1E32C6BA18B7064000DE4595 /* MeasureTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeasureTabBarViewController.m; sourceTree = "<group>"; };
 		1E32C6C418B746B600DE4595 /* VentilatorMeasureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VentilatorMeasureView.h; sourceTree = "<group>"; };
@@ -302,7 +301,6 @@
 				1E5E56AE18861184005EF6AC /* 呼吸照護Tests */,
 				1E5E568218861184005EF6AC /* Frameworks */,
 				1E5E568118861184005EF6AC /* Products */,
-				1E17DFE118D6D1B0007798C1 /* 呼吸照護 copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};

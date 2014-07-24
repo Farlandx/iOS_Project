@@ -206,7 +206,7 @@
     
     switch ((CFNetworkErrors)[error code]) {
         case kCFURLErrorTimedOut:
-            [ProgressHUD showError:@"連線遇時"];
+            [ProgressHUD showError:@"連線逾時"];
             break;
             
         case kCFURLErrorCannotConnectToHost:
@@ -263,7 +263,7 @@
     VentilationData *data = [measureDataList objectAtIndex:indexPath.row];
     // Configure the cell...
     cell.labelRecordTime.text = data.RecordTime;
-    cell.labelChtNo.text = data.ChtNo;
+    cell.labelChtNo.text = [NSString stringWithFormat:@"%@ - %@", data.BedNo, data.ChtNo];
     cell.labelRecordOper.text = data.RecordOper;
     cell.labelVentilationMode.text = data.VentilationMode;
     

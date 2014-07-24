@@ -140,7 +140,7 @@
     //床號
     [ary addObject:data.BedNo];
     //治療師
-    [ary addObject:data.RecordOper];
+    [ary addObject:data.RecordOperName];
     //呼吸器
     [ary addObject:data.VentNo];
     //Ventilation Mode

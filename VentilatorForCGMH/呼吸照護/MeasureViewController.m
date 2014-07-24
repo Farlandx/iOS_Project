@@ -23,7 +23,7 @@
     DatabaseUtility *db;
     
     BOOL isStartListeningThread, isFocusOnRecordOper, isFocusOnVentNo;
-    NSString *mac_address;
+    NSString *mac_address, *tmp_RecordOper, *tmp_VentNo, *tmp_ChtNo;
 }
 
 @synthesize viewMode;
@@ -134,26 +134,71 @@
 }
 
 - (void)recordOperTextFieldDone:(UITextField*)textField {
-    [textField resignFirstResponder];
-    [_ChtNo becomeFirstResponder];
+    if ([textField.text length] >= 3 && [textField.text length] <= 8) {
+        _ChtNo.text = textField.text;
+        textField.text = @"";
+        [_ChtNo becomeFirstResponder];
+        [self chtNoTextFieldDone:_ChtNo];
+    }
+    else if([textField.text length] > 12) {
+        _VentNo.text = textField.text;
+        textField.text = @"";
+        [_VentNo becomeFirstResponder];
+        [self ventNoTextFieldDone:_VentNo];
+    }
+    else {
+        tmp_RecordOper = textField.text;
+        [textField resignFirstResponder];
+        [_ChtNo becomeFirstResponder];
+    }
 }
 
 - (void)chtNoTextFieldDone:(UITextField*)textField {
-    [textField resignFirstResponder];
-    [_VentNo becomeFirstResponder];
+    if ([textField.text length] == 10) {
+        _RecordOper.text = textField.text;
+        textField.text = @"";
+        [_RecordOper becomeFirstResponder];
+        [self recordOperTextFieldDone:_RecordOper];
+    }
+    else if([textField.text length] > 12) {
+        _VentNo.text = textField.text;
+        textField.text = @"";
+        [_VentNo becomeFirstResponder];
+        [self ventNoTextFieldDone:_VentNo];
+    }
+    else {
+        tmp_ChtNo = textField.text;
+        [textField resignFirstResponder];
+        [_VentNo becomeFirstResponder];
+    }
 }
 
 - (void)ventNoTextFieldDone:(UITextField*)textField {
-    [textField resignFirstResponder];
-    
-    if (![_VentNo.text isEqualToString:@""]) {
-        [ble setConnectionString:_VentNo.text];
-        
-        _VentNo.text = [_VentNo.text componentsSeparatedByString:@"**"][0];
-        
-        [ble startRead];
+    if ([textField.text length] == 10) {
+        _RecordOper.text = textField.text;
+        textField.text = @"";
+        [_RecordOper becomeFirstResponder];
+        [self recordOperTextFieldDone:_RecordOper];
     }
-    //[self btnStart:_btnReadData];
+    else if ([textField.text length] >= 3 && [textField.text length] <= 8) {
+        _ChtNo.text = textField.text;
+        textField.text = @"";
+        [_ChtNo becomeFirstResponder];
+        [self chtNoTextFieldDone:_ChtNo];
+    }
+    else {
+        tmp_VentNo = textField.text;
+        [textField resignFirstResponder];
+        
+        if (![_VentNo.text isEqualToString:@""]) {
+            [ble setConnectionString:_VentNo.text];
+            
+            _VentNo.text = [_VentNo.text componentsSeparatedByString:@"**"][0];
+            
+            [ble startRead];
+        }
+        //[self btnStart:_btnReadData];
+    }
 }
 
 - (IBAction)testClick:(id)sender {
@@ -430,6 +475,10 @@
 
 #pragma mark - UITextFieldDelegate
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
+    if (textField == _RecordOper || textField == _ChtNo || textField == _VentNo) {
+        textField.text = @"";
+    }
+    
     if (![self isHeadsetPluggedIn]) {
         isStartListeningThread = NO;
         isFocusOnRecordOper = NO;
@@ -484,8 +533,12 @@
 //            [_RecordOper clearLabel];
 //        }
         NSLog(@"RecordOper leave");
+        
+        if (![_RecordOper.text isEqualToString:@""] && ![tmp_RecordOper isEqualToString:@""]) {
+            _RecordOper.text = tmp_RecordOper;
+        }
     }
-//    else if(textField == _ChtNo) {
+    else if(textField == _ChtNo) {
 //        Patient *p = [db getPatientById:textField.text];
 //        if (p && p.Name.length > 0) {
 //            [_ChtNo setLabel:p.Name];
@@ -493,11 +546,19 @@
 //        else {
 //            [_ChtNo clearLabel];
 //        }
-//    }
+        
+        if (![_ChtNo.text isEqualToString:@""] && ![tmp_ChtNo isEqualToString:@""]) {
+            _ChtNo.text = tmp_ChtNo;
+        }
+    }
     else if(textField == _VentNo) {
         NSLog(@"VentNo leave");
         [self indicatorVNOStop];
         isFocusOnVentNo = NO;
+        
+        if (![_VentNo.text isEqualToString:@""] && [tmp_VentNo isEqualToString:@""]) {
+            _VentNo.text = tmp_VentNo;
+        }
     }
 }
 
@@ -511,7 +572,16 @@
 }
 
 - (BOOL)textFieldShouldClear:(UITextField *)textField {
-    if (textField == _RecordOper || textField == _ChtNo || textField == _VentNo) {
+    if (textField == _RecordOper) {
+        tmp_RecordOper = @"";
+        _btnSave.enabled = NO;
+    }
+    else if(textField == _ChtNo) {
+        tmp_ChtNo = @"";
+        _btnSave.enabled = NO;
+    }
+    else if (textField == _VentNo) {
+        tmp_VentNo = @"";
         _btnSave.enabled = NO;
     }
     return YES;
