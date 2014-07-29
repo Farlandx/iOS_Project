@@ -397,6 +397,8 @@
     switch (status) {
         case BLE_READ_DONE: {
             [ProgressHUD dismiss];
+            [myMeasureData clearVentilationData];
+            
             //取的目前時間
             _RecordTime.text = [DeviceStatus getSystemTime];
             
@@ -534,7 +536,7 @@
 //        }
         NSLog(@"RecordOper leave");
         
-        if (![_RecordOper.text isEqualToString:@""] && ![tmp_RecordOper isEqualToString:@""]) {
+        if ([_RecordOper.text isEqualToString:@""] && ![tmp_RecordOper isEqualToString:@""]) {
             _RecordOper.text = tmp_RecordOper;
         }
     }
@@ -547,7 +549,7 @@
 //            [_ChtNo clearLabel];
 //        }
         
-        if (![_ChtNo.text isEqualToString:@""] && ![tmp_ChtNo isEqualToString:@""]) {
+        if ([_ChtNo.text isEqualToString:@""] && ![tmp_ChtNo isEqualToString:@""]) {
             _ChtNo.text = tmp_ChtNo;
         }
     }
@@ -556,7 +558,7 @@
         [self indicatorVNOStop];
         isFocusOnVentNo = NO;
         
-        if (![_VentNo.text isEqualToString:@""] && [tmp_VentNo isEqualToString:@""]) {
+        if ([_VentNo.text isEqualToString:@""] && [tmp_VentNo isEqualToString:@""]) {
             _VentNo.text = tmp_VentNo;
         }
     }

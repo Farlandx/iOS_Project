@@ -226,4 +226,46 @@
     checked = NO;
 }
 
+- (void) clearVentilationData {
+    RecordTime = @"";
+    VentNo = @"";
+    RawData = @"";
+    VentilationMode = @"";
+    TidalVolumeSet = @"";
+    VolumeTarget = @"";
+    TidalVolumeMeasured = @"";
+    VentilationRateSet = @"";
+    SIMVRateSet = @"";
+    VentilationRateTotal = @"";
+    InspT = @"";
+    THigh = @"";
+    InspirationExpirationRatio = @"";
+    Tlow = @"";
+    AutoFlow = @"";
+    FlowSetting = @"";
+    FlowMeasured = @"";
+    Pattern = @"";
+    MVSet = @"";
+    PercentMinVolSet = @"";
+    MVTotal = @"";
+    PeakPressure = @"";
+    PlateauPressure = @"";
+    MeanPressure = @"";
+    PEEP = @"";
+    Plow = @"";
+    PressureSupport = @"";
+    PressureControl = @"";
+    PHigh = @"";
+    FiO2Set = @"";
+    FiO2Measured = @"";
+    Resistance = @"";
+    Compliance = @"";
+    BaseFlow = @"";
+    FlowSensitivity = @"";
+    LowerMV = @"";
+    HighPressureAlarm = @"";
+    Temperature = @"";
+    ReliefPressure = @"";
+}
+
 @end

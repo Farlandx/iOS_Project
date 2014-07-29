@@ -125,5 +125,6 @@ typedef NS_ENUM(NSInteger, VENTILATION_MODE) {
 #pragma mark - -methods
 - (NSString *) modeToString:(VENTILATION_MODE)mode;
 - (void) setDefaultValue;
+- (void) clearVentilationData;
 
 @end
