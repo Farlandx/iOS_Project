@@ -1,12 +1,9 @@
 {
   "images" : [
     {
-      "idiom" : "universal"
-    },
-    {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "BC_3-1.png"
+      "filename" : "#@100161#.png"
     },
     {
       "idiom" : "universal",
