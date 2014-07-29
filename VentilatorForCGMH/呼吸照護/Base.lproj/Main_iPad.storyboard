@@ -1449,11 +1449,15 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="#@100065#" id="OPH-bD-a1T">
-                                <rect key="frame" x="261" y="453" width="246" height="118"/>
+                                <rect key="frame" x="261" y="398" width="246" height="118"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="#@101023#" id="N6K-ie-ELq">
-                                <rect key="frame" x="261" y="681" width="246" height="118"/>
+                                <rect key="frame" x="261" y="571" width="246" height="118"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="#@101029#" id="hw4-bM-qCb">
+                                <rect key="frame" x="261" y="744" width="246" height="118"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
@@ -1549,6 +1553,7 @@
         <image name="#@100065#" width="246" height="118"/>
         <image name="#@100161#" width="246" height="118"/>
         <image name="#@101023#" width="246" height="118"/>
+        <image name="#@101029#" width="246" height="118"/>
         <image name="BC_1-1" width="447" height="125"/>
         <image name="BC_1-2" width="213" height="107"/>
         <image name="BC_1-3" width="213" height="108"/>
