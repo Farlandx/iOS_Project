@@ -134,70 +134,71 @@
 }
 
 - (void)recordOperTextFieldDone:(UITextField*)textField {
-    if ([textField.text length] >= 3 && [textField.text length] <= 8) {
+    if ([textField.text length] >= 3 && [textField.text length] <= 8) { //病患
         _ChtNo.text = textField.text;
-        textField.text = @"";
         [_ChtNo becomeFirstResponder];
-        [self chtNoTextFieldDone:_ChtNo];
+        
+        [self setChtNoTextFieldValue:textField];
+        [self clearRecordOperTextFieldValue];
     }
-    else if([textField.text length] > 12) {
+    else if([textField.text length] > 12) { //儀器
         _VentNo.text = textField.text;
-        textField.text = @"";
         [_VentNo becomeFirstResponder];
-        [self ventNoTextFieldDone:_VentNo];
+        
+        [self setVentNoTextFieldValue:textField];
+        [self clearRecordOperTextFieldValue];
+    }
+    else if ([textField.text length] == 10) { //治療師
+        [self setRecordOperTextFieldValue:textField];
     }
     else {
-        tmp_RecordOper = textField.text;
-        [textField resignFirstResponder];
-        [_ChtNo becomeFirstResponder];
+        textField.text = @"";
     }
 }
 
 - (void)chtNoTextFieldDone:(UITextField*)textField {
-    if ([textField.text length] == 10) {
+    if ([textField.text length] == 10) { //治療師
         _RecordOper.text = textField.text;
-        textField.text = @"";
         [_RecordOper becomeFirstResponder];
-        [self recordOperTextFieldDone:_RecordOper];
+        
+        [self setRecordOperTextFieldValue:textField];
+        [self clearChtNoTextFieldValue];
     }
-    else if([textField.text length] > 12) {
+    else if([textField.text length] > 12) { //儀器
         _VentNo.text = textField.text;
-        textField.text = @"";
         [_VentNo becomeFirstResponder];
-        [self ventNoTextFieldDone:_VentNo];
+        
+        [self setVentNoTextFieldValue:textField];
+        [self clearChtNoTextFieldValue];
+    }
+    else if ([textField.text length] >= 3 && [textField.text length] <= 8){ //病患
+        [self setChtNoTextFieldValue:textField];
     }
     else {
-        tmp_ChtNo = textField.text;
-        [textField resignFirstResponder];
-        [_VentNo becomeFirstResponder];
+        textField.text = @"";
     }
 }
 
 - (void)ventNoTextFieldDone:(UITextField*)textField {
-    if ([textField.text length] == 10) {
+    if ([textField.text length] == 10) { //治療師
         _RecordOper.text = textField.text;
-        textField.text = @"";
         [_RecordOper becomeFirstResponder];
-        [self recordOperTextFieldDone:_RecordOper];
+        
+        [self setRecordOperTextFieldValue:textField];
+        [self clearVentNoTextFieldValue];
     }
-    else if ([textField.text length] >= 3 && [textField.text length] <= 8) {
+    else if ([textField.text length] >= 3 && [textField.text length] <= 8) { //病患
         _ChtNo.text = textField.text;
-        textField.text = @"";
         [_ChtNo becomeFirstResponder];
-        [self chtNoTextFieldDone:_ChtNo];
+        
+        [self setChtNoTextFieldValue:textField];
+        [self clearVentNoTextFieldValue];
+    }
+    else if ([textField.text length] > 12) { //儀器
+        [self setVentNoTextFieldValue:textField];
     }
     else {
-        tmp_VentNo = textField.text;
-        [textField resignFirstResponder];
-        
-        if (![_VentNo.text isEqualToString:@""]) {
-            [ble setConnectionString:_VentNo.text];
-            
-            _VentNo.text = [_VentNo.text componentsSeparatedByString:@"**"][0];
-            
-            [ble startRead];
-        }
-        //[self btnStart:_btnReadData];
+        textField.text = @"";
     }
 }
 
@@ -668,5 +669,45 @@
     [_btnSave setEnabled:YES];
 }
 
+- (void)setRecordOperTextFieldValue:(UITextField*)textField {
+    tmp_RecordOper = textField.text;
+    [textField resignFirstResponder];
+    [_ChtNo becomeFirstResponder];
+}
+
+- (void)clearRecordOperTextFieldValue {
+//    tmp_RecordOper = @"";
+    _RecordOper.text = @"";
+}
+
+- (void)setChtNoTextFieldValue:(UITextField*)textField {
+    tmp_ChtNo = textField.text;
+    [textField resignFirstResponder];
+    [_VentNo becomeFirstResponder];
+}
+
+- (void)clearChtNoTextFieldValue {
+//    tmp_ChtNo = @"";
+    _ChtNo.text = @"";
+}
+
+- (void)setVentNoTextFieldValue:(UITextField*)textField {
+    tmp_VentNo = textField.text;
+    [textField resignFirstResponder];
+    
+    if (![_VentNo.text isEqualToString:@""]) {
+        [ble setConnectionString:_VentNo.text];
+        
+        _VentNo.text = [_VentNo.text componentsSeparatedByString:@"**"][0];
+        
+        [ble startRead];
+    }
+    //[self btnStart:_btnReadData];
+}
+
+- (void)clearVentNoTextFieldValue {
+//    tmp_VentNo = @"";
+    _VentNo.text = @"";
+}
 
 @end

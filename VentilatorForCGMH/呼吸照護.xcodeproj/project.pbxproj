@@ -20,6 +20,8 @@
 		1E32C6BB18B7064000DE4595 /* MeasureTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E32C6BA18B7064000DE4595 /* MeasureTabBarViewController.m */; };
 		1E32C6C618B746B600DE4595 /* VentilatorMeasureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E32C6C518B746B600DE4595 /* VentilatorMeasureView.m */; };
 		1E345E83196F701800967B44 /* ScannerSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E345E82196F701800967B44 /* ScannerSettingsViewController.m */; };
+		1E58EF681999A6C400D4E20E /* GZIP.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E58EF671999A6C400D4E20E /* GZIP.m */; };
+		1E58EF6A1999A6E000D4E20E /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E58EF691999A6E000D4E20E /* libz.1.2.5.dylib */; };
 		1E5E568418861184005EF6AC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E5E568318861184005EF6AC /* Foundation.framework */; };
 		1E5E568618861184005EF6AC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E5E568518861184005EF6AC /* CoreGraphics.framework */; };
 		1E5E568818861184005EF6AC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E5E568718861184005EF6AC /* UIKit.framework */; };
@@ -51,6 +53,7 @@
 		1E97B40118E01CC300704F07 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E97B40018E01CC300704F07 /* AVFoundation.framework */; };
 		1E97B40318E01F4F00704F07 /* libNfcA1Device_D14E.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E97B40218E01F4F00704F07 /* libNfcA1Device_D14E.a */; };
 		1E9DDB3318D2DDD800643295 /* BreathSoundTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E9DDB3218D2DDD800643295 /* BreathSoundTableViewController.m */; };
+		1EB210AE199A0148002D7C3D /* BLETrans.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EB210AD199A0148002D7C3D /* BLETrans.m */; };
 		1ECAB80B1918813800161572 /* ProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1ECAB8081918813800161572 /* ProgressHUD.bundle */; };
 		1ECAB80C1918813800161572 /* ProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ECAB80A1918813800161572 /* ProgressHUD.m */; };
 		1ECAB815192060D500161572 /* APLSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ECAB80F192060D500161572 /* APLSectionHeaderView.m */; };
@@ -107,6 +110,9 @@
 		1E345E81196F701800967B44 /* ScannerSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScannerSettingsViewController.h; sourceTree = "<group>"; };
 		1E345E82196F701800967B44 /* ScannerSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScannerSettingsViewController.m; sourceTree = "<group>"; };
 		1E4E497D18B1AF9200B1721B /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		1E58EF661999A6C400D4E20E /* GZIP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GZIP.h; sourceTree = "<group>"; };
+		1E58EF671999A6C400D4E20E /* GZIP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GZIP.m; sourceTree = "<group>"; };
+		1E58EF691999A6E000D4E20E /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
 		1E5BCA4018AB05DA00DF2355 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		1E5E568018861184005EF6AC /* 呼吸照護.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "呼吸照護.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E5E568318861184005EF6AC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -157,6 +163,8 @@
 		1E97B40418E01F6400704F07 /* NfcA1Device.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NfcA1Device.h; sourceTree = "<group>"; };
 		1E9DDB3118D2DDD800643295 /* BreathSoundTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BreathSoundTableViewController.h; sourceTree = "<group>"; };
 		1E9DDB3218D2DDD800643295 /* BreathSoundTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BreathSoundTableViewController.m; sourceTree = "<group>"; };
+		1EB210AC199A0148002D7C3D /* BLETrans.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLETrans.h; sourceTree = "<group>"; };
+		1EB210AD199A0148002D7C3D /* BLETrans.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLETrans.m; sourceTree = "<group>"; };
 		1ECAB8081918813800161572 /* ProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ProgressHUD.bundle; sourceTree = "<group>"; };
 		1ECAB8091918813800161572 /* ProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressHUD.h; sourceTree = "<group>"; };
 		1ECAB80A1918813800161572 /* ProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressHUD.m; sourceTree = "<group>"; };
@@ -197,6 +205,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1E58EF6A1999A6E000D4E20E /* libz.1.2.5.dylib in Frameworks */,
 				1E948E50197387170031F415 /* libBLE.a in Frameworks */,
 				1E97B40318E01F4F00704F07 /* libNfcA1Device_D14E.a in Frameworks */,
 				1E97B40118E01CC300704F07 /* AVFoundation.framework in Frameworks */,
@@ -294,6 +303,15 @@
 			name = Title;
 			sourceTree = "<group>";
 		};
+		1E58EF651999A6C400D4E20E /* GZIP */ = {
+			isa = PBXGroup;
+			children = (
+				1E58EF661999A6C400D4E20E /* GZIP.h */,
+				1E58EF671999A6C400D4E20E /* GZIP.m */,
+			);
+			path = GZIP;
+			sourceTree = "<group>";
+		};
 		1E5E567718861184005EF6AC = {
 			isa = PBXGroup;
 			children = (
@@ -316,6 +334,7 @@
 		1E5E568218861184005EF6AC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1E58EF691999A6E000D4E20E /* libz.1.2.5.dylib */,
 				1E948E4F197387170031F415 /* libBLE.a */,
 				1E97B40218E01F4F00704F07 /* libNfcA1Device_D14E.a */,
 				1E97B40018E01CC300704F07 /* AVFoundation.framework */,
@@ -412,12 +431,23 @@
 		1E8881E618EAC331009B5E06 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				1EB210AB199A0148002D7C3D /* BLETrans */,
 				1ECAB8211920B04F00161572 /* BLE */,
+				1E58EF651999A6C400D4E20E /* GZIP */,
 				1ECAB8071918813800161572 /* ProgressHUD */,
 				1ECAB80D192060D500161572 /* HistoryTableView */,
 				1E97B40418E01F6400704F07 /* NfcA1Device.h */,
 			);
 			name = Library;
+			sourceTree = "<group>";
+		};
+		1EB210AB199A0148002D7C3D /* BLETrans */ = {
+			isa = PBXGroup;
+			children = (
+				1EB210AC199A0148002D7C3D /* BLETrans.h */,
+				1EB210AD199A0148002D7C3D /* BLETrans.m */,
+			);
+			path = BLETrans;
 			sourceTree = "<group>";
 		};
 		1ECAB8071918813800161572 /* ProgressHUD */ = {
@@ -628,11 +658,13 @@
 				1E0DD9E9192AFEB2008E3F18 /* ContentScrollView.m in Sources */,
 				1E9219D71907A8CD006ED639 /* DtoUploadVentDataResult.m in Sources */,
 				1E781AEF18BC469200647ED3 /* OtherDataViewController.m in Sources */,
+				1EB210AE199A0148002D7C3D /* BLETrans.m in Sources */,
 				1ECAB8201920614D00161572 /* HistoryTableViewCell.m in Sources */,
 				1E75E33B194AF1C300593E17 /* Patient.m in Sources */,
 				1E9219CD19064F9E006ED639 /* WebService.m in Sources */,
 				1E8881E518EABF7E009B5E06 /* MeasureViewController.m in Sources */,
 				1EF0012B18B2EAEF003B5D58 /* DatabaseUtility.m in Sources */,
+				1E58EF681999A6C400D4E20E /* GZIP.m in Sources */,
 				1E0DD9F1192B000D008E3F18 /* ContentCollectionView.m in Sources */,
 				1E0DD9EE192AFFCB008E3F18 /* HeaderCell.m in Sources */,
 				1ECAB80C1918813800161572 /* ProgressHUD.m in Sources */,

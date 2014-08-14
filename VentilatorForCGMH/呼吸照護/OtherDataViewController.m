@@ -10,6 +10,8 @@
 #import "MeasureTabBarViewController.h"
 #import "MeasureViewController.h"
 
+#define TAGS_OF_TEXTFIELD 15
+
 @interface OtherDataViewController ()
 
 @end
@@ -132,7 +134,19 @@
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [textField resignFirstResponder];
+    if (textField.tag < TAGS_OF_TEXTFIELD) {
+        for (UIView *view in _displayView.subviews) {
+            if ([view isKindOfClass:[UITextField class]] || [view isKindOfClass:[UITextView class]]) {
+                if (view.tag == textField.tag + 1) {
+                    [textField resignFirstResponder];
+                    [view becomeFirstResponder];
+                }
+            }
+        }
+    }
+    else {
+        [textField resignFirstResponder];
+    }
     return YES;
     
 }

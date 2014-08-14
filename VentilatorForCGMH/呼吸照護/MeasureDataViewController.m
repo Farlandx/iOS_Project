@@ -17,6 +17,7 @@
 #import "DeviceStatus.h"
 #import "ProgressHUD.h"
 #import "NfcA1Device.h"
+#import "BLETrans.h"
 
 @interface MeasureDataViewController ()<UIAlertViewDelegate, UITextFieldDelegate, MeasureViewControllerDelegate, WebServiceDelegate, NfcA1ProtocolDelegate>
 
@@ -37,6 +38,10 @@
     
     UIAlertView *alertView;
     UITextField *uploaderTextField;
+    
+    UIAlertView *uploadAlertView;
+    DtoVentExchangeUploadBatch *pcBatch;
+    BLETrans *ble;
 }
 
 @synthesize measureDataList;
@@ -64,6 +69,9 @@
     [self.imgSelectAll addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectAllToggle)]];
     
     isStartListeningThread = NO;
+    
+    ble = [[BLETrans alloc] init];
+    ble.delegate = self;
     
     db = [[DatabaseUtility alloc] init];
     
@@ -127,6 +135,42 @@
     }
     else {
         NSLog(@"no");
+    }
+}
+
+#pragma mark - BLETransDelegate
+- (void)BLETransUploadDone:(NSString *)data {
+    if (data.length) {
+        NSArray *ary = [data componentsSeparatedByString:@","];
+        pcBatch.VentRecList = [[NSMutableArray alloc] init];
+        for (NSString *recordTime in ary) {
+            VentilationData *data = [db getMeasureDataByRecordTime:recordTime];
+            if (data) {
+                [pcBatch.VentRecList addObject:data];
+            }
+        }
+        
+        if (pcBatch.VentRecList.count) {
+            [db saveUploadData:pcBatch];
+            
+            measureDataList = [db getMeasures];
+            [self.tableView reloadData];
+        }
+    }
+    
+    //將視窗關閉
+    if (uploadAlertView) {
+        [uploadAlertView dismissWithClickedButtonIndex:-1 animated:YES];
+    }
+}
+
+- (void)UploadProgress:(float)progressStatus {
+    if (progressStatus < 1) {
+        uploadAlertView.message = [NSString stringWithFormat:@"%.1f%%...已完成", progressStatus * 100];
+    }
+    else {
+        uploadAlertView.title = @"資料同步完成";
+        uploadAlertView.message = @"等待上傳結果回傳中\n請至PC端執行上傳動作";
     }
 }
 
@@ -259,6 +303,7 @@
     DataTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     [cell.imgCheckbox setTag:indexPath.row];
     [cell.imgCheckbox addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(checkboxTapped:)]];
+    [cell.imgCheckbox setImage:[UIImage imageNamed:@"unchecked"]];
     
     VentilationData *data = [measureDataList objectAtIndex:indexPath.row];
     // Configure the cell...
@@ -373,7 +418,7 @@
     NSLog(@"%ld", selectedItems.count);
     uploadOper = @"";
     
-    alertView = [[UIAlertView alloc] initWithTitle:@"請掃瞄或輸入治療師卡號" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"送出", nil];
+    alertView = [[UIAlertView alloc] initWithTitle:@"請掃瞄或輸入治療師卡號" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"送出", @"將資料傳送至PC", nil];
     alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
     uploaderTextField = [alertView textFieldAtIndex:0];
     [uploaderTextField setDelegate:self];
@@ -413,7 +458,7 @@
 }
 
 #pragma mark - UIAlertViewDelegate
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
         if ([uploaderTextField.text isEqualToString:@""]) {
             [ProgressHUD showError:@"治療師編號不得空白"];
@@ -424,6 +469,25 @@
         [ProgressHUD show:@"取得驗證資料中..." Interaction:NO];
         [ws appLoginDeviceName:[DeviceStatus getDeviceVendorUUID] idNo:uploadOper];
     }
+    else if(buttonIndex == 2) {
+        //連接PC
+        uploadAlertView = [[UIAlertView alloc] initWithTitle:@"資料同步中" message:@"0.0%...已完成" delegate:self cancelButtonTitle:nil otherButtonTitles:@"取消", nil];
+        [uploadAlertView show];
+        //call ble method
+        pcBatch = [self getDataListToUploadDataByDeviceUUID:[DeviceStatus getDeviceVendorUUID]];
+        if (pcBatch) {
+            [ble SendBatchData:pcBatch];
+        }
+        
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if (alertView == uploadAlertView) {
+        //取消傳輸
+        [ble CancelTrans];
+    }
+    
 }
 
 #pragma mark - NFC Dongle
@@ -537,7 +601,7 @@
 #pragma mark - Private Method
 - (DtoVentExchangeUploadBatch *)getDataListToUploadDataByDeviceUUID:(NSString *)deviceUUID {
     NSMutableArray *selectedItems = [self getSelectedItem];
-    if (![uploadOper isEqualToString:@""] && [selectedItems count] > 0) {
+    if ([selectedItems count] > 0) {
         //組上傳資料
         DtoVentExchangeUploadBatch *batch = [[DtoVentExchangeUploadBatch alloc] init];
         batch.UploadOper = uploadOper;

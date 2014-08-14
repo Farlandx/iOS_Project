@@ -26,6 +26,7 @@
 //取得尚未上傳的量測資料
 - (NSMutableArray *) getMeasures;
 - (VentilationData *) getMeasureDataById:(NSInteger)measureId;
+- (VentilationData *)getMeasureDataByRecordTime:(NSString *)recordTime;
 
 #pragma mark - UploadData
 - (BOOL) saveUploadData:(DtoVentExchangeUploadBatch *)uploadData;
