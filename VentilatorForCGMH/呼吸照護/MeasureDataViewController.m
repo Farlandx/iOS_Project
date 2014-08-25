@@ -143,10 +143,15 @@
     if (data.length) {
         NSArray *ary = [data componentsSeparatedByString:@","];
         pcBatch.VentRecList = [[NSMutableArray alloc] init];
-        for (NSString *recordTime in ary) {
-            VentilationData *data = [db getMeasureDataByRecordTime:recordTime];
-            if (data) {
-                [pcBatch.VentRecList addObject:data];
+        for (NSString *s in ary) {
+            NSArray *dataAry = [s componentsSeparatedByString:@";"];
+            VentilationData *ventData = [db getMeasureDataByRecordTime:dataAry[0]];
+            if (ventData) {
+                if (dataAry.count > 1 && dataAry[1]) {
+                    ventData.RecordOperName = dataAry[1];
+                }
+                
+                [pcBatch.VentRecList addObject:ventData];
             }
         }
         
@@ -166,7 +171,7 @@
 
 - (void)UploadProgress:(float)progressStatus {
     if (progressStatus < 1) {
-        uploadAlertView.message = [NSString stringWithFormat:@"%.1f%%...已完成", progressStatus * 100];
+        uploadAlertView.message = [NSString stringWithFormat:@"已完成...%.1f%%", progressStatus * 100];
     }
     else {
         uploadAlertView.title = @"資料同步完成";
@@ -471,7 +476,7 @@
     }
     else if(buttonIndex == 2) {
         //連接PC
-        uploadAlertView = [[UIAlertView alloc] initWithTitle:@"資料同步中" message:@"0.0%...已完成" delegate:self cancelButtonTitle:nil otherButtonTitles:@"取消", nil];
+        uploadAlertView = [[UIAlertView alloc] initWithTitle:@"資料同步中" message:@"已完成...0.0%" delegate:self cancelButtonTitle:nil otherButtonTitles:@"取消", nil];
         [uploadAlertView show];
         //call ble method
         pcBatch = [self getDataListToUploadDataByDeviceUUID:[DeviceStatus getDeviceVendorUUID]];

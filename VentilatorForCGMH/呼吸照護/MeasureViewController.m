@@ -69,6 +69,8 @@
     
     ble = [[BLE alloc] init];
     ble.delegate = self;
+    //印出BLE Library版本
+    NSLog(@"%@", ble.getVersion);
     
     db = [[DatabaseUtility alloc] init];
     [db initDatabase];
@@ -141,7 +143,7 @@
         [self setChtNoTextFieldValue:textField];
         [self clearRecordOperTextFieldValue];
     }
-    else if([textField.text length] > 12) { //儀器
+    else if([textField.text length] >= 12) { //儀器
         _VentNo.text = textField.text;
         [_VentNo becomeFirstResponder];
         
@@ -164,7 +166,7 @@
         [self setRecordOperTextFieldValue:textField];
         [self clearChtNoTextFieldValue];
     }
-    else if([textField.text length] > 12) { //儀器
+    else if([textField.text length] >= 12) { //儀器
         _VentNo.text = textField.text;
         [_VentNo becomeFirstResponder];
         
@@ -194,7 +196,7 @@
         [self setChtNoTextFieldValue:textField];
         [self clearVentNoTextFieldValue];
     }
-    else if ([textField.text length] > 12) { //儀器
+    else if ([textField.text length] >= 12) { //儀器
         [self setVentNoTextFieldValue:textField];
     }
     else {
@@ -323,8 +325,7 @@
             if (result) {
                 MSG_INFORM_DATA *infrom_data = data;
                 
-                NSString *blockData =
-                [self sectorHexDataToString: infrom_data->data Length: 48];
+                NSString *blockData = [self sectorHexDataToString: infrom_data->data Length: 48];
                 
                 _VentNo.text = [blockData componentsSeparatedByString:@"**"][0];
                 
@@ -693,12 +694,12 @@
 
 - (void)setVentNoTextFieldValue:(UITextField*)textField {
     tmp_VentNo = textField.text;
-    [textField resignFirstResponder];
+    [_VentNo resignFirstResponder];
     
-    if (![_VentNo.text isEqualToString:@""]) {
-        [ble setConnectionString:_VentNo.text];
+    if (![textField.text isEqualToString:@""]) {
+        [ble setConnectionString:textField.text];
         
-        _VentNo.text = [_VentNo.text componentsSeparatedByString:@"**"][0];
+        _VentNo.text = [textField.text componentsSeparatedByString:@"**"][0];
         
         [ble startRead];
     }

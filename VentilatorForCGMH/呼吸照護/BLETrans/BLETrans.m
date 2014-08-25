@@ -41,8 +41,6 @@
 
 - (id)init {
     if (self = [super init]) {
-//        _centralMgr = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
-//        _peripheral = [[CBPeripheral alloc] init];
         isFindDevice = NO;
         SOH = [@"\x01\x01\x01" dataUsingEncoding:NSUTF8StringEncoding];
         ETX = [@"\x03\x03\x03" dataUsingEncoding:NSUTF8StringEncoding];
@@ -93,7 +91,7 @@
     [_centralMgr scanForPeripheralsWithServices:nil options:nil];
 }
 
-- (void)scanStop:(NSTimer*)timer {
+- (void)scanBLETransStop:(NSTimer*)timer {
     if (_centralMgr != nil){
         [_centralMgr stopScan];
     }else{
@@ -106,13 +104,6 @@
 }
 
 - (NSData *)getTransferData {
-//    NSMutableData *result = [[NSMutableData alloc] init];
-//    
-//    [result appendBytes:(const char*)0x02 length:1];
-    
-//    NSString *soapMessage = @"\x01<?xml version=\"1.0\" encoding=\"utf-8\"?>"
-//    "<soap12:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap12=\"http://www.w3.org/2003/05/soap-envelope\">"
-//    "<soap12:Body>"
     NSString *soapMessage = @"<DtoVentExchangeUploadBatch>"
     "<UploadOper>%@</UploadOper>"
     "<UploadIp>%@</UploadIp>"
@@ -203,17 +194,6 @@
 
     soapMessage = [soapMessage stringByAppendingString:@"</VentRecList>"
                                                         "</DtoVentExchangeUploadBatch>"];
-                   
-//    soapMessage = [soapMessage stringByAppendingString:@"</VentRecList>"
-//                                                        "</data>"
-//                                                        "<sessionId></sessionId>"
-//                                                        "</UploadVentData>"
-//                                                        "</soap12:Body>"
-//                                                        "</soap12:Envelope>\x04"];
-    
-//    [result appendData:[soapMessage dataUsingEncoding:NSUTF8StringEncoding]];
-//    
-//    [result appendBytes:(const void*)0x03 length:1];
     
     return [soapMessage dataUsingEncoding:NSUTF8StringEncoding];
 }
@@ -290,7 +270,7 @@
     }
     else if (!isFindDevice){
         [timeoutTimer invalidate];
-        timeoutTimer = [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(scanStop:) userInfo:nil repeats:NO];
+        timeoutTimer = [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(scanBLETransStop:) userInfo:nil repeats:NO];
     }
 }
 
@@ -360,28 +340,6 @@
     
     if (_peripheral.state != CBPeripheralStateDisconnected && _notifyCharacteristic != nil && _writeCharacteristic != nil) {
         [self sendData];
-        
-//        NSData *data = [self getTransferData];
-//        //[_peripheral writeValue:data forCharacteristic:_writeCharacteristic type:CBCharacteristicWriteWithoutResponse];
-//      
-//        const char *bytes = [data bytes];
-//        int dataLength = (int)[data length];
-//        int offset = 0;
-//        while (offset < dataLength) {
-//            int size = (dataLength - offset);
-//            if (size > NOTIFY_MTU) {
-//                size = NOTIFY_MTU;
-//            }
-//            
-//            NSData *buffer = [NSData dataWithBytes:bytes + offset length:size];
-//            [_peripheral writeValue:buffer forCharacteristic:_writeCharacteristic type:CBCharacteristicWriteWithoutResponse];
-//            
-//            offset += size;
-//            usleep(10000);
-//            NSLog(@"%d / %d", offset, dataLength);
-//            [_delegate test:[NSString stringWithFormat:@"%d / %d", offset, dataLength]];
-//        }
-//        NSLog(@"Send data finished.");
     }
 }
 
