@@ -316,6 +316,7 @@
     cell.labelChtNo.text = [NSString stringWithFormat:@"%@ - %@", data.BedNo, data.ChtNo];
     cell.labelRecordOper.text = data.RecordOper;
     cell.labelVentilationMode.text = data.VentilationMode;
+    cell.labelErrorMessage.text = data.ErrorMsg;
     
     return cell;
 }

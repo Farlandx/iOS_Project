@@ -15,5 +15,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *labelRecordOper;
 @property (strong, nonatomic) IBOutlet UILabel *labelRecordTime;
 @property (strong, nonatomic) IBOutlet UILabel *labelVentilationMode;
+@property (strong, nonatomic) IBOutlet UILabel *labelErrorMessage;
 
 @end

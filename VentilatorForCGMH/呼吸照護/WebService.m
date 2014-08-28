@@ -275,6 +275,7 @@
                         [uploadSuccess addObject:batch.VentRecList[index]];
                     }
                     else {
+                        ((VentilationData *)batch.VentRecList[index]).ErrorMsg = tmp.Message;
                         [uploadFailed addObject:batch.VentRecList[index]];
                         
                     }
@@ -301,6 +302,7 @@
                     [uploadSuccess addObject:batch.VentRecList[index]];
                 }
                 else {
+                    ((VentilationData *)batch.VentRecList[index]).ErrorMsg = tmp.Message;
                     [uploadFailed addObject:batch.VentRecList[index]];
                     
                 }

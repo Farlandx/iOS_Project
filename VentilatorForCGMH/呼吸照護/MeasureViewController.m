@@ -54,9 +54,6 @@
     _btnTest1.hidden = YES;
     _btnTest2.hidden = YES;
     
-    [_RecordOper addTarget:self action:@selector(recordOperTextFieldDone:) forControlEvents:UIControlEventEditingDidEndOnExit];
-    [_ChtNo addTarget:self action:@selector(chtNoTextFieldDone:) forControlEvents:UIControlEventEditingDidEndOnExit];
-    [_VentNo addTarget:self action:@selector(ventNoTextFieldDone:) forControlEvents:UIControlEventEditingDidEndOnExit];
     _RecordOper.delegate = self;
     _VentNo.delegate = self;
     _ChtNo.delegate = self;
@@ -133,75 +130,6 @@
 - (IBAction)btnStart:(id)sender {
 //    _peripheral = [self getPeripheralByCode:@"2D1A5856-8987-F8C9-771E-5683182BF5F0"];
 //    [_centralManager connectPeripheral:_peripheral options:nil];
-}
-
-- (void)recordOperTextFieldDone:(UITextField*)textField {
-    if ([textField.text length] >= 3 && [textField.text length] <= 8) { //病患
-        _ChtNo.text = textField.text;
-        [_ChtNo becomeFirstResponder];
-        
-        [self setChtNoTextFieldValue:textField];
-        [self clearRecordOperTextFieldValue];
-    }
-    else if([textField.text length] >= 12) { //儀器
-        _VentNo.text = textField.text;
-        [_VentNo becomeFirstResponder];
-        
-        [self setVentNoTextFieldValue:textField];
-        [self clearRecordOperTextFieldValue];
-    }
-    else if ([textField.text length] == 10) { //治療師
-        [self setRecordOperTextFieldValue:textField];
-    }
-    else {
-        textField.text = @"";
-    }
-}
-
-- (void)chtNoTextFieldDone:(UITextField*)textField {
-    if ([textField.text length] == 10) { //治療師
-        _RecordOper.text = textField.text;
-        [_RecordOper becomeFirstResponder];
-        
-        [self setRecordOperTextFieldValue:textField];
-        [self clearChtNoTextFieldValue];
-    }
-    else if([textField.text length] >= 12) { //儀器
-        _VentNo.text = textField.text;
-        [_VentNo becomeFirstResponder];
-        
-        [self setVentNoTextFieldValue:textField];
-        [self clearChtNoTextFieldValue];
-    }
-    else if ([textField.text length] >= 3 && [textField.text length] <= 8){ //病患
-        [self setChtNoTextFieldValue:textField];
-    }
-    else {
-        textField.text = @"";
-    }
-}
-
-- (void)ventNoTextFieldDone:(UITextField*)textField {
-    if ([textField.text length] == 10) { //治療師
-        _RecordOper.text = textField.text;
-        [_RecordOper becomeFirstResponder];
-        
-        [self setRecordOperTextFieldValue:textField];
-        [self clearVentNoTextFieldValue];
-    }
-    else if ([textField.text length] >= 3 && [textField.text length] <= 8) { //病患
-        _ChtNo.text = textField.text;
-        [_ChtNo becomeFirstResponder];
-        
-        [self setChtNoTextFieldValue:textField];
-        [self clearVentNoTextFieldValue];
-    }
-    else if ([textField.text length] >= 12) { //儀器
-        [self setVentNoTextFieldValue:textField];
-    }
-    else {
-        textField.text = @"";
-    }
 }
 
 - (IBAction)testClick:(id)sender {
@@ -591,6 +519,79 @@
     return YES;
 }
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if (textField == _RecordOper) {
+        if ([self checkChtNo:textField.text]) { //病患
+            _ChtNo.text = textField.text;
+            [_ChtNo becomeFirstResponder];
+            
+            [self setChtNoTextFieldValue:textField];
+            [self clearRecordOperTextFieldValue];
+        }
+        else if([self checkVentNo:textField.text]) { //儀器
+            _VentNo.text = textField.text;
+            [_VentNo becomeFirstResponder];
+            
+            [self setVentNoTextFieldValue:textField];
+            [self clearRecordOperTextFieldValue];
+        }
+        else if ([self checkRecordOper:textField.text]) { //治療師
+            [self setRecordOperTextFieldValue:textField];
+        }
+        else {
+            textField.text = @"";
+        }
+        [self setNextResponder:textField];
+    }
+    else if (textField == _ChtNo) {
+        if ([self checkRecordOper:textField.text]) { //治療師
+            _RecordOper.text = textField.text;
+            [_RecordOper becomeFirstResponder];
+            
+            [self setRecordOperTextFieldValue:textField];
+            [self clearChtNoTextFieldValue];
+        }
+        else if([self checkVentNo:textField.text]) { //儀器
+            _VentNo.text = textField.text;
+            [_VentNo becomeFirstResponder];
+            
+            [self setVentNoTextFieldValue:textField];
+            [self clearChtNoTextFieldValue];
+        }
+        else if ([self checkChtNo:textField.text]){ //病患
+            [self setChtNoTextFieldValue:textField];
+        }
+        else {
+            textField.text = @"";
+        }
+        [self setNextResponder:textField];
+    }
+    else if (textField == _VentNo) {
+        if ([self checkRecordOper:textField.text]) { //治療師
+            _RecordOper.text = textField.text;
+            [_RecordOper becomeFirstResponder];
+            
+            [self setRecordOperTextFieldValue:textField];
+            [self clearVentNoTextFieldValue];
+        }
+        else if ([self checkChtNo:textField.text]) { //病患
+            _ChtNo.text = textField.text;
+            [_ChtNo becomeFirstResponder];
+            
+            [self setChtNoTextFieldValue:textField];
+            [self clearVentNoTextFieldValue];
+        }
+        else if ([self checkVentNo:textField.text]) { //儀器
+            [self setVentNoTextFieldValue:textField];
+        }
+        else {
+            textField.text = @"";
+        }
+        [self setNextResponder:textField];
+    }
+    return YES;
+}
+
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:string];
     BOOL isModeEmpty = [myMeasureData.VentilationMode isEqualToString:@""];
@@ -672,29 +673,32 @@
 
 - (void)setRecordOperTextFieldValue:(UITextField*)textField {
     tmp_RecordOper = textField.text;
-    [textField resignFirstResponder];
-    [_ChtNo becomeFirstResponder];
 }
 
 - (void)clearRecordOperTextFieldValue {
-//    tmp_RecordOper = @"";
-    _RecordOper.text = @"";
+    if (tmp_RecordOper.length) {
+        _RecordOper.text = tmp_RecordOper;
+    }
+    else {
+        _RecordOper.text = @"";
+    }
 }
 
 - (void)setChtNoTextFieldValue:(UITextField*)textField {
     tmp_ChtNo = textField.text;
-    [textField resignFirstResponder];
-    [_VentNo becomeFirstResponder];
 }
 
 - (void)clearChtNoTextFieldValue {
-//    tmp_ChtNo = @"";
-    _ChtNo.text = @"";
+    if (tmp_ChtNo.length) {
+        _ChtNo.text = tmp_ChtNo;
+    }
+    else {
+        _ChtNo.text = @"";
+    }
 }
 
 - (void)setVentNoTextFieldValue:(UITextField*)textField {
     tmp_VentNo = textField.text;
-    [_VentNo resignFirstResponder];
     
     if (![textField.text isEqualToString:@""]) {
         [ble setConnectionString:textField.text];
@@ -703,12 +707,56 @@
         
         [ble startRead];
     }
-    //[self btnStart:_btnReadData];
 }
 
 - (void)clearVentNoTextFieldValue {
-//    tmp_VentNo = @"";
-    _VentNo.text = @"";
+    if (tmp_VentNo) {
+        _VentNo.text = tmp_VentNo;
+    }
+    else {
+        _VentNo.text = @"";
+    }
+}
+
+//_RecordOper > _ChtNo > _VentNo
+- (void)setNextResponder:(UITextField *)currentResponder {
+    if (!tmp_RecordOper.length) {
+        [_RecordOper becomeFirstResponder];
+    }
+    else if (!tmp_ChtNo.length) {
+        [_ChtNo becomeFirstResponder];
+    }
+    else if (!tmp_VentNo.length) {
+        [_VentNo becomeFirstResponder];
+    }
+    else {
+        [currentResponder resignFirstResponder];
+    }
+}
+
+//第一碼為英文、長度10
+- (BOOL)checkRecordOper:(NSString *)text {
+    if (text.length == 10 &&
+        [[text substringToIndex:1] rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"abcedfghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"]].location != NSNotFound) {
+        return YES;
+    }
+    return NO;
+}
+
+//全部都是數字
+- (BOOL)checkChtNo:(NSString *)text {
+    if ([[[NSNumberFormatter alloc] init] numberFromString:text]) {
+        return YES;
+    }
+    return NO;
+}
+
+//判斷**是否在12的位置，並且字串長度大於12
+- (BOOL)checkVentNo:(NSString *)text {
+    if ([text rangeOfString:@"**"].location == 12 && text.length > 12) {
+        return YES;
+    }
+    return NO;
 }
 
 @end

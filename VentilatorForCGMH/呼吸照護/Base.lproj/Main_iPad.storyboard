@@ -51,11 +51,19 @@
                                             <rect key="frame" x="0.0" y="0.0" width="64" height="43"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="errorMsg" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="lka-FH-qCE">
+                                            <rect key="frame" x="46" y="11" width="676" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="imgCheckbox" destination="NeL-nU-bad" id="bAi-1r-pc7"/>
                                     <outlet property="labelChtNo" destination="KKS-Zn-Vqy" id="QJr-lS-le3"/>
+                                    <outlet property="labelErrorMessage" destination="lka-FH-qCE" id="bui-Ra-KIT"/>
                                     <outlet property="labelRecordOper" destination="ZrR-F1-u2I" id="N2u-2o-FiJ"/>
                                     <outlet property="labelRecordTime" destination="ALM-XG-d29" id="F8r-kR-lOI"/>
                                     <outlet property="labelVentilationMode" destination="dnh-uv-4yv" id="np2-zC-Dcs"/>
