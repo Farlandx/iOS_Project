@@ -93,8 +93,7 @@
         curRtCardListVerId = 0;
     }
     
-    [ProgressHUD show:@"確認病歷資料版本中" Interaction:NO];
-    [ws getCurRtCardListVerId];
+    [self cardVerCheck];
 }
 
 - (void)didReceiveMemoryWarning
@@ -450,6 +449,10 @@
     [alertView show];
 }
 
+- (IBAction)refreshClick:(id)sender {
+    [self cardVerCheck];
+}
+
 #pragma mark - UITextFieldDelegate
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     if (textField == uploaderTextField) {
@@ -624,6 +627,11 @@
 }
 
 #pragma mark - Private Method
+- (void)cardVerCheck {
+    [ProgressHUD show:@"取得病歷資料版本中" Interaction:NO];
+    [ws getCurRtCardListVerId];
+}
+
 - (DtoVentExchangeUploadBatch *)getDataListToUploadDataByDeviceUUID:(NSString *)deviceUUID {
     NSMutableArray *selectedItems = [self getSelectedItem];
     if ([selectedItems count] > 0) {

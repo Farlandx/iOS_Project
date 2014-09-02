@@ -12,6 +12,8 @@
 
 @property (strong, nonatomic)NSMutableArray *measureDataList;
 - (IBAction)uploadClick:(id)sender;
+- (IBAction)refreshClick:(id)sender;
+
 
 @property (strong, nonatomic) IBOutlet UIImageView *imgSelectAll;
 
