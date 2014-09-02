@@ -18,8 +18,9 @@
 #import "ProgressHUD.h"
 #import "NfcA1Device.h"
 #import "BLETrans.h"
+#import "PListManager.h"
 
-@interface MeasureDataViewController ()<UIAlertViewDelegate, UITextFieldDelegate, MeasureViewControllerDelegate, WebServiceDelegate, NfcA1ProtocolDelegate>
+@interface MeasureDataViewController ()<UIAlertViewDelegate, UITextFieldDelegate, MeasureViewControllerDelegate, WebServiceDelegate, NfcA1ProtocolDelegate, BLETransDelegate>
 
 @end
 
@@ -28,6 +29,7 @@
     WebService *ws;
     NSString *uploadOper;
     int curRtCardListVerId;
+    int tmpVerId;
     
     NfcA1Device* mNfcA1Device;
     UInt8 gBlockData[16];
@@ -42,6 +44,8 @@
     UIAlertView *uploadAlertView;
     DtoVentExchangeUploadBatch *pcBatch;
     BLETrans *ble;
+    
+    PListManager *plManager;
 }
 
 @synthesize measureDataList;
@@ -79,8 +83,17 @@
     ws.delegate = self;
     
     //取得版本號合現有的做比對
-    curRtCardListVerId = [db getCurRtCardListVerId];
+    plManager = [[PListManager alloc] initWithPListName:@"Properties"];
+    NSString *cardIdString = [plManager readByKey:@"curRtCardListVerId"];
+//    curRtCardListVerId = [db getCurRtCardListVerId];
+    if (cardIdString) {
+        curRtCardListVerId = (int)[cardIdString integerValue];
+    }
+    else {
+        curRtCardListVerId = 0;
+    }
     
+    [ProgressHUD show:@"確認病歷資料版本中" Interaction:NO];
     [ws getCurRtCardListVerId];
 }
 
@@ -222,23 +235,26 @@
 
 - (void)wsResponseCurRtCardList:(NSMutableArray *)data {
     if (data != nil && data.count > 0) {
-        [db saveCurRtCardListVerId:curRtCardListVerId];
+//        [db saveCurRtCardListVerId:curRtCardListVerId];
         [db saveCurRtCardList:data];
         
         [ws getPatientList];
     }
-    [ProgressHUD dismiss];
+    else {
+        [ProgressHUD dismiss];
+    }
 }
 
 - (void)wsResponseCurRtCardListVerId:(int)verId {
-    if (curRtCardListVerId == verId) {
-        curRtCardListVerId = verId;
-    }
-    else {
+    //##這裡需要測試
+    if (verId > curRtCardListVerId) {
+        //先將新的版本號存在暫存的變數中，待資料更新完後再更新plist中的數值
+        tmpVerId = verId;
         [self getCardList];
     }
-    
-    [ProgressHUD dismiss];
+    else {
+        [ProgressHUD show:@"資料已是最新版"];
+    }
 }
 
 - (void)wsResponsePatientList:(NSMutableArray *)data {
@@ -248,7 +264,10 @@
 //    }
     [db savePatient:data];
     
-    [ProgressHUD dismiss];
+    [plManager writeByKey:@"curRtCardListVerId" value:[NSString stringWithFormat:@"%d", tmpVerId]];
+    curRtCardListVerId = tmpVerId;
+    
+    [ProgressHUD show:@"資料更新完畢"];
 }
 
 - (void)wsConnectionError:(NSError *)error {

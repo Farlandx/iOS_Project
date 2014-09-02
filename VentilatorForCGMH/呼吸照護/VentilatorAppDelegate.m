@@ -29,6 +29,7 @@
 //    [self.window makeKeyAndVisible];
     
     // Override point for customization after application launch.
+    [self copyPlist];
     return YES;
 }
 							
@@ -57,6 +58,22 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (void)copyPlist {
+    NSError *error;
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *path = [documentsDirectory stringByAppendingPathComponent:@"/Properties.plist"];
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    if (![fileManager fileExistsAtPath: path])
+    {
+        NSString *bundle = [[NSBundle mainBundle] pathForResource:@"Properties" ofType:@"plist"];
+        
+        [fileManager copyItemAtPath:bundle toPath: path error:&error];
+    }
 }
 
 @end

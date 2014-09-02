@@ -4,7 +4,4 @@
    <FileRef
       location = "group:Ventilator/&#x547c;&#x5438;&#x7167;&#x8b77;.xcodeproj">
    </FileRef>
-   <FileRef
-      location = "group:../iOS_Library/BLEForCGMH/BLE.xcodeproj">
-   </FileRef>
 </Workspace>
