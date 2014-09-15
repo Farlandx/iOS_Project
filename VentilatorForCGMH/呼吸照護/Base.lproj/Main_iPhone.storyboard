@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="8YX-ce-x5E">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="8YX-ce-x5E">
     <dependencies>
-        <deployment defaultVersion="1792" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <scenes>
-        <!--Measure Data View Controller - 呼吸照護-->
+        <!--呼吸照護-->
         <scene sceneID="rZN-0C-oEL">
             <objects>
                 <tableViewController id="jXn-MH-5iv" customClass="MeasureDataViewController" sceneMemberID="viewController">
@@ -54,7 +53,7 @@
             </objects>
             <point key="canvasLocation" x="-5099" y="-1136"/>
         </scene>
-        <!--Navigation Controller - 照護記錄(0)-->
+        <!--照護記錄(0)-->
         <scene sceneID="8DX-bb-oEl">
             <objects>
                 <navigationController definesPresentationContext="YES" id="9wp-zZ-K2f" sceneMemberID="viewController">
@@ -70,7 +69,7 @@
             </objects>
             <point key="canvasLocation" x="-5591" y="-1136"/>
         </scene>
-        <!--Ventilator Second View Controller - Second-->
+        <!--Second-->
         <scene sceneID="ot8-2e-RuS">
             <objects>
                 <viewController title="Second" id="QUy-BD-bpt" customClass="VentilatorSecondViewController" sceneMemberID="viewController">
@@ -104,7 +103,7 @@
             </objects>
             <point key="canvasLocation" x="-5591" y="-466"/>
         </scene>
-        <!--First View Controller - 量測資料-->
+        <!--量測資料-->
         <scene sceneID="eOn-rD-nMS">
             <objects>
                 <viewController id="iW1-qY-UQA" customClass="FirstViewController" sceneMemberID="viewController">
@@ -185,7 +184,7 @@
             </objects>
             <point key="canvasLocation" x="-3626" y="-1798"/>
         </scene>
-        <!--Ventilator Data View Controller - 呼吸器資料-->
+        <!--呼吸器資料-->
         <scene sceneID="Llg-pb-WSJ">
             <objects>
                 <viewController id="f5J-Oe-tbU" customClass="VentilatorDataViewController" sceneMemberID="viewController">
@@ -707,7 +706,7 @@
             </objects>
             <point key="canvasLocation" x="-4621" y="-1136"/>
         </scene>
-        <!--Other Data View Controller - 其他資料-->
+        <!--其他資料-->
         <scene sceneID="6Bv-Qq-YR7">
             <objects>
                 <viewController id="EGt-d1-l0d" customClass="OtherDataViewController" sceneMemberID="viewController">
@@ -991,7 +990,7 @@
             </objects>
             <point key="canvasLocation" x="-3127" y="-421"/>
         </scene>
-        <!--Measure Tab Bar View Controller - 量測-->
+        <!--量測-->
         <scene sceneID="EQk-No-xyV">
             <objects>
                 <tabBarController definesPresentationContext="YES" hidesBottomBarWhenPushed="YES" id="Nke-rB-VvK" customClass="MeasureTabBarViewController" sceneMemberID="viewController">

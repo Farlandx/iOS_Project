@@ -288,6 +288,7 @@
                 // 編輯
                 NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
                 vc.myMeasureData = [measureDataList objectAtIndex: indexPath.row];
+                [vc setEditMode];
                 vc.delegate = self;
                 
                 vc.demoMode = [MainViewController IsDemoMode];

@@ -26,13 +26,14 @@
     NSString *mac_address, *tmp_RecordOper, *tmp_VentNo, *tmp_ChtNo;
 }
 
-@synthesize viewMode;
+@synthesize viewMode,editMode;
 @synthesize myMeasureData;
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
         viewMode = NO;
+        editMode = NO;
     }
     return self;
 }
@@ -100,11 +101,16 @@
             }
         }
     }
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [_RecordOper becomeFirstResponder];
-    [super viewDidAppear:animated];
+    
+    
+    if (editMode) {
+        tmp_RecordOper = _RecordOper.text;
+        tmp_ChtNo = _ChtNo.text;
+        tmp_VentNo = _VentNo.text;
+    }
+    else {
+        [_RecordOper becomeFirstResponder];
+    }
 }
 
 - (void)dealloc {
@@ -469,6 +475,9 @@
         if ([_RecordOper.text isEqualToString:@""] && ![tmp_RecordOper isEqualToString:@""]) {
             _RecordOper.text = tmp_RecordOper;
         }
+        else {
+            [self textFieldShouldReturn:textField];
+        }
     }
     else if(textField == _ChtNo) {
 //        Patient *p = [db getPatientById:textField.text];
@@ -478,9 +487,12 @@
 //        else {
 //            [_ChtNo clearLabel];
 //        }
-        
+        [_ChtNo setLabel:@"yo"];
         if ([_ChtNo.text isEqualToString:@""] && ![tmp_ChtNo isEqualToString:@""]) {
             _ChtNo.text = tmp_ChtNo;
+        }
+        else {
+            [self textFieldShouldReturn:textField];
         }
     }
     else if(textField == _VentNo) {
@@ -488,8 +500,11 @@
         [self indicatorVNOStop];
         isFocusOnVentNo = NO;
         
-        if ([_VentNo.text isEqualToString:@""] && [tmp_VentNo isEqualToString:@""]) {
+        if ([_VentNo.text isEqualToString:@""] && ![tmp_VentNo isEqualToString:@""]) {
             _VentNo.text = tmp_VentNo;
+        }
+        else {
+            [self textFieldShouldReturn:textField];
         }
     }
 }
@@ -611,6 +626,10 @@
 
 #pragma mark - Methods
 - (IBAction)btnSaveClick:(id)sender {
+    if (!_RecordOper.text.length || !_ChtNo.text.length || !_VentNo.text.length) {
+        return;
+    }
+    
     if (myMeasureData == nil) {
         myMeasureData = [[VentilationData alloc] init];
     }
@@ -668,6 +687,8 @@
 }
 
 - (void)setEditMode {
+    editMode = YES;
+    
     [_btnSave setEnabled:YES];
 }
 
@@ -698,12 +719,13 @@
 }
 
 - (void)setVentNoTextFieldValue:(UITextField*)textField {
-    tmp_VentNo = textField.text;
+//    tmp_VentNo = textField.text;
     
     if (![textField.text isEqualToString:@""]) {
         [ble setConnectionString:textField.text];
         
         _VentNo.text = [textField.text componentsSeparatedByString:@"**"][0];
+        tmp_VentNo = _VentNo.text;
         
         [ble startRead];
     }

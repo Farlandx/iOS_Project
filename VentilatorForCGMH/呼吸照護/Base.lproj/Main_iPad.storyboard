@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="49e-Tb-3d3">
     <dependencies>
         <deployment defaultVersion="1792" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <scenes>
-        <!--Measure Data View Controller - 呼吸照護-->
+        <!--呼吸照護-->
         <scene sceneID="Vuf-3n-0Au">
             <objects>
                 <tableViewController id="TCb-jn-xpP" customClass="MeasureDataViewController" sceneMemberID="viewController">
@@ -93,17 +93,6 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="rik-cA-xqJ">
-                                        <rect key="frame" x="122" y="0.0" width="48" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
-                                        <state key="normal" title="更新">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="refreshClick:" destination="TCb-jn-xpP" eventType="touchUpInside" id="Xhi-Zv-Pf3"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                             </view>
                         </barButtonItem>
@@ -124,7 +113,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="o7d-pA-sSw">
-                                        <rect key="frame" x="52" y="2" width="48" height="30"/>
+                                        <rect key="frame" x="59" y="2" width="48" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
                                         <state key="normal" title="上傳">
@@ -132,6 +121,17 @@
                                         </state>
                                         <connections>
                                             <action selector="uploadClick:" destination="TCb-jn-xpP" eventType="touchUpInside" id="Zvv-vn-Ekd"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="rik-cA-xqJ">
+                                        <rect key="frame" x="-4" y="2" width="48" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
+                                        <state key="normal" title="更新">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="refreshClick:" destination="TCb-jn-xpP" eventType="touchUpInside" id="Xhi-Zv-Pf3"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -162,7 +162,7 @@
             </objects>
             <point key="canvasLocation" x="3607" y="-2820"/>
         </scene>
-        <!--Measure View Controller - 量測-->
+        <!--量測-->
         <scene sceneID="RnM-lA-reZ">
             <objects>
                 <viewController id="sB3-mS-iQr" customClass="MeasureViewController" sceneMemberID="viewController">
@@ -290,7 +290,7 @@
             </objects>
             <point key="canvasLocation" x="4767" y="-2885"/>
         </scene>
-        <!--Measure Tab Bar View Controller - 量測-->
+        <!--量測-->
         <scene sceneID="mXv-nR-gEm">
             <objects>
                 <tabBarController definesPresentationContext="YES" id="csN-Mc-g5Y" customClass="MeasureTabBarViewController" sceneMemberID="viewController">
@@ -310,7 +310,7 @@
             </objects>
             <point key="canvasLocation" x="5633" y="-2715"/>
         </scene>
-        <!--Ventilator Data View Controller - 呼吸器資料-->
+        <!--呼吸器資料-->
         <scene sceneID="4xR-45-6Q6">
             <objects>
                 <viewController id="TBH-XW-hIz" customClass="VentilatorDataViewController" sceneMemberID="viewController">
@@ -900,7 +900,7 @@
             </objects>
             <point key="canvasLocation" x="6639" y="-3128"/>
         </scene>
-        <!--Other Data View Controller - 其他資料-->
+        <!--其他資料-->
         <scene sceneID="JV3-Bq-79w">
             <objects>
                 <viewController id="UNO-bx-0Mp" customClass="OtherDataViewController" sceneMemberID="viewController">
@@ -1223,7 +1223,7 @@
             </objects>
             <point key="canvasLocation" x="7638" y="-2137"/>
         </scene>
-        <!--Navigation Controller - 照護記錄-->
+        <!--照護記錄-->
         <scene sceneID="vVx-Xk-hyd">
             <objects>
                 <navigationController definesPresentationContext="YES" id="Evp-Ev-Kef" sceneMemberID="viewController">
@@ -1239,7 +1239,7 @@
             </objects>
             <point key="canvasLocation" x="1649" y="-2820"/>
         </scene>
-        <!--History Table View Controller - 歷史記錄-->
+        <!--歷史記錄-->
         <scene sceneID="n10-zH-GTI">
             <objects>
                 <tableViewController id="3K2-ZY-aPO" customClass="HistoryTableViewController" sceneMemberID="viewController">
@@ -1383,7 +1383,7 @@
             </objects>
             <point key="canvasLocation" x="2631" y="-246"/>
         </scene>
-        <!--Scanner Settings View Controller - 步驟一-->
+        <!--步驟一-->
         <scene sceneID="QZP-Ya-5Ej">
             <objects>
                 <viewController id="kmJ-XJ-bUu" customClass="ScannerSettingsViewController" sceneMemberID="viewController">
@@ -1442,7 +1442,7 @@
             </objects>
             <point key="canvasLocation" x="3621" y="-246"/>
         </scene>
-        <!--Scanner Settings View Controller - 步驟二-->
+        <!--步驟二-->
         <scene sceneID="dtn-QX-idK">
             <objects>
                 <viewController id="Lh6-vV-xVy" customClass="ScannerSettingsViewController" sceneMemberID="viewController">
@@ -1492,7 +1492,7 @@
             </objects>
             <point key="canvasLocation" x="4544" y="-246"/>
         </scene>
-        <!--Navigation Controller - 歷史記錄-->
+        <!--歷史記錄-->
         <scene sceneID="K2D-C2-d2J">
             <objects>
                 <navigationController definesPresentationContext="YES" id="5TN-FP-GrJ" sceneMemberID="viewController">
@@ -1508,7 +1508,7 @@
             </objects>
             <point key="canvasLocation" x="1649" y="-1498"/>
         </scene>
-        <!--View Controller - 掃描器設定-->
+        <!--掃描器設定-->
         <scene sceneID="JlZ-nR-PF9">
             <objects>
                 <viewController id="VFE-Ta-h0h" sceneMemberID="viewController">

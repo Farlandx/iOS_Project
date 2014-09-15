@@ -10,6 +10,8 @@
 #import "MeasureTabBarViewController.h"
 #import "MeasureViewController.h"
 
+#define FOO_PATTERN @"0123456789."
+
 @interface VentilatorDataViewController ()
 
 @end
@@ -110,6 +112,17 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    if (string.length == 0) {
+        return YES;
+    }
+    else if (string.length == 1) {
+        return [string rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:FOO_PATTERN]].location != NSNotFound;
+    }
+    
+    return NO;
 }
 
 #pragma mark - Methods

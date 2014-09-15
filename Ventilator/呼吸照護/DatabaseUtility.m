@@ -73,8 +73,8 @@
 //    // Build the path to the database file
 //    databasePath = [[NSString alloc] initWithString:
 //                    [docsDir stringByAppendingPathComponent:@"measuredata.db"]];
-    
-    NSFileManager *fileManager = [NSFileManager defaultManager];
+//    
+//    NSFileManager *fileManager = [NSFileManager defaultManager];
     
     //the file will not be there when we load the application for the first time
     //so this will create the database table

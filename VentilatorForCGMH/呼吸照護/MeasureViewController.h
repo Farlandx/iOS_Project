@@ -40,6 +40,7 @@
 
 @property (strong, nonatomic) VentilationData *myMeasureData;
 @property (nonatomic) BOOL viewMode;
+@property (nonatomic) BOOL editMode;
 @property (assign, nonatomic) id<MeasureViewControllerDelegate> delegate;
 
 //儲存按鈕

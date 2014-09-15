@@ -20,6 +20,9 @@
 #import "BLETrans.h"
 #import "PListManager.h"
 
+#define CELL_HEIGHT 44.0f
+#define ERR_LABEL_HEIGHT 21.0f
+
 @interface MeasureDataViewController ()<UIAlertViewDelegate, UITextFieldDelegate, MeasureViewControllerDelegate, WebServiceDelegate, NfcA1ProtocolDelegate, BLETransDelegate>
 
 @end
@@ -320,9 +323,16 @@
     }
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (measureDataList.count && ((VentilationData *)measureDataList[indexPath.row]).ErrorMsg.length) {
+        return CELL_HEIGHT + ERR_LABEL_HEIGHT;
+    }
+    return CELL_HEIGHT;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Data Cell";
+    NSString *CellIdentifier = @"Data Cell";
     DataTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     [cell.imgCheckbox setTag:indexPath.row];
     [cell.imgCheckbox addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(checkboxTapped:)]];
@@ -334,7 +344,8 @@
     cell.labelChtNo.text = [NSString stringWithFormat:@"%@ - %@", data.BedNo, data.ChtNo];
     cell.labelRecordOper.text = data.RecordOper;
     cell.labelVentilationMode.text = data.VentilationMode;
-    cell.labelErrorMessage.text = data.ErrorMsg;
+    
+    [self setErrorMsg:data.ErrorMsg cell:cell];
     
     return cell;
 }
@@ -656,5 +667,23 @@
         }
     }
     return selectedItems;
+}
+
+- (void)setErrorMsg:(NSString *)text cell:(DataTableViewCell *)cell {
+    if (text.length) {
+        cell.labelErrorMessage.text = [NSString stringWithFormat:@"錯誤訊息:%@", text];
+        
+        cell.labelErrorMessage.frame = CGRectMake(cell.labelErrorMessage.frame.origin.x,
+                                                  CELL_HEIGHT,
+                                                  cell.labelErrorMessage.frame.size.width,
+                                                  ERR_LABEL_HEIGHT);
+        cell.frame = CGRectMake(cell.frame.origin.x,
+                                cell.frame.origin.y,
+                                cell.frame.size.width,
+                                CELL_HEIGHT + ERR_LABEL_HEIGHT);
+    }
+    else {
+        cell.labelErrorMessage.text = @"";
+    }
 }
 @end

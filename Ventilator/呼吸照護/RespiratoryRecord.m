@@ -13,7 +13,7 @@
 @synthesize RespiratoryIdString, PatientId, PatientName, CreatedUserId, UserName, IPAddress, CreatedDatetime, SourceType, VentNo, Ventilation;
 
 - (id)init {
-    if (self == [super init]) {
+    if (self = [super init]) {
         SourceType = @"iOS";
     }
     return self;

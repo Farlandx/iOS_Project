@@ -59,9 +59,6 @@
     _btnDemo.hidden = !demoMode;
     _btnTest.hidden = YES;
     
-    [_RecordOper addTarget:self action:@selector(recordOperTextFieldDone:) forControlEvents:UIControlEventEditingDidEndOnExit];
-    [_ChtNo addTarget:self action:@selector(chtNoTextFieldDone:) forControlEvents:UIControlEventEditingDidEndOnExit];
-    [_VentNo addTarget:self action:@selector(ventNoTextFieldDone:) forControlEvents:UIControlEventEditingDidEndOnExit];
     _RecordOper.delegate = self;
     _VentNo.delegate = self;
     _ChtNo.delegate = self;
@@ -131,34 +128,6 @@
 - (IBAction)btnStart:(id)sender {
 //    _peripheral = [self getPeripheralByCode:@"2D1A5856-8987-F8C9-771E-5683182BF5F0"];
 //    [_centralManager connectPeripheral:_peripheral options:nil];
-}
-
-- (void)recordOperTextFieldDone:(UITextField*)textField {
-    [textField resignFirstResponder];
-    [_ChtNo becomeFirstResponder];
-}
-
-- (void)chtNoTextFieldDone:(UITextField*)textField {
-    [textField resignFirstResponder];
-    [_VentNo becomeFirstResponder];
-}
-
-- (void)ventNoTextFieldDone:(UITextField*)textField {
-    [textField resignFirstResponder];
-    
-    if (![_VentNo.text isEqualToString:@""]) {
-        if (demoMode) {
-            [self btnDemoClick:nil];
-        }
-        else {
-            [ble setConnectionString:_VentNo.text];
-            
-            _VentNo.text = [_VentNo.text componentsSeparatedByString:@"**"][0];
-            
-            [ble startRead];
-        }
-    }
-    //[self btnStart:_btnReadData];
 }
 
 - (void)setDemoData {
@@ -498,6 +467,8 @@
                     
                 }
             }
+            _btnSave.enabled = _RecordOper.text.length && _ChtNo.text.length && _VentNo.text.length;
+            
             NSLog(@"BLE Read Done.");
             break;
         }
@@ -639,6 +610,31 @@
     return YES;
 }
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if (textField == _RecordOper) {
+        [_ChtNo becomeFirstResponder];
+    }
+    else if (textField == _ChtNo) {
+        [_VentNo becomeFirstResponder];
+    }
+    else if (textField == _VentNo) {
+        if (![_VentNo.text isEqualToString:@""]) {
+            if (demoMode) {
+                [self btnDemoClick:nil];
+            }
+            else {
+                [ble setConnectionString:_VentNo.text];
+                
+                _VentNo.text = [_VentNo.text componentsSeparatedByString:@"**"][0];
+                
+                [ble startRead];
+            }
+        }
+        //[self btnStart:_btnReadData];
+    }
+    return YES;
+}
+
 #pragma mark - Methods
 - (IBAction)btnSaveClick:(id)sender {
     if (myMeasureData == nil) {
@@ -693,5 +689,7 @@
     [_btnSave setEnabled:NO];
 }
 
-
+- (void)setEditMode {
+    [_btnSave setEnabled:YES];
+}
 @end
