@@ -82,10 +82,7 @@
 
 #pragma mark - 20140902新增欄位
 @synthesize VentilationHertz;  //Hertz, XXX
-@synthesize PH;  //PH (H下標),XXX
-@synthesize PL;  //PL (L下標),XXX
 
-@synthesize MinVol; //MinVol%,XXXX
 @synthesize PressureAmplitude; //Amplitude,XXX
 @synthesize TubeCompensation;//Tube Compensation%,XXXX
 @synthesize VolumeAssist;//Volume Assist,XXX
@@ -249,10 +246,7 @@
     
     //20140902新增欄位
     VentilationHertz = @"";  //Hertz, XXX
-    PH = @"";  //PH (H下標),XXX
-    PL = @"";  //PL (L下標),XXX
     
-    MinVol = @""; //MinVol%,XXXX
     PressureAmplitude = @""; //Amplitude,XXX
     TubeCompensation = @"";//Tube Compensation%,XXXX
     VolumeAssist = @"";//Volume Assist,XXX

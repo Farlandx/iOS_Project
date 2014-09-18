@@ -112,10 +112,7 @@ typedef NS_ENUM(NSInteger, VENTILATION_MODE) {
 
 #pragma mark - 20140902新增欄位
 @property (strong, nonatomic) NSString *VentilationHertz;  //Hertz, XXX
-@property (strong, nonatomic) NSString *PH;  //PH (H下標),XXX
-@property (strong, nonatomic) NSString *PL;  //PL (L下標),XXX
 
-@property (strong, nonatomic) NSString *MinVol; //MinVol%,XXXX
 @property (strong, nonatomic) NSString *PressureAmplitude; //Amplitude,XXX
 @property (strong, nonatomic) NSString *TubeCompensation;//Tube Compensation%,XXXX
 @property (strong, nonatomic) NSString *VolumeAssist;//Volume Assist,XXX
