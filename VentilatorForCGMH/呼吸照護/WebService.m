@@ -226,6 +226,19 @@
             tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<BpS>%@</BpS>", ventData.BpS]];
             tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<BpD>%@</BpD>", ventData.BpD]];
             tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<Xrem>%@</Xrem>", ventData.Xrem]];
+            //20140902新增欄位
+            tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<VentilationHertz>%@</VentilationHertz>", ventData.VentilationHertz]];
+            tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<PressureAmplitude>%@</PressureAmplitude>", ventData.PressureAmplitude]];
+            tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<TubeCompensation>%@</TubeCompensation>", ventData.TubeCompensation]];
+            tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<VolumeAssist>%@</VolumeAssist>", ventData.VolumeAssist]];
+            tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<FlowAssist>%@</FlowAssist>", ventData.FlowAssist]];
+            tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<EdiPeak>%@</EdiPeak>", ventData.EdiPeak]];
+            tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<EdiMin>%@</EdiMin>", ventData.EdiMin]];
+            tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<NavaLevel>%@</NavaLevel>", ventData.NavaLevel]];
+            tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<EdiTrigger>%@</EdiTrigger>", ventData.EdiTrigger]];
+            tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<NO>%@</NO>", ventData._NO]];
+            tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<NO2>%@</NO2>", ventData.NO2]];
+            tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<LeakTest>%@</LeakTest>", ventData.LeakTest]];
             tmp = [tmp stringByAppendingString:@"</VentRecord>"];
             
             tmp = [tmp stringByAppendingString:@"</DtoVentExchangeUpload>"];

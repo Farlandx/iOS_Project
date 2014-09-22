@@ -487,7 +487,6 @@
 //        else {
 //            [_ChtNo clearLabel];
 //        }
-        [_ChtNo setLabel:@"yo"];
         if ([_ChtNo.text isEqualToString:@""] && ![tmp_ChtNo isEqualToString:@""]) {
             _ChtNo.text = tmp_ChtNo;
         }
@@ -504,7 +503,7 @@
             _VentNo.text = tmp_VentNo;
         }
         else {
-            [self textFieldShouldReturn:textField];
+            //[self textFieldShouldReturn:textField];
         }
     }
 }
@@ -773,9 +772,9 @@
     return NO;
 }
 
-//判斷**是否在12的位置，並且字串長度大於12
+//並且字串長度大於12
 - (BOOL)checkVentNo:(NSString *)text {
-    if ([text rangeOfString:@"**"].location == 12 && text.length > 12) {
+    if (text.length >= 12) {
         return YES;
     }
     return NO;

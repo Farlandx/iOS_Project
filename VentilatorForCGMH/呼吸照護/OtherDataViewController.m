@@ -197,6 +197,9 @@
     _BpS.text = measureData.BpS;
     _BpD.text = measureData.BpD;
     _Xrem.text = measureData.Xrem;
+    
+    //20140902新增欄位
+    _LeakTest.text = measureData.LeakTest;
 }
 
 - (void)getMeasureData:(VentilationData *)measureData {
@@ -217,6 +220,9 @@
     measureData.BpS = _BpS.text;
     measureData.BpD = _BpD.text;
     measureData.Xrem = _Xrem.text;
+    
+    //20140902新增欄位
+    measureData.LeakTest = _LeakTest.text;
 }
 
 @end

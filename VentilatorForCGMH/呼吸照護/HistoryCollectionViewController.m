@@ -258,7 +258,7 @@
     
     //----------------------------------------------51
     //Breath Sounds
-    [ary  addObject:data.BreathSounds];
+    [ary addObject:data.BreathSounds];
     //PR
     [ary addObject:data.Pr];
     //CVP
@@ -269,6 +269,36 @@
     [ary addObject:data.BpD];
     
     //----------------------------------------------56
+    //20140902新增欄位
+    //Hertz
+    [ary addObject:data.VentilationHertz];
+    //Amplitude
+    [ary  addObject:data.PressureAmplitude];
+    //Tube Compensation
+    [ary addObject:data.TubeCompensation];
+    //Volume Assist
+    [ary addObject:data.VolumeAssist];
+    //Flow Assist
+    [ary addObject:data.FlowAssist];
+    
+    //----------------------------------------------61
+    //Edi Peak
+    [ary addObject:data.EdiPeak];
+    //Edi Min
+    [ary addObject:data.EdiMin];
+    //Nava Level
+    [ary addObject:data.NavaLevel];
+    //Edi Trigger
+    [ary addObject:data.EdiTrigger];
+    //NO
+    [ary addObject:data._NO];
+    
+    //----------------------------------------------66
+    //NO2(2下標)
+    [ary addObject:data.NO2];
+    //Cuff Leak Test
+    [ary addObject:data.LeakTest];
+    
     
     return ary;
 }

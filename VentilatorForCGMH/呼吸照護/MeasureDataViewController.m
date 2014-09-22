@@ -31,7 +31,7 @@
     DatabaseUtility *db;
     WebService *ws;
     NSString *uploadOper;
-    int curRtCardListVerId;
+//    int curRtCardListVerId;
     int tmpVerId;
     
     NfcA1Device* mNfcA1Device;
@@ -86,17 +86,21 @@
     ws.delegate = self;
     
     //取得版本號合現有的做比對
-    plManager = [[PListManager alloc] initWithPListName:@"Properties"];
-    NSString *cardIdString = [plManager readByKey:@"curRtCardListVerId"];
+//    plManager = [[PListManager alloc] initWithPListName:@"Properties"];
+//    NSString *cardIdString = [plManager readByKey:@"curRtCardListVerId"];
+    //old
 //    curRtCardListVerId = [db getCurRtCardListVerId];
-    if (cardIdString) {
-        curRtCardListVerId = (int)[cardIdString integerValue];
-    }
-    else {
-        curRtCardListVerId = 0;
-    }
+//    if (cardIdString) {
+//        curRtCardListVerId = (int)[cardIdString integerValue];
+//    }
+//    else {
+//        curRtCardListVerId = 0;
+//    }
     
-    [self cardVerCheck];
+//    [self cardVerCheck];
+    
+    
+    [self getCardList];
 }
 
 - (void)didReceiveMemoryWarning
@@ -236,27 +240,28 @@
 }
 
 - (void)wsResponseCurRtCardList:(NSMutableArray *)data {
-    if (data != nil && data.count > 0) {
+//    if (data != nil && data.count > 0) {
 //        [db saveCurRtCardListVerId:curRtCardListVerId];
-        [db saveCurRtCardList:data];
-        
-        [ws getPatientList];
-    }
-    else {
-        [ProgressHUD dismiss];
-    }
+//        [db saveCurRtCardList:data];
+//        
+//        [ws getPatientList];
+//    }
+//    else {
+//        [ProgressHUD dismiss];
+//    }
+    [ws getPatientList];
 }
 
 - (void)wsResponseCurRtCardListVerId:(int)verId {
     //##這裡需要測試
-    if (verId > curRtCardListVerId) {
-        //先將新的版本號存在暫存的變數中，待資料更新完後再更新plist中的數值
-        tmpVerId = verId;
-        [self getCardList];
-    }
-    else {
-        [ProgressHUD show:@"資料已是最新版"];
-    }
+//    if (verId > curRtCardListVerId) {
+//        //先將新的版本號存在暫存的變數中，待資料更新完後再更新plist中的數值
+//        tmpVerId = verId;
+//        [self getCardList];
+//    }
+//    else {
+//        [ProgressHUD showSuccess:@"資料已是最新版"];
+//    }
 }
 
 - (void)wsResponsePatientList:(NSMutableArray *)data {
@@ -267,9 +272,9 @@
     [db savePatient:data];
     
     [plManager writeByKey:@"curRtCardListVerId" value:[NSString stringWithFormat:@"%d", tmpVerId]];
-    curRtCardListVerId = tmpVerId;
+//    curRtCardListVerId = tmpVerId;
     
-    [ProgressHUD show:@"資料更新完畢"];
+    [ProgressHUD showSuccess:@"資料更新完畢"];
 }
 
 - (void)wsConnectionError:(NSError *)error {
@@ -461,7 +466,8 @@
 }
 
 - (IBAction)refreshClick:(id)sender {
-    [self cardVerCheck];
+//    [self cardVerCheck];
+    [self getCardList];
 }
 
 #pragma mark - UITextFieldDelegate

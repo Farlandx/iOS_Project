@@ -211,6 +211,40 @@
     
     //Relief. Pr.
     _ReliefPressure.text = measureData.ReliefPressure;
+    
+    //20140902新增欄位
+    //Hertz, XXX
+    _VentilationHertz.text = measureData.VentilationHertz;
+    
+    //Amplitude,XXX
+    _PressureAmplitude.text = measureData.PressureAmplitude;
+    
+    //Tube Compensation%,XXXX
+    _TubeCompensation.text = measureData.TubeCompensation;
+    
+    //Volume Assist,XXX
+    _VolumeAssist.text = measureData.VolumeAssist;
+    
+    //Flow Assist,XXX
+    _FlowAssist.text = measureData.FlowAssist;
+    
+    //Edi Peak,XXX
+    _EdiPeak.text = measureData.EdiPeak;
+    
+    //Edi Min,XXX
+    _EdiMin.text = measureData.EdiMin;
+    
+    //Nava Level,XXXX
+    _NavaLevel.text = measureData.NavaLevel;
+    
+    //Edi Trigger,XXX
+    _EdiTrigger.text = measureData.EdiTrigger;
+    
+    //NO.XXX
+    __NO.text = measureData._NO;
+    
+    //NO2(2下標),XXXX
+    _NO2.text = measureData.NO2;
 }
 
 - (void)getMeasureData:(VentilationData *)measureData {
@@ -298,6 +332,40 @@
     
     //Relief. Pr.
     measureData.ReliefPressure = _ReliefPressure.text;
+    
+    //20140902新增欄位
+    //Hertz, XXX
+    measureData.VentilationHertz = _VentilationHertz.text;
+    
+    //Amplitude,XXX
+    measureData.PressureAmplitude = _PressureAmplitude.text;
+    
+    //Tube Compensation%,XXXX
+    measureData.TubeCompensation = _TubeCompensation.text;
+    
+    //Volume Assist,XXX
+    measureData.VolumeAssist = _VolumeAssist.text;
+    
+    //Flow Assist,XXX
+    measureData.FlowAssist = _FlowAssist.text;
+    
+    //Edi Peak,XXX
+    measureData.EdiPeak = _EdiPeak.text;
+    
+    //Edi Min,XXX
+    measureData.EdiMin = _EdiMin.text;
+    
+    //Nava Level,XXXX
+    measureData.NavaLevel = _NavaLevel.text;
+    
+    //Edi Trigger,XXX
+    measureData.EdiTrigger = _EdiTrigger.text;
+    
+    //NO.XXX
+    measureData._NO = __NO.text;
+    
+    //NO2(2下標),XXXX
+    measureData.NO2 = _NO2.text;
 }
 
 @end

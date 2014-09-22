@@ -106,4 +106,22 @@
 //Relief. Pr.
 @property (strong, nonatomic) IBOutlet UITextField *ReliefPressure;
 
+
+#pragma mark - 20140902新增欄位
+@property (strong, nonatomic) IBOutlet UITextField *VentilationHertz;  //Hertz, XXX
+
+@property (strong, nonatomic) IBOutlet UITextField *PressureAmplitude; //Amplitude,XXX
+@property (strong, nonatomic) IBOutlet UITextField *TubeCompensation;//Tube Compensation%,XXXX
+@property (strong, nonatomic) IBOutlet UITextField *VolumeAssist;//Volume Assist,XXX
+@property (strong, nonatomic) IBOutlet UITextField *FlowAssist;//Flow Assist,XXX
+
+@property (strong, nonatomic) IBOutlet UITextField *EdiPeak;//Edi Peak,XXX
+@property (strong, nonatomic) IBOutlet UITextField *EdiMin;//Edi Min,XXX
+@property (strong, nonatomic) IBOutlet UITextField *NavaLevel;//Nava Level,XXXX
+@property (strong, nonatomic) IBOutlet UITextField *EdiTrigger;//Edi Trigger,XXX
+#pragma mark 原本欄位是NO，與關鍵字衝突，因此在前面加了底線
+@property (strong, nonatomic) IBOutlet UITextField *_NO;//NO,XXX
+@property (strong, nonatomic) IBOutlet UITextField *NO2;//NO2(2下標),XXXX
+
+
 @end
