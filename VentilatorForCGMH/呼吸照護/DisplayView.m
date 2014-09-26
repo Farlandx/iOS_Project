@@ -19,6 +19,19 @@
     return self;
 }
 
+//- (id)initWithCoder:(NSCoder *)aDecoder {
+//    if (self = [super initWithCoder:aDecoder]) {
+//        NSLog(@"%@", [self.superview class]);
+//        if ([self.superview isKindOfClass:[UIScrollView class]]) {
+//            UIScrollView *scrollView = (UIScrollView *)self.superview;
+//            NSLog(@"%f", scrollView.frame.size.height);
+//            [scrollView setContentSize:CGSizeMake(scrollView.frame.origin.x, self.frame.size.height)];
+//            
+//        }
+//    }
+//    return  self;
+//}
+
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

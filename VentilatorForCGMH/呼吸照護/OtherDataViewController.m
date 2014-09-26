@@ -18,7 +18,6 @@
 
 @implementation OtherDataViewController {
     VentilationData *data;
-    CGPoint svos;
     CGRect textRect;
 }
 
@@ -62,8 +61,6 @@
             }
         }
     }
-    
-    svos = _scrollView.contentOffset;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
@@ -109,28 +106,42 @@
 
 #pragma mark - Keyboard
 - (void)keyboardWillShow:(NSNotification *)notification {
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:[notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue]];
+    [UIView setAnimationCurve:[notification.userInfo[UIKeyboardAnimationCurveUserInfoKey] integerValue]];
+    
     if (!CGRectIsEmpty(textRect)) {
         // Get the size of the keyboard.
         CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
         
         CGFloat textPos = textRect.origin.y + textRect.size.height;
-        if (_scrollView.frame.size.height - textPos < keyboardSize.height) {
+        if (self.view.window.frame.size.height - textPos < keyboardSize.height) {
             CGPoint pt = textRect.origin;
             pt.x = 0;
-            pt.y = keyboardSize.height;
-            [_scrollView setContentOffset:pt animated:YES];
+            pt.y = textPos + keyboardSize.height - self.view.window.frame.size.height;
+            
+            [self.view setTransform:CGAffineTransformIdentity];
+            
+            [self.view.window setBounds:CGRectMake(self.view.window.frame.origin.x, keyboardSize.height, self.view.window.frame.size.width, self.view.window.frame.size.height)];
         }
     }
+    
+    [UIView commitAnimations];
 }
 
 - (void)keyboardWillHide:(NSNotification *)notification {
-    [_scrollView setContentOffset:svos animated:YES];
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:[notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue]];
+    [UIView setAnimationCurve:[notification.userInfo[UIKeyboardAnimationCurveUserInfoKey] integerValue]];
+    
+    [self.view.window setBounds:CGRectMake(self.view.window.frame.origin.x, 0, self.view.window.frame.size.width, self.view.window.frame.size.height)];
+    
+    [UIView commitAnimations];
 }
 
 #pragma mark - TextFieldDelegate
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    textRect = [textField bounds];
-    textRect = [textField convertRect:textRect toView:_scrollView];
+    textRect = [self.view.window convertRect:textField.bounds fromView:textField];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -153,8 +164,7 @@
 
 #pragma mark - TextViewDelegate
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
-    textRect = [textView bounds];
-    textRect = [textView convertRect:textRect toView:_scrollView];
+    textRect = [self.view.window convertRect:textView.bounds fromView:textView];
     return YES;
 }
 
