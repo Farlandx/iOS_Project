@@ -82,6 +82,10 @@
     
     db = [[DatabaseUtility alloc] init];
     
+    measureDataList = [db getMeasures];
+    
+    [self.tableView reloadData];
+    
     ws = [[WebService alloc] init];
     ws.delegate = self;
     
@@ -109,13 +113,9 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:YES];
-    
-    measureDataList = [db getMeasures];
-    
-    [self.tableView reloadData];
-}
+//- (void)viewWillAppear:(BOOL)animated {
+//    [super viewWillAppear:YES];
+//}
 
 - (void)getCardList {
     [ProgressHUD show:@"資料更新中..." Interaction:NO];
