@@ -88,7 +88,7 @@
     
     ws = [[WebService alloc] init];
     ws.delegate = self;
-    
+
     //取得版本號合現有的做比對
 //    plManager = [[PListManager alloc] initWithPListName:@"Properties"];
 //    NSString *cardIdString = [plManager readByKey:@"curRtCardListVerId"];
@@ -103,6 +103,7 @@
     
 //    [self cardVerCheck];
     
+    _tmpRecordOper = @"";
     
     [self getCardList];
 }
@@ -148,9 +149,11 @@
 }
 
 #pragma mark - Delegate
-- (void)measureViewControllerDismissed:(VentilationData *)measureData {
+- (void)measureViewControllerDismissed:(VentilationData *)measureData recordOper:(NSString *)recordOper {
+    _tmpRecordOper = recordOper;
     if (measureData != nil) {
-        
+        measureDataList = [db getMeasures];
+        [self.tableView reloadData];
     }
     else {
         NSLog(@"no");
@@ -425,15 +428,15 @@
                 VentilationData *foo = [[VentilationData alloc] init];
                 [foo setDefaultValue];
                 vc.myMeasureData = foo;
-                vc.delegate = self;
+                vc.rememberRecordOperString = _tmpRecordOper;
             }
             else if ([[segue identifier] isEqualToString:@"Edit segue"]) {
                 // 編輯
                 NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
                 vc.myMeasureData = [measureDataList objectAtIndex: indexPath.row];
                 [vc setEditMode];
-                vc.delegate = self;
             }
+            vc.delegate = self;
         }
     }
     

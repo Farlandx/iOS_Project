@@ -19,6 +19,7 @@
 @property (strong, nonatomic) NSMutableArray *VentRecList;
 
 
+@property (strong, nonatomic) NSString *ChtNo;
 @property (strong, nonatomic) NSString *BedNo;
 
 @end

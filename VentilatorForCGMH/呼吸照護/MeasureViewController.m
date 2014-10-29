@@ -22,12 +22,13 @@
 @implementation MeasureViewController {
     DatabaseUtility *db;
     
-    BOOL isStartListeningThread, isFocusOnRecordOper, isFocusOnVentNo;
+    BOOL isStartListeningThread, isFocusOnRecordOper, isFocusOnVentNo, callByReturn;
     NSString *mac_address, *tmp_RecordOper, *tmp_VentNo, *tmp_ChtNo;
 }
 
 @synthesize viewMode,editMode;
 @synthesize myMeasureData;
+@synthesize rememberRecordOperString;
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
@@ -38,19 +39,11 @@
     return self;
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
     //這是測試用按鈕
     _btnTest1.hidden = YES;
     _btnTest2.hidden = YES;
@@ -62,6 +55,7 @@
     isStartListeningThread = NO;
     isFocusOnRecordOper = NO;
     isFocusOnVentNo = NO;
+    callByReturn = NO;
     
     mac_address = @"";
     
@@ -109,7 +103,15 @@
         tmp_VentNo = _VentNo.text;
     }
     else {
-        [_RecordOper becomeFirstResponder];
+        if (rememberRecordOperString.length) {
+            _RecordOper.text = rememberRecordOperString;
+            tmp_RecordOper = _RecordOper.text;
+            _rememberRecordOper.on = YES;
+            [_ChtNo becomeFirstResponder];
+        }
+        else {
+            [_RecordOper becomeFirstResponder];
+        }
     }
 }
 
@@ -459,6 +461,9 @@
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
+    if (callByReturn) {
+        return;
+    }
     if (textField == _RecordOper) {
         isFocusOnRecordOper = NO;
         [self indicatorROStop];
@@ -534,6 +539,7 @@
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    callByReturn = YES;
     if (textField == _RecordOper) {
         if ([self checkChtNo:textField.text]) { //病患
             _ChtNo.text = textField.text;
@@ -603,6 +609,7 @@
         }
         [self setNextResponder:textField];
     }
+    callByReturn = NO;
     return YES;
 }
 
@@ -670,7 +677,7 @@
         NSLog(@"Save fail.");
     }
     else {
-        [_delegate measureViewControllerDismissed:myMeasureData];
+        [_delegate measureViewControllerDismissed:myMeasureData recordOper:_rememberRecordOper.on ? _RecordOper.text : @""];
         [self dismissViewControllerAnimated:YES completion:nil];
     }
 }

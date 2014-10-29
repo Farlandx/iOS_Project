@@ -14,6 +14,7 @@
 - (IBAction)uploadClick:(id)sender;
 - (IBAction)refreshClick:(id)sender;
 
+@property (strong, nonatomic) NSString *tmpRecordOper;
 
 @property (strong, nonatomic) IBOutlet UIImageView *imgSelectAll;
 

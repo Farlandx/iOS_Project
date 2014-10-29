@@ -66,7 +66,7 @@
     
     // toggle the disclosure button state
     self.disclosureButton.selected = !self.disclosureButton.selected;
-    
+
     // if this was a user action, send the delegate the appropriate message
     if (userAction) {
         if (self.disclosureButton.selected) {

@@ -47,6 +47,10 @@
 #pragma mark - 20140902新增欄位
 @property (strong, nonatomic) IBOutlet UITextField *LeakTest;//Cuff Leak Test,XXXXX
 
+#pragma mark - 20141023新增欄位
+@property (strong, nonatomic) IBOutlet UITextField *MaxPe;
+@property (strong, nonatomic) IBOutlet UITextField *Vc;
+
 #pragma mark - Method
 - (void)getMeasureData:(VentilationData *)measureData;
 

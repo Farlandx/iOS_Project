@@ -15,7 +15,7 @@
 
 @protocol MeasureViewControllerDelegate <NSObject>
 
-- (void)measureViewControllerDismissed:(VentilationData *)measureData;
+- (void)measureViewControllerDismissed:(VentilationData *)measureData recordOper:(NSString *)recordOper;
 
 @end
 
@@ -34,6 +34,10 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *btnTest1;
 @property (strong, nonatomic) IBOutlet UIButton *btnTest2;
+
+//基隆、高雄院區用
+@property (strong, nonatomic) IBOutlet UISwitch *rememberRecordOper;
+@property (strong, nonatomic) IBOutlet NSString *rememberRecordOperString;
 
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicatorRO;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicatorVNO;

@@ -18,7 +18,13 @@
 #define ___webservice
 #define WS_NAMESPACE @"http://cgmh.org.tw/g27/"
 //#define WS_URL @"http://172.30.1.119:8883/VentDataExchangeSvc.asmx"
-#define WS_URL @"http://10.30.11.54/webwork/resp/VentDataExchangeSvc.asmx"
+
+//林口
+//#define WS_URL @"http://10.30.11.54/webwork/resp/VentDataExchangeSvc.asmx"
+//高雄
+//#define WS_URL @"http://10.40.11.21/webwork/resp/VentDataExchangeSvc.asmx"
+//嘉義
+#define WS_URL @"http://10.48.11.10/webwork/resp/VentDataExchangeSvc.asmx"
 
 #define WS_GET_CUR_RT_CARD_LIST @"GetCurRtCardList"
 #define WS_GET_CUR_RT_CARD_LIST_VER_ID @"GetCurRtCardListVerId"

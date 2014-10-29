@@ -113,6 +113,7 @@ static NSString *SectionHeaderViewIdentifier = @"SectionHeaderViewIdentifier";
         [infoArray addObject:sectionInfo];
     }
     
+    self.openSectionIndex = NSNotFound;
     self.sectionInfoArray = infoArray;
     [self.tableView reloadData];
 }

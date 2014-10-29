@@ -34,7 +34,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+    // Do any additional setup after loading the view.
+    
+    //SwipeGesture
+    UISwipeGestureRecognizer *swipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeTrigger:)];
+    [swipeGesture setDirection:UISwipeGestureRecognizerDirectionLeft];
+    [self.view  addGestureRecognizer:swipeGesture];
+    
     _displayView.delegate = self;
     [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.origin.x, _displayView.frame.size.height + self.tabBarController.tabBar.frame.size.height)];
     
@@ -70,6 +76,17 @@
     if (data != nil) {
         [self setMeasureData:data];
     }
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [UIView transitionWithView:self.view
+                      duration:1.0
+                       options:UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionTransitionCrossDissolve
+                    animations:^(void){
+                        [super viewWillAppear:YES];
+                    } completion:^(BOOL finished){
+                    }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -378,6 +395,12 @@
     
     //NO2(2下標),XXXX
     measureData.NO2 = _NO2.text;
+}
+
+#pragma mark - Gesture
+- (void)swipeTrigger:(UISwipeGestureRecognizer*)gesture {
+    MeasureTabBarViewController *tabbarView = (MeasureTabBarViewController *)self.parentViewController;
+    tabbarView.selectedIndex = 1;
 }
 
 @end

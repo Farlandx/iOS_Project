@@ -10,7 +10,7 @@
 #import "MeasureTabBarViewController.h"
 #import "MeasureViewController.h"
 
-#define TAGS_OF_TEXTFIELD 15
+#define TAGS_OF_TEXTFIELD 17
 
 @interface OtherDataViewController ()
 
@@ -35,6 +35,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    //SwipeGesture
+    UISwipeGestureRecognizer *swipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeTrigger:)];
+    [swipeGesture setDirection:UISwipeGestureRecognizerDirectionRight];
+    [self.view  addGestureRecognizer:swipeGesture];
+    
     _displayView.delegate = self;
     
     if (viewMode) {
@@ -51,7 +57,7 @@
         for (UIView *v in [_displayView subviews]) {
             if ([v isKindOfClass:[UITextField class]]) {
                 UITextField *txtField = (UITextField *)v;
-                if (txtField.tag == 1) {
+                if (txtField.tag == 100) {
                     txtField.keyboardType = UIKeyboardTypeDefault;
                 }
                 else {
@@ -210,6 +216,10 @@
     
     //20140902新增欄位
     _LeakTest.text = measureData.LeakTest;
+    
+    //20141023新增欄位
+    _MaxPe.text = measureData.MaxPe;
+    _Vc.text = measureData.Vc;
 }
 
 - (void)getMeasureData:(VentilationData *)measureData {
@@ -233,6 +243,16 @@
     
     //20140902新增欄位
     measureData.LeakTest = _LeakTest.text;
+    
+    //20141023新增欄位
+    measureData.MaxPe = _MaxPe.text;
+    measureData.Vc = _Vc.text;
+}
+
+#pragma mark - Gesture
+- (void)swipeTrigger:(UISwipeGestureRecognizer*)gesture {
+    MeasureTabBarViewController *tabbarView = (MeasureTabBarViewController *)self.parentViewController;
+    tabbarView.selectedIndex = 0;
 }
 
 @end
