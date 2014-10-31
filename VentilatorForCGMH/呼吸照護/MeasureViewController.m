@@ -794,6 +794,7 @@
     if ([[hospital objectForKey:@"Name"] isEqualToString:LIN_KOU]) {
         label.hidden = YES;
         _rememberRecordOper.hidden = YES;
+        rememberRecordOperString = @"";
     }
     else {
         label.hidden = NO;
