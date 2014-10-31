@@ -14,6 +14,8 @@
 #import "DeviceStatus.h"
 #import "ProgressHUD.h"
 #import "Patient.h"
+#import "PListManager.h"
+#import "HospitalName.h"
 
 @interface MeasureViewController ()
 
@@ -30,19 +32,12 @@
 @synthesize myMeasureData;
 @synthesize rememberRecordOperString;
 
-- (id)initWithCoder:(NSCoder *)aDecoder {
-    self = [super initWithCoder:aDecoder];
-    if (self) {
-        viewMode = NO;
-        editMode = NO;
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    [self setHospitalCustome];
     
     //這是測試用按鈕
     _btnTest1.hidden = YES;
@@ -785,6 +780,25 @@
         return YES;
     }
     return NO;
+}
+
+//設定各院區不同的需求
+- (void)setHospitalCustome {
+    PListManager *plManager = [[PListManager alloc] initWithPListName:@"Properties"];
+    NSDictionary *hospital = [plManager readDictionaryByKey:@"Hospital"];
+    
+    //記住治療師的「記住」label
+    UILabel *label =  (UILabel *)[self.view viewWithTag:200];
+    
+    //林口不顯示儲存治療師
+    if ([[hospital objectForKey:@"Name"] isEqualToString:LIN_KOU]) {
+        label.hidden = YES;
+        _rememberRecordOper.hidden = YES;
+    }
+    else {
+        label.hidden = NO;
+        _rememberRecordOper.hidden = NO;
+    }
 }
 
 @end

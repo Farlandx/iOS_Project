@@ -89,7 +89,7 @@
     ws = [[WebService alloc] init];
     ws.delegate = self;
 
-    //取得版本號合現有的做比對
+    //取得版本號合現有的做比對API壞掉了，不能用
 //    plManager = [[PListManager alloc] initWithPListName:@"Properties"];
 //    NSString *cardIdString = [plManager readByKey:@"curRtCardListVerId"];
     //old
@@ -105,7 +105,13 @@
     
     _tmpRecordOper = @"";
     
-    [self getCardList];
+    //院區確認
+    plManager = [[PListManager alloc] initWithPListName:@"Properties"];
+    NSDictionary *hospital = [plManager readDictionaryByKey:@"Hospital"];
+    if (hospital && [self checkHasHospital:hospital]) {
+        return;
+        [self getCardList];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -284,7 +290,7 @@
     
     switch ((CFNetworkErrors)[error code]) {
         case kCFURLErrorTimedOut:
-            [ProgressHUD showError:@"連線逾時"];
+            [ProgressHUD showError:@"連線逾時，請洽資訊中心確認網路是否有問題"];
             break;
             
         case kCFURLErrorCannotConnectToHost:
@@ -296,6 +302,10 @@
             break;
     }
     NSLog(@"連線錯誤(%ld)", [error code]);
+}
+
+- (void)wsError {
+    [ProgressHUD showError:@"連線錯誤，請洽資訊中心確認網路是否有問題"];
 }
 
 #pragma mark - Table view data source
@@ -694,5 +704,14 @@
     else {
         cell.labelErrorMessage.text = @"";
     }
+}
+
+- (BOOL)checkHasHospital:(NSDictionary *)hospital {
+    if ([[hospital objectForKey:@"Name"] isEqualToString:@""]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"院區尚未設定" message:@"請至設定頁面設定院區否則上傳功能將無法使用" delegate:nil cancelButtonTitle:@"確定" otherButtonTitles:nil];
+        [alert show];
+        return NO;
+    }
+    return YES;
 }
 @end

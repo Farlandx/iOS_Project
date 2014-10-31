@@ -18,6 +18,7 @@
 - (void)wsResponseCurRtCardListVerId:(int)verId;
 - (void)wsResponsePatientList:(NSMutableArray *)data;
 - (void)wsConnectionError:(NSError *)error;
+- (void)wsError;
 
 @end
 

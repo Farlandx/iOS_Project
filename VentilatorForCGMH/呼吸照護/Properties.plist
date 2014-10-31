@@ -4,5 +4,12 @@
 <dict>
 	<key>curRtCardListVerId</key>
 	<string>0</string>
+	<key>Hospital</key>
+	<dict>
+		<key>Name</key>
+		<string></string>
+		<key>IpAddress</key>
+		<string></string>
+	</dict>
 </dict>
 </plist>

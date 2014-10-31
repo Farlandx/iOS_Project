@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6249" systemVersion="14A389" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="49e-Tb-3d3">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6243"/>
     </dependencies>
     <scenes>
-        <!--Measure Data View Controller - 呼吸照護-->
+        <!--呼吸照護-->
         <scene sceneID="Vuf-3n-0Au">
             <objects>
                 <tableViewController id="TCb-jn-xpP" customClass="MeasureDataViewController" sceneMemberID="viewController">
@@ -133,7 +134,7 @@
             </objects>
             <point key="canvasLocation" x="3607" y="-2820"/>
         </scene>
-        <!--Measure View Controller - 量測-->
+        <!--量測-->
         <scene sceneID="RnM-lA-reZ">
             <objects>
                 <viewController id="sB3-mS-iQr" customClass="MeasureViewController" sceneMemberID="viewController">
@@ -261,7 +262,7 @@
             </objects>
             <point key="canvasLocation" x="4767" y="-2885"/>
         </scene>
-        <!--Measure Tab Bar View Controller - 量測-->
+        <!--量測-->
         <scene sceneID="mXv-nR-gEm">
             <objects>
                 <tabBarController definesPresentationContext="YES" id="csN-Mc-g5Y" customClass="MeasureTabBarViewController" sceneMemberID="viewController">
@@ -281,7 +282,7 @@
             </objects>
             <point key="canvasLocation" x="5633" y="-2715"/>
         </scene>
-        <!--Ventilator Data View Controller - 呼吸器資料-->
+        <!--呼吸器資料-->
         <scene sceneID="4xR-45-6Q6">
             <objects>
                 <viewController id="TBH-XW-hIz" customClass="VentilatorDataViewController" sceneMemberID="viewController">
@@ -871,7 +872,7 @@
             </objects>
             <point key="canvasLocation" x="6639" y="-3128"/>
         </scene>
-        <!--Other Data View Controller - 其他資料-->
+        <!--其他資料-->
         <scene sceneID="JV3-Bq-79w">
             <objects>
                 <viewController id="UNO-bx-0Mp" customClass="OtherDataViewController" sceneMemberID="viewController">
@@ -1311,7 +1312,7 @@
             </objects>
             <point key="canvasLocation" x="7638" y="-2137"/>
         </scene>
-        <!--Navigation Controller - 照護記錄-->
+        <!--照護記錄-->
         <scene sceneID="vVx-Xk-hyd">
             <objects>
                 <navigationController definesPresentationContext="YES" id="Evp-Ev-Kef" sceneMemberID="viewController">
@@ -1327,7 +1328,7 @@
             </objects>
             <point key="canvasLocation" x="1649" y="-2820"/>
         </scene>
-        <!--Navigation Controller - 歷史記錄-->
+        <!--歷史記錄-->
         <scene sceneID="K2D-C2-d2J">
             <objects>
                 <navigationController definesPresentationContext="YES" id="5TN-FP-GrJ" sceneMemberID="viewController">
@@ -1368,7 +1369,7 @@
             </objects>
             <point key="canvasLocation" x="2631" y="-1498"/>
         </scene>
-        <!--Settings Table View Controller - 設定-->
+        <!--設定-->
         <scene sceneID="38z-2x-hbf">
             <objects>
                 <tableViewController id="hV9-BB-CXa" customClass="SettingsTableViewController" sceneMemberID="viewController">
@@ -1462,7 +1463,7 @@
             </objects>
             <point key="canvasLocation" x="2629" y="-213"/>
         </scene>
-        <!--Navigation Controller - 設定-->
+        <!--設定-->
         <scene sceneID="9uF-BL-vnc">
             <objects>
                 <navigationController definesPresentationContext="YES" id="qNg-lE-SdH" sceneMemberID="viewController">

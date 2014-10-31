@@ -13,6 +13,7 @@
 #import "VentilationData.h"
 #import "DeviceStatus.h"
 #import "Patient.h"
+#import "PListManager.h"
 
 #ifndef ___webservice
 #define ___webservice
@@ -24,7 +25,7 @@
 //高雄
 //#define WS_URL @"http://10.40.11.21/webwork/resp/VentDataExchangeSvc.asmx"
 //嘉義
-#define WS_URL @"http://10.48.11.10/webwork/resp/VentDataExchangeSvc.asmx"
+//#define WS_URL @"http://10.48.11.10/webwork/resp/VentDataExchangeSvc.asmx"
 
 #define WS_GET_CUR_RT_CARD_LIST @"GetCurRtCardList"
 #define WS_GET_CUR_RT_CARD_LIST_VER_ID @"GetCurRtCardListVerId"
@@ -35,43 +36,29 @@
 
 #endif
 
-@implementation WebService
+@implementation WebService {
+    PListManager *plManager;
+    NSDictionary *hospital;
+    NSString *WS_URL;
+}
 
 - (void)dealloc {
     _delegate = nil;
+    
+    plManager = [[PListManager alloc] initWithPListName:@"Properties"];
+    hospital = [plManager readDictionaryByKey:@"Hospital"];
+    WS_URL = @"";
 }
 
 #pragma mark - Private Method
-/*- (NSString *)getIPAddress {
-    
-    NSString *address = @"error";
-    struct ifaddrs *interfaces = NULL;
-    struct ifaddrs *temp_addr = NULL;
-    int success = 0;
-    // retrieve the current interfaces - returns 0 on success
-    success = getifaddrs(&interfaces);
-    if (success == 0) {
-        // Loop through linked list of interfaces
-        temp_addr = interfaces;
-        while(temp_addr != NULL) {
-            if(temp_addr->ifa_addr->sa_family == AF_INET) {
-                // Check if interface is en0 which is the wifi connection on the iPhone
-                if([[NSString stringWithUTF8String:temp_addr->ifa_name] isEqualToString:@"en0"]) {
-                    // Get NSString from C String
-                    address = [NSString stringWithUTF8String:inet_ntoa(((struct sockaddr_in *)temp_addr->ifa_addr)->sin_addr)];
-                    
-                }
-                
-            }
-            
-            temp_addr = temp_addr->ifa_next;
-        }
+- (NSString *)getHospitalIpAddress {
+    NSString *hospitalName = [hospital objectForKey:@"Name"];
+    if ([hospitalName isEqualToString:@""]) {
+        return @"";
     }
-    // Free memory
-    freeifaddrs(interfaces);
-    return address;
     
-}*/
+    return [NSString stringWithFormat:@"http://%@/webwork/resp/VentDataExchangeSvc.asmx", hospitalName];
+}
 
 - (NSString *)getSOAPDateStringByNSString:(NSString *) dateString {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -86,18 +73,21 @@
 }
 
 - (NSURLRequest *) getURLRequestByWSString:(NSString *) swString {
+    WS_URL = [self getHospitalIpAddress];
     NSString *urlString = [NSString stringWithFormat:@"%@/%@", WS_URL, swString];
     NSURL *url = [NSURL URLWithString:urlString];
     return [NSURLRequest requestWithURL:url];
 }
 
 - (NSMutableURLRequest *) getMutableURLRequestByWSString:(NSString *) swString {
+    WS_URL = [self getHospitalIpAddress];
     NSString *urlString = [NSString stringWithFormat:@"%@/%@", WS_URL, swString];
     NSURL *url = [NSURL URLWithString:urlString];
     return [NSMutableURLRequest requestWithURL:url];
 }
 
 - (NSMutableURLRequest *) getSOAPRequestByWSString:(NSString *) swString soapMessage:(NSString *)soapMessage {
+    WS_URL = [self getHospitalIpAddress];
     NSURL *url = [NSURL URLWithString:WS_URL];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:WS_REQUEST_TIMEOUT_INTERVAL];
     NSString *msgLength = [NSString stringWithFormat:@"%ld", [soapMessage length]];
@@ -141,6 +131,9 @@
         }
         else if (connectionError) {
             [_delegate wsConnectionError:connectionError];
+        }
+        else {
+            [_delegate wsError];
         }
     }];
 }
@@ -332,6 +325,9 @@
         else if (connectionError) {
             [_delegate wsConnectionError:connectionError];
         }
+        else {
+            [_delegate wsError];
+        }
     }];
 }
 
@@ -387,6 +383,9 @@
         else if (connectionError) {
             [_delegate wsConnectionError:connectionError];
         }
+        else {
+            [_delegate wsError];
+        }
     }];
 }
 
@@ -419,6 +418,10 @@
         else if (connectionError) {
             [_delegate wsConnectionError:connectionError];
         }
-    }];}
+        else {
+            [_delegate wsError];
+        }
+    }];
+}
 
 @end

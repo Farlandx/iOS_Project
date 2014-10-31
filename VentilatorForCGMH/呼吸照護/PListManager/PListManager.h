@@ -11,7 +11,8 @@
 @interface PListManager : NSObject
 
 - (void)setPListName:(NSString *)name;
-- (NSString *)readByKey:(NSString *)key;
+- (NSString *)readStringByKey:(NSString *)key;
+- (NSDictionary *)readDictionaryByKey:(NSString *)key;
 - (BOOL)writeByKey:(NSString *)key value:(id)value;
 
 - (id)initWithPListName:(NSString *)name;

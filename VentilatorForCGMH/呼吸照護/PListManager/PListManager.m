@@ -42,6 +42,22 @@
     return @"";
 }
 
+- (NSDictionary *)readDictionaryByKey:(NSString *)key {
+    if (dict) {
+        NSDictionary *dictValue = [dict objectForKey:key];
+        if (dictValue) {
+            return dictValue;
+        }
+        //預設值
+        dictValue = [[NSDictionary alloc] initWithObjects:@[@"", @""] forKeys:@[@"Name", @"IpAddress"]];
+        
+        [self writeByKey:@"Hospital" value:dictValue];
+        
+        return dictValue;
+    }
+    return nil;
+}
+
 #pragma mark - Write
 - (BOOL)writeByKey:(NSString *)key value:(id)value {
     if (dict) {

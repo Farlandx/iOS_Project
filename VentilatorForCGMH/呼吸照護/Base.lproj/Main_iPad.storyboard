@@ -262,7 +262,7 @@
                                 <rect key="frame" x="703" y="101" width="51" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </switch>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="記住" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1yD-km-JQQ">
+                            <label opaque="NO" userInteractionEnabled="NO" tag="200" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="記住" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1yD-km-JQQ">
                                 <rect key="frame" x="657" y="104" width="42" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -1847,14 +1847,14 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="kmJ-XJ-bUu" kind="relationship" relationship="rootViewController" id="hqu-N2-aQ2"/>
+                        <segue destination="VFE-Ta-h0h" kind="relationship" relationship="rootViewController" id="3Oy-l6-v4O"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pe9-BT-t34" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2631" y="-246"/>
+            <point key="canvasLocation" x="3621" y="-208"/>
         </scene>
-        <!--步驟一-->
+        <!--步驟二-->
         <scene sceneID="QZP-Ya-5Ej">
             <objects>
                 <viewController id="kmJ-XJ-bUu" customClass="ScannerSettingsViewController" sceneMemberID="viewController">
@@ -1901,7 +1901,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="步驟一" id="GSj-yn-yQX">
+                    <navigationItem key="navigationItem" title="步驟二" id="GSj-yn-yQX">
                         <barButtonItem key="rightBarButtonItem" title="結束" id="qhJ-Gd-E06">
                             <connections>
                                 <action selector="closeView:" destination="kmJ-XJ-bUu" id="HXp-KR-0KQ"/>
@@ -1911,9 +1911,9 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uEf-jj-rnN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3621" y="-246"/>
+            <point key="canvasLocation" x="5593" y="-208"/>
         </scene>
-        <!--步驟二-->
+        <!--步驟三-->
         <scene sceneID="dtn-QX-idK">
             <objects>
                 <viewController id="Lh6-vV-xVy" customClass="ScannerSettingsViewController" sceneMemberID="viewController">
@@ -1951,7 +1951,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="步驟二" id="PZU-4w-M7m">
+                    <navigationItem key="navigationItem" title="步驟三" id="PZU-4w-M7m">
                         <barButtonItem key="rightBarButtonItem" title="結束" id="sjq-MK-R79">
                             <connections>
                                 <action selector="closeView:" destination="Lh6-vV-xVy" id="gkK-Hd-cbY"/>
@@ -1961,7 +1961,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Tm-Wv-XPe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4544" y="-246"/>
+            <point key="canvasLocation" x="6516" y="-208"/>
         </scene>
         <!--歷史記錄-->
         <scene sceneID="K2D-C2-d2J">
@@ -1979,10 +1979,151 @@
             </objects>
             <point key="canvasLocation" x="1649" y="-1498"/>
         </scene>
-        <!--掃描器設定-->
+        <!--設定-->
+        <scene sceneID="XW7-AO-v5o">
+            <objects>
+                <navigationController id="I2c-MW-4Uf" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="設定" image="Settings_Icon" id="Jut-GU-OBT"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="IIm-eX-wwA">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="vWM-gS-Ycv" kind="relationship" relationship="rootViewController" id="gtJ-BY-nK3"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5Il-D9-a5c" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1644" y="-208"/>
+        </scene>
+        <!--設定-->
+        <scene sceneID="vJ0-01-QRk">
+            <objects>
+                <tableViewController id="vWM-gS-Ycv" customClass="SettingsTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="OC9-CY-SAi">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <sections>
+                            <tableViewSection headerTitle="院區" id="TOq-a0-zzQ">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Hospital Cell" id="0SW-vx-ESB" customClass="HospitalViewCell">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0SW-vx-ESB" id="tNC-Ar-kaa">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="林口" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="h18-FJ-JCI">
+                                                    <rect key="frame" x="15" y="11" width="34" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="IpAddress" value="10.30.11.54"/>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="Name" value="CGHASP"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Hospital Cell" id="NGP-33-s6M" customClass="HospitalViewCell">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NGP-33-s6M" id="drf-Pj-4RH">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="高雄" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Edb-V0-FVz">
+                                                    <rect key="frame" x="15" y="11" width="34" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="IpAddress" value="10.40.11.21"/>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="Name" value="SHKWWW"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Hospital Cell" id="pQE-Y5-fRU" customClass="HospitalViewCell">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pQE-Y5-fRU" id="jX4-gF-nXH">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="基隆" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ufs-mW-xhI">
+                                                    <rect key="frame" x="15" y="11" width="34" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="IpAddress" value="10.26.2.19"/>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="Name" value="KELWWW"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Hospital Cell" id="BAv-fx-vQ7" customClass="HospitalViewCell">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BAv-fx-vQ7" id="SaV-tw-atY">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="嘉義" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5FK-Oj-l0S">
+                                                    <rect key="frame" x="15" y="11" width="34" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="IpAddress" value="10.48.11.10"/>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="Name" value="JIAWWW"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="掃描器" id="QxM-Qo-qe8">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="UZ9-r5-mSl">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UZ9-r5-mSl" id="TK0-J7-fPH">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="掃瞄器設定" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3lY-ef-kfG">
+                                                    <rect key="frame" x="15" y="11" width="85" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="oJV-9r-rEM" kind="modal" id="zgR-tR-JWw"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="vWM-gS-Ycv" id="7Dj-KI-pTy"/>
+                            <outlet property="delegate" destination="vWM-gS-Ycv" id="NSz-24-PKd"/>
+                        </connections>
+                    </tableView>
+                    <tabBarItem key="tabBarItem" title="設定" image="Settings_Icon" id="w73-h5-GM0"/>
+                    <navigationItem key="navigationItem" title="設定" id="HhD-Kq-JBY"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bIW-4L-EPx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2594" y="-208"/>
+        </scene>
+        <!--步驟一-->
         <scene sceneID="JlZ-nR-PF9">
             <objects>
-                <viewController id="VFE-Ta-h0h" sceneMemberID="viewController">
+                <viewController id="VFE-Ta-h0h" customClass="ScannerSettingsViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dpp-kk-H5R">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2004,17 +2145,24 @@
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
                                 <state key="normal" title="下一步&gt;"/>
                                 <connections>
-                                    <segue destination="oJV-9r-rEM" kind="modal" id="ACy-29-REM"/>
+                                    <segue destination="kmJ-XJ-bUu" kind="push" id="foX-OX-kbh"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="掃描器設定" image="Settings_Icon" id="1bO-Ke-QFV"/>
+                    <navigationItem key="navigationItem" title="步驟一" id="8NO-MM-nzi">
+                        <barButtonItem key="rightBarButtonItem" title="結束" id="jX7-Zn-3dM">
+                            <connections>
+                                <action selector="closeView:" destination="VFE-Ta-h0h" id="mVP-tL-Vwd"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VaQ-bB-MZS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1649" y="-246"/>
+            <point key="canvasLocation" x="4589" y="-208"/>
         </scene>
         <!--Main View Controller-->
         <scene sceneID="yl2-sM-qoP">
@@ -2029,7 +2177,7 @@
                     <connections>
                         <segue destination="Evp-Ev-Kef" kind="relationship" relationship="viewControllers" id="1bj-mE-gS6"/>
                         <segue destination="5TN-FP-GrJ" kind="relationship" relationship="viewControllers" id="SDz-Sh-h3V"/>
-                        <segue destination="VFE-Ta-h0h" kind="relationship" relationship="viewControllers" id="K09-YG-c2n"/>
+                        <segue destination="I2c-MW-4Uf" kind="relationship" relationship="viewControllers" id="Bsl-ZW-ASS"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>

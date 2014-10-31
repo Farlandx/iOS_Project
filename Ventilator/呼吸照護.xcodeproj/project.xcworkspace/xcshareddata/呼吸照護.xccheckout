@@ -12,17 +12,13 @@
 	<dict>
 		<key>054094D7A112209FE5B6021502AFE60FD657A03B</key>
 		<string>https://github.com/Farlandx/iOS_Project.git</string>
-		<key>11D9AD97-5387-46B6-9AC2-B5058D6849DA</key>
-		<string>https://github.com/Farlandx/iOS_Library.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Ventilator/呼吸照護.xcodeproj/project.xcworkspace</string>
+	<string>Ventilator/呼吸照護.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>054094D7A112209FE5B6021502AFE60FD657A03B</key>
 		<string>../../..</string>
-		<key>11D9AD97-5387-46B6-9AC2-B5058D6849DA</key>
-		<string>../../../../iOS_Library</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/Farlandx/iOS_Project.git</string>
@@ -32,14 +28,6 @@
 	<string>054094D7A112209FE5B6021502AFE60FD657A03B</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
-		<dict>
-			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.git</string>
-			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>11D9AD97-5387-46B6-9AC2-B5058D6849DA</string>
-			<key>IDESourceControlWCCName</key>
-			<string>iOS_Library</string>
-		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>

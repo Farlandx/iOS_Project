@@ -66,6 +66,8 @@
 		1ECAB81C1920612300161572 /* HistoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ECAB81B1920612300161572 /* HistoryTableViewController.m */; };
 		1ECAB8201920614D00161572 /* HistoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ECAB81F1920614D00161572 /* HistoryTableViewCell.m */; };
 		1ECAB8241920C8CA00161572 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ECAB8231920C8CA00161572 /* MainViewController.m */; };
+		1ECD23191A0093E600C5EAD1 /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ECD23181A0093E600C5EAD1 /* SettingsTableViewController.m */; };
+		1ECD231D1A00BCEE00C5EAD1 /* HospitalViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ECD231C1A00BCEE00C5EAD1 /* HospitalViewCell.m */; };
 		1ED31BA4190E071D00E58228 /* VentilationData.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ED31B9E190E071D00E58228 /* VentilationData.m */; };
 		1EDA9CCF18B206CA00AF987A /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EDA9CCE18B206CA00AF987A /* libsqlite3.0.dylib */; };
 		1EDE9FC818B6FEC5004B8FE5 /* DataTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EDE9FC718B6FEC5004B8FE5 /* DataTableViewCell.m */; };
@@ -165,6 +167,7 @@
 		1E97B40418E01F6400704F07 /* NfcA1Device.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NfcA1Device.h; sourceTree = "<group>"; };
 		1E9DDB3118D2DDD800643295 /* BreathSoundTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BreathSoundTableViewController.h; sourceTree = "<group>"; };
 		1E9DDB3218D2DDD800643295 /* BreathSoundTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BreathSoundTableViewController.m; sourceTree = "<group>"; };
+		1EA5421F1A032103000A7B4A /* HospitalName.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HospitalName.h; sourceTree = "<group>"; };
 		1EB210AC199A0148002D7C3D /* BLETrans.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLETrans.h; sourceTree = "<group>"; };
 		1EB210AD199A0148002D7C3D /* BLETrans.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLETrans.m; sourceTree = "<group>"; };
 		1ECAB76A19B4428800A1E3CD /* PListManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PListManager.h; sourceTree = "<group>"; };
@@ -186,6 +189,10 @@
 		1ECAB81F1920614D00161572 /* HistoryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryTableViewCell.m; sourceTree = "<group>"; };
 		1ECAB8221920C8CA00161572 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		1ECAB8231920C8CA00161572 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		1ECD23171A0093E600C5EAD1 /* SettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsTableViewController.h; sourceTree = "<group>"; };
+		1ECD23181A0093E600C5EAD1 /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableViewController.m; sourceTree = "<group>"; };
+		1ECD231B1A00BCEE00C5EAD1 /* HospitalViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HospitalViewCell.h; sourceTree = "<group>"; };
+		1ECD231C1A00BCEE00C5EAD1 /* HospitalViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HospitalViewCell.m; sourceTree = "<group>"; };
 		1ED31B90190E071D00E58228 /* BLE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLE.h; sourceTree = "<group>"; };
 		1ED31B92190E071D00E58228 /* DeviceInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceInfo.h; sourceTree = "<group>"; };
 		1ED31B94190E071D00E58228 /* DRAGER.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DRAGER.h; sourceTree = "<group>"; };
@@ -418,6 +425,7 @@
 		1E781AF018BC46A300647ED3 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				1ECD23131A007BD100C5EAD1 /* Settings */,
 				1EDE9FC918B6FF2E004B8FE5 /* MeasureView */,
 				1E0DD9DA192AFDBD008E3F18 /* HistoryCollectionView */,
 				1EDE9FC618B6FEC5004B8FE5 /* DataTableViewCell.h */,
@@ -428,8 +436,6 @@
 				1E15858418CC660A009249AF /* MeasureDataViewController.m */,
 				1E32C6B918B7064000DE4595 /* MeasureTabBarViewController.h */,
 				1E32C6BA18B7064000DE4595 /* MeasureTabBarViewController.m */,
-				1E345E81196F701800967B44 /* ScannerSettingsViewController.h */,
-				1E345E82196F701800967B44 /* ScannerSettingsViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -517,9 +523,31 @@
 			name = BLE;
 			sourceTree = "<group>";
 		};
+		1ECD23131A007BD100C5EAD1 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				1ECD231A1A00BCCC00C5EAD1 /* Cell */,
+				1E345E81196F701800967B44 /* ScannerSettingsViewController.h */,
+				1E345E82196F701800967B44 /* ScannerSettingsViewController.m */,
+				1ECD23171A0093E600C5EAD1 /* SettingsTableViewController.h */,
+				1ECD23181A0093E600C5EAD1 /* SettingsTableViewController.m */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
+		1ECD231A1A00BCCC00C5EAD1 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				1ECD231B1A00BCEE00C5EAD1 /* HospitalViewCell.h */,
+				1ECD231C1A00BCEE00C5EAD1 /* HospitalViewCell.m */,
+			);
+			name = Cell;
+			sourceTree = "<group>";
+		};
 		1EDA9CCA18B2067300AF987A /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				1EA5421F1A032103000A7B4A /* HospitalName.h */,
 				1ED31B9D190E071D00E58228 /* VentilationData.h */,
 				1ED31B9E190E071D00E58228 /* VentilationData.m */,
 				1E9219C6190641B2006ED639 /* XMLReader.h */,
@@ -667,6 +695,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1ECD23191A0093E600C5EAD1 /* SettingsTableViewController.m in Sources */,
 				1E0DD9F6192B0022008E3F18 /* TitleLabel.m in Sources */,
 				1E9219C8190641B2006ED639 /* XMLReader.m in Sources */,
 				1E0DD9FA192B0040008E3F18 /* CollectionViewFlowLayout.m in Sources */,
@@ -683,6 +712,7 @@
 				1EF0012B18B2EAEF003B5D58 /* DatabaseUtility.m in Sources */,
 				1E58EF681999A6C400D4E20E /* GZIP.m in Sources */,
 				1E0DD9F1192B000D008E3F18 /* ContentCollectionView.m in Sources */,
+				1ECD231D1A00BCEE00C5EAD1 /* HospitalViewCell.m in Sources */,
 				1E0DD9EE192AFFCB008E3F18 /* HeaderCell.m in Sources */,
 				1ECAB80C1918813800161572 /* ProgressHUD.m in Sources */,
 				1E0DD9E4192AFE62008E3F18 /* CollectionViewHeader.m in Sources */,
