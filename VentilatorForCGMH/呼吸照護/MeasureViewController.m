@@ -37,8 +37,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    [self setHospitalCustome];
-    
     //這是測試用按鈕
     _btnTest1.hidden = YES;
     _btnTest2.hidden = YES;
@@ -98,6 +96,7 @@
         tmp_VentNo = _VentNo.text;
     }
     else {
+        [self setHospitalCustome];
         if (rememberRecordOperString.length) {
             _RecordOper.text = rememberRecordOperString;
             tmp_RecordOper = _RecordOper.text;
