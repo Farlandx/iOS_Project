@@ -15,15 +15,7 @@
 
 @implementation MainViewController {
     DatabaseUtility *db;
-}
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+    PListManager *plManager;
 }
 
 - (void)viewDidLoad
@@ -35,10 +27,16 @@
     [db initDatabase];
     
     [self refreshHistoryList];
+    
+    plManager = [[PListManager alloc] initWithPListName:@"Properties"];
 }
 
 - (void)refreshHistoryList {
     self.historyList = [db getUploadHistories];
+}
+
+- (PListManager *)getPListManager {
+    return plManager;
 }
 
 - (void)didReceiveMemoryWarning

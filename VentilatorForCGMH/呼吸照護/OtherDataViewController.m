@@ -219,7 +219,7 @@
     
     //20141023新增欄位
     _MaxPe.text = measureData.MaxPe;
-    _Vc.text = measureData.Vc;
+    _VC.text = measureData.VC;
 }
 
 - (void)getMeasureData:(VentilationData *)measureData {
@@ -246,7 +246,7 @@
     
     //20141023新增欄位
     measureData.MaxPe = _MaxPe.text;
-    measureData.Vc = _Vc.text;
+    measureData.VC = _VC.text;
 }
 
 #pragma mark - Gesture

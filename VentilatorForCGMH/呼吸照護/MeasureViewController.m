@@ -784,7 +784,7 @@
 //設定各院區不同的需求
 - (void)setHospitalCustome {
     PListManager *plManager = [[PListManager alloc] initWithPListName:@"Properties"];
-    NSDictionary *hospital = [plManager readDictionaryByKey:@"Hospital"];
+    NSDictionary *hospital = [plManager getHospital];
     
     //記住治療師的「記住」label
     UILabel *label =  (UILabel *)[self.view viewWithTag:200];

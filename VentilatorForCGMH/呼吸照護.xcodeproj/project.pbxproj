@@ -53,6 +53,7 @@
 		1E97B40118E01CC300704F07 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E97B40018E01CC300704F07 /* AVFoundation.framework */; };
 		1E97B40318E01F4F00704F07 /* libNfcA1Device_D14E.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E97B40218E01F4F00704F07 /* libNfcA1Device_D14E.a */; };
 		1E9DDB3318D2DDD800643295 /* BreathSoundTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E9DDB3218D2DDD800643295 /* BreathSoundTableViewController.m */; };
+		1EA542221A037BD9000A7B4A /* CareSortViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EA542211A037BD9000A7B4A /* CareSortViewCell.m */; };
 		1EB210AE199A0148002D7C3D /* BLETrans.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EB210AD199A0148002D7C3D /* BLETrans.m */; };
 		1ECAB76C19B4428800A1E3CD /* PListManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ECAB76B19B4428800A1E3CD /* PListManager.m */; };
 		1ECAB76E19B44F9700A1E3CD /* Properties.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1ECAB76D19B44F9700A1E3CD /* Properties.plist */; };
@@ -168,6 +169,8 @@
 		1E9DDB3118D2DDD800643295 /* BreathSoundTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BreathSoundTableViewController.h; sourceTree = "<group>"; };
 		1E9DDB3218D2DDD800643295 /* BreathSoundTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BreathSoundTableViewController.m; sourceTree = "<group>"; };
 		1EA5421F1A032103000A7B4A /* HospitalName.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HospitalName.h; sourceTree = "<group>"; };
+		1EA542201A037BD9000A7B4A /* CareSortViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CareSortViewCell.h; sourceTree = "<group>"; };
+		1EA542211A037BD9000A7B4A /* CareSortViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CareSortViewCell.m; sourceTree = "<group>"; };
 		1EB210AC199A0148002D7C3D /* BLETrans.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLETrans.h; sourceTree = "<group>"; };
 		1EB210AD199A0148002D7C3D /* BLETrans.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLETrans.m; sourceTree = "<group>"; };
 		1ECAB76A19B4428800A1E3CD /* PListManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PListManager.h; sourceTree = "<group>"; };
@@ -538,6 +541,8 @@
 		1ECD231A1A00BCCC00C5EAD1 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				1EA542201A037BD9000A7B4A /* CareSortViewCell.h */,
+				1EA542211A037BD9000A7B4A /* CareSortViewCell.m */,
 				1ECD231B1A00BCEE00C5EAD1 /* HospitalViewCell.h */,
 				1ECD231C1A00BCEE00C5EAD1 /* HospitalViewCell.m */,
 			);
@@ -734,6 +739,7 @@
 				1E781AEC18BC467600647ED3 /* VentilatorDataViewController.m in Sources */,
 				1ECAB815192060D500161572 /* APLSectionHeaderView.m in Sources */,
 				1ECAB81C1920612300161572 /* HistoryTableViewController.m in Sources */,
+				1EA542221A037BD9000A7B4A /* CareSortViewCell.m in Sources */,
 				1E5E569018861184005EF6AC /* main.m in Sources */,
 				1E9219D1190750D7006ED639 /* DeviceStatus.m in Sources */,
 				1E32C6C618B746B600DE4595 /* VentilatorMeasureView.m in Sources */,

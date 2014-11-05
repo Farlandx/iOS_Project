@@ -31,6 +31,10 @@
     }
 }
 
+- (void)dealloc {
+    _delegate = nil;
+}
+
 #pragma mark - Read
 - (NSString *)readByKey:(NSString *)key {
     if (dict) {
@@ -48,6 +52,16 @@
         if (dictValue) {
             return dictValue;
         }
+    }
+    return nil;
+}
+
+- (NSDictionary *)getHospital {
+    if (dict) {
+        NSDictionary *dictValue = [dict objectForKey:@"Hospital"];
+        if (dictValue) {
+            return dictValue;
+        }
         //預設值
         dictValue = [[NSDictionary alloc] initWithObjects:@[@"", @""] forKeys:@[@"Name", @"IpAddress"]];
         
@@ -58,14 +72,40 @@
     return nil;
 }
 
+- (NSDictionary *)getCareSort {
+    if (dict) {
+        NSDictionary *dictValue = [dict objectForKey:@"CareSort"];
+        if (dictValue) {
+            return dictValue;
+        }
+        //預設值
+        dictValue = [[NSDictionary alloc] initWithObjects:@[@"", [NSNumber numberWithBool:NO]] forKeys:@[@"Key", @"Ascending"]];
+        
+        [self writeByKey:@"CareSort" value:dictValue];
+        
+        return dictValue;
+    }
+    return nil;
+}
+
+
 #pragma mark - Write
 - (BOOL)writeByKey:(NSString *)key value:(id)value {
     if (dict) {
         NSMutableDictionary *newDict = [dict mutableCopy];
         [newDict setValue:value forKey:key];
         if ([newDict writeToFile:dictionaryFullPath atomically:YES]) {
+            dict = newDict;
             return YES;
         }
+    }
+    return NO;
+}
+
+- (BOOL)writeCareSortValue:(id)value {
+    if (dict && [self writeByKey:@"CareSort" value:value]) {
+        [_delegate careSortChanged];
+        return YES;
     }
     return NO;
 }

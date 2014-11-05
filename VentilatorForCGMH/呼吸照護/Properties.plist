@@ -11,5 +11,12 @@
 		<key>IpAddress</key>
 		<string></string>
 	</dict>
+	<key>CareSort</key>
+	<dict>
+		<key>Key</key>
+		<string></string>
+		<key>Ascending</key>
+		<false/>
+	</dict>
 </dict>
 </plist>

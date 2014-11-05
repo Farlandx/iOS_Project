@@ -46,7 +46,7 @@
     _delegate = nil;
     
     plManager = [[PListManager alloc] initWithPListName:@"Properties"];
-    hospital = [plManager readDictionaryByKey:@"Hospital"];
+    hospital = [plManager getHospital];
     WS_URL = @"";
 }
 
@@ -238,6 +238,9 @@
             tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<NO>%@</NO>", ventData._NO]];
             tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<NO2>%@</NO2>", ventData.NO2]];
             tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<LeakTest>%@</LeakTest>", ventData.LeakTest]];
+            //20141023新增欄位
+            tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<MaxPe>%@</MaxPe>", ventData.MaxPe]];
+            tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<VC>%@</VC>", ventData.VC]];
             tmp = [tmp stringByAppendingString:@"</VentRecord>"];
             
             tmp = [tmp stringByAppendingString:@"</DtoVentExchangeUpload>"];

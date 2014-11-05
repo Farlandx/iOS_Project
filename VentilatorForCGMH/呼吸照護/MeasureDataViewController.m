@@ -18,12 +18,13 @@
 #import "ProgressHUD.h"
 #import "NfcA1Device.h"
 #import "BLETrans.h"
+#import "MainViewController.h"
 #import "PListManager.h"
 
 #define CELL_HEIGHT 44.0f
 #define ERR_LABEL_HEIGHT 21.0f
 
-@interface MeasureDataViewController ()<UIAlertViewDelegate, UITextFieldDelegate, MeasureViewControllerDelegate, WebServiceDelegate, NfcA1ProtocolDelegate, BLETransDelegate>
+@interface MeasureDataViewController ()<UIAlertViewDelegate, UITextFieldDelegate, MeasureViewControllerDelegate, WebServiceDelegate, NfcA1ProtocolDelegate, BLETransDelegate, PListManagerDelegate>
 
 @end
 
@@ -84,7 +85,11 @@
     
     measureDataList = [db getMeasures];
     
-    [self.tableView reloadData];
+//    [self.tableView reloadData];
+    MainViewController *mainViewController = (MainViewController *)((UINavigationController *)self.parentViewController).parentViewController;
+    plManager = [mainViewController getPListManager];
+    plManager.delegate = self;
+    [self sortTableList];
     
     ws = [[WebService alloc] init];
     ws.delegate = self;
@@ -106,8 +111,7 @@
     _tmpRecordOper = @"";
     
     //院區確認
-    plManager = [[PListManager alloc] initWithPListName:@"Properties"];
-    NSDictionary *hospital = [plManager readDictionaryByKey:@"Hospital"];
+    NSDictionary *hospital = [plManager getHospital];
     if (hospital && [self checkHasHospital:hospital]) {
         return;
         [self getCardList];
@@ -158,8 +162,10 @@
 - (void)measureViewControllerDismissed:(VentilationData *)measureData recordOper:(NSString *)recordOper {
     _tmpRecordOper = recordOper;
     if (measureData != nil) {
+        [measureDataList removeAllObjects];
         measureDataList = [db getMeasures];
-        [self.tableView reloadData];
+//        [self.tableView reloadData];
+        [self sortTableList];
     }
     else {
         NSLog(@"no");
@@ -185,9 +191,10 @@
         
         if (pcBatch.VentRecList.count) {
             [db saveUploadData:pcBatch];
-            
+            [measureDataList removeAllObjects];
             measureDataList = [db getMeasures];
-            [self.tableView reloadData];
+//            [self.tableView reloadData];
+            [self sortTableList];
         }
     }
     
@@ -205,6 +212,11 @@
         uploadAlertView.title = @"資料同步完成";
         uploadAlertView.message = @"等待上傳結果回傳中\n請至PC端執行上傳動作";
     }
+}
+
+#pragma mark - PListManager Delegate
+- (void)careSortChanged {
+    [self sortTableList];
 }
 
 #pragma mark - WebService Delegate
@@ -243,7 +255,8 @@
         [cell.imgCheckbox setImage:[UIImage imageNamed:@"unchecked"]];
     }
     
-    [self.tableView reloadData];
+//    [self.tableView reloadData];
+    [self sortTableList];
     [self.imgSelectAll setImage:[UIImage imageNamed:@"unchecked"]];
     [ProgressHUD dismiss];
 }
@@ -713,5 +726,18 @@
         return NO;
     }
     return YES;
+}
+
+//依據設定的排序顯示資料
+- (void)sortTableList {
+    NSDictionary *careSort = [plManager getCareSort];
+    if (measureDataList.count && careSort && ![[careSort objectForKey:@"Key"] isEqualToString:@""]) {
+        NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:[careSort objectForKey:@"Key"]
+                                                               ascending:[[careSort objectForKey:@"Ascending"] boolValue]];
+        
+        measureDataList = [NSMutableArray arrayWithArray: [measureDataList sortedArrayUsingDescriptors:@[sort]]];
+    }
+    
+    [self.tableView reloadData];
 }
 @end

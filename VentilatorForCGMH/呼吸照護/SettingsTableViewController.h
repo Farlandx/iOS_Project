@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "HospitalViewCell.h"
 
 @interface SettingsTableViewController : UITableViewController
 
-@property (nonatomic, retain) NSIndexPath *checkedIndexPath;
+@property (nonatomic, retain) NSIndexPath *checkedHospitalIndexPath;
+@property (nonatomic, retain) NSIndexPath *checkedCareSortIndexPath;
 
 @end

@@ -8,7 +8,12 @@
 
 #import "SettingsTableViewController.h"
 #import "HospitalViewCell.h"
+#import "CareSortViewCell.h"
+#import "MainViewController.h"
 #import "PListManager.h"
+
+#define HOSPITAL_SECTION 0
+#define CARESORT_SECTION 1
 
 @interface SettingsTableViewController ()
 
@@ -17,17 +22,20 @@
 @implementation SettingsTableViewController {
     PListManager *plManager;
     NSDictionary *hospital;
+    NSDictionary *careSort;
 }
 
-@synthesize checkedIndexPath;
+@synthesize checkedHospitalIndexPath, checkedCareSortIndexPath;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    plManager = [[PListManager alloc] initWithPListName:@"Properties"];
-    hospital = [plManager readDictionaryByKey:@"Hospital"];
+    MainViewController *mainViewController = (MainViewController *)((UINavigationController *)self.parentViewController).parentViewController;
+    plManager = [mainViewController getPListManager];
+    hospital = [plManager getHospital];
+    careSort = [plManager getCareSort];
 
-    [self setCurrentHospitalWithCheckmark];
+    [self setCurrentCheckmark];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -47,33 +55,65 @@
     //do work for checkmark
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if (indexPath.section > 0) {
-        return;
+    switch (indexPath.section) {
+        case 0: {
+            if(self.checkedHospitalIndexPath && ![self.checkedHospitalIndexPath isEqual:indexPath])
+            {
+                HospitalViewCell* uncheckCell = (HospitalViewCell *)[tableView cellForRowAtIndexPath:self.checkedHospitalIndexPath];
+                uncheckCell.accessoryType = UITableViewCellAccessoryNone;
+            }
+            
+            HospitalViewCell* cell = (HospitalViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            self.checkedHospitalIndexPath = indexPath;
+            [self writeHospitalName:cell.Name IpAddress:cell.IpAddress];
+            break;
+        }
+            
+        case 1: {
+            if (self.checkedCareSortIndexPath && ![self.checkedCareSortIndexPath isEqual:indexPath]) {
+                CareSortViewCell *unckeckCell = (CareSortViewCell *)[tableView cellForRowAtIndexPath:self.checkedCareSortIndexPath];
+                unckeckCell.accessoryType = UITableViewCellAccessoryNone;
+            }
+            
+            CareSortViewCell *cell = (CareSortViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            self.checkedCareSortIndexPath = indexPath;
+            [self writeCareSortByKey:cell.Key Ascending:cell.Ascending];
+            break;
+        }
+            
+        default:
+            break;
     }
-    
-    if(self.checkedIndexPath && ![self.checkedIndexPath isEqual:indexPath])
-    {
-        HospitalViewCell* uncheckCell = (HospitalViewCell *)[tableView cellForRowAtIndexPath:self.checkedIndexPath];
-        uncheckCell.accessoryType = UITableViewCellAccessoryNone;
-    }
-    
-    HospitalViewCell* cell = (HospitalViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-    cell.accessoryType = UITableViewCellAccessoryCheckmark;
-    self.checkedIndexPath = indexPath;
-    [self writeHospitalName:cell.Name IpAddress:cell.IpAddress];
 }
 
 #pragma mark - Private Method
-- (void)setCurrentHospitalWithCheckmark {
+- (void)setCurrentCheckmark {
+    //院區
     NSString *hospitalName = [hospital objectForKey:@"Name"];
     if (![hospitalName isEqualToString:@""]) {
-        for (int i = 0; i < [self.tableView numberOfRowsInSection:0]; i++) {
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+        for (int i = 0; i < [self.tableView numberOfRowsInSection:HOSPITAL_SECTION]; i++) {
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:HOSPITAL_SECTION];
             HospitalViewCell *cell = (HospitalViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
             if ([cell.Name isEqualToString:hospitalName]) {
                 cell.accessoryType = UITableViewCellAccessoryCheckmark;
-                self.checkedIndexPath = [self.tableView indexPathForCell:cell];
-                return;
+                self.checkedHospitalIndexPath = [self.tableView indexPathForCell:cell];
+                break;
+            }
+        }
+    }
+    
+    //照護記錄排序
+    NSString *careSortKey = [careSort objectForKey:@"Key"];
+    if (![careSortKey isEqualToString:@""]) {
+        for (int i = 0; i < [self.tableView numberOfRowsInSection:CARESORT_SECTION]; i++) {
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:CARESORT_SECTION];
+            CareSortViewCell *cell = (CareSortViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+            if ([cell.Key isEqualToString:careSortKey] && [[careSort objectForKey:@"Ascending"] isEqualToNumber:[NSNumber numberWithBool:cell.Ascending]]) {
+                cell.accessoryType = UITableViewCellAccessoryCheckmark;
+                self.checkedCareSortIndexPath = [self.tableView indexPathForCell:cell];
+                break;
             }
         }
     }
@@ -87,16 +127,11 @@
     [plManager writeByKey:@"Hospital" value:hospital];
 }
 
-- (IBAction)test:(id)sender {
-    NSString *hospitalName = [hospital objectForKey:@"Name"];
-    if (![hospitalName isEqualToString:@""]) {
-        for (HospitalViewCell *cell in [self.tableView dequeueReusableCellWithIdentifier:@"Hospital Cell"]) {
-            if ([cell.Name isEqualToString:hospitalName]) {
-                cell.accessoryType = UITableViewCellAccessoryCheckmark;
-                self.checkedIndexPath = [self.tableView indexPathForCell:cell];
-                return;
-            }
-        }
+- (void)writeCareSortByKey:(NSString *)Key Ascending:(BOOL)Ascending {
+    if ([[careSort objectForKey:@"Key"] isEqualToString:Key] && [[careSort objectForKey:@"Ascending"] isEqualToNumber:[NSNumber numberWithBool:Ascending]]) {
+        return;
     }
+    careSort = [[NSDictionary alloc] initWithObjects:@[Key, [NSNumber numberWithBool:Ascending]] forKeys:@[@"Key", @"Ascending"]];
+    [plManager writeCareSortValue:careSort];
 }
 @end

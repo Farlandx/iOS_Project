@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PListManager.h"
 
 @interface MainViewController : UITabBarController
 
 @property (strong, nonatomic)NSMutableArray *historyList;
 
 - (void)refreshHistoryList;
+- (PListManager *)getPListManager;
 
 @end
