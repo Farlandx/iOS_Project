@@ -11,6 +11,7 @@
 #import "MeasureViewController.h"
 
 #define FOO_PATTERN @"0123456789."
+#define FOO_IE_PATTERN @"0123456789.:"
 
 @interface VentilatorDataViewController ()
 
@@ -146,6 +147,9 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     if (string.length == 0) {
         return YES;
+    }
+    else if (textField == _InspirationExpirationRatio && string.length == 1) {
+        return [string rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:FOO_IE_PATTERN]].location != NSNotFound;
     }
     else if (string.length == 1) {
         return [string rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:FOO_PATTERN]].location != NSNotFound;
