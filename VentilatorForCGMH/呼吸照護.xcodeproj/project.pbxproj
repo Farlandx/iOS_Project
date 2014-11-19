@@ -20,6 +20,8 @@
 		1E32C6BB18B7064000DE4595 /* MeasureTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E32C6BA18B7064000DE4595 /* MeasureTabBarViewController.m */; };
 		1E32C6C618B746B600DE4595 /* VentilatorMeasureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E32C6C518B746B600DE4595 /* VentilatorMeasureView.m */; };
 		1E345E83196F701800967B44 /* ScannerSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E345E82196F701800967B44 /* ScannerSettingsViewController.m */; };
+		1E550F431A19A4F700C19B03 /* PwdSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E550F411A19A4F700C19B03 /* PwdSettingsViewController.m */; };
+		1E550F441A19A4F700C19B03 /* PwdSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1E550F421A19A4F700C19B03 /* PwdSettingsViewController.xib */; };
 		1E58EF681999A6C400D4E20E /* GZIP.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E58EF671999A6C400D4E20E /* GZIP.m */; };
 		1E58EF6A1999A6E000D4E20E /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E58EF691999A6E000D4E20E /* libz.1.2.5.dylib */; };
 		1E5E568418861184005EF6AC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E5E568318861184005EF6AC /* Foundation.framework */; };
@@ -36,6 +38,9 @@
 		1E5E56AB18861184005EF6AC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E5E568718861184005EF6AC /* UIKit.framework */; };
 		1E5E56B318861184005EF6AC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1E5E56B118861184005EF6AC /* InfoPlist.strings */; };
 		1E5E56B518861184005EF6AC /* ____Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E5E56B418861184005EF6AC /* ____Tests.m */; };
+		1E73BF841A09FECA003CBC0F /* ABGUpdateRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E73BF831A09FECA003CBC0F /* ABGUpdateRecord.m */; };
+		1E73BF871A0A1343003CBC0F /* DtoGetAssociatedRespCareRecRslt.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E73BF861A0A1343003CBC0F /* DtoGetAssociatedRespCareRecRslt.m */; };
+		1E73BF8A1A0A1D66003CBC0F /* DtoRespCareCol.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E73BF891A0A1D66003CBC0F /* DtoRespCareCol.m */; };
 		1E75E335194AA16C00593E17 /* NameLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E75E334194AA16C00593E17 /* NameLabel.m */; };
 		1E75E338194AA19600593E17 /* NameTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E75E337194AA19600593E17 /* NameTextField.m */; };
 		1E75E33B194AF1C300593E17 /* Patient.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E75E33A194AF1C300593E17 /* Patient.m */; };
@@ -115,6 +120,9 @@
 		1E345E81196F701800967B44 /* ScannerSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScannerSettingsViewController.h; sourceTree = "<group>"; };
 		1E345E82196F701800967B44 /* ScannerSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScannerSettingsViewController.m; sourceTree = "<group>"; };
 		1E4E497D18B1AF9200B1721B /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		1E550F401A19A4F700C19B03 /* PwdSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PwdSettingsViewController.h; sourceTree = "<group>"; };
+		1E550F411A19A4F700C19B03 /* PwdSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PwdSettingsViewController.m; sourceTree = "<group>"; };
+		1E550F421A19A4F700C19B03 /* PwdSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PwdSettingsViewController.xib; sourceTree = "<group>"; };
 		1E58EF661999A6C400D4E20E /* GZIP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GZIP.h; sourceTree = "<group>"; };
 		1E58EF671999A6C400D4E20E /* GZIP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GZIP.m; sourceTree = "<group>"; };
 		1E58EF691999A6E000D4E20E /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
@@ -137,6 +145,12 @@
 		1E5E56B018861184005EF6AC /* 呼吸照護Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "呼吸照護Tests-Info.plist"; sourceTree = "<group>"; };
 		1E5E56B218861184005EF6AC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1E5E56B418861184005EF6AC /* ____Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "____Tests.m"; sourceTree = "<group>"; };
+		1E73BF821A09FECA003CBC0F /* ABGUpdateRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABGUpdateRecord.h; sourceTree = "<group>"; };
+		1E73BF831A09FECA003CBC0F /* ABGUpdateRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABGUpdateRecord.m; sourceTree = "<group>"; };
+		1E73BF851A0A1343003CBC0F /* DtoGetAssociatedRespCareRecRslt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DtoGetAssociatedRespCareRecRslt.h; sourceTree = "<group>"; };
+		1E73BF861A0A1343003CBC0F /* DtoGetAssociatedRespCareRecRslt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DtoGetAssociatedRespCareRecRslt.m; sourceTree = "<group>"; };
+		1E73BF881A0A1D66003CBC0F /* DtoRespCareCol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DtoRespCareCol.h; sourceTree = "<group>"; };
+		1E73BF891A0A1D66003CBC0F /* DtoRespCareCol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DtoRespCareCol.m; sourceTree = "<group>"; };
 		1E75E333194AA16C00593E17 /* NameLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NameLabel.h; sourceTree = "<group>"; };
 		1E75E334194AA16C00593E17 /* NameLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NameLabel.m; sourceTree = "<group>"; };
 		1E75E336194AA19600593E17 /* NameTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NameTextField.h; sourceTree = "<group>"; };
@@ -449,7 +463,6 @@
 				1EB210AB199A0148002D7C3D /* BLETrans */,
 				1ECAB8211920B04F00161572 /* BLE */,
 				1E58EF651999A6C400D4E20E /* GZIP */,
-				1ECAB76919B4425B00A1E3CD /* PListManager */,
 				1ECAB8071918813800161572 /* ProgressHUD */,
 				1ECAB80D192060D500161572 /* HistoryTableView */,
 				1E97B40418E01F6400704F07 /* NfcA1Device.h */,
@@ -534,6 +547,9 @@
 				1E345E82196F701800967B44 /* ScannerSettingsViewController.m */,
 				1ECD23171A0093E600C5EAD1 /* SettingsTableViewController.h */,
 				1ECD23181A0093E600C5EAD1 /* SettingsTableViewController.m */,
+				1E550F401A19A4F700C19B03 /* PwdSettingsViewController.h */,
+				1E550F411A19A4F700C19B03 /* PwdSettingsViewController.m */,
+				1E550F421A19A4F700C19B03 /* PwdSettingsViewController.xib */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -552,6 +568,7 @@
 		1EDA9CCA18B2067300AF987A /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				1ECAB76919B4425B00A1E3CD /* PListManager */,
 				1EA5421F1A032103000A7B4A /* HospitalName.h */,
 				1ED31B9D190E071D00E58228 /* VentilationData.h */,
 				1ED31B9E190E071D00E58228 /* VentilationData.m */,
@@ -569,6 +586,12 @@
 				1E9219D0190750D7006ED639 /* DeviceStatus.m */,
 				1E75E339194AF1C300593E17 /* Patient.h */,
 				1E75E33A194AF1C300593E17 /* Patient.m */,
+				1E73BF821A09FECA003CBC0F /* ABGUpdateRecord.h */,
+				1E73BF831A09FECA003CBC0F /* ABGUpdateRecord.m */,
+				1E73BF851A0A1343003CBC0F /* DtoGetAssociatedRespCareRecRslt.h */,
+				1E73BF861A0A1343003CBC0F /* DtoGetAssociatedRespCareRecRslt.m */,
+				1E73BF881A0A1D66003CBC0F /* DtoRespCareCol.h */,
+				1E73BF891A0A1D66003CBC0F /* DtoRespCareCol.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -676,6 +699,7 @@
 				1E5E569A18861184005EF6AC /* Main_iPad.storyboard in Resources */,
 				1E5E56A218861184005EF6AC /* Images.xcassets in Resources */,
 				1E5E569718861184005EF6AC /* Main_iPhone.storyboard in Resources */,
+				1E550F441A19A4F700C19B03 /* PwdSettingsViewController.xib in Resources */,
 				1ECAB80B1918813800161572 /* ProgressHUD.bundle in Resources */,
 				1E5E568E18861184005EF6AC /* InfoPlist.strings in Resources */,
 				1ECAB76E19B44F9700A1E3CD /* Properties.plist in Resources */,
@@ -700,6 +724,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1E73BF841A09FECA003CBC0F /* ABGUpdateRecord.m in Sources */,
+				1E550F431A19A4F700C19B03 /* PwdSettingsViewController.m in Sources */,
 				1ECD23191A0093E600C5EAD1 /* SettingsTableViewController.m in Sources */,
 				1E0DD9F6192B0022008E3F18 /* TitleLabel.m in Sources */,
 				1E9219C8190641B2006ED639 /* XMLReader.m in Sources */,
@@ -710,6 +736,7 @@
 				1E9219D71907A8CD006ED639 /* DtoUploadVentDataResult.m in Sources */,
 				1E781AEF18BC469200647ED3 /* OtherDataViewController.m in Sources */,
 				1EB210AE199A0148002D7C3D /* BLETrans.m in Sources */,
+				1E73BF8A1A0A1D66003CBC0F /* DtoRespCareCol.m in Sources */,
 				1ECAB8201920614D00161572 /* HistoryTableViewCell.m in Sources */,
 				1E75E33B194AF1C300593E17 /* Patient.m in Sources */,
 				1E9219CD19064F9E006ED639 /* WebService.m in Sources */,
@@ -724,6 +751,7 @@
 				1E8DD5D918D824DF005B41D2 /* DisplayView.m in Sources */,
 				1EFAD8C418C6B335002118C7 /* FirstViewController.m in Sources */,
 				1E32C6BB18B7064000DE4595 /* MeasureTabBarViewController.m in Sources */,
+				1E73BF871A0A1343003CBC0F /* DtoGetAssociatedRespCareRecRslt.m in Sources */,
 				1ED31BA4190E071D00E58228 /* VentilationData.m in Sources */,
 				1E15858718CC660A009249AF /* MeasureDataViewController.m in Sources */,
 				1E75E338194AA19600593E17 /* NameTextField.m in Sources */,

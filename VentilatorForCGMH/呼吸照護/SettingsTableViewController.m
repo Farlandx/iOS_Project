@@ -11,18 +11,22 @@
 #import "CareSortViewCell.h"
 #import "MainViewController.h"
 #import "PListManager.h"
+#import "PwdSettingsViewController.h"
 
 #define HOSPITAL_SECTION 0
 #define CARESORT_SECTION 1
 
-@interface SettingsTableViewController ()
+@interface SettingsTableViewController () <PwdSettingDelegate>
 
 @end
 
 @implementation SettingsTableViewController {
     PListManager *plManager;
+    PwdSettingsViewController *pwdSettings;
     NSDictionary *hospital;
     NSDictionary *careSort;
+    
+    NSIndexPath *tmpIndexPath;
 }
 
 @synthesize checkedHospitalIndexPath, checkedCareSortIndexPath;
@@ -36,6 +40,15 @@
     careSort = [plManager getCareSort];
 
     [self setCurrentCheckmark];
+    
+    pwdSettings = [[PwdSettingsViewController alloc] init];
+    pwdSettings.delegate = self;
+    pwdSettings.plManager = plManager;
+}
+
+- (void) viewWillAppear:(BOOL)animated {
+    [self resetTmp];
+    [super viewWillAppear:animated];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -49,37 +62,62 @@
 //    [self setCurrentHospital];
 //}
 
+#pragma mark - PwdSettingDelegate
+- (void)PwdValid {
+    if (tmpIndexPath) {
+        switch (tmpIndexPath.section) {
+            case 0: {
+                if(self.checkedHospitalIndexPath && ![self.checkedHospitalIndexPath isEqual:tmpIndexPath])
+                {
+                    HospitalViewCell* uncheckCell = (HospitalViewCell *)[self.tableView cellForRowAtIndexPath:self.checkedHospitalIndexPath];
+                    uncheckCell.accessoryType = UITableViewCellAccessoryNone;
+                }
+                
+                HospitalViewCell* cell = (HospitalViewCell *)[self.tableView cellForRowAtIndexPath:tmpIndexPath];
+                cell.accessoryType = UITableViewCellAccessoryCheckmark;
+                self.checkedHospitalIndexPath = tmpIndexPath;
+                [self writeHospitalName:cell.Name IpAddress:cell.IpAddress];
+                break;
+            }
+                
+            case 1: {
+                if (self.checkedCareSortIndexPath && ![self.checkedCareSortIndexPath isEqual:tmpIndexPath]) {
+                    CareSortViewCell *unckeckCell = (CareSortViewCell *)[self.tableView cellForRowAtIndexPath:self.checkedCareSortIndexPath];
+                    unckeckCell.accessoryType = UITableViewCellAccessoryNone;
+                }
+                
+                CareSortViewCell *cell = (CareSortViewCell *)[self.tableView cellForRowAtIndexPath:tmpIndexPath];
+                cell.accessoryType = UITableViewCellAccessoryCheckmark;
+                self.checkedCareSortIndexPath = tmpIndexPath;
+                [self writeCareSortByKey:cell.Key Ascending:cell.Ascending];
+                break;
+            }
+                
+            default:
+                break;
+        }
+    }
+    [self resetTmp];
+}
+
 #pragma mark - Table view data source
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //do work for checkmark
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     switch (indexPath.section) {
-        case 0: {
-            if(self.checkedHospitalIndexPath && ![self.checkedHospitalIndexPath isEqual:indexPath])
-            {
-                HospitalViewCell* uncheckCell = (HospitalViewCell *)[tableView cellForRowAtIndexPath:self.checkedHospitalIndexPath];
-                uncheckCell.accessoryType = UITableViewCellAccessoryNone;
-            }
-            
-            HospitalViewCell* cell = (HospitalViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-            cell.accessoryType = UITableViewCellAccessoryCheckmark;
-            self.checkedHospitalIndexPath = indexPath;
-            [self writeHospitalName:cell.Name IpAddress:cell.IpAddress];
+        case 0:
+        case 1: {
+            tmpIndexPath = indexPath;
+            [pwdSettings showInView:self.view.superview.window animated:YES pwdType:PWD_CONFIRM];
             break;
         }
             
-        case 1: {
-            if (self.checkedCareSortIndexPath && ![self.checkedCareSortIndexPath isEqual:indexPath]) {
-                CareSortViewCell *unckeckCell = (CareSortViewCell *)[tableView cellForRowAtIndexPath:self.checkedCareSortIndexPath];
-                unckeckCell.accessoryType = UITableViewCellAccessoryNone;
+        case 2: {
+            if (indexPath.row == 1) {
+                //管理員密碼設定
+                [pwdSettings showInView:self.view.superview.window animated:YES pwdType:PWD_MODIFY];
             }
-            
-            CareSortViewCell *cell = (CareSortViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-            cell.accessoryType = UITableViewCellAccessoryCheckmark;
-            self.checkedCareSortIndexPath = indexPath;
-            [self writeCareSortByKey:cell.Key Ascending:cell.Ascending];
             break;
         }
             
@@ -133,5 +171,9 @@
     }
     careSort = [[NSDictionary alloc] initWithObjects:@[Key, [NSNumber numberWithBool:Ascending]] forKeys:@[@"Key", @"Ascending"]];
     [plManager writeCareSortValue:careSort];
+}
+
+- (void)resetTmp {
+    tmpIndexPath = nil;
 }
 @end

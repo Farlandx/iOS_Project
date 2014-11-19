@@ -20,10 +20,10 @@
 @property (assign, nonatomic) id<PListManagerDelegate> delegate;
 
 - (void)setPListName:(NSString *)name;
-- (NSString *)readStringByKey:(NSString *)key;
 - (NSDictionary *)readDictionaryByKey:(NSString *)key;
 - (NSDictionary *)getHospital;
 - (NSDictionary *)getCareSort;
+- (NSString *)getAdminPwd;
 
 - (BOOL)writeByKey:(NSString *)key value:(id)value;
 - (BOOL)writeCareSortValue:(id)value;

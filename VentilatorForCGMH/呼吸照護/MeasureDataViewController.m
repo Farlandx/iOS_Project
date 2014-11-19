@@ -113,7 +113,6 @@
     //院區確認
     NSDictionary *hospital = [plManager getHospital];
     if (hospital && [self checkHasHospital:hospital]) {
-        return;
         [self getCardList];
     }
 }
@@ -221,7 +220,6 @@
 
 #pragma mark - WebService Delegate
 - (void)wsAppLogin:(NSString *)sessionId {
-    sessionId = sessionId;
     NSLog(@"sessionId:%@", sessionId);
     if (sessionId != nil && ![sessionId isEqualToString:@""]) {
         [ProgressHUD show:@"上傳中..." Interaction:NO];
@@ -275,7 +273,7 @@
 }
 
 - (void)wsResponseCurRtCardListVerId:(int)verId {
-    //##這裡需要測試
+    //##這裡API好像掛了，先註解掉
 //    if (verId > curRtCardListVerId) {
 //        //先將新的版本號存在暫存的變數中，待資料更新完後再更新plist中的數值
 //        tmpVerId = verId;

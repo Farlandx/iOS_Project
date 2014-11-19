@@ -14,6 +14,8 @@
 #import "DeviceStatus.h"
 #import "Patient.h"
 #import "PListManager.h"
+#import "DtoGetAssociatedRespCareRecRslt.h"
+#import "DtoRespCareCol.h"
 
 #ifndef ___webservice
 #define ___webservice
@@ -32,6 +34,7 @@
 #define WS_APPLOGIN @"AppLogin"
 #define WS_GET_PATIENT_LIST @"GetPatientList"
 #define WS_UPLOAD_VENT_DATA @"UploadVentData"
+#define WS_RESP_CARE_REC_BY_PATIENT @"GetRespCareRecByPatient"
 #define WS_REQUEST_TIMEOUT_INTERVAL 10 //Second
 
 #endif
@@ -42,22 +45,27 @@
     NSString *WS_URL;
 }
 
+- (id)init {
+    if (self = [super init]) {
+        plManager = [[PListManager alloc] initWithPListName:@"Properties"];
+        hospital = [plManager getHospital];
+        WS_URL = @"";
+    }
+    return self;
+}
+
 - (void)dealloc {
     _delegate = nil;
-    
-    plManager = [[PListManager alloc] initWithPListName:@"Properties"];
-    hospital = [plManager getHospital];
-    WS_URL = @"";
 }
 
 #pragma mark - Private Method
 - (NSString *)getHospitalIpAddress {
-    NSString *hospitalName = [hospital objectForKey:@"Name"];
-    if ([hospitalName isEqualToString:@""]) {
+    NSString *hospitalIpAddress = [hospital objectForKey:@"IpAddress"];
+    if ([hospitalIpAddress isEqualToString:@""]) {
         return @"";
     }
     
-    return [NSString stringWithFormat:@"http://%@/webwork/resp/VentDataExchangeSvc.asmx", hospitalName];
+    return [NSString stringWithFormat:@"http://%@/webwork/resp/VentDataExchangeSvc.asmx", hospitalIpAddress];
 }
 
 - (NSString *)getSOAPDateStringByNSString:(NSString *) dateString {
@@ -417,6 +425,85 @@
             }
             
             [_delegate wsResponsePatientList:result];
+        }
+        else if (connectionError) {
+            [_delegate wsConnectionError:connectionError];
+        }
+        else {
+            [_delegate wsError];
+        }
+    }];
+}
+
+- (void)getABGDataBySessionId:(NSString *)sessionId ChtNo:(NSString *)ChtNo LastUpdateTime:(NSString *)LastUpdateTime {
+    NSString *soapMessage = @"<?xml version=\"1.0\" encoding=\"utf-8\"?>"
+    "<soap12:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap12=\"http://www.w3.org/2003/05/soap-envelope\">"
+    "<soap12:Body>"
+    "<GetRespCareRecByPatient xmlns=\"http://cgmh.org.tw/g27/\">"
+    "<chtNo>%@</chtNo>"
+    "<lastSyncTime>%@</lastSyncTime>"
+    "<sessionId>%@</sessionId>"
+    "</GetRespCareRecByPatient>"
+    "</soap12:Body>"
+    "</soap12:Envelope>";
+    if (!LastUpdateTime || !LastUpdateTime.length) {
+        LastUpdateTime = @"1982-10-23";
+    }
+    soapMessage = [NSString stringWithFormat:soapMessage, ChtNo, LastUpdateTime, sessionId];
+    
+    NSMutableURLRequest *request = [self getSOAPRequestByWSString: WS_RESP_CARE_REC_BY_PATIENT soapMessage:soapMessage];
+    
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        if (data.length > 0 && connectionError == nil) {
+            NSError *error = nil;
+            NSDictionary *xmlDictionary = [XMLReader dictionaryForXMLData:data
+                                                                  options:XMLReaderOptionsProcessNamespaces
+                                                                    error:&error];
+            NSMutableArray *result = [[NSMutableArray alloc] init];
+            //##這裡的架構應該會需要改變，然後要測試單筆和多筆
+            NSDictionary *dict = [xmlDictionary valueForKeyPath:@"Envelope.Body.GetRespCareRecByPatientResponse.GetRespCareRecByPatientResult.DtoGetAssociatedRespCareRecRslt"];
+            
+            if ([[dict valueForKey:@"ChtNo"] count] == 1) {
+                //單筆
+                DtoGetAssociatedRespCareRecRslt *r = [[DtoGetAssociatedRespCareRecRslt alloc] init];
+                r.ChtNo = [dict valueForKeyPath:@"ChtNo.text"];
+                r.RecordTime = [dict valueForKeyPath:@"RecordTime.text"];
+                NSMutableArray *tmpAry =[[NSMutableArray alloc] init];
+                for (NSDictionary *d in [dict valueForKeyPath:@"Fields.DtoRespCareCol"]) {
+                    DtoRespCareCol *col = [[DtoRespCareCol alloc] init];
+                    
+                    col.Name = [d valueForKeyPath:@"Name.text"];
+                    col.Description = [d valueForKeyPath:@"Description.text"];
+                    col.Unit = [d valueForKeyPath:@"Unit.text"];
+                    col.Value = [d valueForKeyPath:@"Value.text"] != nil ? [d valueForKeyPath:@"Value.text"] : @"";
+                    
+                    [tmpAry addObject:[col copy]];
+                }
+                r.Fields = [tmpAry copy];
+                [result addObject:[r copy]];
+            }
+            else {
+                //多筆
+                for (NSDictionary *rslt in dict) {
+                    DtoGetAssociatedRespCareRecRslt *r = [[DtoGetAssociatedRespCareRecRslt alloc] init];
+                    r.ChtNo = [rslt valueForKeyPath:@"ChtNo.text"];
+                    r.RecordTime = [rslt valueForKeyPath:@"RecordTime.text"];
+                    NSMutableArray *tmpAry =[[NSMutableArray alloc] init];
+                    for (NSDictionary *d in [rslt valueForKeyPath:@"Fields.DtoRespCareCol"]) {
+                        DtoRespCareCol *col = [[DtoRespCareCol alloc] init];
+                        
+                        col.Name = [d valueForKeyPath:@"Name.text"];
+                        col.Description = [d valueForKeyPath:@"Description.text"];
+                        col.Unit = [d valueForKeyPath:@"Unit.text"];
+                        col.Value = [d valueForKeyPath:@"Value.text"] != nil ? [d valueForKeyPath:@"Value.text"] : @"";
+                        
+                        [tmpAry addObject:[col copy]];
+                    }
+                    r.Fields = [tmpAry copy];
+                    [result addObject:[r copy]];
+                }
+            }
+            [_delegate wsResponseABGData:result];
         }
         else if (connectionError) {
             [_delegate wsConnectionError:connectionError];

@@ -12,11 +12,13 @@
 
 @protocol WebServiceDelegate <NSObject>
 
+@optional
 - (void)wsAppLogin:(NSString *)sessionId;
 - (void)wsUploadVentDataSuccess:(NSMutableArray *)uploadSuccessResult uploadFailed:(NSMutableArray *)uploadFailed DtoVentExchangeUploadBatch:(DtoVentExchangeUploadBatch *)batch;
 - (void)wsResponseCurRtCardList:(NSMutableArray *)data;
 - (void)wsResponseCurRtCardListVerId:(int)verId;
 - (void)wsResponsePatientList:(NSMutableArray *)data;
+- (void)wsResponseABGData:(NSMutableArray *)data;
 - (void)wsConnectionError:(NSError *)error;
 - (void)wsError;
 
@@ -31,5 +33,6 @@
 - (void)getCurRtCardList;
 - (void)getCurRtCardListVerId;
 - (void)getPatientList;
+- (void)getABGDataBySessionId:(NSString *)sessionId ChtNo:(NSString *)ChtNo LastUpdateTime:(NSString *)LastUpdateTime;
 
 @end

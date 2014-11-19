@@ -88,6 +88,16 @@
     return nil;
 }
 
+- (NSString *)getAdminPwd {
+    if (dict) {
+        NSString *stringValue = [dict objectForKey:@"AdminPwd"];
+        if (stringValue.length) {
+            return stringValue;
+        }
+    }
+    return @"";
+}
+
 
 #pragma mark - Write
 - (BOOL)writeByKey:(NSString *)key value:(id)value {

@@ -174,7 +174,17 @@
             sql_stmt = [sql_stmt stringByAppendingString:@"NO2 TEXT, "];
             sql_stmt = [sql_stmt stringByAppendingString:@"LeakTest TEXT, "];
             sql_stmt = [sql_stmt stringByAppendingString:@"MaxPe TEXT, "];
-            sql_stmt = [sql_stmt stringByAppendingString:@"VC TEXT)"];
+            sql_stmt = [sql_stmt stringByAppendingString:@"VC TEXT, "];
+            sql_stmt = [sql_stmt stringByAppendingString:@"Be TEXT, "];
+            sql_stmt = [sql_stmt stringByAppendingString:@"HCO3 TEXT, "];
+            sql_stmt = [sql_stmt stringByAppendingString:@"PAAO2 TEXT, "];
+            sql_stmt = [sql_stmt stringByAppendingString:@"PaCo2 TEXT, "];
+            sql_stmt = [sql_stmt stringByAppendingString:@"PaO2 TEXT, "];
+            sql_stmt = [sql_stmt stringByAppendingString:@"PfRatio TEXT, "];
+            sql_stmt = [sql_stmt stringByAppendingString:@"Ph TEXT, "];
+            sql_stmt = [sql_stmt stringByAppendingString:@"SaO2 TEXT, "];
+            sql_stmt = [sql_stmt stringByAppendingString:@"Shunt TEXT, "];
+            sql_stmt = [sql_stmt stringByAppendingString:@"Site TEXT)"];
 
             if (sqlite3_exec(sqliteDb, [sql_stmt UTF8String], NULL, NULL, &errMsg) != SQLITE_OK) {
                 NSLog(@"Failed to create MEASURE_DATA table.");
@@ -225,7 +235,15 @@
             else {
                 NSLog(@"PATIENT Table craeted successfully.");
             }
-
+            
+            //建立動脈血氧分析更新記錄table
+            sql_stmt = @"CREATE TABLE IF NOT EXISTS ABG_UPDATE_RECORD (ChtNo TEXT PRIMARY KEY, LastUpdateTime TEXT, CreateTime TEXT)";
+            if (sqlite3_exec(sqliteDb, [sql_stmt UTF8String], NULL, NULL, &errMsg) != SQLITE_OK) {
+                NSLog(@"Failed to create ABG_UPDATE_RECORD table.");
+            }
+            else {
+                NSLog(@"ABG_UPDATE_RECORD Table craeted successfully.");
+            }
             sqlite3_close(sqliteDb);
         }
         else {
@@ -233,6 +251,7 @@
         }
     }
     
+    //以下正式上線要刪掉
     //確認20140902新增欄位是否存在
     if (![self checkColumnExists:@"VentilationHertz" table:@"MEASURE_DATA"]) {
         [self addColumn:@"VentilationHertz" table:@"MEASURE_DATA" property:@"TEXT"];
@@ -253,6 +272,39 @@
     if (![self checkColumnExists:@"MaxPe" table:@"MEASURE_DATA"]) {
         [self addColumn:@"MaxPe" table:@"MEASURE_DATA" property:@"TEXT"];
         [self addColumn:@"VC" table:@"MEASURE_DATA" property:@"TEXT"];
+        [self addColumn:@"Be" table:@"MEASURE_DATA" property:@"TEXT"];
+        [self addColumn:@"HCO3" table:@"MEASURE_DATA" property:@"TEXT"];
+        [self addColumn:@"PAAO2" table:@"MEASURE_DATA" property:@"TEXT"];
+        [self addColumn:@"PaCo2" table:@"MEASURE_DATA" property:@"TEXT"];
+        [self addColumn:@"PaO2" table:@"MEASURE_DATA" property:@"TEXT"];
+        [self addColumn:@"PfRatio" table:@"MEASURE_DATA" property:@"TEXT"];
+        [self addColumn:@"Ph" table:@"MEASURE_DATA" property:@"TEXT"];
+        [self addColumn:@"SaO2" table:@"MEASURE_DATA" property:@"TEXT"];
+        [self addColumn:@"Shunt" table:@"MEASURE_DATA" property:@"TEXT"];
+        [self addColumn:@"Site" table:@"MEASURE_DATA" property:@"TEXT"];
+    }
+    if (![self checkColumnExists:@"Be" table:@"MEASURE_DATA"]) {
+        [self addColumn:@"Be" table:@"MEASURE_DATA" property:@"TEXT"];
+        [self addColumn:@"HCO3" table:@"MEASURE_DATA" property:@"TEXT"];
+        [self addColumn:@"PAAO2" table:@"MEASURE_DATA" property:@"TEXT"];
+        [self addColumn:@"PaCo2" table:@"MEASURE_DATA" property:@"TEXT"];
+        [self addColumn:@"PaO2" table:@"MEASURE_DATA" property:@"TEXT"];
+        [self addColumn:@"PfRatio" table:@"MEASURE_DATA" property:@"TEXT"];
+        [self addColumn:@"Ph" table:@"MEASURE_DATA" property:@"TEXT"];
+        [self addColumn:@"SaO2" table:@"MEASURE_DATA" property:@"TEXT"];
+        [self addColumn:@"Shunt" table:@"MEASURE_DATA" property:@"TEXT"];
+        [self addColumn:@"Site" table:@"MEASURE_DATA" property:@"TEXT"];
+    }
+    //確認20141113新增欄位是否存在
+    if (![self checkColumnExists:@"AnalysisTime" table:@"MEASURE_DATA"]) {
+        [self addColumn:@"AnalysisTime" table:@"MEASURE_DATA" property:@"TEXT"];
+    }
+    
+    
+    NSString *sql_stmt = @"CREATE TABLE IF NOT EXISTS ABG_UPDATE_RECORD (ChtNo TEXT PRIMARY KEY, LastUpdateTime TEXT, CreateTime TEXT)";
+    if (sqlite3_exec(sqliteDb, [sql_stmt UTF8String], NULL, NULL, NULL) != SQLITE_OK) {
+    }
+    else {
     }
 }
 
@@ -264,7 +316,6 @@
     
     if (sqlite3_open(dbpath, &sqliteDb) == SQLITE_OK) {
         if (measureData.MeasureId > 0) {
-            NSLog(@"Existing data, Update.");
             NSString *updateSQL = @"UPDATE MEASURE_DATA ";
             updateSQL = [updateSQL stringByAppendingString:[NSString stringWithFormat:@"SET ChtNo = '%@', ", measureData.ChtNo]];
             updateSQL = [updateSQL stringByAppendingString:[NSString stringWithFormat:@"RecordTime = '%@', ", measureData.RecordTime]];
@@ -348,7 +399,19 @@
             updateSQL = [updateSQL stringByAppendingString:[NSString stringWithFormat:@"LeakTest = '%@', ", measureData.LeakTest]];
             //20141023新增欄位
             updateSQL = [updateSQL stringByAppendingString:[NSString stringWithFormat:@"MaxPe = '%@', ", measureData.MaxPe]];
-            updateSQL = [updateSQL stringByAppendingString:[NSString stringWithFormat:@"VC = '%@' ", measureData.VC]];
+            updateSQL = [updateSQL stringByAppendingString:[NSString stringWithFormat:@"VC = '%@', ", measureData.VC]];
+            updateSQL = [updateSQL stringByAppendingString:[NSString stringWithFormat:@"Be = '%@', ", measureData.Be]];
+            updateSQL = [updateSQL stringByAppendingString:[NSString stringWithFormat:@"HCO3 = '%@', ", measureData.HCO3]];
+            updateSQL = [updateSQL stringByAppendingString:[NSString stringWithFormat:@"PAAO2 = '%@', ", measureData.PAAO2]];
+            updateSQL = [updateSQL stringByAppendingString:[NSString stringWithFormat:@"PaCo2 = '%@', ", measureData.PaCo2]];
+            updateSQL = [updateSQL stringByAppendingString:[NSString stringWithFormat:@"PaO2 = '%@', ", measureData.PaO2]];
+            updateSQL = [updateSQL stringByAppendingString:[NSString stringWithFormat:@"PfRatio = '%@', ", measureData.PfRatio]];
+            updateSQL = [updateSQL stringByAppendingString:[NSString stringWithFormat:@"Ph = '%@', ", measureData.Ph]];
+            updateSQL = [updateSQL stringByAppendingString:[NSString stringWithFormat:@"SaO2 = '%@', ", measureData.SaO2]];
+            updateSQL = [updateSQL stringByAppendingString:[NSString stringWithFormat:@"Shunt = '%@', ", measureData.Shunt]];
+            updateSQL = [updateSQL stringByAppendingString:[NSString stringWithFormat:@"Site = '%@', ", measureData.Site]];
+            //20141114新增欄位
+            updateSQL = [updateSQL stringByAppendingString:[NSString stringWithFormat:@"AnalysisTime = '%@'", measureData.AnalysisTime]];
             //結尾
             updateSQL = [updateSQL stringByAppendingString:@"WHERE MeasureId = ?"];
             
@@ -362,7 +425,7 @@
         else {
             NSLog(@"New data, Insert.");
             NSString *insertSQL = [NSString stringWithFormat:
-                                   @"INSERT INTO MEASURE_DATA (ChtNo, RecordTime, RecordIp, RecordOper, RecordDevice, RecordClientVersion, VentNo, RawData, VentilationMode, TidalVolumeSet, VolumeTarget, TidalVolumeMeasured, VentilationRateSet, SIMVRateSet, VentilationRateTotal, InspT, THigh, InspirationExpirationRatio, Tlow, AutoFlow, FlowSetting, FlowMeasured, Pattern, MVSet, PercentMinVolSet, MVTotal, PeakPressure, PlateauPressure, MeanPressure, PEEP, Plow, PressureSupport, PressureControl, PHigh, FiO2Set, FiO2Measured, Resistance, Compliance, BaseFlow, FlowSensitivity, LowerMV, HighPressureAlarm, Temperature, ReliefPressure, PetCo2, SpO2, RR, TV, MV, MaxPi, Mvv, Rsbi, EtSize, Mark, CuffPressure, BreathSounds, Pr, Cvp, BpS, BpD, Xrem, AutoPEEP, PlateauTimeSetting, RecordOperName, VentilatorModel, BedNo, ErrorMsg, VentilationHertz, PressureAmplitude, TubeCompensation, VolumeAssist, FlowAssist, EdiPeak, EdiMin, NavaLevel, EdiTrigger, NO, NO2, LeakTest, MaxPe, VC) VALUES (\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\")",
+                                   @"INSERT INTO MEASURE_DATA (ChtNo, RecordTime, RecordIp, RecordOper, RecordDevice, RecordClientVersion, VentNo, RawData, VentilationMode, TidalVolumeSet, VolumeTarget, TidalVolumeMeasured, VentilationRateSet, SIMVRateSet, VentilationRateTotal, InspT, THigh, InspirationExpirationRatio, Tlow, AutoFlow, FlowSetting, FlowMeasured, Pattern, MVSet, PercentMinVolSet, MVTotal, PeakPressure, PlateauPressure, MeanPressure, PEEP, Plow, PressureSupport, PressureControl, PHigh, FiO2Set, FiO2Measured, Resistance, Compliance, BaseFlow, FlowSensitivity, LowerMV, HighPressureAlarm, Temperature, ReliefPressure, PetCo2, SpO2, RR, TV, MV, MaxPi, Mvv, Rsbi, EtSize, Mark, CuffPressure, BreathSounds, Pr, Cvp, BpS, BpD, Xrem, AutoPEEP, PlateauTimeSetting, RecordOperName, VentilatorModel, BedNo, ErrorMsg, VentilationHertz, PressureAmplitude, TubeCompensation, VolumeAssist, FlowAssist, EdiPeak, EdiMin, NavaLevel, EdiTrigger, NO, NO2, LeakTest, MaxPe, VC, Be, HCO3, PAAO2, PaCo2, PaO2, PfRatio, Ph, SaO2, Shunt, Site, AnalysisTime) VALUES (\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\")",
                                    measureData.ChtNo,
                                    measureData.RecordTime,
                                    measureData.RecordIp,
@@ -445,7 +508,19 @@
                                    measureData.LeakTest,
                                    //20141023新增欄位
                                    measureData.MaxPe,
-                                   measureData.VC
+                                   measureData.VC,
+                                   measureData.Be,
+                                   measureData.HCO3,
+                                   measureData.PAAO2,
+                                   measureData.PaCo2,
+                                   measureData.PaO2,
+                                   measureData.PfRatio,
+                                   measureData.Ph,
+                                   measureData.SaO2,
+                                   measureData.Shunt,
+                                   measureData.Site,
+                                   //20141113新增欄位
+                                   measureData.AnalysisTime
                                    ];
             
             const char *insert_stmt = [insertSQL UTF8String];
@@ -469,7 +544,7 @@
     sqlite3_stmt *statement;
     
     if (sqlite3_open(dbpath, &sqliteDb) == SQLITE_OK) {
-        NSString *querySQL = @"SELECT MeasureId, ChtNo, RecordTime, RecordIp, RecordOper, RecordDevice, RecordClientVersion, VentNo, RawData, VentilationMode, TidalVolumeSet, VolumeTarget, TidalVolumeMeasured, VentilationRateSet, SIMVRateSet, VentilationRateTotal, InspT, THigh, InspirationExpirationRatio, Tlow, AutoFlow, FlowSetting, FlowMeasured, Pattern, MVSet, PercentMinVolSet, MVTotal, PeakPressure, PlateauPressure, MeanPressure, PEEP, Plow, PressureSupport, PressureControl, PHigh, FiO2Set, FiO2Measured, Resistance, Compliance, BaseFlow, FlowSensitivity, LowerMV, HighPressureAlarm, Temperature, ReliefPressure, PetCo2, SpO2, RR, TV, MV, MaxPi, Mvv, Rsbi, EtSize, Mark, CuffPressure, BreathSounds, Pr, Cvp, BpS, BpD, Xrem, AutoPEEP, PlateauTimeSetting, RecordOperName, VentilatorModel, BedNo, ErrorMsg, VentilationHertz, PressureAmplitude, TubeCompensation, VolumeAssist, FlowAssist, EdiPeak, EdiMin, NavaLevel, EdiTrigger, NO, NO2, LeakTest, MaxPe, VC FROM MEASURE_DATA WHERE UploadId IS NULL OR UploadId = ''";
+        NSString *querySQL = @"SELECT MeasureId, ChtNo, RecordTime, RecordIp, RecordOper, RecordDevice, RecordClientVersion, VentNo, RawData, VentilationMode, TidalVolumeSet, VolumeTarget, TidalVolumeMeasured, VentilationRateSet, SIMVRateSet, VentilationRateTotal, InspT, THigh, InspirationExpirationRatio, Tlow, AutoFlow, FlowSetting, FlowMeasured, Pattern, MVSet, PercentMinVolSet, MVTotal, PeakPressure, PlateauPressure, MeanPressure, PEEP, Plow, PressureSupport, PressureControl, PHigh, FiO2Set, FiO2Measured, Resistance, Compliance, BaseFlow, FlowSensitivity, LowerMV, HighPressureAlarm, Temperature, ReliefPressure, PetCo2, SpO2, RR, TV, MV, MaxPi, Mvv, Rsbi, EtSize, Mark, CuffPressure, BreathSounds, Pr, Cvp, BpS, BpD, Xrem, AutoPEEP, PlateauTimeSetting, RecordOperName, VentilatorModel, BedNo, ErrorMsg, VentilationHertz, PressureAmplitude, TubeCompensation, VolumeAssist, FlowAssist, EdiPeak, EdiMin, NavaLevel, EdiTrigger, NO, NO2, LeakTest, MaxPe, VC, Be, HCO3, PAAO2, PaCo2, PaO2, PfRatio, Ph, SaO2, Shunt, Site, AnalysisTime FROM MEASURE_DATA WHERE UploadId IS NULL OR UploadId = ''";
         const char *query_stmt = [querySQL UTF8String];
         
         if (sqlite3_prepare_v2(sqliteDb, query_stmt, -1, &statement, NULL) == SQLITE_OK) {
@@ -559,6 +634,18 @@
                 //20141023新增欄位
                 measureData.MaxPe = [self getColumnString:(char *)sqlite3_column_text(statement, 80)];
                 measureData.VC = [self getColumnString:(char *)sqlite3_column_text(statement, 81)];
+                measureData.Be = [self getColumnString:(char *)sqlite3_column_text(statement, 82)];
+                measureData.HCO3 = [self getColumnString:(char *)sqlite3_column_text(statement, 83)];
+                measureData.PAAO2 = [self getColumnString:(char *)sqlite3_column_text(statement, 84)];
+                measureData.PaCo2 = [self getColumnString:(char *)sqlite3_column_text(statement, 85)];
+                measureData.PaO2 = [self getColumnString:(char *)sqlite3_column_text(statement, 86)];
+                measureData.PfRatio = [self getColumnString:(char *)sqlite3_column_text(statement, 87)];
+                measureData.Ph = [self getColumnString:(char *)sqlite3_column_text(statement, 88)];
+                measureData.SaO2 = [self getColumnString:(char *)sqlite3_column_text(statement, 89)];
+                measureData.Shunt = [self getColumnString:(char *)sqlite3_column_text(statement, 90)];
+                measureData.Site = [self getColumnString:(char *)sqlite3_column_text(statement, 91)];
+                //20141113新增欄位
+                measureData.AnalysisTime = [self getColumnString:(char *)sqlite3_column_text(statement, 92)];
                 
                 [measureList addObject:measureData];
             }
@@ -577,7 +664,7 @@
     
     if (sqlite3_open(dbpath, &sqliteDb) == SQLITE_OK) {
         NSString *querySQL = [NSString stringWithFormat:
-                              @"SELECT MeasureId, ChtNo, RecordTime, RecordIp, RecordOper, RecordDevice, RecordClientVersion, VentNo, RawData, VentilationMode, TidalVolumeSet, VolumeTarget, TidalVolumeMeasured, VentilationRateSet, SIMVRateSet, VentilationRateTotal, InspT, THigh, InspirationExpirationRatio, Tlow, AutoFlow, FlowSetting, FlowMeasured, Pattern, MVSet, PercentMinVolSet, MVTotal, PeakPressure, PlateauPressure, MeanPressure, PEEP, Plow, PressureSupport, PressureControl, PHigh, FiO2Set, FiO2Measured, Resistance, Compliance, BaseFlow, FlowSensitivity, LowerMV, HighPressureAlarm, Temperature, ReliefPressure, PetCo2, SpO2, RR, TV, MV, MaxPi, Mvv, Rsbi, EtSize, Mark, CuffPressure, BreathSounds, Pr, Cvp, BpS, BpD, Xrem, AutoPEEP, PlateauTimeSetting, RecordOperName, VentilatorModel, BedNo, ErrorMsg, VentilationHertz, PressureAmplitude, TubeCompensation, VolumeAssist, FlowAssist, EdiPeak, EdiMin, NavaLevel, EdiTrigger, NO, NO2, LeakTest, MaxPe, VC FROM MEASURE_DATA FROM MEASURE_DATA WHERE MeasureId = %d", (int)measureId];
+                              @"SELECT MeasureId, ChtNo, RecordTime, RecordIp, RecordOper, RecordDevice, RecordClientVersion, VentNo, RawData, VentilationMode, TidalVolumeSet, VolumeTarget, TidalVolumeMeasured, VentilationRateSet, SIMVRateSet, VentilationRateTotal, InspT, THigh, InspirationExpirationRatio, Tlow, AutoFlow, FlowSetting, FlowMeasured, Pattern, MVSet, PercentMinVolSet, MVTotal, PeakPressure, PlateauPressure, MeanPressure, PEEP, Plow, PressureSupport, PressureControl, PHigh, FiO2Set, FiO2Measured, Resistance, Compliance, BaseFlow, FlowSensitivity, LowerMV, HighPressureAlarm, Temperature, ReliefPressure, PetCo2, SpO2, RR, TV, MV, MaxPi, Mvv, Rsbi, EtSize, Mark, CuffPressure, BreathSounds, Pr, Cvp, BpS, BpD, Xrem, AutoPEEP, PlateauTimeSetting, RecordOperName, VentilatorModel, BedNo, ErrorMsg, VentilationHertz, PressureAmplitude, TubeCompensation, VolumeAssist, FlowAssist, EdiPeak, EdiMin, NavaLevel, EdiTrigger, NO, NO2, LeakTest, MaxPe, VC, Be, HCO3, PAAO2, PaCo2, PaO2, PfRatio, Ph, SaO2, Shunt, Site, AnalysisTime FROM MEASURE_DATA FROM MEASURE_DATA WHERE MeasureId = %d", (int)measureId];
         const char *query_stmt = [querySQL UTF8String];
         
         if (sqlite3_prepare_v2(sqliteDb, query_stmt, -1, &statement, NULL) == SQLITE_OK) {
@@ -666,6 +753,18 @@
                 //20141023新增欄位
                 measureData.MaxPe = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 80)];
                 measureData.VC = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 81)];
+                measureData.Be = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 82)];
+                measureData.HCO3 = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 83)];
+                measureData.PAAO2 = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 84)];
+                measureData.PaCo2 = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 85)];
+                measureData.PaO2 = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 86)];
+                measureData.PfRatio = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 87)];
+                measureData.Ph = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 88)];
+                measureData.SaO2 = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 89)];
+                measureData.Shunt = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 90)];
+                measureData.Site = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 91)];
+                //20141113新增欄位
+                measureData.AnalysisTime = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 92)];
             }
             sqlite3_finalize(statement);
         }
@@ -682,7 +781,7 @@
     
     if (sqlite3_open(dbpath, &sqliteDb) == SQLITE_OK) {
         NSString *querySQL = [NSString stringWithFormat:
-                              @"SELECT MeasureId, ChtNo, RecordTime, RecordIp, RecordOper, RecordDevice, RecordClientVersion, VentNo, RawData, VentilationMode, TidalVolumeSet, VolumeTarget, TidalVolumeMeasured, VentilationRateSet, SIMVRateSet, VentilationRateTotal, InspT, THigh, InspirationExpirationRatio, Tlow, AutoFlow, FlowSetting, FlowMeasured, Pattern, MVSet, PercentMinVolSet, MVTotal, PeakPressure, PlateauPressure, MeanPressure, PEEP, Plow, PressureSupport, PressureControl, PHigh, FiO2Set, FiO2Measured, Resistance, Compliance, BaseFlow, FlowSensitivity, LowerMV, HighPressureAlarm, Temperature, ReliefPressure, PetCo2, SpO2, RR, TV, MV, MaxPi, Mvv, Rsbi, EtSize, Mark, CuffPressure, BreathSounds, Pr, Cvp, BpS, BpD, Xrem, AutoPEEP, PlateauTimeSetting, RecordOperName, VentilatorModel, BedNo, ErrorMsg, VentilationHertz, PressureAmplitude, TubeCompensation, VolumeAssist, FlowAssist, EdiPeak, EdiMin, NavaLevel, EdiTrigger, NO, NO2, LeakTest, MaxPe, VC FROM MEASURE_DATA WHERE RecordTime = '%@'", recordTime];
+                              @"SELECT MeasureId, ChtNo, RecordTime, RecordIp, RecordOper, RecordDevice, RecordClientVersion, VentNo, RawData, VentilationMode, TidalVolumeSet, VolumeTarget, TidalVolumeMeasured, VentilationRateSet, SIMVRateSet, VentilationRateTotal, InspT, THigh, InspirationExpirationRatio, Tlow, AutoFlow, FlowSetting, FlowMeasured, Pattern, MVSet, PercentMinVolSet, MVTotal, PeakPressure, PlateauPressure, MeanPressure, PEEP, Plow, PressureSupport, PressureControl, PHigh, FiO2Set, FiO2Measured, Resistance, Compliance, BaseFlow, FlowSensitivity, LowerMV, HighPressureAlarm, Temperature, ReliefPressure, PetCo2, SpO2, RR, TV, MV, MaxPi, Mvv, Rsbi, EtSize, Mark, CuffPressure, BreathSounds, Pr, Cvp, BpS, BpD, Xrem, AutoPEEP, PlateauTimeSetting, RecordOperName, VentilatorModel, BedNo, ErrorMsg, VentilationHertz, PressureAmplitude, TubeCompensation, VolumeAssist, FlowAssist, EdiPeak, EdiMin, NavaLevel, EdiTrigger, NO, NO2, LeakTest, MaxPe, VC, Be, HCO3, PAAO2, PaCo2, PaO2, PfRatio, Ph, SaO2, Shunt, Site, AnalysisTime FROM MEASURE_DATA WHERE RecordTime = '%@'", recordTime];
         const char *query_stmt = [querySQL UTF8String];
         
         if (sqlite3_prepare_v2(sqliteDb, query_stmt, -1, &statement, NULL) == SQLITE_OK) {
@@ -771,6 +870,18 @@
                 //20141023新增欄位
                 measureData.MaxPe = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 80)];
                 measureData.VC = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 81)];
+                measureData.Be = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 82)];
+                measureData.HCO3 = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 83)];
+                measureData.PAAO2 = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 84)];
+                measureData.PaCo2 = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 85)];
+                measureData.PaO2 = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 86)];
+                measureData.PfRatio = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 87)];
+                measureData.Ph = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 88)];
+                measureData.SaO2 = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 89)];
+                measureData.Shunt = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 90)];
+                measureData.Site = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 91)];
+                //20141113新增欄位
+                measureData.AnalysisTime = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 92)];
             }
             sqlite3_finalize(statement);
         }
@@ -893,7 +1004,13 @@
     sqlite3_stmt *statement;
     
     //刪除過期資料
-    [self deleteExpiredHistories];
+    @try {
+        [self deleteExpiredHistories];
+        [self deleteExpiredABGRecords];
+    }
+    @catch (NSException *e) {
+        
+    }
     
     if (sqlite3_open(dbpath, &sqliteDb) == SQLITE_OK) {
         //取得上傳記錄
@@ -918,7 +1035,7 @@
         
         for (int i = 0;i < batchList.count; i++) {
             NSMutableArray *measureList = [[NSMutableArray alloc] init];
-            querySQL = [NSString stringWithFormat:@"SELECT MeasureId, ChtNo, RecordTime, RecordIp, RecordOper, RecordDevice, RecordClientVersion, VentNo, RawData, VentilationMode, TidalVolumeSet, VolumeTarget, TidalVolumeMeasured, VentilationRateSet, SIMVRateSet, VentilationRateTotal, InspT, THigh, InspirationExpirationRatio, Tlow, AutoFlow, FlowSetting, FlowMeasured, Pattern, MVSet, PercentMinVolSet, MVTotal, PeakPressure, PlateauPressure, MeanPressure, PEEP, Plow, PressureSupport, PressureControl, PHigh, FiO2Set, FiO2Measured, Resistance, Compliance, BaseFlow, FlowSensitivity, LowerMV, HighPressureAlarm, Temperature, ReliefPressure, PetCo2, SpO2, RR, TV, MV, MaxPi, Mvv, Rsbi, EtSize, Mark, CuffPressure, BreathSounds, Pr, Cvp, BpS, BpD, Xrem, AutoPEEP, PlateauTimeSetting, RecordOperName, VentilatorModel, BedNo, ErrorMsg, VentilationHertz, PressureAmplitude, TubeCompensation, VolumeAssist, FlowAssist, EdiPeak, EdiMin, NavaLevel, EdiTrigger, NO, NO2, LeakTest, MaxPe, VC FROM measure_data WHERE uploadid IS NOT NULL AND uploadid <> '' AND BedNo = '%@' AND ChtNo = '%@' ORDER BY BedNo ASC, RecordTime DESC", ((DtoVentExchangeUploadBatch *)batchList[i]).BedNo, ((DtoVentExchangeUploadBatch *)batchList[i]).ChtNo];
+            querySQL = [NSString stringWithFormat:@"SELECT MeasureId, ChtNo, RecordTime, RecordIp, RecordOper, RecordDevice, RecordClientVersion, VentNo, RawData, VentilationMode, TidalVolumeSet, VolumeTarget, TidalVolumeMeasured, VentilationRateSet, SIMVRateSet, VentilationRateTotal, InspT, THigh, InspirationExpirationRatio, Tlow, AutoFlow, FlowSetting, FlowMeasured, Pattern, MVSet, PercentMinVolSet, MVTotal, PeakPressure, PlateauPressure, MeanPressure, PEEP, Plow, PressureSupport, PressureControl, PHigh, FiO2Set, FiO2Measured, Resistance, Compliance, BaseFlow, FlowSensitivity, LowerMV, HighPressureAlarm, Temperature, ReliefPressure, PetCo2, SpO2, RR, TV, MV, MaxPi, Mvv, Rsbi, EtSize, Mark, CuffPressure, BreathSounds, Pr, Cvp, BpS, BpD, Xrem, AutoPEEP, PlateauTimeSetting, RecordOperName, VentilatorModel, BedNo, ErrorMsg, VentilationHertz, PressureAmplitude, TubeCompensation, VolumeAssist, FlowAssist, EdiPeak, EdiMin, NavaLevel, EdiTrigger, NO, NO2, LeakTest, MaxPe, VC, Be, HCO3, PAAO2, PaCo2, PaO2, PfRatio, Ph, SaO2, Shunt, Site, AnalysisTime FROM measure_data WHERE uploadid IS NOT NULL AND uploadid <> '' AND BedNo = '%@' AND ChtNo = '%@' ORDER BY BedNo ASC, RecordTime DESC", ((DtoVentExchangeUploadBatch *)batchList[i]).BedNo, ((DtoVentExchangeUploadBatch *)batchList[i]).ChtNo];
             query_stmt = [querySQL UTF8String];
             
             if (sqlite3_prepare_v2(sqliteDb, query_stmt, -1, &statement, NULL) == SQLITE_OK) {
@@ -1008,6 +1125,19 @@
                     //20141023新增欄位
                     measureData.MaxPe = [self getColumnString:(char *)sqlite3_column_text(statement, 80)];
                     measureData.VC = [self getColumnString:(char *)sqlite3_column_text(statement, 81)];
+                    measureData.Be = [self getColumnString:(char *)sqlite3_column_text(statement, 82)];
+                    measureData.HCO3 = [self getColumnString:(char *)sqlite3_column_text(statement, 83)];
+                    measureData.PAAO2 = [self getColumnString:(char *)sqlite3_column_text(statement, 84)];
+                    measureData.PaCo2 = [self getColumnString:(char *)sqlite3_column_text(statement, 85)];
+                    measureData.PaO2 = [self getColumnString:(char *)sqlite3_column_text(statement, 86)];
+                    measureData.PfRatio = [self getColumnString:(char *)sqlite3_column_text(statement, 87)];
+                    measureData.Ph = [self getColumnString:(char *)sqlite3_column_text(statement, 88)];
+                    measureData.SaO2 = [self getColumnString:(char *)sqlite3_column_text(statement, 89)];
+                    measureData.Shunt = [self getColumnString:(char *)sqlite3_column_text(statement, 90)];
+                    measureData.Site = [self getColumnString:(char *)sqlite3_column_text(statement, 91)];
+                    //20141113新增欄位
+                    measureData.AnalysisTime = [self getColumnString:(char *)sqlite3_column_text(statement, 92)];
+                    
                     [measureList addObject:measureData];
                 }
             }
@@ -1018,6 +1148,124 @@
     }
     
     return batchList;
+}
+
+- (NSMutableArray *) getUploadHistoriesByChtNo:(NSString *)ChtNo {
+    const char *dbpath = [databasePath UTF8String];
+    sqlite3_stmt *statement;
+    NSMutableArray *measureList = [[NSMutableArray alloc] init];
+    
+    if (sqlite3_open(dbpath, &sqliteDb) == SQLITE_OK) {
+        NSString *querySQL = [NSString stringWithFormat:@"SELECT MeasureId, ChtNo, RecordTime, RecordIp, RecordOper, RecordDevice, RecordClientVersion, VentNo, RawData, VentilationMode, TidalVolumeSet, VolumeTarget, TidalVolumeMeasured, VentilationRateSet, SIMVRateSet, VentilationRateTotal, InspT, THigh, InspirationExpirationRatio, Tlow, AutoFlow, FlowSetting, FlowMeasured, Pattern, MVSet, PercentMinVolSet, MVTotal, PeakPressure, PlateauPressure, MeanPressure, PEEP, Plow, PressureSupport, PressureControl, PHigh, FiO2Set, FiO2Measured, Resistance, Compliance, BaseFlow, FlowSensitivity, LowerMV, HighPressureAlarm, Temperature, ReliefPressure, PetCo2, SpO2, RR, TV, MV, MaxPi, Mvv, Rsbi, EtSize, Mark, CuffPressure, BreathSounds, Pr, Cvp, BpS, BpD, Xrem, AutoPEEP, PlateauTimeSetting, RecordOperName, VentilatorModel, BedNo, ErrorMsg, VentilationHertz, PressureAmplitude, TubeCompensation, VolumeAssist, FlowAssist, EdiPeak, EdiMin, NavaLevel, EdiTrigger, NO, NO2, LeakTest, MaxPe, VC, Be, HCO3, PAAO2, PaCo2, PaO2, PfRatio, Ph, SaO2, Shunt, Site, AnalysisTime FROM measure_data WHERE uploadid IS NOT NULL AND uploadid <> '' AND ChtNo = '%@' ORDER BY BedNo ASC, RecordTime DESC", ChtNo];
+        const char *query_stmt = [querySQL UTF8String];
+        
+        if (sqlite3_prepare_v2(sqliteDb, query_stmt, -1, &statement, NULL) == SQLITE_OK) {
+            while (sqlite3_step(statement) == SQLITE_ROW) {
+                VentilationData *measureData = [[VentilationData alloc] init];
+                measureData.MeasureId = sqlite3_column_int(statement, 0);
+                measureData.ChtNo = [self getColumnString:(char *)sqlite3_column_text(statement, 1)];
+                measureData.RecordTime = [self getColumnString:(char *)sqlite3_column_text(statement, 2)];
+                measureData.RecordIp = [self getColumnString:(char *)sqlite3_column_text(statement, 3)];
+                measureData.RecordOper = [self getColumnString:(char *)sqlite3_column_text(statement, 4)];
+                measureData.RecordDevice = [self getColumnString:(char *)sqlite3_column_text(statement, 5)];
+                measureData.RecordClientVersion = [self getColumnString:(char *)sqlite3_column_text(statement, 6)];
+                measureData.VentNo = [self getColumnString:(char *)sqlite3_column_text(statement, 7)];
+                measureData.RawData = [self getColumnString:(char *)sqlite3_column_text(statement, 8)];
+                measureData.VentilationMode = [self getColumnString:(char *)sqlite3_column_text(statement, 9)];
+                measureData.TidalVolumeSet = [self getColumnString:(char *)sqlite3_column_text(statement, 10)];
+                measureData.VolumeTarget = [self getColumnString:(char *)sqlite3_column_text(statement, 11)];
+                measureData.TidalVolumeMeasured = [self getColumnString:(char *)sqlite3_column_text(statement, 12)];
+                measureData.VentilationRateSet = [self getColumnString:(char *)sqlite3_column_text(statement, 13)];
+                measureData.SIMVRateSet = [self getColumnString:(char *)sqlite3_column_text(statement, 14)];
+                measureData.VentilationRateTotal = [self getColumnString:(char *)sqlite3_column_text(statement, 15)];
+                measureData.InspT = [self getColumnString:(char *)sqlite3_column_text(statement, 16)];
+                measureData.THigh = [self getColumnString:(char *)sqlite3_column_text(statement, 17)];
+                measureData.InspirationExpirationRatio = [self getColumnString:(char *)sqlite3_column_text(statement, 18)];
+                measureData.Tlow = [self getColumnString:(char *)sqlite3_column_text(statement, 19)];
+                measureData.AutoFlow = [self getColumnString:(char *)sqlite3_column_text(statement, 20)];
+                measureData.FlowSetting = [self getColumnString:(char *)sqlite3_column_text(statement, 21)];
+                measureData.FlowMeasured = [self getColumnString:(char *)sqlite3_column_text(statement, 22)];
+                measureData.Pattern = [self getColumnString:(char *)sqlite3_column_text(statement, 23)];
+                measureData.MVSet = [self getColumnString:(char *)sqlite3_column_text(statement, 24)];
+                measureData.PercentMinVolSet = [self getColumnString:(char *)sqlite3_column_text(statement, 25)];
+                measureData.MVTotal = [self getColumnString:(char *)sqlite3_column_text(statement, 26)];
+                measureData.PeakPressure = [self getColumnString:(char *)sqlite3_column_text(statement, 27)];
+                measureData.PlateauPressure = [self getColumnString:(char *)sqlite3_column_text(statement, 28)];
+                measureData.MeanPressure = [self getColumnString:(char *)sqlite3_column_text(statement, 29)];
+                measureData.PEEP = [self getColumnString:(char *)sqlite3_column_text(statement, 30)];
+                measureData.Plow = [self getColumnString:(char *)sqlite3_column_text(statement, 31)];
+                measureData.PressureSupport = [self getColumnString:(char *)sqlite3_column_text(statement, 32)];
+                measureData.PressureControl = [self getColumnString:(char *)sqlite3_column_text(statement, 33)];
+                measureData.PHigh = [self getColumnString:(char *)sqlite3_column_text(statement, 34)];
+                measureData.FiO2Set = [self getColumnString:(char *)sqlite3_column_text(statement, 35)];
+                measureData.FiO2Measured = [self getColumnString:(char *)sqlite3_column_text(statement, 36)];
+                measureData.Resistance = [self getColumnString:(char *)sqlite3_column_text(statement, 37)];
+                measureData.Compliance = [self getColumnString:(char *)sqlite3_column_text(statement, 38)];
+                measureData.BaseFlow = [self getColumnString:(char *)sqlite3_column_text(statement, 39)];
+                measureData.FlowSensitivity = [self getColumnString:(char *)sqlite3_column_text(statement, 40)];
+                measureData.LowerMV = [self getColumnString:(char *)sqlite3_column_text(statement, 41)];
+                measureData.HighPressureAlarm = [self getColumnString:(char *)sqlite3_column_text(statement, 42)];
+                measureData.Temperature = [self getColumnString:(char *)sqlite3_column_text(statement, 43)];
+                measureData.ReliefPressure = [self getColumnString:(char *)sqlite3_column_text(statement, 44)];
+                measureData.PetCo2 = [self getColumnString:(char *)sqlite3_column_text(statement, 45)];
+                measureData.SpO2 = [self getColumnString:(char *)sqlite3_column_text(statement, 46)];
+                measureData.RR = [self getColumnString:(char *)sqlite3_column_text(statement, 47)];
+                measureData.TV = [self getColumnString:(char *)sqlite3_column_text(statement, 48)];
+                measureData.MV = [self getColumnString:(char *)sqlite3_column_text(statement, 49)];
+                measureData.MaxPi = [self getColumnString:(char *)sqlite3_column_text(statement, 50)];
+                measureData.Mvv = [self getColumnString:(char *)sqlite3_column_text(statement, 51)];
+                measureData.Rsbi = [self getColumnString:(char *)sqlite3_column_text(statement, 52)];
+                measureData.EtSize = [self getColumnString:(char *)sqlite3_column_text(statement, 53)];
+                measureData.Mark = [self getColumnString:(char *)sqlite3_column_text(statement, 54)];
+                measureData.CuffPressure = [self getColumnString:(char *)sqlite3_column_text(statement, 55)];
+                measureData.BreathSounds = [self getColumnString:(char *)sqlite3_column_text(statement, 56)];
+                measureData.Pr = [self getColumnString:(char *)sqlite3_column_text(statement, 57)];
+                measureData.Cvp = [self getColumnString:(char *)sqlite3_column_text(statement, 58)];
+                measureData.BpS = [self getColumnString:(char *)sqlite3_column_text(statement, 59)];
+                measureData.BpD = [self getColumnString:(char *)sqlite3_column_text(statement, 60)];
+                measureData.Xrem = [self getColumnString:(char *)sqlite3_column_text(statement, 61)];
+                measureData.AutoPEEP = [self getColumnString:(char *)sqlite3_column_text(statement, 62)];
+                measureData.PlateauTimeSetting = [self getColumnString:(char *)sqlite3_column_text(statement, 63)];
+                measureData.RecordOperName = [self getColumnString:(char *)sqlite3_column_text(statement, 64)];
+                measureData.VentilatorModel = [self getColumnString:(char *)sqlite3_column_text(statement, 65)];
+                measureData.BedNo = [self getColumnString:(char *)sqlite3_column_text(statement, 66)];
+                measureData.ErrorMsg = [self getColumnString:(char *)sqlite3_column_text(statement, 67)];
+                //20140902新增欄位
+                measureData.VentilationHertz = [self getColumnString:(char *)sqlite3_column_text(statement, 68)];
+                measureData.PressureAmplitude = [self getColumnString:(char *)sqlite3_column_text(statement, 69)];
+                measureData.TubeCompensation = [self getColumnString:(char *)sqlite3_column_text(statement, 70)];
+                measureData.VolumeAssist = [self getColumnString:(char *)sqlite3_column_text(statement, 71)];
+                measureData.FlowAssist = [self getColumnString:(char *)sqlite3_column_text(statement, 72)];
+                measureData.EdiPeak = [self getColumnString:(char *)sqlite3_column_text(statement, 73)];
+                measureData.EdiMin = [self getColumnString:(char *)sqlite3_column_text(statement, 74)];
+                measureData.NavaLevel = [self getColumnString:(char *)sqlite3_column_text(statement, 75)];
+                measureData.EdiTrigger = [self getColumnString:(char *)sqlite3_column_text(statement, 76)];
+                measureData._NO = [self getColumnString:(char *)sqlite3_column_text(statement, 77)];
+                measureData.NO2 = [self getColumnString:(char *)sqlite3_column_text(statement, 78)];
+                measureData.LeakTest = [self getColumnString:(char *)sqlite3_column_text(statement, 79)];
+                //20141023新增欄位
+                measureData.MaxPe = [self getColumnString:(char *)sqlite3_column_text(statement, 80)];
+                measureData.VC = [self getColumnString:(char *)sqlite3_column_text(statement, 81)];
+                measureData.Be = [self getColumnString:(char *)sqlite3_column_text(statement, 82)];
+                measureData.HCO3 = [self getColumnString:(char *)sqlite3_column_text(statement, 83)];
+                measureData.PAAO2 = [self getColumnString:(char *)sqlite3_column_text(statement, 84)];
+                measureData.PaCo2 = [self getColumnString:(char *)sqlite3_column_text(statement, 85)];
+                measureData.PaO2 = [self getColumnString:(char *)sqlite3_column_text(statement, 86)];
+                measureData.PfRatio = [self getColumnString:(char *)sqlite3_column_text(statement, 87)];
+                measureData.Ph = [self getColumnString:(char *)sqlite3_column_text(statement, 88)];
+                measureData.SaO2 = [self getColumnString:(char *)sqlite3_column_text(statement, 89)];
+                measureData.Shunt = [self getColumnString:(char *)sqlite3_column_text(statement, 90)];
+                measureData.Site = [self getColumnString:(char *)sqlite3_column_text(statement, 91)];
+                //20141113新增欄位
+                measureData.AnalysisTime = [self getColumnString:(char *)sqlite3_column_text(statement, 92)];
+                [measureList addObject:measureData];
+            }
+        }
+        sqlite3_finalize(statement);
+        sqlite3_close(sqliteDb);
+    }
+    
+    return measureList;
 }
 
 - (void) deleteUploadHistoryByUploadId:(int)uploadId {
@@ -1076,7 +1324,15 @@
                 }
                 
                 //Delete MeasureData
-                [self deleteMeasuresByUploadId:[uploadId intValue]];
+                deleteSQL = [NSString stringWithFormat:@"DELETE FROM MEASURE_DATA WHERE UploadId = ?"];
+                
+                delete_stmt = [deleteSQL UTF8String];
+                sqlite3_prepare_v2(sqliteDb, delete_stmt, -1, &statement, NULL);
+                sqlite3_bind_int(statement, 1, [uploadId intValue]);
+                foo = sqlite3_step(statement);
+                if (foo != SQLITE_DONE) {
+                    NSLog(@"Error. %s", __func__);
+                }
             }
         }
         
@@ -1331,6 +1587,114 @@
     }
     
     return result;
+}
+
+#pragma mark - ABG
+- (ABGUpdateRecord *) getABGUpdateRecordByChtNo:(NSString *)ChtNo {
+    ABGUpdateRecord *record = [[ABGUpdateRecord alloc] init];
+    const char *dbpath = [databasePath UTF8String];
+    sqlite3_stmt *statement;
+    
+    if (sqlite3_open(dbpath, &sqliteDb) == SQLITE_OK) {
+        NSString *querySQL = [NSString stringWithFormat:@"SELECT ChtNo, LastUpdateTime FROM ABG_UPDATE_RECORD WHERE ChtNo = '%@'", ChtNo];
+        const char *query_stmt = [querySQL UTF8String];
+        
+        if (sqlite3_prepare_v2(sqliteDb, query_stmt, -1, &statement, NULL) == SQLITE_OK) {
+            while (sqlite3_step(statement) == SQLITE_ROW) {
+                record.ChtNo = [self getColumnString:(char *)sqlite3_column_text(statement, 0)];
+                record.LastUpdateTime = [self getColumnString:(char *)sqlite3_column_text(statement, 1)];
+                break;
+            }
+            sqlite3_finalize(statement);
+        }
+        sqlite3_close(sqliteDb);
+    }
+    
+    return record;
+}
+
+- (BOOL) updateABGUpdateRecordByChtNo:(NSString *)ChtNo {
+    ABGUpdateRecord *record = [[ABGUpdateRecord alloc] init];
+    const char *dbpath = [databasePath UTF8String];
+    sqlite3_stmt *statement;
+    BOOL isSuccess = false;
+    
+    if (sqlite3_open(dbpath, &sqliteDb) == SQLITE_OK) {
+        NSString *querySQL = [NSString stringWithFormat:
+                              @"SELECT ChtNo, LastUpdateTime, CreateTime FROM ABG_UPDATE_RECORD WHERE ChtNo = '%@'", ChtNo];
+        const char *query_stmt = [querySQL UTF8String];
+        
+        NSDateFormatter *dateFormatter=[[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
+        NSString *nowTime = [dateFormatter stringFromDate:[NSDate date]];
+        
+        if (sqlite3_prepare_v2(sqliteDb, query_stmt, -1, &statement, NULL) == SQLITE_OK) {
+            //有資料就做Update
+            if (sqlite3_step(statement) == SQLITE_ROW) {
+                record.ChtNo = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 0)];
+                record.LastUpdateTime = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 1)];
+                
+                NSString *updateSQL = @"UPDATE ABG_UPDATE_RECORD ";
+                updateSQL = [updateSQL stringByAppendingString:[NSString stringWithFormat:@"SET LastUpdateTime = '%@' ", nowTime]];
+                
+                //結尾
+                updateSQL = [updateSQL stringByAppendingString:[NSString stringWithFormat:@"WHERE ChtNo = '%@'", record.ChtNo]];
+                
+                const char *update_stmt = [updateSQL UTF8String];
+                sqlite3_prepare_v2(sqliteDb, update_stmt, -1, &statement, NULL);
+                sqlite3_bind_null(statement, 1);
+                if(sqlite3_step(statement)) {
+                    isSuccess = true;
+                }
+            }
+            else {
+                //沒資料新增一筆
+                NSString *insertSQL = [NSString stringWithFormat:
+                                       @"INSERT INTO ABG_UPDATE_RECORD (ChtNo, LastUpdateTime, CreateTime) VALUES (\"%@\",\"%@\",\"%@\")",
+                                       ChtNo,
+                                       nowTime,
+                                       nowTime];
+                
+                const char *insert_stmt = [insertSQL UTF8String];
+                sqlite3_prepare_v2(sqliteDb, insert_stmt, -1, &statement, NULL);
+                int sqliteState = sqlite3_step(statement);
+                if (sqliteState == SQLITE_DONE) {
+                    isSuccess = true;
+                }
+            }
+        }
+        sqlite3_finalize(statement);
+        sqlite3_close(sqliteDb);
+    }
+    return isSuccess;
+}
+
+- (void) deleteExpiredABGRecords {
+    NSMutableArray *ChtNoArray = [[NSMutableArray alloc] init];
+    
+    const char *dbpath = [databasePath UTF8String];
+    sqlite3_stmt *statement;
+    
+    if (sqlite3_open(dbpath, &sqliteDb) == SQLITE_OK) {
+        NSDateComponents *dateComponets = [[NSDateComponents alloc] init];
+        [dateComponets setDay:-3];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
+        
+        
+        NSString *deleteSQL = [NSString stringWithFormat:@"DELETE FROM ABG_UPDATE_RECORD WHERE CreateTime < '%@'", [dateFormatter stringFromDate:[[NSCalendar currentCalendar] dateByAddingComponents:dateComponets toDate:[NSDate date] options:0]]];
+        
+        const char *delete_stmt = [deleteSQL UTF8String];
+        sqlite3_prepare_v2(sqliteDb, delete_stmt, -1, &statement, NULL);
+        sqlite3_bind_null(statement, 1);
+        int foo = sqlite3_step(statement);
+        if (foo != SQLITE_DONE) {
+            NSLog(@"Error. %@ (%s)", deleteSQL, __func__);
+        }
+        
+        sqlite3_finalize(statement);
+        sqlite3_close(sqliteDb);
+    }
 }
 
 @end

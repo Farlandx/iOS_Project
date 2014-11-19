@@ -11,6 +11,7 @@
 #import "VentilationData.h"
 #import "DtoVentExchangeUploadBatch.h"
 #import "Patient.h"
+#import "ABGUpdateRecord.h"
 
 @interface DatabaseUtility : NSObject {
     sqlite3 *sqliteDb;
@@ -31,6 +32,7 @@
 #pragma mark - UploadData
 - (BOOL) saveUploadData:(DtoVentExchangeUploadBatch *)uploadData;
 - (NSMutableArray *) getUploadHistories;
+- (NSMutableArray *) getUploadHistoriesByChtNo:(NSString *)ChtNo;
 
 #pragma mark - CurRtCardListVerId
 - (int) getCurRtCardListVerId;
@@ -44,5 +46,9 @@
 - (void) savePatient:(NSArray *)data;
 - (NSMutableArray *) getPatientList;
 - (Patient *) getPatientByChtNo:(NSString *)chtNo;
+
+#pragma mark - ABG
+- (ABGUpdateRecord *) getABGUpdateRecordByChtNo:(NSString *)ChtNo;
+- (BOOL) updateABGUpdateRecordByChtNo:(NSString *)ChtNo;
 
 @end

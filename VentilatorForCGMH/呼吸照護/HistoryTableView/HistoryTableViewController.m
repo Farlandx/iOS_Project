@@ -158,7 +158,8 @@ static NSString *SectionHeaderViewIdentifier = @"SectionHeaderViewIdentifier";
     
     UIStoryboard *storyboard = self.navigationController.storyboard;
     HistoryCollectionViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"historyCollectionViewController"];
-    viewController.batchData = self.batchAry[view.tag];
+//    viewController.batchData = self.batchAry[view.tag];
+    viewController.ChtNo = ((DtoVentExchangeUploadBatch *)self.batchAry[view.tag]).ChtNo;
     
     self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:viewController animated:YES];

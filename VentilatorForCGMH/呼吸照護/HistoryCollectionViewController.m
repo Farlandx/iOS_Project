@@ -14,31 +14,37 @@
 #import "TitleView.h"
 #import "ContentCollectionView.h"
 #import "VentilationData.h"
+#import "DatabaseUtility.h"
+#import "WebService.h"
+#import "DeviceStatus.h"
+#import "ProgressHUD.h"
+#import "DtoGetAssociatedRespCareRecRslt.h"
+#import "DtoRespCareCol.h"
 
-@interface HistoryCollectionViewController () <CollectionViewHeaderProtocol, ContentCollectionViewProtocol>
+@interface HistoryCollectionViewController () <CollectionViewHeaderProtocol, ContentCollectionViewProtocol, WebServiceDelegate, UITextFieldDelegate, UIAlertViewDelegate>
 
 @end
 
 @implementation HistoryCollectionViewController {
     CollectionViewHeader *collectionViewHeader;
     ContentCollectionView *contentCollectionView;
+    DatabaseUtility *db;
+    ABGUpdateRecord *updateRecord;
+    WebService *ws;
+    UITextField *userText;
+    UIAlertView *alertView;
+    NSMutableArray *VentRecList;
 }
 
-@synthesize batchData;
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
+@synthesize ChtNo;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    UIBarButtonItem *btnGetABGData = [[UIBarButtonItem alloc] initWithTitle:@"取得動脈血氧分析資料" style:UIBarButtonItemStylePlain target:self action:@selector(getABGData)];
+    self.navigationItem.rightBarButtonItem = btnGetABGData;
     
     //左上角加入一塊填充的UIView
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 64, HEADER_WIDTH, HEADER_HEIGHT)];
@@ -58,6 +64,12 @@
     [view.layer addSublayer:rightBorder];
     
     [self.view addSubview:view];
+    
+    db = [[DatabaseUtility alloc] init];
+    VentRecList = [db getUploadHistoriesByChtNo:ChtNo];
+    
+    ws = [[WebService alloc] init];
+    ws.delegate = self;
     
     //調整subview裡面的內容
     ContentScrollView *scrollView;
@@ -93,14 +105,14 @@
         [scrollView setContentSize:CGSizeMake(scrollView.frame.origin.x, titleView.totalHeight)];
         
         //將資料放進subview裡面
-        if (batchData != nil && batchData.VentRecList.count > 0) {
+        if (VentRecList.count > 0) {
             NSMutableArray *timeArray = [[NSMutableArray alloc] init];
             NSMutableArray *dataArray = [[NSMutableArray alloc] init];
             
             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
             [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
             
-            for (VentilationData *data in batchData.VentRecList) {
+            for (VentilationData *data in VentRecList) {
                 //CollectionViewHeader
                 //不這樣轉會出現尾巴有+0000奇怪的格式
                 NSDate *d = [dateFormatter dateFromString:data.RecordTime];
@@ -113,12 +125,14 @@
             }
             
             if (timeArray.count > 0) {
-                collectionViewHeader.timeArray = timeArray;
+                collectionViewHeader.timeArray = [timeArray mutableCopy];
+                [timeArray removeAllObjects];
                 [collectionViewHeader reloadData];
             }
             
             if (dataArray.count > 0) {
-                contentCollectionView.dataArray = dataArray;
+                contentCollectionView.dataArray = [dataArray mutableCopy];
+                [dataArray removeAllObjects];
             }
             
             [dateFormatter stringFromDate:[NSDate date]];
@@ -136,7 +150,7 @@
 - (NSArray *)getContentCollectionData:(VentilationData *)data {
     NSMutableArray *ary = [[NSMutableArray alloc] init];
     
-    //----------------------------------------------01
+    /*//----------------------------------------------01
     //床號
     [ary addObject:data.BedNo];
     //治療師
@@ -242,7 +256,7 @@
     //MV
     [ary addObject:data.MV];
     //Max Pi
-    [ary  addObject:data.MaxPi];
+    [ary addObject:data.MaxPi];
     
     //----------------------------------------------46
     //MVV
@@ -298,7 +312,111 @@
     [ary addObject:data.NO2];
     //Cuff Leak Test
     [ary addObject:data.LeakTest];
+    //B.E
+    [ary addObject:data.Be];
+    //HCO3
+    [ary addObject:data.HCO3];
+    //PA-aO2
+    [ary addObject:data.PAAO2];
     
+    //----------------------------------------------71
+    //PaCO2
+    [ary addObject:data.PaCo2];
+    //PaO2
+    [ary addObject:data.PaO2];
+    //PEtCO2
+    [ary addObject:data.PetCo2];
+    //PF ratio
+    [ary addObject:data.PfRatio];
+    //PH
+    [ary addObject:data.Ph];
+    
+    //----------------------------------------------76
+    //SaO2
+    [ary addObject:data.SaO2];
+    //Shunt
+    [ary addObject:data.Shunt];
+    //Site
+    [ary addObject:data.Site];
+    //SpO2
+    [ary addObject:data.SpO2];*/
+    
+    //床號
+    [ary addObject:data.BedNo];
+    //病歷號
+    [ary addObject:data.ChtNo];
+    //呼吸器
+    [ary addObject:data.VentilatorModel];
+    //Ventilation Mode
+    [ary addObject:data.VentilationMode];
+    //TidalVolume Set
+    [ary addObject:data.TidalVolumeSet];
+    //TidalVolume Measured
+    [ary addObject:data.TidalVolumeSet];
+    //Ventilation Rate Set/Total/Hertz
+    [ary addObject:[NSString stringWithFormat:@"%@ / %@ / %@", data.VentilationRateSet, data.VentilationRateTotal, data.VentilationHertz]];
+    //Flow/NO/NO2
+    [ary addObject:[NSString stringWithFormat:@"%@ / %@ / %@", @"???", data._NO, data.NO2]];
+    //Insp. T / I:E
+    [ary addObject:[NSString stringWithFormat:@"%@ / %@", data.InspT, data.InspirationExpirationRatio]];
+    //MV Set/MinVol%/Total
+    [ary addObject:[NSString stringWithFormat:@"%@ / %@ / %@", data.MVSet, data.PercentMinVolSet, data.MVTotal]];
+    //Peak/Plateau
+    [ary addObject:[NSString stringWithFormat:@"%@ / %@", data.PeakPressure, data.PlateauPressure]];
+    //Mean/PEEP
+    [ary addObject:[NSString stringWithFormat:@"%@ / %@", data.MeanPressure, data.PEEP]];
+    //P.S/P.C/amplitude
+    [ary addObject:[NSString stringWithFormat:@"%@ / %@ / %@", data.PressureSupport, data.PressureControl, data.PressureAmplitude]];
+    //Temp/Tube compensation
+    [ary addObject:[NSString stringWithFormat:@"%@ / %@", data.Temperature, data.TubeCompensation]];
+    //FiO2 Set/Measured
+    [ary addObject:[NSString stringWithFormat:@"%@ / %@", data.FiO2Set, data.FiO2Measured]];
+    //Resistance/Compliance
+    [ary addObject:[NSString stringWithFormat:@"%@ / %@", data.Resistance, data.Compliance]];
+    //Base Flow/Flow sens
+    [ary addObject:[NSString stringWithFormat:@"%@ / %@", data.BaseFlow, data.FlowSensitivity]];
+    //Volume/Flow Assist
+    [ary addObject:[NSString stringWithFormat:@"%@ / %@", @"???", data.FlowAssist]];
+    //Edi peak/min
+    [ary addObject:[NSString stringWithFormat:@"%@ / %@", data.EdiPeak, data.EdiMin]];
+    //NAVA Level/Edi trigger
+    [ary addObject:[NSString stringWithFormat:@"%@ / %@", data.NavaLevel, data.EdiTrigger]];
+    //L. MV/ H. Pr. Alarm/ Relief Pr.
+    [ary addObject:[NSString stringWithFormat:@"%@ / %@ / %@", data.LowerMV, data.HighPressureAlarm, data.ReliefPressure]];
+    //時間
+    [ary addObject:data.AnalysisTime];
+    //PH
+    [ary addObject:data.Ph];
+    //PaCO2 / PetCO2
+    [ary addObject:[NSString stringWithFormat:@"%@ / %@", data.PaCo2, data.PetCo2]];
+    //PaO2 / Site
+    [ary addObject:[NSString stringWithFormat:@"%@ / %@", data.PaO2, data.Site]];
+    //HCO3 / BE
+    [ary addObject:[NSString stringWithFormat:@"%@ / %@", data.HCO3, data.Be]];
+    //SaO2 / SpO2
+    [ary addObject:[NSString stringWithFormat:@"%@ / %@", data.SaO2, data.SpO2]];
+    //PA-aO2 / Shunt
+    [ary addObject:[NSString stringWithFormat:@"%@ / %@", data.PAAO2, data.Shunt]];
+    //P/F ratio
+    [ary addObject:data.PfRatio];
+    //RR/OI
+    [ary addObject:[NSString stringWithFormat:@"%@ / %@", data.RR, @"???"]];
+    //TV/MV
+    [ary addObject:[NSString stringWithFormat:@"%@ / %@", data.TV, data.MV]];
+    //Max Pi/Pe
+    [ary addObject:[NSString stringWithFormat:@"%@ / %@", data.MaxPi, data.MaxPe]];
+    //MVV/VC
+    [ary addObject:[NSString stringWithFormat:@"%@ / %@", data.Mvv, data.VC]];
+    //RSBI
+    [ary addObject:data.Rsbi];
+    //ET Size/mark
+    [ary addObject:[NSString stringWithFormat:@"%@ / %@", data.EtSize, data.Mark]];
+    //Cuff pressure/leak test
+    [ary addObject:[NSString stringWithFormat:@"%@ / %@", data.CuffPressure, data.LeakTest]];
+    //Breath Sound
+    [ary addObject:data.BreathSounds];
+    //治療師
+    [ary addObject:data.RecordOperName];
     
     return ary;
 }
@@ -327,6 +445,169 @@
     
     offset.x = contentCollectionView.contentOffset.x;
     [collectionViewHeader setContentOffset:offset];
+}
+
+#pragma mark - Method
+- (void)getABGData {
+    alertView = [[UIAlertView alloc] initWithTitle:@"請掃瞄或輸入治療師卡號" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"送出", nil];
+    alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+    userText = [alertView textFieldAtIndex:0];
+    userText.delegate = self;
+    [alertView show];
+}
+
+- (BOOL)isEqualDateString:(NSString *)dateString1 withDateString:(NSString *)dateString2 {
+    if (!dateString1.length || !dateString2.length) {
+        return NO;
+    }
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
+    if ([[dateFormatter dateFromString:dateString1] compare:[dateFormatter dateFromString:dateString2]] == NSOrderedSame) {
+        return YES;
+    }
+    return NO;
+}
+
+#pragma mark - UITextFieldDelegate
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if (textField == userText) {
+        [self alertView:alertView clickedButtonAtIndex:1];
+        [alertView dismissWithClickedButtonIndex:1 animated:YES];
+    }
+    return YES;
+}
+
+#pragma mark - UIAlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        if ([userText.text isEqualToString:@""]) {
+            [ProgressHUD showError:@"治療師編號不得空白"];
+            return;
+        }
+        
+        [ProgressHUD show:@"取得驗證資料中..." Interaction:NO];
+        [ws appLoginDeviceName:[DeviceStatus getDeviceVendorUUID] idNo:userText.text];
+    }
+}
+
+#pragma mark - WebService Delegate
+- (void)wsAppLogin:(NSString *)sessionId {
+    NSLog(@"sessionId:%@", sessionId);
+    if (sessionId != nil && ![sessionId isEqualToString:@""]) {
+        updateRecord = [db getABGUpdateRecordByChtNo:ChtNo];
+        [ws getABGDataBySessionId:sessionId ChtNo:ChtNo LastUpdateTime:updateRecord.LastUpdateTime];
+    }
+    else {
+        [ProgressHUD showError:@"驗證失敗，請洽資訊中心確認網路是否有問" Interaction:NO];
+    }
+}
+
+- (void)wsConnectionError:(NSError *)error {
+    
+    switch ((CFNetworkErrors)[error code]) {
+        case kCFURLErrorTimedOut:
+            [ProgressHUD showError:@"連線逾時，請洽資訊中心確認網路是否有問題"];
+            break;
+            
+        case kCFURLErrorCannotConnectToHost:
+            [ProgressHUD showError:@"與伺服器連線失敗，請確認網路是否暢通"];
+            break;
+            
+        default:
+            [ProgressHUD showError:[NSString stringWithFormat:@"連線錯誤(%ld)", [error code]]];
+            break;
+    }
+    NSLog(@"連線錯誤(%ld)", [error code]);
+}
+
+- (void)wsError {
+    [ProgressHUD showError:@"連線錯誤，請洽資訊中心確認網路是否有問題"];
+}
+
+- (void)wsResponseABGData:(NSMutableArray *)data {
+    //更新抓到的資料
+    for (DtoGetAssociatedRespCareRecRslt *rslt in data) {
+        for (VentilationData *vent in VentRecList) {
+            if ([self isEqualDateString:rslt.RecordTime withDateString:vent.RecordTime]) {
+                BOOL hasChanged = NO;
+                for (DtoRespCareCol *col in rslt.Fields) {
+                    if ([col.Name caseInsensitiveCompare:@"AnalysisTime"] == NSOrderedSame) {
+                        hasChanged = YES;
+                        vent.AnalysisTime = col.Value;
+                    }
+                    else if ([col.Name caseInsensitiveCompare:@"Be"] == NSOrderedSame) {
+                        hasChanged = YES;
+                        vent.Be = col.Value;
+                    }
+                    else if ([col.Name caseInsensitiveCompare:@"HCO3"] == NSOrderedSame) {
+                        hasChanged = YES;
+                        vent.HCO3 = col.Value;
+                    }
+                    else if ([col.Name caseInsensitiveCompare:@"PAAO2"] == NSOrderedSame) {
+                        hasChanged = YES;
+                        vent.PAAO2 = col.Value;
+                    }
+                    else if ([col.Name caseInsensitiveCompare:@"PaCO2"] == NSOrderedSame) {
+                        hasChanged = YES;
+                        vent.PaCo2 = col.Value;
+                    }
+                    else if ([col.Name caseInsensitiveCompare:@"PaO2"] == NSOrderedSame) {
+                        hasChanged = YES;
+                        vent.PaO2 = col.Value;
+                    }
+                    else if ([col.Name caseInsensitiveCompare:@"PetCo2"] == NSOrderedSame) {
+                        hasChanged = YES;
+                        vent.PetCo2 = col.Value;
+                    }
+                    else if ([col.Name caseInsensitiveCompare:@"PfRatio"] == NSOrderedSame) {
+                        hasChanged = YES;
+                        vent.PfRatio = col.Value;
+                    }
+                    else if ([col.Name caseInsensitiveCompare:@"Ph"] == NSOrderedSame) {
+                        hasChanged = YES;
+                        vent.Ph = col.Value;
+                    }
+                    else if ([col.Name caseInsensitiveCompare:@"SaO2"] == NSOrderedSame) {
+                        hasChanged = YES;
+                        vent.SaO2 = col.Value;
+                    }
+                    else if ([col.Name caseInsensitiveCompare:@"Shunt"] == NSOrderedSame) {
+                        hasChanged = YES;
+                        vent.Shunt = col.Value;
+                    }
+                    else if ([col.Name caseInsensitiveCompare:@"Site"] == NSOrderedSame) {
+                        hasChanged = YES;
+                        vent.Site = col.Value;
+                    }
+                    else if ([col.Name caseInsensitiveCompare:@"SpO2"] == NSOrderedSame) {
+                        hasChanged = YES;
+                        vent.SpO2 = col.Value;
+                    }
+                }
+                
+                if (hasChanged) {
+                    [db saveMeasure:vent];
+                }
+            }
+        }
+    }
+    
+    //更新最後更新時間
+    [db updateABGUpdateRecordByChtNo:ChtNo];
+    
+    //更新表單
+    NSMutableArray *dataArray = [[NSMutableArray alloc] init];
+    
+    for (VentilationData *data in VentRecList) {
+        [dataArray addObject:[self getContentCollectionData:data]];
+    }
+    
+    if (dataArray.count > 0) {
+        contentCollectionView.dataArray = [dataArray mutableCopy];
+        [dataArray removeAllObjects];
+    }
+    [contentCollectionView reloadData];
+    [ProgressHUD dismiss];
 }
 
 @end
