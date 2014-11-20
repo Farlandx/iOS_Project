@@ -43,7 +43,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    UIBarButtonItem *btnGetABGData = [[UIBarButtonItem alloc] initWithTitle:@"取得動脈血氧分析資料" style:UIBarButtonItemStylePlain target:self action:@selector(getABGData)];
+    UIBarButtonItem *btnGetABGData = [[UIBarButtonItem alloc] initWithTitle:@"取得動脈血氣體分析資料" style:UIBarButtonItemStylePlain target:self action:@selector(getABGData)];
     self.navigationItem.rightBarButtonItem = btnGetABGData;
     
     //左上角加入一塊填充的UIView
@@ -353,10 +353,15 @@
     [ary addObject:data.TidalVolumeSet];
     //TidalVolume Measured
     [ary addObject:data.TidalVolumeSet];
-    //Ventilation Rate Set/Total/Hertz
-    [ary addObject:[NSString stringWithFormat:@"%@ / %@ / %@", data.VentilationRateSet, data.VentilationRateTotal, data.VentilationHertz]];
+    //Ventilation Rate Set/Total
+    [ary addObject:[NSString stringWithFormat:@"%@ / %@", data.VentilationRateSet, data.VentilationRateTotal]];
+    //Hertz
+    [ary addObject:data.VentilationHertz];
     //Flow/NO/NO2
-    [ary addObject:[NSString stringWithFormat:@"%@ / %@ / %@", @"???", data._NO, data.NO2]];
+    //Flow Set > Auto > Measured
+    [ary addObject:[NSString stringWithFormat:@"%@ / %@ / %@",
+                    (![data.FlowSetting isEqualToString:@""] ? data.FlowSetting : (![data.AutoFlow isEqualToString:@""] ? data.AutoFlow : (![data.FlowMeasured isEqualToString:@""] ? data.FlowMeasured : @"")))
+                    , data._NO, data.NO2]];
     //Insp. T / I:E
     [ary addObject:[NSString stringWithFormat:@"%@ / %@", data.InspT, data.InspirationExpirationRatio]];
     //MV Set/MinVol%/Total
@@ -376,13 +381,15 @@
     //Base Flow/Flow sens
     [ary addObject:[NSString stringWithFormat:@"%@ / %@", data.BaseFlow, data.FlowSensitivity]];
     //Volume/Flow Assist
-    [ary addObject:[NSString stringWithFormat:@"%@ / %@", @"???", data.FlowAssist]];
+    [ary addObject:[NSString stringWithFormat:@"%@ / %@", data.VolumeAssist, data.FlowAssist]];
     //Edi peak/min
     [ary addObject:[NSString stringWithFormat:@"%@ / %@", data.EdiPeak, data.EdiMin]];
     //NAVA Level/Edi trigger
     [ary addObject:[NSString stringWithFormat:@"%@ / %@", data.NavaLevel, data.EdiTrigger]];
-    //L. MV/ H. Pr. Alarm/ Relief Pr.
-    [ary addObject:[NSString stringWithFormat:@"%@ / %@ / %@", data.LowerMV, data.HighPressureAlarm, data.ReliefPressure]];
+    //L. MV/ H. Pr. Alarm
+    [ary addObject:[NSString stringWithFormat:@"%@ / %@", data.LowerMV, data.HighPressureAlarm]];
+    //Relief Pr.
+    [ary addObject:data.ReliefPressure];
     //時間
     [ary addObject:data.AnalysisTime];
     //PH
@@ -400,7 +407,7 @@
     //P/F ratio
     [ary addObject:data.PfRatio];
     //RR/OI
-    [ary addObject:[NSString stringWithFormat:@"%@ / %@", data.RR, @"???"]];
+    [ary addObject:[NSString stringWithFormat:@"%@ / %@", data.RR, @""]];
     //TV/MV
     [ary addObject:[NSString stringWithFormat:@"%@ / %@", data.TV, data.MV]];
     //Max Pi/Pe
@@ -415,6 +422,10 @@
     [ary addObject:[NSString stringWithFormat:@"%@ / %@", data.CuffPressure, data.LeakTest]];
     //Breath Sound
     [ary addObject:data.BreathSounds];
+    //PR/CVP
+    [ary addObject:[NSString stringWithFormat:@"%@ / %@", data.Pr, data.Cvp]];
+    //BP(S/D)
+    [ary addObject:[NSString stringWithFormat:@"%@ / %@", data.BpS, data.BpD]];
     //治療師
     [ary addObject:data.RecordOperName];
     
@@ -533,7 +544,9 @@
                 for (DtoRespCareCol *col in rslt.Fields) {
                     if ([col.Name caseInsensitiveCompare:@"AnalysisTime"] == NSOrderedSame) {
                         hasChanged = YES;
-                        vent.AnalysisTime = col.Value;
+                        if (![col.Value isEqualToString:@"00:00"]) {
+                            vent.AnalysisTime = col.Value;
+                        }
                     }
                     else if ([col.Name caseInsensitiveCompare:@"Be"] == NSOrderedSame) {
                         hasChanged = YES;
@@ -561,7 +574,9 @@
                     }
                     else if ([col.Name caseInsensitiveCompare:@"PfRatio"] == NSOrderedSame) {
                         hasChanged = YES;
-                        vent.PfRatio = col.Value;
+                        if (![col.Value isEqualToString:@""]) {
+                            vent.PfRatio = [NSString stringWithFormat:@"%.1f", [col.Value floatValue]];
+                        }
                     }
                     else if ([col.Name caseInsensitiveCompare:@"Ph"] == NSOrderedSame) {
                         hasChanged = YES;
