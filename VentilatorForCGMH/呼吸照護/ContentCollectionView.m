@@ -16,9 +16,7 @@
 
 @end
 
-@implementation ContentCollectionView {
-    NSUInteger dataCount;
-}
+@implementation ContentCollectionView
 
 @synthesize protocol;
 @synthesize dataArray;
@@ -28,7 +26,6 @@
     if (self) {
         [self setDataSource:self];
         [self setDelegate:self];
-        dataCount = 0;
         
         dataArray = [[NSMutableArray alloc] init];
     }
@@ -80,20 +77,8 @@
         
         [label.layer addSublayer:bottomBorder];
         
-        //最後一筆，畫右邊的線
-        if (dataCount == dataArray.count - 1) {
-            CALayer *rightBorder = [CALayer layer];
-            rightBorder.frame = CGRectMake(HEADER_WIDTH - borderSize, 0.0f, borderSize, HEADER_HEIGHT);
-            
-            rightBorder.backgroundColor = [UIColor grayColor].CGColor;
-            
-            [label.layer addSublayer:rightBorder];
-        }
-        
         [cell addSubview:label];
     }
-    
-    dataCount++;
     
     return cell;
 }

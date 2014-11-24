@@ -352,7 +352,7 @@
     //TidalVolume Set
     [ary addObject:data.TidalVolumeSet];
     //TidalVolume Measured
-    [ary addObject:data.TidalVolumeSet];
+    [ary addObject:data.TidalVolumeMeasured];
     //Ventilation Rate Set/Total
     [ary addObject:[NSString stringWithFormat:@"%@ / %@", data.VentilationRateSet, data.VentilationRateTotal]];
     //Hertz
