@@ -90,6 +90,7 @@
 @synthesize PAaDO2;
 @synthesize Shunt;
 @synthesize EndTidalCO2;
+@synthesize CI;
 
 //以下參數顯示用,不須上傳
 @synthesize RecordOperName;
@@ -244,6 +245,7 @@
     VentilatorModel = @"";
     BedNo = @"";
     ErrorMsg = @"";
+    CI = @"";
     checked = NO;
 }
 

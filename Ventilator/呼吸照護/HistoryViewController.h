@@ -10,6 +10,7 @@
 
 @interface HistoryViewController : UIViewController
 
+@property (strong, nonatomic) NSString *MedicalId;
 @property (strong, nonatomic) IBOutlet UIWebView *webView;
 
 @end

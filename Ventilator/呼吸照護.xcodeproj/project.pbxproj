@@ -57,6 +57,18 @@
 		1ED31BA4190E071D00E58228 /* VentilationData.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ED31B9E190E071D00E58228 /* VentilationData.m */; };
 		1ED42EB619382CD100A5224E /* JsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ED42EB519382CD100A5224E /* JsonParser.m */; };
 		1EDA9CCF18B206CA00AF987A /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EDA9CCE18B206CA00AF987A /* libsqlite3.0.dylib */; };
+		1EDCDE301A1ECC3500C11E5F /* CollectionViewHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EDCDE1C1A1ECC3500C11E5F /* CollectionViewHeader.m */; };
+		1EDCDE311A1ECC3500C11E5F /* HeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EDCDE1E1A1ECC3500C11E5F /* HeaderCell.m */; };
+		1EDCDE321A1ECC3500C11E5F /* CollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EDCDE201A1ECC3500C11E5F /* CollectionViewFlowLayout.m */; };
+		1EDCDE331A1ECC3500C11E5F /* ContentScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EDCDE231A1ECC3500C11E5F /* ContentScrollView.m */; };
+		1EDCDE341A1ECC3500C11E5F /* ContentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EDCDE261A1ECC3500C11E5F /* ContentCell.m */; };
+		1EDCDE351A1ECC3500C11E5F /* ContentCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EDCDE281A1ECC3500C11E5F /* ContentCollectionView.m */; };
+		1EDCDE361A1ECC3500C11E5F /* TitleLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EDCDE2B1A1ECC3500C11E5F /* TitleLabel.m */; };
+		1EDCDE371A1ECC3500C11E5F /* TitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EDCDE2D1A1ECC3500C11E5F /* TitleView.m */; };
+		1EDCDE381A1ECC3500C11E5F /* HistoryCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EDCDE2F1A1ECC3500C11E5F /* HistoryCollectionViewController.m */; };
+		1EDCDE3C1A22BD3500C11E5F /* HistoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EDCDE3B1A22BD3500C11E5F /* HistoryTableViewController.m */; };
+		1EDCDE3F1A22BE5A00C11E5F /* HistoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EDCDE3E1A22BE5A00C11E5F /* HistoryTableViewCell.m */; };
+		1EDCDE421A23055E00C11E5F /* HistoryRoomData.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EDCDE411A23055E00C11E5F /* HistoryRoomData.m */; };
 		1EDE9FC818B6FEC5004B8FE5 /* DataTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EDE9FC718B6FEC5004B8FE5 /* DataTableViewCell.m */; };
 		1EF0012B18B2EAEF003B5D58 /* DatabaseUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EF0012A18B2EAEF003B5D58 /* DatabaseUtility.m */; };
 		1EFAD8C418C6B335002118C7 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EFAD8C318C6B335002118C7 /* FirstViewController.m */; };
@@ -165,6 +177,30 @@
 		1ED42EB419382CD100A5224E /* JsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JsonParser.h; sourceTree = "<group>"; };
 		1ED42EB519382CD100A5224E /* JsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JsonParser.m; sourceTree = "<group>"; };
 		1EDA9CCE18B206CA00AF987A /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
+		1EDCDE1B1A1ECC3500C11E5F /* CollectionViewHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewHeader.h; sourceTree = "<group>"; };
+		1EDCDE1C1A1ECC3500C11E5F /* CollectionViewHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewHeader.m; sourceTree = "<group>"; };
+		1EDCDE1D1A1ECC3500C11E5F /* HeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderCell.h; sourceTree = "<group>"; };
+		1EDCDE1E1A1ECC3500C11E5F /* HeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeaderCell.m; sourceTree = "<group>"; };
+		1EDCDE1F1A1ECC3500C11E5F /* CollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewFlowLayout.h; sourceTree = "<group>"; };
+		1EDCDE201A1ECC3500C11E5F /* CollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewFlowLayout.m; sourceTree = "<group>"; };
+		1EDCDE221A1ECC3500C11E5F /* ContentScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentScrollView.h; sourceTree = "<group>"; };
+		1EDCDE231A1ECC3500C11E5F /* ContentScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContentScrollView.m; sourceTree = "<group>"; };
+		1EDCDE251A1ECC3500C11E5F /* ContentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentCell.h; sourceTree = "<group>"; };
+		1EDCDE261A1ECC3500C11E5F /* ContentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContentCell.m; sourceTree = "<group>"; };
+		1EDCDE271A1ECC3500C11E5F /* ContentCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentCollectionView.h; sourceTree = "<group>"; };
+		1EDCDE281A1ECC3500C11E5F /* ContentCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContentCollectionView.m; sourceTree = "<group>"; };
+		1EDCDE2A1A1ECC3500C11E5F /* TitleLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TitleLabel.h; sourceTree = "<group>"; };
+		1EDCDE2B1A1ECC3500C11E5F /* TitleLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TitleLabel.m; sourceTree = "<group>"; };
+		1EDCDE2C1A1ECC3500C11E5F /* TitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TitleView.h; sourceTree = "<group>"; };
+		1EDCDE2D1A1ECC3500C11E5F /* TitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TitleView.m; sourceTree = "<group>"; };
+		1EDCDE2E1A1ECC3500C11E5F /* HistoryCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryCollectionViewController.h; sourceTree = "<group>"; };
+		1EDCDE2F1A1ECC3500C11E5F /* HistoryCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryCollectionViewController.m; sourceTree = "<group>"; };
+		1EDCDE3A1A22BD3500C11E5F /* HistoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryTableViewController.h; sourceTree = "<group>"; };
+		1EDCDE3B1A22BD3500C11E5F /* HistoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryTableViewController.m; sourceTree = "<group>"; };
+		1EDCDE3D1A22BE5A00C11E5F /* HistoryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HistoryTableViewCell.h; path = HistoryCollectionView/HistoryTableViewCell.h; sourceTree = "<group>"; };
+		1EDCDE3E1A22BE5A00C11E5F /* HistoryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HistoryTableViewCell.m; path = HistoryCollectionView/HistoryTableViewCell.m; sourceTree = "<group>"; };
+		1EDCDE401A23055E00C11E5F /* HistoryRoomData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryRoomData.h; sourceTree = "<group>"; };
+		1EDCDE411A23055E00C11E5F /* HistoryRoomData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryRoomData.m; sourceTree = "<group>"; };
 		1EDE9FC618B6FEC5004B8FE5 /* DataTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataTableViewCell.h; sourceTree = "<group>"; };
 		1EDE9FC718B6FEC5004B8FE5 /* DataTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataTableViewCell.m; sourceTree = "<group>"; };
 		1EF0012918B2EAEF003B5D58 /* DatabaseUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabaseUtility.h; sourceTree = "<group>"; };
@@ -295,6 +331,7 @@
 		1E781AF018BC46A300647ED3 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				1EDCDE391A22BCEA00C11E5F /* History */,
 				1E849AFF1936D575008238EE /* Settings */,
 				1EDE9FC918B6FF2E004B8FE5 /* MeasureView */,
 				1EDE9FC618B6FEC5004B8FE5 /* DataTableViewCell.h */,
@@ -409,8 +446,87 @@
 				1E044098193D7F0E00825AA3 /* User.m */,
 				1E04409A193DCAAF00825AA3 /* Patient.h */,
 				1E04409B193DCAAF00825AA3 /* Patient.m */,
+				1EDCDE401A23055E00C11E5F /* HistoryRoomData.h */,
+				1EDCDE411A23055E00C11E5F /* HistoryRoomData.m */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		1EDCDE181A1ECC3500C11E5F /* HistoryCollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				1EDCDE191A1ECC3500C11E5F /* CollectionView */,
+				1EDCDE2E1A1ECC3500C11E5F /* HistoryCollectionViewController.h */,
+				1EDCDE2F1A1ECC3500C11E5F /* HistoryCollectionViewController.m */,
+			);
+			path = HistoryCollectionView;
+			sourceTree = "<group>";
+		};
+		1EDCDE191A1ECC3500C11E5F /* CollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				1EDCDE1A1A1ECC3500C11E5F /* CollectionHeader */,
+				1EDCDE1F1A1ECC3500C11E5F /* CollectionViewFlowLayout.h */,
+				1EDCDE201A1ECC3500C11E5F /* CollectionViewFlowLayout.m */,
+				1EDCDE211A1ECC3500C11E5F /* ScrollView */,
+			);
+			path = CollectionView;
+			sourceTree = "<group>";
+		};
+		1EDCDE1A1A1ECC3500C11E5F /* CollectionHeader */ = {
+			isa = PBXGroup;
+			children = (
+				1EDCDE1B1A1ECC3500C11E5F /* CollectionViewHeader.h */,
+				1EDCDE1C1A1ECC3500C11E5F /* CollectionViewHeader.m */,
+				1EDCDE1D1A1ECC3500C11E5F /* HeaderCell.h */,
+				1EDCDE1E1A1ECC3500C11E5F /* HeaderCell.m */,
+			);
+			path = CollectionHeader;
+			sourceTree = "<group>";
+		};
+		1EDCDE211A1ECC3500C11E5F /* ScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				1EDCDE221A1ECC3500C11E5F /* ContentScrollView.h */,
+				1EDCDE231A1ECC3500C11E5F /* ContentScrollView.m */,
+				1EDCDE291A1ECC3500C11E5F /* Title */,
+				1EDCDE241A1ECC3500C11E5F /* ContentView */,
+			);
+			path = ScrollView;
+			sourceTree = "<group>";
+		};
+		1EDCDE241A1ECC3500C11E5F /* ContentView */ = {
+			isa = PBXGroup;
+			children = (
+				1EDCDE271A1ECC3500C11E5F /* ContentCollectionView.h */,
+				1EDCDE281A1ECC3500C11E5F /* ContentCollectionView.m */,
+				1EDCDE251A1ECC3500C11E5F /* ContentCell.h */,
+				1EDCDE261A1ECC3500C11E5F /* ContentCell.m */,
+			);
+			path = ContentView;
+			sourceTree = "<group>";
+		};
+		1EDCDE291A1ECC3500C11E5F /* Title */ = {
+			isa = PBXGroup;
+			children = (
+				1EDCDE2C1A1ECC3500C11E5F /* TitleView.h */,
+				1EDCDE2D1A1ECC3500C11E5F /* TitleView.m */,
+				1EDCDE2A1A1ECC3500C11E5F /* TitleLabel.h */,
+				1EDCDE2B1A1ECC3500C11E5F /* TitleLabel.m */,
+			);
+			path = Title;
+			sourceTree = "<group>";
+		};
+		1EDCDE391A22BCEA00C11E5F /* History */ = {
+			isa = PBXGroup;
+			children = (
+				1EDCDE181A1ECC3500C11E5F /* HistoryCollectionView */,
+				1EDCDE3D1A22BE5A00C11E5F /* HistoryTableViewCell.h */,
+				1EDCDE3E1A22BE5A00C11E5F /* HistoryTableViewCell.m */,
+				1EDCDE3A1A22BD3500C11E5F /* HistoryTableViewController.h */,
+				1EDCDE3B1A22BD3500C11E5F /* HistoryTableViewController.m */,
+			);
+			name = History;
 			sourceTree = "<group>";
 		};
 		1EDE9FC918B6FF2E004B8FE5 /* MeasureView */ = {
@@ -538,16 +654,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				1E044099193D7F0E00825AA3 /* User.m in Sources */,
+				1EDCDE301A1ECC3500C11E5F /* CollectionViewHeader.m in Sources */,
 				1EAB0A01194A8D5D00FFF9E4 /* NameLabel.m in Sources */,
+				1EDCDE331A1ECC3500C11E5F /* ContentScrollView.m in Sources */,
 				1E849B021936D5A8008238EE /* SettingsTableViewController.m in Sources */,
 				1E9219C8190641B2006ED639 /* XMLReader.m in Sources */,
 				1EDE9FC818B6FEC5004B8FE5 /* DataTableViewCell.m in Sources */,
 				1E849AFE1935CE21008238EE /* HistoryViewController.m in Sources */,
+				1EDCDE371A1ECC3500C11E5F /* TitleView.m in Sources */,
+				1EDCDE3C1A22BD3500C11E5F /* HistoryTableViewController.m in Sources */,
 				1E9219D71907A8CD006ED639 /* DtoUploadVentDataResult.m in Sources */,
 				1E781AEF18BC469200647ED3 /* OtherDataViewController.m in Sources */,
 				1E9219CD19064F9E006ED639 /* WebService.m in Sources */,
+				1EDCDE341A1ECC3500C11E5F /* ContentCell.m in Sources */,
+				1EDCDE421A23055E00C11E5F /* HistoryRoomData.m in Sources */,
 				1ED31BA3190E071D00E58228 /* SERVOi.m in Sources */,
 				1E8881E518EABF7E009B5E06 /* MeasureViewController.m in Sources */,
+				1EDCDE311A1ECC3500C11E5F /* HeaderCell.m in Sources */,
 				1EF0012B18B2EAEF003B5D58 /* DatabaseUtility.m in Sources */,
 				1ECAB80C1918813800161572 /* ProgressHUD.m in Sources */,
 				1EAB09FD194A8D2600FFF9E4 /* NameTextField.m in Sources */,
@@ -569,9 +692,14 @@
 				1E9DDB3318D2DDD800643295 /* BreathSoundTableViewController.m in Sources */,
 				1E9219C219063CFB006ED639 /* DtoVentExchangeUploadBatch.m in Sources */,
 				1E781AEC18BC467600647ED3 /* VentilatorDataViewController.m in Sources */,
+				1EDCDE321A1ECC3500C11E5F /* CollectionViewFlowLayout.m in Sources */,
 				1E5E569018861184005EF6AC /* main.m in Sources */,
+				1EDCDE3F1A22BE5A00C11E5F /* HistoryTableViewCell.m in Sources */,
 				1E9219D1190750D7006ED639 /* DeviceStatus.m in Sources */,
+				1EDCDE361A1ECC3500C11E5F /* TitleLabel.m in Sources */,
 				1E32C6C618B746B600DE4595 /* VentilatorMeasureView.m in Sources */,
+				1EDCDE351A1ECC3500C11E5F /* ContentCollectionView.m in Sources */,
+				1EDCDE381A1ECC3500C11E5F /* HistoryCollectionViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

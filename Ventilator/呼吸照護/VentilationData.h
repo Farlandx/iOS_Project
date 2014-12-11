@@ -121,6 +121,21 @@ typedef NS_ENUM(NSInteger, VENTILATION_MODE) {
 @property (strong, nonatomic) NSString *Shunt;
 @property (strong, nonatomic) NSString *EndTidalCO2;
 
+@property (strong, nonatomic) NSString *PAaO2;
+@property (strong, nonatomic) NSString *BP;
+@property (strong, nonatomic) NSString *IO;
+@property (strong, nonatomic) NSString *ConsciousLevel;
+@property (strong, nonatomic) NSString *Hb;
+@property (strong, nonatomic) NSString *Sugar;
+@property (strong, nonatomic) NSString *Na;
+@property (strong, nonatomic) NSString *K;
+@property (strong, nonatomic) NSString *Ca;
+@property (strong, nonatomic) NSString *Mg;
+@property (strong, nonatomic) NSString *BUN;
+@property (strong, nonatomic) NSString *Cr;
+@property (strong, nonatomic) NSString *Albumin;
+@property (strong, nonatomic) NSString *CI;
+
 #pragma mark - 以下參數顯示用,不須上傳
 //治療師姓名
 @property (strong, nonatomic) NSString *RecordOperName;

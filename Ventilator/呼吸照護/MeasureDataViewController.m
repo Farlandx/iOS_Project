@@ -19,6 +19,7 @@
 #import "RespiratoryRecord.h"
 #import "WebAPI.h"
 #import "MainViewController.h"
+#import "RespiratoryRecord.h"
 
 @interface MeasureDataViewController ()<UIAlertViewDelegate, UITextFieldDelegate, MeasureViewControllerDelegate, WebServiceDelegate, NfcA1ProtocolDelegate, WebAPIDelegate>
 

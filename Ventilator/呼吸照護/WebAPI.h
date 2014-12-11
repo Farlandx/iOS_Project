@@ -10,10 +10,11 @@
 
 @protocol WebAPIDelegate <NSObject>
 
-@required
+@optional
 - (void)uploadDone:(NSInteger)measureId;
 - (void)userListDelegate:(NSArray *)userList;
 - (void)patientListDelegate:(NSArray *)patientList;
+- (void)historyListDelegate:(NSArray *)historyList;
 
 @end
 
@@ -27,5 +28,8 @@
 - (void)uploadVentData:(NSData *)jsonData patientId:(NSString *)patientId measureId:(NSInteger)measureId;
 - (void)getUserList;
 - (void)getPatientList;
+
+- (void)getHistoryByRoomNo:(NSString *)RoomNo;
+- (void)getRespiratoryByMedicalId:(NSString *)MedicalId;
 
 @end
