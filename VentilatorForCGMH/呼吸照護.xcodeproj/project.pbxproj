@@ -426,7 +426,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		1E75E332194AA15900593E17 /* View */ = {
+		1E75E332194AA15900593E17 /* Subview */ = {
 			isa = PBXGroup;
 			children = (
 				1E8DD5D718D824DF005B41D2 /* DisplayView.h */,
@@ -436,7 +436,7 @@
 				1E75E336194AA19600593E17 /* NameTextField.h */,
 				1E75E337194AA19600593E17 /* NameTextField.m */,
 			);
-			name = View;
+			name = Subview;
 			sourceTree = "<group>";
 		};
 		1E781AF018BC46A300647ED3 /* ViewControllers */ = {
@@ -599,7 +599,7 @@
 		1EDE9FC918B6FF2E004B8FE5 /* MeasureView */ = {
 			isa = PBXGroup;
 			children = (
-				1E75E332194AA15900593E17 /* View */,
+				1E75E332194AA15900593E17 /* Subview */,
 				1EFAD8C218C6B335002118C7 /* FirstViewController.h */,
 				1EFAD8C318C6B335002118C7 /* FirstViewController.m */,
 				1E9DDB3118D2DDD800643295 /* BreathSoundTableViewController.h */,

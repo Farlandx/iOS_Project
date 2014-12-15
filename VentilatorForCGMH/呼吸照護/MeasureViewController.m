@@ -41,6 +41,10 @@
     _btnTest1.hidden = YES;
     _btnTest2.hidden = YES;
     
+    tmp_RecordOper = @"";
+    tmp_VentNo = @"";
+    tmp_ChtNo = @"";
+    
     _RecordOper.delegate = self;
     _VentNo.delegate = self;
     _ChtNo.delegate = self;
@@ -536,14 +540,12 @@
     callByReturn = YES;
     if (textField == _RecordOper) {
         if ([self checkChtNo:textField.text]) { //病患
-            _ChtNo.text = textField.text;
             [_ChtNo becomeFirstResponder];
             
             [self setChtNoTextFieldValue:textField];
             [self clearRecordOperTextFieldValue];
         }
         else if([self checkVentNo:textField.text]) { //儀器
-            _VentNo.text = textField.text;
             [_VentNo becomeFirstResponder];
             
             [self setVentNoTextFieldValue:textField];
@@ -559,14 +561,12 @@
     }
     else if (textField == _ChtNo) {
         if ([self checkRecordOper:textField.text]) { //治療師
-            _RecordOper.text = textField.text;
             [_RecordOper becomeFirstResponder];
             
             [self setRecordOperTextFieldValue:textField];
             [self clearChtNoTextFieldValue];
         }
         else if([self checkVentNo:textField.text]) { //儀器
-            _VentNo.text = textField.text;
             [_VentNo becomeFirstResponder];
             
             [self setVentNoTextFieldValue:textField];
@@ -582,14 +582,12 @@
     }
     else if (textField == _VentNo) {
         if ([self checkRecordOper:textField.text]) { //治療師
-            _RecordOper.text = textField.text;
             [_RecordOper becomeFirstResponder];
             
             [self setRecordOperTextFieldValue:textField];
             [self clearVentNoTextFieldValue];
         }
         else if ([self checkChtNo:textField.text]) { //病患
-            _ChtNo.text = textField.text;
             [_ChtNo becomeFirstResponder];
             
             [self setChtNoTextFieldValue:textField];
@@ -694,6 +692,7 @@
 
 - (void)setRecordOperTextFieldValue:(UITextField*)textField {
     tmp_RecordOper = textField.text;
+    _RecordOper.text = tmp_RecordOper;
 }
 
 - (void)clearRecordOperTextFieldValue {
@@ -707,6 +706,7 @@
 
 - (void)setChtNoTextFieldValue:(UITextField*)textField {
     tmp_ChtNo = textField.text;
+    _ChtNo.text = tmp_ChtNo;
 }
 
 - (void)clearChtNoTextFieldValue {
@@ -719,14 +719,13 @@
 }
 
 - (void)setVentNoTextFieldValue:(UITextField*)textField {
-//    tmp_VentNo = textField.text;
-    
     if (![textField.text isEqualToString:@""]) {
         [ble setConnectionString:textField.text];
         
         _VentNo.text = [textField.text componentsSeparatedByString:@"**"][0];
         tmp_VentNo = _VentNo.text;
         
+        _VentNo.text = tmp_VentNo;
         [ble startRead];
     }
 }
