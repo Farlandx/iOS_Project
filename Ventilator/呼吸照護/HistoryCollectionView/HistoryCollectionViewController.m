@@ -18,6 +18,7 @@
 #import "WebAPI.h"
 #import "MainViewController.h"
 #import "HistoryViewController.h"
+#import "ProgressHUD.h"
 
 @interface HistoryCollectionViewController () <CollectionViewHeaderProtocol, ContentCollectionViewProtocol, WebAPIDelegate>
 
@@ -65,6 +66,7 @@
     
     api = [[WebAPI alloc] initWithServerPath:((MainViewController *)self.parentViewController.parentViewController).serverPath];
     api.delegate = self;
+    [ProgressHUD show:@"資料讀取中..."];
     [api getRespiratoryByMedicalId:MedicalId];
 }
 
@@ -72,6 +74,11 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    HistoryViewController *vc = (HistoryViewController *)segue.destinationViewController;
+    vc.MedicalId = MedicalId;
 }
 
 //取得ContentCollection用的Data
@@ -243,11 +250,8 @@
             [dateFormatter stringFromDate:[NSDate date]];
         }
     }
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    HistoryViewController *vc = (HistoryViewController *)segue.destinationViewController;
-    vc.MedicalId = MedicalId;
+    
+    [ProgressHUD dismiss];
 }
 
 @end

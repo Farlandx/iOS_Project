@@ -1438,6 +1438,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="btnPrint" destination="00B-df-QvN" id="VDE-q7-CkB"/>
                         <outlet property="webView" destination="Bdo-CS-WHM" id="60K-wU-4ua"/>
                     </connections>
                 </viewController>

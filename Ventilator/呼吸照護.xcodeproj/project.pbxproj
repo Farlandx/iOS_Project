@@ -245,6 +245,15 @@
 			name = Header;
 			sourceTree = "<group>";
 		};
+		1E38090B1A3E6C5E007F60D9 /* Print */ = {
+			isa = PBXGroup;
+			children = (
+				1E849AFC1935CE21008238EE /* HistoryViewController.h */,
+				1E849AFD1935CE21008238EE /* HistoryViewController.m */,
+			);
+			name = Print;
+			sourceTree = "<group>";
+		};
 		1E5E567718861184005EF6AC = {
 			isa = PBXGroup;
 			children = (
@@ -342,8 +351,6 @@
 				1E15858418CC660A009249AF /* MeasureDataViewController.m */,
 				1E32C6B918B7064000DE4595 /* MeasureTabBarViewController.h */,
 				1E32C6BA18B7064000DE4595 /* MeasureTabBarViewController.m */,
-				1E849AFC1935CE21008238EE /* HistoryViewController.h */,
-				1E849AFD1935CE21008238EE /* HistoryViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -520,6 +527,7 @@
 		1EDCDE391A22BCEA00C11E5F /* History */ = {
 			isa = PBXGroup;
 			children = (
+				1E38090B1A3E6C5E007F60D9 /* Print */,
 				1EDCDE181A1ECC3500C11E5F /* HistoryCollectionView */,
 				1EDCDE3D1A22BE5A00C11E5F /* HistoryTableViewCell.h */,
 				1EDCDE3E1A22BE5A00C11E5F /* HistoryTableViewCell.m */,
