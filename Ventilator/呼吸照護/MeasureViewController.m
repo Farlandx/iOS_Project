@@ -665,6 +665,7 @@
 //    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
 //    [dateFormatter setDateFormat:@"yyyy/MM/dd HH:mm:ss"];
 //    myMeasureData.RecordTime = [dateFormatter stringFromDate:[NSDate date]];
+    myMeasureData.RecordTime = _RecordTime.text;
     myMeasureData.RecordOper = _RecordOper.text;
     myMeasureData.RecordDevice = [DeviceStatus getDeviceVendorUUID];
     myMeasureData.ChtNo = _ChtNo.text;

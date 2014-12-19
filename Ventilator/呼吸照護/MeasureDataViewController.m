@@ -88,7 +88,7 @@
     
     measureDataList = [db getMeasures];
     
-    [self.tableView reloadData];
+    [self reloadData];
 }
 
 - (void)getUserList {
@@ -120,6 +120,19 @@
     }
 }
 
+- (void)reloadData {
+    [self.imgSelectAll setImage:[UIImage imageNamed:@"unchecked"]];
+    
+    for (VentilationData *item in measureDataList) {
+        item.checked = NO;
+    }
+    
+    for (DataTableViewCell *cell in [self.tableView visibleCells]) {
+        [cell.imgCheckbox setImage:[UIImage imageNamed:@"unchecked"]];
+    }
+    [self.tableView reloadData];
+}
+
 #pragma mark - Delegate
 - (void)measureViewControllerDismissed:(VentilationData *)measureData {
     if (measureData != nil) {
@@ -143,11 +156,16 @@
         if (data.MeasureId == measureId) {
             [db deleteMeasure:data];
             [measureDataList removeObject:data];
-            
-            [self.tableView reloadData];
+            [self reloadData];
             return;
         }
     }
+    [ProgressHUD dismiss];
+}
+
+- (void)uploadError:(NSInteger)measureId {
+    [self reloadData];
+    [ProgressHUD showError:@"上傳失敗"];
 }
 
 - (void)userListDelegate:(NSArray *)userList {
@@ -379,6 +397,7 @@
             NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[record toDictionary] options:NSJSONWritingPrettyPrinted error:&error];
             
             [api uploadVentData:jsonData patientId:data.ChtNo measureId:data.MeasureId];
+            [ProgressHUD show:@"資料上傳中..."];
         }
         [self.imgSelectAll setImage:[UIImage imageNamed:@"unchecked"]];
     }

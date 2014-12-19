@@ -221,14 +221,16 @@
             NSMutableArray *dataArray = [[NSMutableArray alloc] init];
             
             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-            [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
+            [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
+            NSDateFormatter *displayFormatter = [[NSDateFormatter alloc] init];
+            [displayFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
             
             for (VentilationData *data in historyList) {
                 //CollectionViewHeader
                 //不這樣轉會出現尾巴有+0000奇怪的格式
                 NSDate *d = [dateFormatter dateFromString:data.RecordTime];
                 if (d) {
-                    [timeArray addObject:[dateFormatter stringFromDate:d]];
+                    [timeArray addObject:[displayFormatter stringFromDate:d]];
                 }
                 
                 //ContentCollectionView

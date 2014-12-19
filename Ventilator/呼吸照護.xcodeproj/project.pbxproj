@@ -14,6 +14,7 @@
 		1E3178E419397E020052253B /* RespiratoryRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E3178E319397E020052253B /* RespiratoryRecord.m */; };
 		1E32C6BB18B7064000DE4595 /* MeasureTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E32C6BA18B7064000DE4595 /* MeasureTabBarViewController.m */; };
 		1E32C6C618B746B600DE4595 /* VentilatorMeasureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E32C6C518B746B600DE4595 /* VentilatorMeasureView.m */; };
+		1E33FDF01A43D1B600D43B01 /* WSCoachMarksView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E33FDEF1A43D1B600D43B01 /* WSCoachMarksView.m */; };
 		1E5E568418861184005EF6AC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E5E568318861184005EF6AC /* Foundation.framework */; };
 		1E5E568618861184005EF6AC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E5E568518861184005EF6AC /* CoreGraphics.framework */; };
 		1E5E568818861184005EF6AC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E5E568718861184005EF6AC /* UIKit.framework */; };
@@ -55,6 +56,7 @@
 		1ED31BA2190E071D00E58228 /* Hamilton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ED31B98190E071D00E58228 /* Hamilton.m */; };
 		1ED31BA3190E071D00E58228 /* SERVOi.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ED31B9C190E071D00E58228 /* SERVOi.m */; };
 		1ED31BA4190E071D00E58228 /* VentilationData.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ED31B9E190E071D00E58228 /* VentilationData.m */; };
+		1ED329EB1A3FD356003A2E51 /* ScannerSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ED329EA1A3FD356003A2E51 /* ScannerSettingsViewController.m */; };
 		1ED42EB619382CD100A5224E /* JsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ED42EB519382CD100A5224E /* JsonParser.m */; };
 		1EDA9CCF18B206CA00AF987A /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EDA9CCE18B206CA00AF987A /* libsqlite3.0.dylib */; };
 		1EDCDE301A1ECC3500C11E5F /* CollectionViewHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EDCDE1C1A1ECC3500C11E5F /* CollectionViewHeader.m */; };
@@ -101,6 +103,8 @@
 		1E32C6BA18B7064000DE4595 /* MeasureTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeasureTabBarViewController.m; sourceTree = "<group>"; };
 		1E32C6C418B746B600DE4595 /* VentilatorMeasureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VentilatorMeasureView.h; sourceTree = "<group>"; };
 		1E32C6C518B746B600DE4595 /* VentilatorMeasureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VentilatorMeasureView.m; sourceTree = "<group>"; };
+		1E33FDEE1A43D1B600D43B01 /* WSCoachMarksView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSCoachMarksView.h; sourceTree = "<group>"; };
+		1E33FDEF1A43D1B600D43B01 /* WSCoachMarksView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSCoachMarksView.m; sourceTree = "<group>"; };
 		1E4E497D18B1AF9200B1721B /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		1E5BCA4018AB05DA00DF2355 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		1E5E568018861184005EF6AC /* 呼吸照護.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "呼吸照護.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -174,6 +178,8 @@
 		1ED31B9C190E071D00E58228 /* SERVOi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SERVOi.m; sourceTree = "<group>"; };
 		1ED31B9D190E071D00E58228 /* VentilationData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VentilationData.h; sourceTree = "<group>"; };
 		1ED31B9E190E071D00E58228 /* VentilationData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VentilationData.m; sourceTree = "<group>"; };
+		1ED329E91A3FD356003A2E51 /* ScannerSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScannerSettingsViewController.h; sourceTree = "<group>"; };
+		1ED329EA1A3FD356003A2E51 /* ScannerSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScannerSettingsViewController.m; sourceTree = "<group>"; };
 		1ED42EB419382CD100A5224E /* JsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JsonParser.h; sourceTree = "<group>"; };
 		1ED42EB519382CD100A5224E /* JsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JsonParser.m; sourceTree = "<group>"; };
 		1EDA9CCE18B206CA00AF987A /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
@@ -243,6 +249,15 @@
 				1E046F781932E83800F10392 /* BLE_DEVICE_TYPE.h */,
 			);
 			name = Header;
+			sourceTree = "<group>";
+		};
+		1E33FDED1A43D1A500D43B01 /* WSCoachMarksView */ = {
+			isa = PBXGroup;
+			children = (
+				1E33FDEE1A43D1B600D43B01 /* WSCoachMarksView.h */,
+				1E33FDEF1A43D1B600D43B01 /* WSCoachMarksView.m */,
+			);
+			name = WSCoachMarksView;
 			sourceTree = "<group>";
 		};
 		1E38090B1A3E6C5E007F60D9 /* Print */ = {
@@ -358,6 +373,8 @@
 		1E849AFF1936D575008238EE /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				1ED329E91A3FD356003A2E51 /* ScannerSettingsViewController.h */,
+				1ED329EA1A3FD356003A2E51 /* ScannerSettingsViewController.m */,
 				1E849B001936D5A8008238EE /* SettingsTableViewController.h */,
 				1E849B011936D5A8008238EE /* SettingsTableViewController.m */,
 			);
@@ -367,6 +384,7 @@
 		1E8881E618EAC331009B5E06 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				1E33FDED1A43D1A500D43B01 /* WSCoachMarksView */,
 				1ED42EB319382C7B00A5224E /* Json */,
 				1ECAB8211920B04F00161572 /* BLE */,
 				1ECAB8071918813800161572 /* ProgressHUD */,
@@ -681,6 +699,7 @@
 				1EDCDE311A1ECC3500C11E5F /* HeaderCell.m in Sources */,
 				1EF0012B18B2EAEF003B5D58 /* DatabaseUtility.m in Sources */,
 				1ECAB80C1918813800161572 /* ProgressHUD.m in Sources */,
+				1ED329EB1A3FD356003A2E51 /* ScannerSettingsViewController.m in Sources */,
 				1EAB09FD194A8D2600FFF9E4 /* NameTextField.m in Sources */,
 				1E8DD5D918D824DF005B41D2 /* DisplayView.m in Sources */,
 				1EFAD8C418C6B335002118C7 /* FirstViewController.m in Sources */,
@@ -707,6 +726,7 @@
 				1EDCDE361A1ECC3500C11E5F /* TitleLabel.m in Sources */,
 				1E32C6C618B746B600DE4595 /* VentilatorMeasureView.m in Sources */,
 				1EDCDE351A1ECC3500C11E5F /* ContentCollectionView.m in Sources */,
+				1E33FDF01A43D1B600D43B01 /* WSCoachMarksView.m in Sources */,
 				1EDCDE381A1ECC3500C11E5F /* HistoryCollectionViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

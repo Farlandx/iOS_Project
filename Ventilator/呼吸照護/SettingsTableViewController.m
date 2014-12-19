@@ -31,6 +31,7 @@
     [self.switchDemoMode addTarget:self action:@selector(toggleDemoMode:) forControlEvents:UIControlEventValueChanged];
     
     self.labelVersion.text = [NSString stringWithFormat:@"版本: %@", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -86,6 +87,15 @@
 }
 
 #pragma mark - Table view data source
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (cell.tag != 100) {
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    }
+}
 
 //- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 //{

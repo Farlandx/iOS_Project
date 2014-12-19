@@ -12,6 +12,7 @@
 
 @optional
 - (void)uploadDone:(NSInteger)measureId;
+- (void)uploadError:(NSInteger)measureId;
 - (void)userListDelegate:(NSArray *)userList;
 - (void)patientListDelegate:(NSArray *)patientList;
 - (void)historyListDelegate:(NSArray *)historyList;
