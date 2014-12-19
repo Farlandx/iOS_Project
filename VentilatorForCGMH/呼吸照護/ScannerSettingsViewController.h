@@ -10,4 +10,6 @@
 
 @interface ScannerSettingsViewController : UIViewController
 
+@property (strong, nonatomic) IBOutletCollection(UIImageView) NSArray *imgsCollection;
+
 @end

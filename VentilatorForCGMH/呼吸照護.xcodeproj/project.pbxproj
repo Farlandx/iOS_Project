@@ -60,6 +60,7 @@
 		1E9DDB3318D2DDD800643295 /* BreathSoundTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E9DDB3218D2DDD800643295 /* BreathSoundTableViewController.m */; };
 		1EA542221A037BD9000A7B4A /* CareSortViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EA542211A037BD9000A7B4A /* CareSortViewCell.m */; };
 		1EB210AE199A0148002D7C3D /* BLETrans.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EB210AD199A0148002D7C3D /* BLETrans.m */; };
+		1EB2D89E1A43FE1C00084238 /* WSCoachMarksView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EB2D89D1A43FE1C00084238 /* WSCoachMarksView.m */; };
 		1ECAB76C19B4428800A1E3CD /* PListManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ECAB76B19B4428800A1E3CD /* PListManager.m */; };
 		1ECAB76E19B44F9700A1E3CD /* Properties.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1ECAB76D19B44F9700A1E3CD /* Properties.plist */; };
 		1ECAB80B1918813800161572 /* ProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1ECAB8081918813800161572 /* ProgressHUD.bundle */; };
@@ -187,6 +188,8 @@
 		1EA542211A037BD9000A7B4A /* CareSortViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CareSortViewCell.m; sourceTree = "<group>"; };
 		1EB210AC199A0148002D7C3D /* BLETrans.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLETrans.h; sourceTree = "<group>"; };
 		1EB210AD199A0148002D7C3D /* BLETrans.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLETrans.m; sourceTree = "<group>"; };
+		1EB2D89C1A43FE1C00084238 /* WSCoachMarksView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSCoachMarksView.h; sourceTree = "<group>"; };
+		1EB2D89D1A43FE1C00084238 /* WSCoachMarksView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSCoachMarksView.m; sourceTree = "<group>"; };
 		1ECAB76A19B4428800A1E3CD /* PListManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PListManager.h; sourceTree = "<group>"; };
 		1ECAB76B19B4428800A1E3CD /* PListManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PListManager.m; sourceTree = "<group>"; };
 		1ECAB76D19B44F9700A1E3CD /* Properties.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Properties.plist; sourceTree = "<group>"; };
@@ -460,6 +463,7 @@
 		1E8881E618EAC331009B5E06 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				1EB2D89B1A43FE0600084238 /* WSCoachMarksView */,
 				1EB210AB199A0148002D7C3D /* BLETrans */,
 				1ECAB8211920B04F00161572 /* BLE */,
 				1E58EF651999A6C400D4E20E /* GZIP */,
@@ -477,6 +481,15 @@
 				1EB210AD199A0148002D7C3D /* BLETrans.m */,
 			);
 			path = BLETrans;
+			sourceTree = "<group>";
+		};
+		1EB2D89B1A43FE0600084238 /* WSCoachMarksView */ = {
+			isa = PBXGroup;
+			children = (
+				1EB2D89C1A43FE1C00084238 /* WSCoachMarksView.h */,
+				1EB2D89D1A43FE1C00084238 /* WSCoachMarksView.m */,
+			);
+			name = WSCoachMarksView;
 			sourceTree = "<group>";
 		};
 		1ECAB76919B4425B00A1E3CD /* PListManager */ = {
@@ -771,6 +784,7 @@
 				1E5E569018861184005EF6AC /* main.m in Sources */,
 				1E9219D1190750D7006ED639 /* DeviceStatus.m in Sources */,
 				1E32C6C618B746B600DE4595 /* VentilatorMeasureView.m in Sources */,
+				1EB2D89E1A43FE1C00084238 /* WSCoachMarksView.m in Sources */,
 				1E75E335194AA16C00593E17 /* NameLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

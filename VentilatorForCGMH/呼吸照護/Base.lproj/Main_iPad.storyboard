@@ -1902,12 +1902,42 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="步驟二" id="GSj-yn-yQX">
-                        <barButtonItem key="rightBarButtonItem" title="結束" id="qhJ-Gd-E06">
-                            <connections>
-                                <action selector="closeView:" destination="kmJ-XJ-bUu" id="HXp-KR-0KQ"/>
-                            </connections>
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="uuc-G9-V3d">
+                            <view key="customView" contentMode="scaleToFill" id="9fg-fV-jqK">
+                                <rect key="frame" x="0.0" y="0.0" width="170" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="2Jv-FO-yHZ">
+                                        <rect key="frame" x="132" y="2" width="30" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="結束">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="closeView:" destination="kmJ-XJ-bUu" eventType="touchUpInside" id="Rcm-pI-e1N"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="aHx-BL-s7s">
+                                        <rect key="frame" x="55" y="2" width="60" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="掃瞄助手">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="scanHelper:" destination="kmJ-XJ-bUu" eventType="touchUpInside" id="3q6-h7-YWi"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </view>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outletCollection property="imgsCollection" destination="0ct-4i-xUY" id="ZhT-Tg-QkT"/>
+                        <outletCollection property="imgsCollection" destination="4Ip-uv-BEw" id="5IM-XC-tpx"/>
+                        <outletCollection property="imgsCollection" destination="Hew-LE-Vja" id="Rd6-7I-wvf"/>
+                        <outletCollection property="imgsCollection" destination="nI9-1n-VTk" id="ebk-rH-PGj"/>
+                        <outletCollection property="imgsCollection" destination="sWV-iq-ApQ" id="QSy-gj-n6R"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uEf-jj-rnN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1951,13 +1981,45 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" title="步驟三" id="PZU-4w-M7m">
-                        <barButtonItem key="rightBarButtonItem" title="結束" id="sjq-MK-R79">
-                            <connections>
-                                <action selector="closeView:" destination="Lh6-vV-xVy" id="gkK-Hd-cbY"/>
-                            </connections>
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="kiZ-L9-RCM">
+                            <view key="customView" contentMode="scaleToFill" id="3hp-3p-fF3">
+                                <rect key="frame" x="0.0" y="0.0" width="170" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="h5K-ao-uGF">
+                                        <rect key="frame" x="132" y="2" width="30" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="結束">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="closeView:" destination="Lh6-vV-xVy" eventType="touchUpInside" id="Est-Qv-OKa"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="nZc-2j-DGK">
+                                        <rect key="frame" x="55" y="2" width="60" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="掃瞄助手">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="scanHelper:" destination="Lh6-vV-xVy" eventType="touchUpInside" id="X6e-qf-Z58"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </view>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outletCollection property="imgsCollection" destination="Bw7-Vl-rca" id="AS9-bO-HOw"/>
+                        <outletCollection property="imgsCollection" destination="OPH-bD-a1T" id="YXt-kA-5K9"/>
+                        <outletCollection property="imgsCollection" destination="UjO-Li-yi0" id="aIx-Gl-4iz"/>
+                        <outletCollection property="imgsCollection" destination="N6K-ie-ELq" id="YBL-rH-fUh"/>
+                        <outletCollection property="imgsCollection" destination="hw4-bM-qCb" id="Uds-m7-fYQ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Tm-Wv-XPe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

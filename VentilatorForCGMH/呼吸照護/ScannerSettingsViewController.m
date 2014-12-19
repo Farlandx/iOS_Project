@@ -7,16 +7,44 @@
 //
 
 #import "ScannerSettingsViewController.h"
+#import "WSCoachMarksView.h"
+
+#define __PADDING 30.0f
 
 @interface ScannerSettingsViewController ()
 
 @end
 
-@implementation ScannerSettingsViewController
+@implementation ScannerSettingsViewController {
+    WSCoachMarksView *coachMarksView;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    coachMarksView = [[WSCoachMarksView alloc] initWithFrame:self.view.bounds];
+    NSMutableArray *coachMarks = [[NSMutableArray alloc] init];
+    for (int i = 0; i < self.imgsCollection.count; i++) {
+        UIImageView *img = self.imgsCollection[i];
+        CGRect rect = CGRectMake(img.frame.origin.x - __PADDING / 2, img.frame.origin.y, img.frame.size.width + __PADDING, img.frame.size.height);
+        if (i < self.imgsCollection.count - 1) {
+            [coachMarks addObject:@{
+                                    @"rect": [NSValue valueWithCGRect:rect],
+                                    @"caption": @"點擊畫面選取下一個條碼"
+                                    }];
+        }
+        else {
+            [coachMarks addObject:@{
+                                    @"rect": [NSValue valueWithCGRect:rect],
+                                    @"caption": @""
+                                    }];
+        }
+    }
+    
+    coachMarksView.coachMarks = coachMarks;
+    coachMarksView.enableSkipButton = YES;
+    coachMarksView.enableContinueLabel = NO;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -32,8 +60,17 @@
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
 }
-*/
+ */
 
+- (void)startMarksView {
+    [self.view addSubview:coachMarksView];
+    
+    [coachMarksView start];
+}
+
+- (IBAction)scanHelper:(id)sender {
+    [self startMarksView];
+}
 - (IBAction)closeView:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
