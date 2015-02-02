@@ -157,7 +157,7 @@
             [db deleteMeasure:data];
             [measureDataList removeObject:data];
             [self reloadData];
-            return;
+            break;
         }
     }
     [ProgressHUD dismiss];

@@ -113,6 +113,8 @@
     //院區確認
     NSDictionary *hospital = [plManager getHospital];
     if (hospital && [self checkHasHospital:hospital]) {
+        //##
+        return;
         [self getCardList];
     }
 }

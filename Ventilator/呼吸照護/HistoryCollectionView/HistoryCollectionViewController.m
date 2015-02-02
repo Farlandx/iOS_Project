@@ -222,8 +222,10 @@
             
             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
             [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
+            [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
             NSDateFormatter *displayFormatter = [[NSDateFormatter alloc] init];
             [displayFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+            [displayFormatter setTimeZone:[NSTimeZone localTimeZone]];
             
             for (VentilationData *data in historyList) {
                 //CollectionViewHeader

@@ -13,29 +13,27 @@
 #define FOO_PATTERN @"0123456789."
 #define FOO_IE_PATTERN @"0123456789.:"
 
-@interface VentilatorDataViewController ()
+#define DROPDOWNVIEW_TAG 1023
+#define DROPDOWNVIEW_HEIGHT 300.0
+#define DROPDOWN_LIST_ITEMS @[@"Item 1", @"Item 2", @"Item 3", @"Item 4", @"Item 5", @"Item 6", @"Item 7", @"Item 8", @"Item 9", @"Item 10"]
+
+@interface VentilatorDataViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @end
 
 @implementation VentilatorDataViewController {
     CGRect textRect;
+    BOOL isDropdownViewShow;
 }
 
 @synthesize viewMode;
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    isDropdownViewShow = NO;
     
     //SwipeGesture
     UISwipeGestureRecognizer *swipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeTrigger:)];
@@ -44,6 +42,8 @@
     
     _displayView.delegate = self;
     [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.origin.x, _displayView.frame.size.height + self.tabBarController.tabBar.frame.size.height)];
+    
+    _VentilationMode.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     
     if (viewMode) {
         for(UIView *v in _displayView.subviews) {
@@ -79,6 +79,10 @@
     }
 }
 
+- (void)dealloc {
+    _delegate = nil;
+}
+
 -(void)viewWillAppear:(BOOL)animated
 {
     [UIView transitionWithView:self.view
@@ -97,6 +101,99 @@
 }
 
 - (void)displayViewTouchesBeganDone {
+    [self removeDropdownView];
+}
+
+#pragma mark - Button & DropdownView
+- (IBAction)btnModeClick:(id)sender {
+    if (isDropdownViewShow) {
+        [self removeDropdownView];
+        return;
+    }
+    [self showDropdownViewBelowSender:sender];
+}
+
+- (void)showDropdownViewBelowSender:(id)sender {
+    CGRect rect = ((UIView *)sender).frame;
+    
+    UIView *dropdownView = [[UIView alloc] initWithFrame:CGRectMake(rect.origin.x,
+                                                                    rect.origin.y + rect.size.height,
+                                                                    rect.size.width,
+                                                                    DROPDOWNVIEW_HEIGHT)];
+    dropdownView.tag = DROPDOWNVIEW_TAG;
+    dropdownView.backgroundColor = [UIColor whiteColor];
+    dropdownView.alpha = 0;
+    
+    UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:dropdownView.bounds];
+    dropdownView.layer.masksToBounds = NO;
+    dropdownView.layer.shadowColor = [UIColor blackColor].CGColor;
+    dropdownView.layer.shadowOffset = CGSizeMake(0.0f, 5.0f);
+    dropdownView.layer.shadowOpacity = 0.5f;
+    dropdownView.layer.shadowPath = shadowPath.CGPath;
+    
+    UITableView *listTable = [[UITableView alloc] initWithFrame:CGRectMake(0,
+                                                                           0,
+                                                                           dropdownView.frame.size.width,
+                                                                           DROPDOWNVIEW_HEIGHT)
+                                                          style:UITableViewStylePlain];
+    listTable.alpha = 0;
+    listTable.dataSource = self;
+    listTable.delegate = self;
+    
+    [dropdownView addSubview:listTable];
+    [dropdownView bringSubviewToFront:listTable];
+    
+    [_displayView addSubview:dropdownView];
+    [_displayView bringSubviewToFront:dropdownView];
+    
+    //animation
+    [UIView animateWithDuration:0.3f animations:^ {
+//        CGRect dropdownViewRect = dropdownView.frame;
+//        dropdownViewRect.size.height = DROPDOWNVIEW_HEIGHT;
+//        dropdownView.frame = dropdownViewRect;
+//        
+//        CGRect listTableRect = listTable.frame;
+//        listTableRect.size.height = DROPDOWNVIEW_HEIGHT;
+//        listTable.frame = listTableRect;
+        dropdownView.alpha = 1.0f;
+        listTable.alpha = 1.0f;
+    }];
+    
+    isDropdownViewShow = YES;
+}
+
+- (void)removeDropdownView {
+    if (!isDropdownViewShow) {
+        return;
+    }
+    
+    for (UIView *view in _displayView.subviews) {
+        if (view.tag == DROPDOWNVIEW_TAG) {
+            [view removeFromSuperview];
+            isDropdownViewShow = NO;
+            return;
+        }
+    }
+}
+
+#pragma mark - TableView
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return DROPDOWN_LIST_ITEMS.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [[UITableViewCell alloc] init];
+    cell.textLabel.text = DROPDOWN_LIST_ITEMS[indexPath.row];
+    
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *mode = [tableView cellForRowAtIndexPath:indexPath].textLabel.text;
+    [_VentilationMode setTitle:mode forState:UIControlStateNormal];
+    [_delegate VentilationModeSelected:mode];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self removeDropdownView];
 }
 
 #pragma mark - Keyboard
@@ -161,7 +258,7 @@
 #pragma mark - Methods
 - (void)setMeasureData:(VentilationData *)measureData {
     //Ventilation
-    _VentilationMode.text = measureData.VentilationMode;
+    _VentilationMode.titleLabel.text = measureData.VentilationMode;
     
     //Tidal Volume
     _TidalVolumeSet.text = measureData.TidalVolumeSet;
@@ -282,7 +379,7 @@
 
 - (void)getMeasureData:(VentilationData *)measureData {
     //Ventilation
-    measureData.VentilationMode = _VentilationMode.text;
+    measureData.VentilationMode = _VentilationMode.titleLabel.text;
     
     //Tidal Volume
     measureData.TidalVolumeSet = _TidalVolumeSet.text;

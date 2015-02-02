@@ -66,14 +66,11 @@
     
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
-        if (data.length > 0 && connectionError == nil) {
-            
-        }
-        else if ([httpResponse statusCode] == 200) {
+        if ([httpResponse statusCode] == 200) {
             [_delegate uploadDone:measureId];
         }
-        else if (connectionError) {
-//            [_delegate wsConnectionError:connectionError];
+        else {
+            [_delegate uploadError:measureId];
         }
     }];
 }

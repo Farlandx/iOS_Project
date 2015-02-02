@@ -10,7 +10,16 @@
 #import "VentilationData.h"
 #import "DisplayView.h"
 
+@protocol VentilatorDataViewDelegate <NSObject>
+
+@optional
+- (void)VentilationModeSelected:(NSString *)mode;
+
+@end
+
 @interface VentilatorDataViewController : UIViewController<UITextFieldDelegate, DisplayViewDelegate>
+
+@property (assign, nonatomic) id<VentilatorDataViewDelegate> delegate;
 
 @property (nonatomic) BOOL viewMode;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -22,7 +31,8 @@
 
 #pragma mark - 量測資料
 //Ventilation
-@property (strong, nonatomic) IBOutlet UITextField *VentilationMode;
+//@property (strong, nonatomic) IBOutlet UITextField *VentilationMode;
+@property (strong, nonatomic) IBOutlet UIButton *VentilationMode;
 
 //Tidal Volume
 @property (strong, nonatomic) IBOutlet UITextField *TidalVolumeSet;

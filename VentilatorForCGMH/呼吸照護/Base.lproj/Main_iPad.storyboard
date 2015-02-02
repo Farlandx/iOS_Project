@@ -360,12 +360,6 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="v8c-bY-2rV">
-                                                <rect key="frame" x="20" y="55" width="356" height="30"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                <textInputTraits key="textInputTraits"/>
-                                            </textField>
                                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ventilation Rate" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="8gy-VI-M6a">
                                                 <rect key="frame" x="20" y="93" width="356" height="21"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -994,6 +988,16 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="YmK-kM-8Fu">
+                                                <rect key="frame" x="20" y="55" width="356" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <state key="normal" title="請選擇或讀取模式">
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="btnModeClick:" destination="TBH-XW-hIz" eventType="touchUpInside" id="WOk-Jb-EZl"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                     </view>
@@ -1044,7 +1048,7 @@
                         <outlet property="Tlow" destination="mL4-5q-dPw" id="CjJ-4B-AgY"/>
                         <outlet property="TubeCompensation" destination="u96-6M-Lp1" id="ROa-3v-riO"/>
                         <outlet property="VentilationHertz" destination="ZIt-Kr-Qv8" id="SSs-1a-3z6"/>
-                        <outlet property="VentilationMode" destination="v8c-bY-2rV" id="adt-hc-qeP"/>
+                        <outlet property="VentilationMode" destination="YmK-kM-8Fu" id="tXh-q0-XTc"/>
                         <outlet property="VentilationRateSet" destination="uHU-jy-dys" id="rb8-cH-jYK"/>
                         <outlet property="VentilationRateTotal" destination="yyS-LK-YwR" id="h1N-2l-k6F"/>
                         <outlet property="VolumeAssist" destination="gNq-yH-DJf" id="Zzi-Mm-oN0"/>

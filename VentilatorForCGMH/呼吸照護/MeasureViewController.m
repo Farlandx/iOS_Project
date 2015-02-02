@@ -17,7 +17,7 @@
 #import "PListManager.h"
 #import "HospitalName.h"
 
-@interface MeasureViewController ()
+@interface MeasureViewController () <VentilatorDataViewDelegate>
 
 @end
 
@@ -64,7 +64,7 @@
     db = [[DatabaseUtility alloc] init];
     [db initDatabase];
     
-    if (myMeasureData != nil) {
+    if (myMeasureData) {
         _RecordTime.text = myMeasureData.RecordTime;
         _RecordOper.text = myMeasureData.RecordOper;
         _ChtNo.text = myMeasureData.ChtNo;
@@ -80,11 +80,25 @@
                     for (UIViewController *v in ((MeasureTabBarViewController *)child).viewControllers) {
                         if ([v isKindOfClass:[VentilatorDataViewController class]]) {
                             VentilatorDataViewController *vc = (VentilatorDataViewController *)v;
+                            vc.delegate = self;
                             vc.viewMode = YES;
                         }
                         else if ([v isKindOfClass:[OtherDataViewController class]]) {
                             OtherDataViewController *vc = (OtherDataViewController *)v;
                             vc.viewMode = YES;
+                        }
+                    }
+                    
+                }
+            }
+        }
+        else {
+            for (UIViewController *child in self.childViewControllers) {
+                if ([child isKindOfClass:[MeasureTabBarViewController class]]) {
+                    for (UIViewController *v in ((MeasureTabBarViewController *)child).viewControllers) {
+                        if ([v isKindOfClass:[VentilatorDataViewController class]]) {
+                            VentilatorDataViewController *vc = (VentilatorDataViewController *)v;
+                            vc.delegate = self;
                         }
                     }
                     
@@ -597,7 +611,9 @@
             [self setVentNoTextFieldValue:textField];
         }
         else {
-            textField.text = @"";
+//            textField.text = @"";
+            tmp_VentNo = textField.text;
+            [textField resignFirstResponder];
         }
         [self setNextResponder:textField];
     }
@@ -620,6 +636,12 @@
     }
     
     return YES;
+}
+
+#pragma mark - VentilatorDataViewDelegate
+- (void)VentilationModeSelected:(NSString *)mode {
+    myMeasureData.VentilationMode = mode;
+    _btnSave.enabled = _RecordOper.text.length && _ChtNo.text.length && _VentNo.text.length && mode.length;
 }
 
 #pragma mark - Methods
@@ -774,7 +796,7 @@
 
 //並且字串長度大於12
 - (BOOL)checkVentNo:(NSString *)text {
-    if (text.length >= 12) {
+    if (text.length >= 12 && [text rangeOfString:@"**"].location != NSNotFound) {
         return YES;
     }
     return NO;
