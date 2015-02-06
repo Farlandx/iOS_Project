@@ -15,7 +15,7 @@
 
 #define DROPDOWNVIEW_TAG 1023
 #define DROPDOWNVIEW_HEIGHT 300.0
-#define DROPDOWN_LIST_ITEMS @[@"Item 1", @"Item 2", @"Item 3", @"Item 4", @"Item 5", @"Item 6", @"Item 7", @"Item 8", @"Item 9", @"Item 10"]
+#define DROPDOWN_LIST_ITEMS @[@"NC", @"NC/H", @"Mask", @"Tr-Mask", @"T-P", @"O₂ hood", @"hood/heater", @"O₂ inhalation", @"S-M", @"S-M/H", @"V-M", @"Tr.O₂", @"Tr.O₂/H", @"NRM", @"HF-Mask", @"HF-TP", @"HF FM", @"O₂ blow", @"RA"]
 
 @interface VentilatorDataViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -258,7 +258,7 @@
 #pragma mark - Methods
 - (void)setMeasureData:(VentilationData *)measureData {
     //Ventilation
-    _VentilationMode.titleLabel.text = measureData.VentilationMode;
+    [_VentilationMode setTitle:(measureData.VentilationMode.length > 0 ? measureData.VentilationMode : @"請選擇或讀取模式") forState:UIControlStateNormal];
     
     //Tidal Volume
     _TidalVolumeSet.text = measureData.TidalVolumeSet;
