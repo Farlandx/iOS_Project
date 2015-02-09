@@ -24,7 +24,7 @@
 @implementation MeasureViewController {
     DatabaseUtility *db;
     
-    BOOL isStartListeningThread, isFocusOnRecordOper, isFocusOnVentNo, callByReturn;
+    BOOL isStartListeningThread, isFocusOnRecordOper, isFocusOnVentNo, callByReturn, viewDismiss;
     NSString *mac_address, *tmp_RecordOper, *tmp_VentNo, *tmp_ChtNo;
 }
 
@@ -53,6 +53,7 @@
     isFocusOnRecordOper = NO;
     isFocusOnVentNo = NO;
     callByReturn = NO;
+    viewDismiss = NO;
     
     mac_address = @"";
     
@@ -551,6 +552,10 @@
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if (viewDismiss) {
+        return YES;
+    }
+    
     callByReturn = YES;
     if (textField == _RecordOper) {
         if ([self checkChtNo:textField.text]) { //病患
@@ -697,6 +702,7 @@
 }
 
 - (IBAction)btnCancleClick:(id)sender {
+    viewDismiss = YES;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
