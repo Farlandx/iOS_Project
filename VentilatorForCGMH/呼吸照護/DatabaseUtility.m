@@ -244,6 +244,12 @@
             else {
                 NSLog(@"ABG_UPDATE_RECORD Table craeted successfully.");
             }
+            
+            //建立呼吸器與財編對應table
+            sql_stmt = @"CREATE TALBE IF NOT EXISTS VENTILATOR_LIST (VentilatorNo TEXT PRIMARY KEY, VentilatorModel TEXT, ExternalNo TEXT)";
+            if (sqlite3_exec(sqliteDb, [sql_stmt UTF8String], NULL, NULL, &errMsg) != SQLITE_OK) {
+                NSLog(@"Failed to create VENTILATOR_LIST table.");
+            }
             sqlite3_close(sqliteDb);
         }
         else {
@@ -299,12 +305,14 @@
     if (![self checkColumnExists:@"AnalysisTime" table:@"MEASURE_DATA"]) {
         [self addColumn:@"AnalysisTime" table:@"MEASURE_DATA" property:@"TEXT"];
     }
-    
-    
     NSString *sql_stmt = @"CREATE TABLE IF NOT EXISTS ABG_UPDATE_RECORD (ChtNo TEXT PRIMARY KEY, LastUpdateTime TEXT, CreateTime TEXT)";
     if (sqlite3_exec(sqliteDb, [sql_stmt UTF8String], NULL, NULL, NULL) != SQLITE_OK) {
     }
     else {
+    }
+    //建立財編table
+    sql_stmt = @"CREATE TALBE IF NOT EXISTS VENTILATOR_LIST (VentilatorNo TEXT PRIMARY KEY, VentilatorModel TEXT, ExternalNo TEXT)";
+    if (sqlite3_exec(sqliteDb, [sql_stmt UTF8String], NULL, NULL, NULL) != SQLITE_OK) {
     }
 }
 
@@ -1695,6 +1703,84 @@
         sqlite3_finalize(statement);
         sqlite3_close(sqliteDb);
     }
+}
+
+#pragma mark - ExchangeGenVentilatorList
+- (void)saveExchangeVentilatorList:(NSArray *)data {
+    sqlite3_stmt *statement = NULL;
+    const char *dbpath = [databasePath UTF8String];
+    
+    if (data.count > 0) {
+        [self deleteExchangeVentilatorList];
+        if (sqlite3_open(dbpath, &sqliteDb) == SQLITE_OK) {
+            
+            sqlite3_exec(sqliteDb, "BEGIN EXCLUSIVE TRANSACTION", 0, 0, 0);
+            
+            for (DtoVentExchangeGetVentilatorList *d in data) {
+                NSString *insertSQL = [NSString stringWithFormat:
+                                       @"INSERT INTO VENTILATOR_LIST (VentilatorNo, VentilatorModel, ExternalNo) VALUES ('%@', '%@', '%@')", d.VentilatorNo, d.VentilatorModel, d.ExternalNo];
+                
+                const char *insert_stmt = [insertSQL UTF8String];
+                sqlite3_prepare_v2(sqliteDb, insert_stmt, -1, &statement, NULL);
+                int sqliteState = sqlite3_step(statement);
+                NSLog(@"%s", __func__);
+            }
+            
+            sqlite3_exec(sqliteDb, "COMMIT TRANSACTION", 0, 0, 0);
+        }
+        
+        sqlite3_finalize(statement);
+        sqlite3_close(sqliteDb);
+    }
+}
+
+- (DtoVentExchangeGetVentilatorList *)getExchangeVentilatorListByExternalNo:(NSString *)ExternalNo {
+    DtoVentExchangeGetVentilatorList *list = [[DtoVentExchangeGetVentilatorList alloc] init];
+    
+    const char *dbpath = [databasePath UTF8String];
+    sqlite3_stmt *statement;
+    
+    if (sqlite3_open(dbpath, &sqliteDb) == SQLITE_OK) {
+        NSString *querySQL = [NSString stringWithFormat:@"SELECT VentilatorNo, VentilatorModel, ExternalNo FROM VENTILATOR_LIST WHERE ExternalNo = '%@'", ExternalNo];
+        const char *query_stmt = [querySQL UTF8String];
+        
+        if (sqlite3_prepare_v2(sqliteDb, query_stmt, -1, &statement, NULL) == SQLITE_OK) {
+            while (sqlite3_step(statement) == SQLITE_ROW) {
+                list.VentilatorNo = [self getColumnString:(char *)sqlite3_column_text(statement, 0)];
+                list.VentilatorModel = [self getColumnString:(char *)sqlite3_column_text(statement, 1)];
+                list.ExternalNo = [self getColumnString:(char *)sqlite3_column_text(statement, 2)];
+                break;
+            }
+            sqlite3_finalize(statement);
+        }
+        sqlite3_close(sqliteDb);
+    }
+    
+    return list;
+}
+
+- (BOOL)deleteExchangeVentilatorList {
+    BOOL isSuccess = false;
+    sqlite3_stmt *statement = NULL;
+    const char *dbpath = [databasePath UTF8String];
+    
+    if (sqlite3_open(dbpath, &sqliteDb) == SQLITE_OK) {
+        //刪掉所有資料
+        NSString *deleteSQL = [NSString stringWithFormat:@"DELETE FROM VENTILATOR_LIST"];
+        
+        char *errMsg;
+        if (sqlite3_exec(sqliteDb, [deleteSQL UTF8String], NULL, NULL, &errMsg) != SQLITE_OK) {
+            isSuccess = true;
+        }
+        else {
+            NSLog(@"Delete Error:%s", errMsg);
+        }
+        
+        sqlite3_finalize(statement);
+        sqlite3_close(sqliteDb);
+    }
+    
+    return isSuccess;
 }
 
 @end

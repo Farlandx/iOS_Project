@@ -15,6 +15,7 @@
 #import "Patient.h"
 #import "PListManager.h"
 #import "DtoGetAssociatedRespCareRecRslt.h"
+#import "DtoVentExchangeGetVentilatorList.h"
 #import "DtoRespCareCol.h"
 
 #ifndef ___webservice
@@ -33,6 +34,7 @@
 #define WS_GET_CUR_RT_CARD_LIST_VER_ID @"GetCurRtCardListVerId"
 #define WS_APPLOGIN @"AppLogin"
 #define WS_GET_PATIENT_LIST @"GetPatientList"
+#define WS_GET_VENTILATOR_LIST @"GetVentilatorList"
 #define WS_UPLOAD_VENT_DATA @"UploadVentData"
 #define WS_RESP_CARE_REC_BY_PATIENT @"GetRespCareRecByPatient"
 #define WS_REQUEST_TIMEOUT_INTERVAL 10 //Second
@@ -460,7 +462,7 @@
                                                                   options:XMLReaderOptionsProcessNamespaces
                                                                     error:&error];
             NSMutableArray *result = [[NSMutableArray alloc] init];
-            //##這裡的架構應該會需要改變，然後要測試單筆和多筆
+            
             NSDictionary *dict = [xmlDictionary valueForKeyPath:@"Envelope.Body.GetRespCareRecByPatientResponse.GetRespCareRecByPatientResult.DtoGetAssociatedRespCareRecRslt"];
             
             if ([[dict valueForKey:@"ChtNo"] count] == 1) {
@@ -504,6 +506,43 @@
                 }
             }
             [_delegate wsResponseABGData:result];
+        }
+        else if (connectionError) {
+            [_delegate wsConnectionError:connectionError];
+        }
+        else {
+            [_delegate wsError];
+        }
+    }];
+}
+
+- (void)getVentilatorList {
+    NSString *soapMessage = @"<?xml version=\"1.0\" encoding=\"utf-8\"?>"
+    "<soap12:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap12=\"http://www.w3.org/2003/05/soap-envelope\">"
+    "<soap12:Body>"
+    "<GetVentilatorList xmlns=\"http://cgmh.org.tw/g27/\" />"
+    "</soap12:Body>"
+    "</soap12:Envelope>";
+    
+    NSURLRequest *request = [self getSOAPRequestByWSString:WS_GET_VENTILATOR_LIST soapMessage:soapMessage];
+    
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        if (data.length > 0 && connectionError == nil) {
+            NSMutableArray *result = [[NSMutableArray alloc] init];
+            NSError *error = nil;
+            NSDictionary *xmlDictionary = [XMLReader dictionaryForXMLData:data
+                                                                  options:XMLReaderOptionsProcessNamespaces
+                                                                    error:&error];
+            
+            for (NSDictionary *card in [xmlDictionary valueForKeyPath:@"Envelope.Body.GetVentilatorListResponse.GetVentilatorListResult.DtoVentExchangeGetVentilatorList"]) {
+                DtoVentExchangeGetVentilatorList *v = [[DtoVentExchangeGetVentilatorList alloc] init];
+                v.VentilatorNo = [card valueForKeyPath:@"VentilatorNo.text"];
+                v.VentilatorModel = [card valueForKeyPath:@"VentilatorModel.text"];
+                v.ExternalNo = [card valueForKeyPath:@"ExternalNo.text"];
+                [result addObject:v];
+            }
+            
+            [_delegate wsResponseGetVentilatorList:result];
         }
         else if (connectionError) {
             [_delegate wsConnectionError:connectionError];

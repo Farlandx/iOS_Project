@@ -47,6 +47,7 @@
 		1E781AEC18BC467600647ED3 /* VentilatorDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E781AEB18BC467600647ED3 /* VentilatorDataViewController.m */; };
 		1E781AEF18BC469200647ED3 /* OtherDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E781AEE18BC469200647ED3 /* OtherDataViewController.m */; };
 		1E8881E518EABF7E009B5E06 /* MeasureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E8881E418EABF7E009B5E06 /* MeasureViewController.m */; };
+		1E8A82741A9D6719005FFA53 /* DtoVentExchangeGetVentilatorList.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E8A82731A9D6719005FFA53 /* DtoVentExchangeGetVentilatorList.m */; };
 		1E8DD5D918D824DF005B41D2 /* DisplayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E8DD5D818D824DF005B41D2 /* DisplayView.m */; };
 		1E9219C219063CFB006ED639 /* DtoVentExchangeUploadBatch.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E9219C019063CFB006ED639 /* DtoVentExchangeUploadBatch.m */; };
 		1E9219C8190641B2006ED639 /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E9219C7190641B2006ED639 /* XMLReader.m */; };
@@ -164,6 +165,8 @@
 		1E781AEE18BC469200647ED3 /* OtherDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherDataViewController.m; sourceTree = "<group>"; };
 		1E8881E318EABF7E009B5E06 /* MeasureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeasureViewController.h; sourceTree = "<group>"; };
 		1E8881E418EABF7E009B5E06 /* MeasureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeasureViewController.m; sourceTree = "<group>"; };
+		1E8A82721A9D6719005FFA53 /* DtoVentExchangeGetVentilatorList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DtoVentExchangeGetVentilatorList.h; sourceTree = "<group>"; };
+		1E8A82731A9D6719005FFA53 /* DtoVentExchangeGetVentilatorList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DtoVentExchangeGetVentilatorList.m; sourceTree = "<group>"; };
 		1E8DD5D718D824DF005B41D2 /* DisplayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayView.h; sourceTree = "<group>"; };
 		1E8DD5D818D824DF005B41D2 /* DisplayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisplayView.m; sourceTree = "<group>"; };
 		1E9219BF19063CFB006ED639 /* DtoVentExchangeUploadBatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DtoVentExchangeUploadBatch.h; sourceTree = "<group>"; };
@@ -605,6 +608,8 @@
 				1E73BF861A0A1343003CBC0F /* DtoGetAssociatedRespCareRecRslt.m */,
 				1E73BF881A0A1D66003CBC0F /* DtoRespCareCol.h */,
 				1E73BF891A0A1D66003CBC0F /* DtoRespCareCol.m */,
+				1E8A82721A9D6719005FFA53 /* DtoVentExchangeGetVentilatorList.h */,
+				1E8A82731A9D6719005FFA53 /* DtoVentExchangeGetVentilatorList.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -783,6 +788,7 @@
 				1EA542221A037BD9000A7B4A /* CareSortViewCell.m in Sources */,
 				1E5E569018861184005EF6AC /* main.m in Sources */,
 				1E9219D1190750D7006ED639 /* DeviceStatus.m in Sources */,
+				1E8A82741A9D6719005FFA53 /* DtoVentExchangeGetVentilatorList.m in Sources */,
 				1E32C6C618B746B600DE4595 /* VentilatorMeasureView.m in Sources */,
 				1EB2D89E1A43FE1C00084238 /* WSCoachMarksView.m in Sources */,
 				1E75E335194AA16C00593E17 /* NameLabel.m in Sources */,

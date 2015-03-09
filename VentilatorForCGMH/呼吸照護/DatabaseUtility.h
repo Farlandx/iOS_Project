@@ -10,6 +10,7 @@
 #import <sqlite3.h>
 #import "VentilationData.h"
 #import "DtoVentExchangeUploadBatch.h"
+#import "DtoVentExchangeGetVentilatorList.h"
 #import "Patient.h"
 #import "ABGUpdateRecord.h"
 
@@ -50,5 +51,9 @@
 #pragma mark - ABG
 - (ABGUpdateRecord *) getABGUpdateRecordByChtNo:(NSString *)ChtNo;
 - (BOOL) updateABGUpdateRecordByChtNo:(NSString *)ChtNo;
+
+#pragma mark - ExchangeGenVentilatorList
+- (void)saveExchangeVentilatorList:(NSArray *)data;
+- (DtoVentExchangeGetVentilatorList *)getExchangeVentilatorListByExternalNo:(NSString *)ExternalNo;
 
 @end

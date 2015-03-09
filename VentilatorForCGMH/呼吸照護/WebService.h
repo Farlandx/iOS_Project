@@ -19,6 +19,7 @@
 - (void)wsResponseCurRtCardListVerId:(int)verId;
 - (void)wsResponsePatientList:(NSMutableArray *)data;
 - (void)wsResponseABGData:(NSMutableArray *)data;
+- (void)wsResponseGetVentilatorList:(NSMutableArray *)data;
 - (void)wsConnectionError:(NSError *)error;
 - (void)wsError;
 
@@ -34,5 +35,6 @@
 - (void)getCurRtCardListVerId;
 - (void)getPatientList;
 - (void)getABGDataBySessionId:(NSString *)sessionId ChtNo:(NSString *)ChtNo LastUpdateTime:(NSString *)LastUpdateTime;
+- (void)getVentilatorList;
 
 @end

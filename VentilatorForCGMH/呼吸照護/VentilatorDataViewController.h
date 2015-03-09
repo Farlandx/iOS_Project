@@ -22,8 +22,11 @@
 @property (assign, nonatomic) id<VentilatorDataViewDelegate> delegate;
 
 @property (nonatomic) BOOL viewMode;
+@property (nonatomic) NSInteger dataMode;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet DisplayView *displayView;
+
+- (void)setDataMode:(NSInteger)mode;
 
 #pragma mark - Methods
 - (void)getMeasureData:(VentilationData *)measureData;

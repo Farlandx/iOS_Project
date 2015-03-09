@@ -32,6 +32,7 @@
 - (IBAction)btnSaveClick:(id)sender;
 - (IBAction)btnCancleClick:(id)sender;
 
+@property (weak, nonatomic) IBOutlet UIButton *btnTitleViewButton;
 @property (strong, nonatomic) IBOutlet UIButton *btnTest1;
 @property (strong, nonatomic) IBOutlet UIButton *btnTest2;
 

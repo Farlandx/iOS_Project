@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6249" systemVersion="14C109" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="49e-Tb-3d3">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6243"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <scenes>
         <!--呼吸照護-->
@@ -162,7 +162,7 @@
             </objects>
             <point key="canvasLocation" x="3607" y="-2820"/>
         </scene>
-        <!--量測-->
+        <!--量測資料-->
         <scene sceneID="RnM-lA-reZ">
             <objects>
                 <viewController id="sB3-mS-iQr" customClass="MeasureViewController" sceneMemberID="viewController">
@@ -273,12 +273,23 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="量測資料" id="DSL-AB-HoL"/>
-                    <navigationItem key="navigationItem" title="量測" id="l3y-8Q-hm0">
+                    <navigationItem key="navigationItem" id="l3y-8Q-hm0">
+                        <nil key="title"/>
                         <barButtonItem key="leftBarButtonItem" title="取消" id="kfC-mi-e65">
                             <connections>
                                 <action selector="btnCancleClick:" destination="sB3-mS-iQr" id="qb8-sm-cRE"/>
                             </connections>
                         </barButtonItem>
+                        <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Wi2-l7-TNa">
+                            <rect key="frame" x="230.5" y="7" width="307" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="呼吸量測">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="didTapTitle:" destination="sB3-mS-iQr" eventType="touchUpInside" id="pl5-86-hsz"/>
+                            </connections>
+                        </button>
                         <barButtonItem key="rightBarButtonItem" enabled="NO" title="儲存" id="uFB-lp-Nin">
                             <connections>
                                 <action selector="btnSaveClick:" destination="sB3-mS-iQr" id="Bz5-ga-Ogr"/>
@@ -293,6 +304,7 @@
                         <outlet property="btnSave" destination="uFB-lp-Nin" id="uD9-hq-8T4"/>
                         <outlet property="btnTest1" destination="v8N-HZ-G7Q" id="tov-me-iDu"/>
                         <outlet property="btnTest2" destination="E0O-Lz-L6C" id="o2b-bW-P5t"/>
+                        <outlet property="btnTitleViewButton" destination="Wi2-l7-TNa" id="jll-7B-nJH"/>
                         <outlet property="indicatorRO" destination="3bI-C1-xGF" id="sSJ-Yt-DdL"/>
                         <outlet property="indicatorVNO" destination="hH9-aY-XRm" id="X9j-eC-6LU"/>
                         <outlet property="rememberRecordOper" destination="mg6-GD-0c7" id="pcv-wc-2TA"/>

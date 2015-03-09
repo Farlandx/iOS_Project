@@ -113,8 +113,6 @@
     //院區確認
     NSDictionary *hospital = [plManager getHospital];
     if (hospital && [self checkHasHospital:hospital]) {
-        //##
-        return;
         [self getCardList];
     }
 }
@@ -295,6 +293,12 @@
     
     [plManager writeByKey:@"curRtCardListVerId" value:[NSString stringWithFormat:@"%d", tmpVerId]];
 //    curRtCardListVerId = tmpVerId;
+    
+    [ws getVentilatorList];
+}
+
+- (void)wsResponseGetVentilatorList:(NSMutableArray *)data {
+    [db saveExchangeVentilatorList:data];
     
     [ProgressHUD showSuccess:@"資料更新完畢"];
 }

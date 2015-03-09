@@ -15,7 +15,8 @@
 
 #define DROPDOWNVIEW_TAG 1023
 #define DROPDOWNVIEW_HEIGHT 300.0
-#define DROPDOWN_LIST_ITEMS @[@"NC", @"NC/H", @"Mask", @"Tr-Mask", @"T-P", @"O₂ hood", @"hood/heater", @"O₂ inhalation", @"S-M", @"S-M/H", @"V-M", @"Tr.O₂", @"Tr.O₂/H", @"NRM", @"HF-Mask", @"HF-TP", @"HF FM", @"O₂ blow", @"RA"]
+#define DROPDOWN_LIST_ITEMS_OXYGEN @[@"NC", @"NC/H", @"Mask", @"Tr-Mask", @"T-P", @"O₂ hood", @"hood/heater", @"O₂ inhalation", @"S-M", @"S-M/H", @"V-M", @"Tr.O₂", @"Tr.O₂/H", @"NRM", @"HF-Mask", @"HF-TP", @"HF FM", @"O₂ blow", @"RA"]
+#define DROPDOWN_LIST_ITEMS_VENTILATOR @[@"IPPV", @"IPPV/ASSIST", @"SIMV", @"SIMV/ASB", @"BiPAP", @"BIPAP/ASB", @"SIMV/AutoFlow", @"SIMV/ASB/AutoFlow", @"IPPV/ASSIST/AutoFlow", @"APRV", @"MMV", @"MMV/ASB", @"MMV/AutoFlow", @"MMV/ASB/AutoFlow", @"CPAP", @"CPAP/ASB", @"APNEA VENTILATION", @"CPAP/PPS", @"SYNCHRON MASTER", @"SYNCHRON SLAVE", @"BIPAP/ASSIST", @"NIV"]
 
 @interface VentilatorDataViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -24,9 +25,11 @@
 @implementation VentilatorDataViewController {
     CGRect textRect;
     BOOL isDropdownViewShow;
+    UITableView *listTable;
 }
 
 @synthesize viewMode;
+@synthesize dataMode; //0:呼吸器 1:氧療
 
 - (void)viewDidLoad
 {
@@ -34,6 +37,8 @@
     // Do any additional setup after loading the view.
     
     isDropdownViewShow = NO;
+    
+    dataMode = 0;
     
     //SwipeGesture
     UISwipeGestureRecognizer *swipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeTrigger:)];
@@ -131,11 +136,11 @@
     dropdownView.layer.shadowOpacity = 0.5f;
     dropdownView.layer.shadowPath = shadowPath.CGPath;
     
-    UITableView *listTable = [[UITableView alloc] initWithFrame:CGRectMake(0,
-                                                                           0,
-                                                                           dropdownView.frame.size.width,
-                                                                           DROPDOWNVIEW_HEIGHT)
-                                                          style:UITableViewStylePlain];
+    listTable = [[UITableView alloc] initWithFrame:CGRectMake(0,
+                                                              0,
+                                                              dropdownView.frame.size.width,
+                                                              DROPDOWNVIEW_HEIGHT)
+                                             style:UITableViewStylePlain];
     listTable.alpha = 0;
     listTable.dataSource = self;
     listTable.delegate = self;
@@ -162,6 +167,11 @@
     isDropdownViewShow = YES;
 }
 
+- (void)reloadDropdownListData {
+    [_VentilationMode setTitle:@"請選擇或讀取模式" forState:UIControlStateNormal];
+    [listTable reloadData];
+}
+
 - (void)removeDropdownView {
     if (!isDropdownViewShow) {
         return;
@@ -178,12 +188,12 @@
 
 #pragma mark - TableView
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return DROPDOWN_LIST_ITEMS.count;
+    return dataMode == 0 ? DROPDOWN_LIST_ITEMS_VENTILATOR.count : DROPDOWN_LIST_ITEMS_OXYGEN.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [[UITableViewCell alloc] init];
-    cell.textLabel.text = DROPDOWN_LIST_ITEMS[indexPath.row];
+    cell.textLabel.text = (dataMode == 0 ? DROPDOWN_LIST_ITEMS_VENTILATOR[indexPath.row] : DROPDOWN_LIST_ITEMS_OXYGEN[indexPath.row]);
     
     return cell;
 }
@@ -496,6 +506,10 @@
     
     //NO2(2下標),XXXX
     measureData.NO2 = _NO2.text;
+}
+
+- (void)setDataMode:(NSInteger)mode {
+    dataMode = mode;
 }
 
 #pragma mark - Gesture

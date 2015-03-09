@@ -17,6 +17,8 @@
 #import "PListManager.h"
 #import "HospitalName.h"
 
+#define PROPERTY_NO @"#:"
+
 @interface MeasureViewController () <VentilatorDataViewDelegate>
 
 @end
@@ -26,6 +28,8 @@
     
     BOOL isStartListeningThread, isFocusOnRecordOper, isFocusOnVentNo, callByReturn, viewDismiss;
     NSString *mac_address, *tmp_RecordOper, *tmp_VentNo, *tmp_ChtNo;
+    
+    VentilatorDataViewController *ventDataViewCtrl;
 }
 
 @synthesize viewMode,editMode;
@@ -98,8 +102,8 @@
                 if ([child isKindOfClass:[MeasureTabBarViewController class]]) {
                     for (UIViewController *v in ((MeasureTabBarViewController *)child).viewControllers) {
                         if ([v isKindOfClass:[VentilatorDataViewController class]]) {
-                            VentilatorDataViewController *vc = (VentilatorDataViewController *)v;
-                            vc.delegate = self;
+                            ventDataViewCtrl = (VentilatorDataViewController *)v;
+                            ventDataViewCtrl.delegate = self;
                         }
                     }
                     
@@ -148,6 +152,18 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+- (IBAction)didTapTitle:(id)sender {
+    if ([_btnTitleViewButton.titleLabel.text isEqualToString:@"呼吸量測"]) {
+        [_btnTitleViewButton setTitle:@"氧療量測" forState:UIControlStateNormal];
+        [ventDataViewCtrl setDataMode:1];
+    }
+    else {
+        [_btnTitleViewButton setTitle:@"呼吸量測" forState:UIControlStateNormal];
+        [ventDataViewCtrl setDataMode:0];
+    }
+}
+
 - (IBAction)btnStart:(id)sender {
 //    _peripheral = [self getPeripheralByCode:@"2D1A5856-8987-F8C9-771E-5683182BF5F0"];
 //    [_centralManager connectPeripheral:_peripheral options:nil];
@@ -162,7 +178,6 @@
 - (IBAction)testDisconnect:(id)sender {
     [ble disconnect];
 }
-
 
 #pragma mark - NFC Dongle
 - (BOOL)isHeadsetPluggedIn
@@ -616,8 +631,8 @@
             [self setVentNoTextFieldValue:textField];
         }
         else {
-//            textField.text = @"";
-            tmp_VentNo = textField.text;
+            textField.text = @"";
+//            tmp_VentNo = textField.text;
             [textField resignFirstResponder];
         }
         [self setNextResponder:textField];
@@ -748,13 +763,22 @@
 
 - (void)setVentNoTextFieldValue:(UITextField*)textField {
     if (![textField.text isEqualToString:@""]) {
-        [ble setConnectionString:textField.text];
+        BOOL canRead = NO;
         
-        _VentNo.text = [textField.text componentsSeparatedByString:@"**"][0];
+        if (textField.text.length >= 12 && [textField.text rangeOfString:@"**"].location != NSNotFound) {
+            [ble setConnectionString:textField.text];
+            _VentNo.text = [textField.text componentsSeparatedByString:@"**"][0];
+            canRead = YES;
+        }
+        else if ([textField.text hasPrefix:PROPERTY_NO]) {
+            _VentNo.text = [textField.text substringFromIndex:PROPERTY_NO.length];
+        }
         tmp_VentNo = _VentNo.text;
         
         _VentNo.text = tmp_VentNo;
-        [ble startRead];
+        if (canRead) {
+            [ble startRead];
+        }
     }
 }
 
@@ -802,7 +826,7 @@
 
 //並且字串長度大於12
 - (BOOL)checkVentNo:(NSString *)text {
-    if (text.length >= 12 && [text rangeOfString:@"**"].location != NSNotFound) {
+    if ((text.length >= 12 && [text rangeOfString:@"**"].location != NSNotFound) || [text hasPrefix:PROPERTY_NO]) {
         return YES;
     }
     return NO;
