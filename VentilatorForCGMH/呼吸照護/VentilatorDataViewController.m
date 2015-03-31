@@ -15,8 +15,9 @@
 
 #define DROPDOWNVIEW_TAG 1023
 #define DROPDOWNVIEW_HEIGHT 300.0
-#define DROPDOWN_LIST_ITEMS_OXYGEN @[@"NC", @"NC/H", @"Mask", @"Tr-Mask", @"T-P", @"O₂ hood", @"hood/heater", @"O₂ inhalation", @"S-M", @"S-M/H", @"V-M", @"Tr.O₂", @"Tr.O₂/H", @"NRM", @"HF-Mask", @"HF-TP", @"HF FM", @"O₂ blow", @"RA"]
-#define DROPDOWN_LIST_ITEMS_VENTILATOR @[@"IPPV", @"IPPV/ASSIST", @"SIMV", @"SIMV/ASB", @"BiPAP", @"BIPAP/ASB", @"SIMV/AutoFlow", @"SIMV/ASB/AutoFlow", @"IPPV/ASSIST/AutoFlow", @"APRV", @"MMV", @"MMV/ASB", @"MMV/AutoFlow", @"MMV/ASB/AutoFlow", @"CPAP", @"CPAP/ASB", @"APNEA VENTILATION", @"CPAP/PPS", @"SYNCHRON MASTER", @"SYNCHRON SLAVE", @"BIPAP/ASSIST", @"NIV"]
+#define DROPDOWNVIEW_WIDTH 280.0
+//#define DROPDOWN_LIST_ITEMS_OXYGEN @[@"NC", @"NC/H", @"Mask", @"Tr-Mask", @"T-P", @"O₂ hood", @"hood/heater", @"O₂ inhalation", @"S-M", @"S-M/H", @"V-M", @"Tr.O₂", @"Tr.O₂/H", @"NRM", @"HF-Mask", @"HF-TP", @"HF FM", @"O₂ blow", @"RA"]
+//#define DROPDOWN_LIST_ITEMS_VENTILATOR @[@"IPPV", @"IPPV/ASSIST", @"SIMV", @"SIMV/ASB", @"BiPAP", @"BIPAP/ASB", @"SIMV/AutoFlow", @"SIMV/ASB/AutoFlow", @"IPPV/ASSIST/AutoFlow", @"APRV", @"MMV", @"MMV/ASB", @"MMV/AutoFlow", @"MMV/ASB/AutoFlow", @"CPAP", @"CPAP/ASB", @"APNEA VENTILATION", @"CPAP/PPS", @"SYNCHRON MASTER", @"SYNCHRON SLAVE", @"BIPAP/ASSIST", @"NIV"]
 
 @interface VentilatorDataViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -26,6 +27,8 @@
     CGRect textRect;
     BOOL isDropdownViewShow;
     UITableView *listTable;
+    NSMutableArray *dropdownItems;
+    MeasureViewController *mvc;
 }
 
 @synthesize viewMode;
@@ -37,6 +40,7 @@
     // Do any additional setup after loading the view.
     
     isDropdownViewShow = NO;
+    dropdownItems = [[NSMutableArray alloc] init];
     
     dataMode = 0;
     
@@ -49,6 +53,7 @@
     [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.origin.x, _displayView.frame.size.height + self.tabBarController.tabBar.frame.size.height)];
     
     _VentilationMode.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    _VentilationMode.tag = 0;
     
     if (viewMode) {
         for(UIView *v in _displayView.subviews) {
@@ -77,15 +82,29 @@
                                                object:nil];
     
     //取得measureData並將資料塞入textfield中
-    MeasureViewController *mvc = (MeasureViewController *)(self.tabBarController).parentViewController;
+    mvc = (MeasureViewController *)(self.tabBarController).parentViewController;
     VentilationData *data = mvc.myMeasureData;
     if (data != nil) {
         [self setMeasureData:data];
+        
+        if (mvc.editMode) {
+            //氧療
+            if ([mvc.VentNo.text isEqualToString:@""]) {
+                [self setDataMode:1];
+            }
+            else {
+                [self setVentilatorText:mvc.VentilatorModel];
+            }
+            [self setVentilationModeText:data.VentilationMode];
+        }
     }
 }
 
 - (void)dealloc {
     _delegate = nil;
+    listTable = nil;
+    [dropdownItems removeAllObjects];
+    dropdownItems = nil;
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -115,6 +134,7 @@
         [self removeDropdownView];
         return;
     }
+    
     [self showDropdownViewBelowSender:sender];
 }
 
@@ -123,7 +143,7 @@
     
     UIView *dropdownView = [[UIView alloc] initWithFrame:CGRectMake(rect.origin.x,
                                                                     rect.origin.y + rect.size.height,
-                                                                    rect.size.width,
+                                                                    DROPDOWNVIEW_WIDTH,
                                                                     DROPDOWNVIEW_HEIGHT)];
     dropdownView.tag = DROPDOWNVIEW_TAG;
     dropdownView.backgroundColor = [UIColor whiteColor];
@@ -153,13 +173,6 @@
     
     //animation
     [UIView animateWithDuration:0.3f animations:^ {
-//        CGRect dropdownViewRect = dropdownView.frame;
-//        dropdownViewRect.size.height = DROPDOWNVIEW_HEIGHT;
-//        dropdownView.frame = dropdownViewRect;
-//        
-//        CGRect listTableRect = listTable.frame;
-//        listTableRect.size.height = DROPDOWNVIEW_HEIGHT;
-//        listTable.frame = listTableRect;
         dropdownView.alpha = 1.0f;
         listTable.alpha = 1.0f;
     }];
@@ -168,7 +181,6 @@
 }
 
 - (void)reloadDropdownListData {
-    [_VentilationMode setTitle:@"請選擇或讀取模式" forState:UIControlStateNormal];
     [listTable reloadData];
 }
 
@@ -188,12 +200,12 @@
 
 #pragma mark - TableView
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return dataMode == 0 ? DROPDOWN_LIST_ITEMS_VENTILATOR.count : DROPDOWN_LIST_ITEMS_OXYGEN.count;
+    return dropdownItems.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [[UITableViewCell alloc] init];
-    cell.textLabel.text = (dataMode == 0 ? DROPDOWN_LIST_ITEMS_VENTILATOR[indexPath.row] : DROPDOWN_LIST_ITEMS_OXYGEN[indexPath.row]);
+    cell.textLabel.text = dropdownItems[indexPath.row];
     
     return cell;
 }
@@ -201,7 +213,13 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *mode = [tableView cellForRowAtIndexPath:indexPath].textLabel.text;
     [_VentilationMode setTitle:mode forState:UIControlStateNormal];
-    [_delegate VentilationModeSelected:mode];
+//    if (dataMode) {
+//        [_delegate VentilationModeSelected:mode];
+//    }
+//    else {
+////        dropdownItems = [self getModeArrayByModel:mode];
+//    }
+    [_delegate VentilationModeSelected:mode dataMode:dataMode];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self removeDropdownView];
 }
@@ -510,6 +528,71 @@
 
 - (void)setDataMode:(NSInteger)mode {
     dataMode = mode;
+    
+    [self removeDropdownView];
+    [dropdownItems removeAllObjects];
+    
+    if (dataMode) {
+//        [dropdownItems removeAllObjects];
+//        dropdownItems = [NSMutableArray arrayWithArray:DROPDOWN_LIST_ITEMS_OXYGEN];
+        
+        [self setVentilatorText:@"OXYGEN"];
+    }
+    else {
+        _lblVentilator.text = @"機器型號";
+    }
+    [_VentilationMode setTitle:@"請選擇或讀取模式" forState:UIControlStateNormal];
+    
+    [self reloadDropdownListData];
+    [_delegate dataModeChanged:dataMode];
+}
+
+//- (NSMutableArray *)getModelArray {
+//    NSMutableArray *modelArray = [[NSMutableArray alloc] init];
+//    for (ModelModeList *m in mvc.modelModeList) {
+//        [modelArray addObject:m.Model];
+//    }
+//    return modelArray;
+//}
+
+- (NSMutableArray *)getModeArrayByModel:(NSString *)model {
+    NSMutableArray *modeArray = [[NSMutableArray alloc] init];
+    for (ModelModeList *m in mvc.modelModeList) {
+        if ([m.Model isEqualToString:model]) {
+            for (NSString *mode in m.ModeList) {
+                [modeArray addObject:mode];
+            }
+            break;
+        }
+    }
+    return modeArray;
+}
+
+- (void)setVentilatorText:(NSString *)text {
+    if ([text isEqualToString:@""]) {
+        if (!dataMode) {
+            _lblVentilator.text = @"機器型號";
+        }
+        return;
+    }
+    
+    _lblVentilator.text = text;
+    [dropdownItems removeAllObjects];
+    dropdownItems = [self getModeArrayByModel:text];
+    [self reloadDropdownListData];
+}
+
+- (void)setVentilationModeText:(NSString *)text {
+    if (![text isEqualToString:@""]) {
+        [_VentilationMode setTitle:text forState:UIControlStateNormal];
+    }
+}
+
+- (BOOL)hasModeSelected {
+    if ([_lblVentilator.text isEqualToString:@"機器型號"]) {
+        return NO;
+    }
+    return YES;
 }
 
 #pragma mark - Gesture

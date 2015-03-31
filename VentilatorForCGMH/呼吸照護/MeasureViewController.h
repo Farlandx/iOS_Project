@@ -12,10 +12,12 @@
 #import "DeviceInfo.h"
 #import "BLE.h"
 #import "NameTextField.h"
+#import "ModelModeList.h"
 
 @protocol MeasureViewControllerDelegate <NSObject>
 
 - (void)measureViewControllerDismissed:(VentilationData *)measureData recordOper:(NSString *)recordOper;
+- (void)measureViewControllerCancled;
 
 @end
 
@@ -35,6 +37,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnTitleViewButton;
 @property (strong, nonatomic) IBOutlet UIButton *btnTest1;
 @property (strong, nonatomic) IBOutlet UIButton *btnTest2;
+@property (strong, nonatomic) NSMutableArray *modelModeList;
+@property (strong, nonatomic) IBOutlet UILabel *lblVent;
 
 //基隆、高雄院區用
 @property (strong, nonatomic) IBOutlet UISwitch *rememberRecordOper;
@@ -46,6 +50,7 @@
 @property (strong, nonatomic) VentilationData *myMeasureData;
 @property (nonatomic) BOOL viewMode;
 @property (nonatomic) BOOL editMode;
+@property (strong, nonatomic) NSString *VentilatorModel;
 @property (assign, nonatomic) id<MeasureViewControllerDelegate> delegate;
 
 //儲存按鈕

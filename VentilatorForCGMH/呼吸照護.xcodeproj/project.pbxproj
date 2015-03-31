@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E0A35961AB129C900C6DC5B /* DtoGetAllVentilatorVendor.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E0A35951AB129C900C6DC5B /* DtoGetAllVentilatorVendor.m */; };
+		1E0A35991AB12A1C00C6DC5B /* DtoGetModelModeListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E0A35981AB12A1C00C6DC5B /* DtoGetModelModeListItem.m */; };
+		1E0A359C1AB2DD8700C6DC5B /* ModelModeList.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E0A359B1AB2DD8700C6DC5B /* ModelModeList.m */; };
 		1E0DD9E4192AFE62008E3F18 /* CollectionViewHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E0DD9E1192AFE62008E3F18 /* CollectionViewHeader.m */; };
 		1E0DD9E5192AFE62008E3F18 /* ContentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E0DD9E3192AFE62008E3F18 /* ContentCell.m */; };
 		1E0DD9E9192AFEB2008E3F18 /* ContentScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E0DD9E8192AFEB2008E3F18 /* ContentScrollView.m */; };
@@ -95,6 +98,12 @@
 
 /* Begin PBXFileReference section */
 		1E046F781932E83800F10392 /* BLE_DEVICE_TYPE.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLE_DEVICE_TYPE.h; sourceTree = "<group>"; };
+		1E0A35941AB129C900C6DC5B /* DtoGetAllVentilatorVendor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DtoGetAllVentilatorVendor.h; sourceTree = "<group>"; };
+		1E0A35951AB129C900C6DC5B /* DtoGetAllVentilatorVendor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DtoGetAllVentilatorVendor.m; sourceTree = "<group>"; };
+		1E0A35971AB12A1C00C6DC5B /* DtoGetModelModeListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DtoGetModelModeListItem.h; sourceTree = "<group>"; };
+		1E0A35981AB12A1C00C6DC5B /* DtoGetModelModeListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DtoGetModelModeListItem.m; sourceTree = "<group>"; };
+		1E0A359A1AB2DD8700C6DC5B /* ModelModeList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelModeList.h; sourceTree = "<group>"; };
+		1E0A359B1AB2DD8700C6DC5B /* ModelModeList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelModeList.m; sourceTree = "<group>"; };
 		1E0DD9E0192AFE62008E3F18 /* CollectionViewHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewHeader.h; sourceTree = "<group>"; };
 		1E0DD9E1192AFE62008E3F18 /* CollectionViewHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewHeader.m; sourceTree = "<group>"; };
 		1E0DD9E2192AFE62008E3F18 /* ContentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentCell.h; sourceTree = "<group>"; };
@@ -610,6 +619,12 @@
 				1E73BF891A0A1D66003CBC0F /* DtoRespCareCol.m */,
 				1E8A82721A9D6719005FFA53 /* DtoVentExchangeGetVentilatorList.h */,
 				1E8A82731A9D6719005FFA53 /* DtoVentExchangeGetVentilatorList.m */,
+				1E0A35941AB129C900C6DC5B /* DtoGetAllVentilatorVendor.h */,
+				1E0A35951AB129C900C6DC5B /* DtoGetAllVentilatorVendor.m */,
+				1E0A35971AB12A1C00C6DC5B /* DtoGetModelModeListItem.h */,
+				1E0A35981AB12A1C00C6DC5B /* DtoGetModelModeListItem.m */,
+				1E0A359A1AB2DD8700C6DC5B /* ModelModeList.h */,
+				1E0A359B1AB2DD8700C6DC5B /* ModelModeList.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -758,6 +773,7 @@
 				1ECAB8201920614D00161572 /* HistoryTableViewCell.m in Sources */,
 				1E75E33B194AF1C300593E17 /* Patient.m in Sources */,
 				1E9219CD19064F9E006ED639 /* WebService.m in Sources */,
+				1E0A359C1AB2DD8700C6DC5B /* ModelModeList.m in Sources */,
 				1E8881E518EABF7E009B5E06 /* MeasureViewController.m in Sources */,
 				1EF0012B18B2EAEF003B5D58 /* DatabaseUtility.m in Sources */,
 				1E58EF681999A6C400D4E20E /* GZIP.m in Sources */,
@@ -766,6 +782,7 @@
 				1E0DD9EE192AFFCB008E3F18 /* HeaderCell.m in Sources */,
 				1ECAB80C1918813800161572 /* ProgressHUD.m in Sources */,
 				1E0DD9E4192AFE62008E3F18 /* CollectionViewHeader.m in Sources */,
+				1E0A35991AB12A1C00C6DC5B /* DtoGetModelModeListItem.m in Sources */,
 				1E8DD5D918D824DF005B41D2 /* DisplayView.m in Sources */,
 				1EFAD8C418C6B335002118C7 /* FirstViewController.m in Sources */,
 				1E32C6BB18B7064000DE4595 /* MeasureTabBarViewController.m in Sources */,
@@ -785,6 +802,7 @@
 				1E781AEC18BC467600647ED3 /* VentilatorDataViewController.m in Sources */,
 				1ECAB815192060D500161572 /* APLSectionHeaderView.m in Sources */,
 				1ECAB81C1920612300161572 /* HistoryTableViewController.m in Sources */,
+				1E0A35961AB129C900C6DC5B /* DtoGetAllVentilatorVendor.m in Sources */,
 				1EA542221A037BD9000A7B4A /* CareSortViewCell.m in Sources */,
 				1E5E569018861184005EF6AC /* main.m in Sources */,
 				1E9219D1190750D7006ED639 /* DeviceStatus.m in Sources */,

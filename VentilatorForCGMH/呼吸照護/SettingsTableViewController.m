@@ -14,9 +14,13 @@
 #import "PwdSettingsViewController.h"
 
 #define HOSPITAL_SECTION 0
-#define CARESORT_SECTION 1
+#define DNS_SETTINGS_SECTION 1
+#define CARESORT_SECTION 2
+#define OTHER_SETTINGS_SECTION 3
 
-@interface SettingsTableViewController () <PwdSettingDelegate>
+@interface SettingsTableViewController () <PwdSettingDelegate, UITextFieldDelegate>
+
+@property (strong, nonatomic) IBOutlet UITextField *textDNS;
 
 @end
 
@@ -27,12 +31,17 @@
     NSDictionary *careSort;
     
     NSIndexPath *tmpIndexPath;
+    
+    BOOL isDNSSettingsPwdPassed;
 }
 
 @synthesize checkedHospitalIndexPath, checkedCareSortIndexPath;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    _textDNS.delegate = self;
+    isDNSSettingsPwdPassed = NO;
     
     MainViewController *mainViewController = (MainViewController *)((UINavigationController *)self.parentViewController).parentViewController;
     plManager = [mainViewController getPListManager];
@@ -48,6 +57,7 @@
 
 - (void) viewWillAppear:(BOOL)animated {
     [self resetTmp];
+    isDNSSettingsPwdPassed = NO;
     [super viewWillAppear:animated];
 }
 
@@ -62,11 +72,33 @@
 //    [self setCurrentHospital];
 //}
 
+#pragma mark - TextFieldDelegate
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    if (textField == _textDNS) {
+        tmpIndexPath = [NSIndexPath indexPathForRow:0 inSection:DNS_SETTINGS_SECTION];
+        //每次進入設定Tab，只需要驗証一次密碼
+        if (!isDNSSettingsPwdPassed) {
+            [pwdSettings showInView:self.view.superview.window animated:YES pwdType:PWD_CONFIRM];
+        }
+        return isDNSSettingsPwdPassed;
+    }
+    
+    return YES;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if (textField == _textDNS) {
+        [self saveDNS];
+    }
+    
+    return YES;
+}
+
 #pragma mark - PwdSettingDelegate
 - (void)PwdValid {
     if (tmpIndexPath) {
         switch (tmpIndexPath.section) {
-            case 0: {
+            case HOSPITAL_SECTION: {
                 if(self.checkedHospitalIndexPath && ![self.checkedHospitalIndexPath isEqual:tmpIndexPath])
                 {
                     HospitalViewCell* uncheckCell = (HospitalViewCell *)[self.tableView cellForRowAtIndexPath:self.checkedHospitalIndexPath];
@@ -76,11 +108,18 @@
                 HospitalViewCell* cell = (HospitalViewCell *)[self.tableView cellForRowAtIndexPath:tmpIndexPath];
                 cell.accessoryType = UITableViewCellAccessoryCheckmark;
                 self.checkedHospitalIndexPath = tmpIndexPath;
+                _textDNS.text = cell.IpAddress;
                 [self writeHospitalName:cell.Name IpAddress:cell.IpAddress];
                 break;
             }
                 
-            case 1: {
+            case DNS_SETTINGS_SECTION: {
+                isDNSSettingsPwdPassed = YES;
+                [_textDNS becomeFirstResponder];
+                break;
+            }
+                
+            case CARESORT_SECTION: {
                 if (self.checkedCareSortIndexPath && ![self.checkedCareSortIndexPath isEqual:tmpIndexPath]) {
                     CareSortViewCell *unckeckCell = (CareSortViewCell *)[self.tableView cellForRowAtIndexPath:self.checkedCareSortIndexPath];
                     unckeckCell.accessoryType = UITableViewCellAccessoryNone;
@@ -106,14 +145,14 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     switch (indexPath.section) {
-        case 0:
-        case 1: {
+        case HOSPITAL_SECTION:
+        case CARESORT_SECTION: {
             tmpIndexPath = indexPath;
             [pwdSettings showInView:self.view.superview.window animated:YES pwdType:PWD_CONFIRM];
             break;
         }
             
-        case 2: {
+        case OTHER_SETTINGS_SECTION: {
             if (indexPath.row == 1) {
                 //管理員密碼設定
                 [pwdSettings showInView:self.view.superview.window animated:YES pwdType:PWD_MODIFY];
@@ -130,6 +169,7 @@
 - (void)setCurrentCheckmark {
     //院區
     NSString *hospitalName = [hospital objectForKey:@"Name"];
+    _textDNS.text = [hospital objectForKey:@"IpAddress"];
     if (![hospitalName isEqualToString:@""]) {
         for (int i = 0; i < [self.tableView numberOfRowsInSection:HOSPITAL_SECTION]; i++) {
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:HOSPITAL_SECTION];
@@ -158,7 +198,7 @@
 }
 
 - (void)writeHospitalName:(NSString *)Name IpAddress:(NSString *)IpAddress {
-    if ([[hospital objectForKey:@"Name"] isEqualToString:Name]) {
+    if ([[hospital objectForKey:@"Name"] isEqualToString:Name] && [[hospital objectForKey:@"IpAddress"] isEqualToString:IpAddress]) {
         return;
     }
     hospital = [[NSDictionary alloc] initWithObjects:@[Name, IpAddress] forKeys:@[@"Name", @"IpAddress"]];
@@ -175,5 +215,25 @@
 
 - (void)resetTmp {
     tmpIndexPath = nil;
+}
+
+- (void)saveDNS {
+    if ([_textDNS.text isEqualToString:@""]) {
+        return;
+    }
+    NSString *hospitalName = [hospital objectForKey:@"Name"];
+    if (![hospitalName isEqualToString:@""]) {
+        for (int i = 0; i < [self.tableView numberOfRowsInSection:HOSPITAL_SECTION]; i++) {
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:HOSPITAL_SECTION];
+            HospitalViewCell *cell = (HospitalViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+            if ([cell.Name isEqualToString:hospitalName]) {
+                hospital = [[NSDictionary alloc] initWithObjects:@[cell.Name, _textDNS.text] forKeys:@[@"Name", @"IpAddress"]];
+                [plManager writeByKey:@"Hospital" value:hospital];
+                break;
+            }
+        }
+    }
+    
+    [_textDNS resignFirstResponder];
 }
 @end

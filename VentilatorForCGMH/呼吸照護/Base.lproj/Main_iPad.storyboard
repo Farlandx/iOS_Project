@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="49e-Tb-3d3">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
     </dependencies>
     <scenes>
         <!--呼吸照護-->
@@ -281,9 +281,10 @@
                             </connections>
                         </barButtonItem>
                         <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Wi2-l7-TNa">
-                            <rect key="frame" x="230.5" y="7" width="307" height="30"/>
+                            <rect key="frame" x="230.5" y="4" width="307" height="36"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <state key="normal" title="呼吸量測">
+                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                            <state key="normal" title="呼吸器量測">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>
@@ -307,6 +308,7 @@
                         <outlet property="btnTitleViewButton" destination="Wi2-l7-TNa" id="jll-7B-nJH"/>
                         <outlet property="indicatorRO" destination="3bI-C1-xGF" id="sSJ-Yt-DdL"/>
                         <outlet property="indicatorVNO" destination="hH9-aY-XRm" id="X9j-eC-6LU"/>
+                        <outlet property="lblVent" destination="bTE-9X-SSU" id="luz-lX-tH2"/>
                         <outlet property="rememberRecordOper" destination="mg6-GD-0c7" id="pcv-wc-2TA"/>
                     </connections>
                 </viewController>
@@ -364,12 +366,6 @@
                                                 <color key="backgroundColor" red="0.71372549019999998" green="0.79607843140000001" blue="0.29803921570000003" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mode" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dcm-1E-nYh">
-                                                <rect key="frame" x="20" y="31" width="356" height="21"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ventilation Rate" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="8gy-VI-M6a">
@@ -1001,8 +997,9 @@
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="YmK-kM-8Fu">
-                                                <rect key="frame" x="20" y="55" width="356" height="30"/>
+                                                <rect key="frame" x="163" y="42" width="213" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                 <state key="normal" title="請選擇或讀取模式">
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
@@ -1010,6 +1007,13 @@
                                                     <action selector="btnModeClick:" destination="TBH-XW-hIz" eventType="touchUpInside" id="WOk-Jb-EZl"/>
                                                 </connections>
                                             </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="機器型號" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HdD-Ed-6S6">
+                                                <rect key="frame" x="20" y="46" width="135" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                     </view>
@@ -1067,6 +1071,7 @@
                         <outlet property="VolumeTarget" destination="Ick-J5-rcf" id="qfw-Jq-zWa"/>
                         <outlet property="_NO" destination="skb-5s-Wnr" id="D54-XV-MXi"/>
                         <outlet property="displayView" destination="nQh-vA-TkN" id="BsT-Xo-4lh"/>
+                        <outlet property="lblVentilator" destination="HdD-Ed-6S6" id="RD2-Fv-LZP"/>
                         <outlet property="scrollView" destination="xY6-fP-pLa" id="dST-Sf-Je0"/>
                     </connections>
                 </viewController>
@@ -2163,6 +2168,24 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection headerTitle="伺服器設定" id="6kn-NK-arL">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="hTE-dp-f0G">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hTE-dp-f0G" id="g0o-1r-376">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="請輸入伺服器位置" minimumFontSize="17" id="Gaq-XP-Di0">
+                                                    <rect key="frame" x="8" y="7" width="752" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                             <tableViewSection headerTitle="照護記錄排序" id="Ex3-Pn-xJx">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="PYe-NR-IcU" customClass="CareSortViewCell">
@@ -2288,6 +2311,9 @@
                     </tableView>
                     <tabBarItem key="tabBarItem" title="設定" image="Settings_Icon" id="w73-h5-GM0"/>
                     <navigationItem key="navigationItem" title="設定" id="HhD-Kq-JBY"/>
+                    <connections>
+                        <outlet property="textDNS" destination="Gaq-XP-Di0" id="mWH-he-Ngd"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bIW-4L-EPx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

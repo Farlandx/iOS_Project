@@ -17,6 +17,8 @@
 #import "DtoGetAssociatedRespCareRecRslt.h"
 #import "DtoVentExchangeGetVentilatorList.h"
 #import "DtoRespCareCol.h"
+#import "DtoGetAllVentilatorVendor.h"
+#import "DtoGetModelModeListItem.h"
 
 #ifndef ___webservice
 #define ___webservice
@@ -35,6 +37,8 @@
 #define WS_APPLOGIN @"AppLogin"
 #define WS_GET_PATIENT_LIST @"GetPatientList"
 #define WS_GET_VENTILATOR_LIST @"GetVentilatorList"
+#define WS_GET_ALL_VENTILATOR_VENDOR @"GetAllVentilatorVendor"
+#define WS_GET_ALL_MODEL_MODE_LIST_ITEM @"GetAllModelModeList"
 #define WS_UPLOAD_VENT_DATA @"UploadVentData"
 #define WS_RESP_CARE_REC_BY_PATIENT @"GetRespCareRecByPatient"
 #define WS_REQUEST_TIMEOUT_INTERVAL 10 //Second
@@ -42,15 +46,11 @@
 #endif
 
 @implementation WebService {
-    PListManager *plManager;
-    NSDictionary *hospital;
     NSString *WS_URL;
 }
 
 - (id)init {
     if (self = [super init]) {
-        plManager = [[PListManager alloc] initWithPListName:@"Properties"];
-        hospital = [plManager getHospital];
         WS_URL = @"";
     }
     return self;
@@ -62,12 +62,21 @@
 
 #pragma mark - Private Method
 - (NSString *)getHospitalIpAddress {
-    NSString *hospitalIpAddress = [hospital objectForKey:@"IpAddress"];
+    PListManager *plManager = [[PListManager alloc] initWithPListName:@"Properties"];
+    NSString *hospitalIpAddress = [[plManager getHospital] objectForKey:@"IpAddress"];
     if ([hospitalIpAddress isEqualToString:@""]) {
         return @"";
     }
     
     return [NSString stringWithFormat:@"http://%@/webwork/resp/VentDataExchangeSvc.asmx", hospitalIpAddress];
+}
+
+- (NSString *)xmlEncodingByString:(NSString *)string {
+    return [[[[[string stringByReplacingOccurrencesOfString: @"&" withString: @"&amp;"]
+               stringByReplacingOccurrencesOfString: @"\"" withString: @"&quot;"]
+              stringByReplacingOccurrencesOfString: @"'" withString: @"&#39;"]
+             stringByReplacingOccurrencesOfString: @">" withString: @"&gt;"]
+            stringByReplacingOccurrencesOfString: @"<" withString: @"&lt;"];
 }
 
 - (NSString *)getSOAPDateStringByNSString:(NSString *) dateString {
@@ -234,7 +243,7 @@
             tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<Cvp>%@</Cvp>", ventData.Cvp]];
             tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<BpS>%@</BpS>", ventData.BpS]];
             tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<BpD>%@</BpD>", ventData.BpD]];
-            tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<Xrem>%@</Xrem>", ventData.Xrem]];
+            tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<Xrem>%@</Xrem>", [self xmlEncodingByString:ventData.Xrem]]];
             //20140902新增欄位
             tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<VentilationHertz>%@</VentilationHertz>", ventData.VentilationHertz]];
             tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<PressureAmplitude>%@</PressureAmplitude>", ventData.PressureAmplitude]];
@@ -543,6 +552,86 @@
             }
             
             [_delegate wsResponseGetVentilatorList:result];
+        }
+        else if (connectionError) {
+            [_delegate wsConnectionError:connectionError];
+        }
+        else {
+            [_delegate wsError];
+        }
+    }];
+}
+
+- (void)getAllVentilatorVendor {
+    NSString *soapMessage = @"<?xml version=\"1.0\" encoding=\"utf-8\"?>"
+    "<soap12:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap12=\"http://www.w3.org/2003/05/soap-envelope\">"
+    "<soap12:Body>"
+    "<GetAllVentilatorVendor xmlns=\"http://cgmh.org.tw/g27/\" />"
+    "</soap12:Body>"
+    "</soap12:Envelope>";
+    
+    NSURLRequest *request = [self getSOAPRequestByWSString:WS_GET_ALL_VENTILATOR_VENDOR soapMessage:soapMessage];
+    
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        if (data.length > 0 && connectionError == nil) {
+            NSMutableArray *result = [[NSMutableArray alloc] init];
+            NSError *error = nil;
+            NSDictionary *xmlDictionary = [XMLReader dictionaryForXMLData:data
+                                                                  options:XMLReaderOptionsProcessNamespaces
+                                                                    error:&error];
+            
+            for (NSDictionary *card in [xmlDictionary valueForKeyPath:@"Envelope.Body.GetAllVentilatorVendorResponse.GetAllVentilatorVendorResult.DtoGetAllVentilatorVendor"]) {
+                DtoGetAllVentilatorVendor *v = [[DtoGetAllVentilatorVendor alloc] init];
+                v.VendorId = [card valueForKeyPath:@"VendorId.text"];
+                v.VendorName = [card valueForKeyPath:@"VendorName.text"];
+                [result addObject:v];
+            }
+            
+            [_delegate wsResponseGetAllVentilatorVendor:result];
+        }
+        else if (connectionError) {
+            [_delegate wsConnectionError:connectionError];
+        }
+        else {
+            [_delegate wsError];
+        }
+    }];
+}
+
+- (void)getAllModelModeList {
+    NSString *soapMessage = @"<?xml version=\"1.0\" encoding=\"utf-8\"?>"
+    "<soap12:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap12=\"http://www.w3.org/2003/05/soap-envelope\">"
+    "<soap12:Body>"
+    "<GetAllModelModeList xmlns=\"http://cgmh.org.tw/g27/\" />"
+    "</soap12:Body>"
+    "</soap12:Envelope>";
+    
+    NSURLRequest *request = [self getSOAPRequestByWSString:WS_GET_ALL_MODEL_MODE_LIST_ITEM soapMessage:soapMessage];
+    
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        if (data.length > 0 && connectionError == nil) {
+            NSMutableArray *result = [[NSMutableArray alloc] init];
+            NSError *error = nil;
+            NSDictionary *xmlDictionary = [XMLReader dictionaryForXMLData:data
+                                                                  options:XMLReaderOptionsProcessNamespaces
+                                                                    error:&error];
+            
+            for (NSDictionary *card in [xmlDictionary valueForKeyPath:@"Envelope.Body.GetAllModelModeListResponse.GetAllModelModeListResult.DtoGetModelModeListItem"]) {
+                DtoGetModelModeListItem *m = [[DtoGetModelModeListItem alloc] init];
+                m.VendorId = [card valueForKeyPath:@"VendorId.text"];
+                m.Model = [card valueForKeyPath:@"Model.text"];
+//                m.ModeList = [card valueForKeyPath:@"ModeList.string"];
+                for (NSDictionary *d in [card valueForKeyPath:@"ModeList.string"]) {
+                    NSString *str = [d valueForKey:@"text"];
+                    [m.ModeList addObject:str];
+                }
+                [result addObject:m];
+//                if (card) {
+//                    [result addObject:card];
+//                }
+            }
+            
+            [_delegate wsResponseGetAllModelModeList:result];
         }
         else if (connectionError) {
             [_delegate wsConnectionError:connectionError];

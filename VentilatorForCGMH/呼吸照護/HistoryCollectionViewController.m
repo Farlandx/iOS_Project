@@ -349,8 +349,8 @@
     [ary addObject:data.VentilatorModel];
     //Ventilation Mode
     [ary addObject:data.VentilationMode];
-    //TidalVolume Set
-    [ary addObject:data.TidalVolumeSet];
+    //TidalVolume Set(當Hamilton MODE等於APVc的時候抓VolumeTarget，只有Hamilton MODE有APVc)
+    [ary addObject:([data.VentilationMode caseInsensitiveCompare:@"APVc"] == NSOrderedSame ? data.VolumeTarget : data.TidalVolumeSet)];
     //TidalVolume Measured
     [ary addObject:data.TidalVolumeMeasured];
     //Ventilation Rate Set/Total

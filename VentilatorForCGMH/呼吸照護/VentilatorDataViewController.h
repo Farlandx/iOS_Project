@@ -9,11 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "VentilationData.h"
 #import "DisplayView.h"
+#import "ModelModeList.h"
 
 @protocol VentilatorDataViewDelegate <NSObject>
 
 @optional
-- (void)VentilationModeSelected:(NSString *)mode;
+- (void)VentilationModeSelected:(NSString *)mode dataMode:(NSInteger)dataMode;
+- (void)dataModeChanged:(NSInteger)dataMode;
 
 @end
 
@@ -25,12 +27,16 @@
 @property (nonatomic) NSInteger dataMode;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet DisplayView *displayView;
+@property (strong, nonatomic) IBOutlet UILabel *lblVentilator;
 
 - (void)setDataMode:(NSInteger)mode;
 
 #pragma mark - Methods
 - (void)getMeasureData:(VentilationData *)measureData;
 - (void)setMeasureData:(VentilationData *)measureData;
+- (void)setVentilatorText:(NSString *)text;
+- (void)setVentilationModeText:(NSString *)text;
+- (BOOL)hasModeSelected;
 
 #pragma mark - 量測資料
 //Ventilation

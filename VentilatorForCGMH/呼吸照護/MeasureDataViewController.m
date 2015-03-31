@@ -171,6 +171,12 @@
     }
 }
 
+- (void)measureViewControllerCancled {
+    [measureDataList removeAllObjects];
+    measureDataList = [db getMeasures];
+    [self sortTableList];
+}
+
 #pragma mark - BLETransDelegate
 - (void)BLETransUploadDone:(NSString *)data {
     if (data.length) {
@@ -299,6 +305,18 @@
 
 - (void)wsResponseGetVentilatorList:(NSMutableArray *)data {
     [db saveExchangeVentilatorList:data];
+    
+    [ws getAllVentilatorVendor];
+}
+
+- (void)wsResponseGetAllVentilatorVendor:(NSMutableArray *)data {
+    [db saveDtoGetAllVentilatorVendor:data];
+    
+    [ws getAllModelModeList];
+}
+
+- (void)wsResponseGetAllModelModeList:(NSMutableArray *)data {
+    [db saveDtoGetModelModeListItem:data];
     
     [ProgressHUD showSuccess:@"資料更新完畢"];
 }
@@ -463,6 +481,7 @@
                 vc.myMeasureData = [measureDataList objectAtIndex: indexPath.row];
                 [vc setEditMode];
             }
+            vc.modelModeList = [db getModelModeList];
             vc.delegate = self;
         }
     }

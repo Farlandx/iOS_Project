@@ -30,11 +30,14 @@
     NSString *mac_address, *tmp_RecordOper, *tmp_VentNo, *tmp_ChtNo;
     
     VentilatorDataViewController *ventDataViewCtrl;
+    NSInteger curDataMode;
 }
 
 @synthesize viewMode,editMode;
 @synthesize myMeasureData;
 @synthesize rememberRecordOperString;
+@synthesize modelModeList;
+@synthesize VentilatorModel;
 
 - (void)viewDidLoad
 {
@@ -113,13 +116,24 @@
     }
     
     
+    [self setHospitalCustome];
     if (editMode) {
         tmp_RecordOper = _RecordOper.text;
         tmp_ChtNo = _ChtNo.text;
         tmp_VentNo = _VentNo.text;
+        if (![_VentNo.text isEqualToString:@""]) {
+            [_btnTitleViewButton setTitle:@"呼吸器量測" forState:UIControlStateNormal];
+            VentilatorModel = [db getExchangeVentilatorListByExternalNo:_VentNo.text].VentilatorModel;
+            curDataMode = 0;
+        }
+        else {
+            [_btnTitleViewButton setTitle:@"氧療量測" forState:UIControlStateNormal];
+            curDataMode = 1;
+        }
+        [self setUIByDataMode:curDataMode];
+        _btnSave.enabled = YES;
     }
     else {
-        [self setHospitalCustome];
         if (rememberRecordOperString.length) {
             _RecordOper.text = rememberRecordOperString;
             tmp_RecordOper = _RecordOper.text;
@@ -134,6 +148,8 @@
 
 - (void)dealloc {
     _delegate = nil;
+    [modelModeList removeAllObjects];
+    modelModeList = nil;
 }
 
 - (void)didReceiveMemoryWarning
@@ -154,14 +170,19 @@
 */
 
 - (IBAction)didTapTitle:(id)sender {
-    if ([_btnTitleViewButton.titleLabel.text isEqualToString:@"呼吸量測"]) {
+    if ([_btnTitleViewButton.titleLabel.text isEqualToString:@"呼吸器量測"]) {
+        _VentNo.text = @"";
+        tmp_VentNo = @"";
         [_btnTitleViewButton setTitle:@"氧療量測" forState:UIControlStateNormal];
         [ventDataViewCtrl setDataMode:1];
+        curDataMode = 1;
     }
     else {
-        [_btnTitleViewButton setTitle:@"呼吸量測" forState:UIControlStateNormal];
+        [_btnTitleViewButton setTitle:@"呼吸器量測" forState:UIControlStateNormal];
         [ventDataViewCtrl setDataMode:0];
+        curDataMode = 0;
     }
+    [self setUIByDataMode:curDataMode];
 }
 
 - (IBAction)btnStart:(id)sender {
@@ -394,7 +415,7 @@
                     
                 }
             }
-            _btnSave.enabled = _RecordOper.text.length && _ChtNo.text.length && _VentNo.text.length;
+            _btnSave.enabled = _RecordOper.text.length && _ChtNo.text.length && _VentNo.text.length && [ventDataViewCtrl hasModeSelected];
             
             NSLog(@"BLE Read Done.");
             break;
@@ -562,6 +583,8 @@
     else if (textField == _VentNo) {
         tmp_VentNo = @"";
         _btnSave.enabled = NO;
+        [_btnTitleViewButton setTitle:@"呼吸器量測" forState:UIControlStateNormal];
+        [ventDataViewCtrl setDataMode:0];
     }
     return YES;
 }
@@ -643,7 +666,7 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:string];
-    BOOL isModeEmpty = [myMeasureData.VentilationMode isEqualToString:@""];
+    BOOL isModeEmpty = [myMeasureData.VentilationMode isEqualToString:@""] || [ventDataViewCtrl hasModeSelected];
     
     if (textField == _RecordOper) {
         _btnSave.enabled = newString.length && _ChtNo.text.length && _VentNo.text.length && !isModeEmpty;
@@ -659,14 +682,20 @@
 }
 
 #pragma mark - VentilatorDataViewDelegate
-- (void)VentilationModeSelected:(NSString *)mode {
+- (void)VentilationModeSelected:(NSString *)mode dataMode:(NSInteger)dataMode {
     myMeasureData.VentilationMode = mode;
-    _btnSave.enabled = _RecordOper.text.length && _ChtNo.text.length && _VentNo.text.length && mode.length;
+    //氧療不判斷VentNo長度
+    _btnSave.enabled = _RecordOper.text.length && _ChtNo.text.length && dataMode ? YES : _VentNo.text.length && mode.length;
+}
+
+- (void)dataModeChanged:(NSInteger)dataMode {
+    curDataMode = dataMode;
+    _btnSave.enabled = editMode;
 }
 
 #pragma mark - Methods
 - (IBAction)btnSaveClick:(id)sender {
-    if (!_RecordOper.text.length || !_ChtNo.text.length || !_VentNo.text.length) {
+    if (!_RecordOper.text.length || !_ChtNo.text.length || curDataMode ? NO : !_VentNo.text.length) {
         return;
     }
     
@@ -695,14 +724,18 @@
     }
     
     //insert data to database
-//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-//    [dateFormatter setDateFormat:@"yyyy/MM/dd HH:mm:ss"];
-//    myMeasureData.RecordTime = [dateFormatter stringFromDate:[NSDate date]];
-    myMeasureData.RecordTime = _RecordTime.text;
+    if ([_RecordTime.text isEqualToString:@""]) {
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
+        myMeasureData.RecordTime = [dateFormatter stringFromDate:[NSDate date]];
+    }
+    else {
+        myMeasureData.RecordTime = _RecordTime.text;
+    }
     myMeasureData.RecordOper = _RecordOper.text;
     myMeasureData.RecordDevice = [DeviceStatus getDeviceVendorUUID];
     myMeasureData.ChtNo = _ChtNo.text;
-    myMeasureData.VentNo = _VentNo.text;
+    myMeasureData.VentNo = curDataMode ? @"" : _VentNo.text;
     
     Patient *p = [db getPatientByChtNo:_ChtNo.text];
     myMeasureData.BedNo = p.BedNo;
@@ -718,6 +751,7 @@
 
 - (IBAction)btnCancleClick:(id)sender {
     viewDismiss = YES;
+    [_delegate measureViewControllerCancled];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -768,10 +802,21 @@
         if (textField.text.length >= 12 && [textField.text rangeOfString:@"**"].location != NSNotFound) {
             [ble setConnectionString:textField.text];
             _VentNo.text = [textField.text componentsSeparatedByString:@"**"][0];
+            [ventDataViewCtrl setVentilatorText:[db getExchangeVentilatorListByExternalNo:_VentNo.text].VentilatorModel];
             canRead = YES;
         }
         else if ([textField.text hasPrefix:PROPERTY_NO]) {
             _VentNo.text = [textField.text substringFromIndex:PROPERTY_NO.length];
+            VentilatorModel = [db getExchangeVentilatorListByExternalNo:_VentNo.text].VentilatorModel;
+            if ([VentilatorModel isEqualToString:@""]) {
+                _VentNo.text = VentilatorModel;
+            }
+            else {
+                [_btnTitleViewButton setTitle:@"呼吸器量測" forState:UIControlStateNormal];
+                [ventDataViewCtrl setDataMode:0];
+            }
+            [ventDataViewCtrl setVentilatorText:VentilatorModel];
+            [self setUIByDataMode:curDataMode];
         }
         tmp_VentNo = _VentNo.text;
         
@@ -850,6 +895,11 @@
         label.hidden = NO;
         _rememberRecordOper.hidden = NO;
     }
+}
+
+- (void)setUIByDataMode:(NSInteger)dataMode {
+    _lblVent.hidden = dataMode;
+    _VentNo.hidden = dataMode;
 }
 
 @end

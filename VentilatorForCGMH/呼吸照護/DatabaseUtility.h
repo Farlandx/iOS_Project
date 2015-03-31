@@ -11,8 +11,11 @@
 #import "VentilationData.h"
 #import "DtoVentExchangeUploadBatch.h"
 #import "DtoVentExchangeGetVentilatorList.h"
+#import "DtoGetAllVentilatorVendor.h"
+#import "DtoGetModelModeListItem.h"
 #import "Patient.h"
 #import "ABGUpdateRecord.h"
+#import "ModelModeList.h"
 
 @interface DatabaseUtility : NSObject {
     sqlite3 *sqliteDb;
@@ -55,5 +58,10 @@
 #pragma mark - ExchangeGenVentilatorList
 - (void)saveExchangeVentilatorList:(NSArray *)data;
 - (DtoVentExchangeGetVentilatorList *)getExchangeVentilatorListByExternalNo:(NSString *)ExternalNo;
+
+#pragma mark - VentilatorModeInfo
+- (void)saveDtoGetAllVentilatorVendor:(NSArray *)data;
+- (void)saveDtoGetModelModeListItem:(NSArray *)data;
+- (NSMutableArray *)getModelModeList;
 
 @end
